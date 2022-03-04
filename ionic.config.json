@@ -1,0 +1,7 @@
+{
+    "name": "connectwallet",
+    "integrations": {
+      "capacitor": {}
+    },
+    "type": "react"
+  }
