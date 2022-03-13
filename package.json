@@ -1,86 +1,38 @@
 {
-  "name": "walletconnect-example-dapp",
-  "version": "1.7.1",
+  "name": "klubby-react-native-app",
+  "version": "0.1.0",
   "private": true,
-  "keywords": [
-    "walletconnect",
-    "ethereum",
-    "web3",
-    "crypto"
-  ],
-  "author": "WalletConnect, Inc. <walletconnect.com>",
-  "homepage": "https://walletconnect.org",
-  "license": "MIT",
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "lint": "eslint -c './.eslintrc' --fix './src/**/*{.ts,.tsx}'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/walletconnect/walletconnect-example-dapp.git"
-  },
-  "bugs": {
-    "url": "https://github.com/walletconnect/walletconnect-example-dapp/issues"
-  },
   "dependencies": {
-    "@capacitor/android": "3.4.3",
-    "@capacitor/cli": "^3.4.3",
-    "@capacitor/core": "^3.4.3",
-    "@capacitor/ios": "3.4.3",
-    "@types/eth-sig-util": "^2.1.1",
-    "@walletconnect/client": "^1.7.1",
-    "@walletconnect/qrcode-modal": "^1.7.1",
-    "axios": "^0.25.0",
-    "bignumber.js": "^9.0.1",
-    "blockies-ts": "^1.0.0",
-    "eth-sig-util": "^2.5.3",
-    "ethereumjs-util": "^7.0.6",
-    "ethers": "^5.0.17",
-    "node-gyp": "^8.1.0",
-    "prop-types": "^15.7.2",
-    "qr-image": "^3.2.0",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-is": "^17.0.2",
-    "react-scripts-ts": "^4.0.8",
-    "styled-components": "^5.2.0"
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.4"
   },
-  "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/better-sqlite3": "^5.4.1",
-    "@types/bignumber.js": "^5.0.0",
-    "@types/bn.js": "^4.11.5",
-    "@types/eth-sig-util": "^2.1.1",
-    "@types/jest": "^24.0.25",
-    "@types/node": "^13.1.6",
-    "@types/prop-types": "^15.7.3",
-    "@types/qr-image": "^3.2.3",
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
-    "@types/styled-components": "^5.1.3",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-config-react": "^1.1.7",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.4"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
