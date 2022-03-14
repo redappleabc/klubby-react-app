@@ -1,0 +1,7 @@
+{
+  "name": "klubby",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
