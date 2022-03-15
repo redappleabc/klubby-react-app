@@ -8,6 +8,7 @@ env:
 phases:
   build:
     commands:
+      - npm install -g aws-cli
       - npm install -D typescript
       - npm install
       - npm run build
