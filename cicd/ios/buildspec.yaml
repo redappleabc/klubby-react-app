@@ -1,0 +1,16 @@
+
+version: 0.2
+
+env:
+  variables:
+    ENVIRONMENT: 'dev'
+
+phases:
+  build:
+    commands:
+      - npm install
+      - npm run build
+      - npm install -g @ionic/cli
+      - ionic capacitor add ios
+      #then updload to s3
+      - ls
