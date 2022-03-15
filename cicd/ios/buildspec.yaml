@@ -13,5 +13,4 @@ phases:
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add ios
-      #then updload to s3
-      - ls
+      - aws s3 cp -r ios s3://klubby-deployment-ios-dev-pipelineartifactsbucket-72ae00j2dw1w/ios/
