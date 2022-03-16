@@ -1,5 +1,6 @@
 # Klubby React App
 
+This app is built using the react framework.
 
 # Getting Started with Create React App
 
