@@ -1,6 +1,6 @@
 # Klubby React App
 
-At the core of this project is a webapp that uses the react framework. Ionic Capacitor is cross-platform deployment solution that is then used to deploy the react app to native iOS and Android code. 
+At the core of this project is a webapp that uses the react framework. [Ionic Capacitor](https://capacitorjs.com/) is cross-platform deployment solution that is then used to deploy the react app to native iOS and Android code.
 
 DevOps best practices are in place to automate the deployment of this application. Examples include:
 - IAC
