@@ -7,3 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Git Practice
 
 This project is going to follow gitflow with long term strategy of using trunk based deployments.
+
+[Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+
+[Trunk Based Deployments](https://trunkbaseddevelopment.com/)
