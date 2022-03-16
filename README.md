@@ -11,3 +11,9 @@ This project is going to follow gitflow with long term strategy of using trunk b
 [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 
 [Trunk Based Deployments](https://trunkbaseddevelopment.com/)
+
+## CI/CD
+The main and dev branches have cicd in place to automate the following:
+- Webapp Deployment
+- iOS Deployment
+- Android Deployment
