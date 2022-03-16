@@ -5,6 +5,8 @@ env:
   variables:
     ENVIRONMENT: 'dev'
 
+#TODO this needs to know env so it can add to save location, rn conflict with prod
+
 phases:
   build:
     commands:
