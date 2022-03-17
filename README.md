@@ -24,5 +24,11 @@ The main and dev branches have cicd in place to automate the following:
 ### Manual Deployment
 
 - Webapp
+
+npm install
+npm build
+#TODO add commands
+
+
 - iOS
 - Android
