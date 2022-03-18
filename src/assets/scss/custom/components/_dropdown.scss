@@ -1,0 +1,63 @@
+//
+// _dropdown.scss
+//
+
+.dropdown-menu {
+  box-shadow: $box-shadow-lg;
+  animation-name: DropDownSlide;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  position: absolute;
+  z-index: 1000;
+
+  &.dropdown-megamenu {
+    padding: 20px;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  &[data-popper-placement="top-start"] {
+    animation-name: DropDownSlideDown;
+  }
+}
+
+@keyframes DropDownSlide {
+  100% {
+    margin-top: -1px;
+  }
+  0% {
+    margin-top: 8px;
+  }
+}
+
+@keyframes DropDownSlideDown {
+  100% {
+    margin-bottom: 0;
+  }
+  0% {
+    margin-bottom: 8px;
+  }
+}
+
+.dropdown-toggle {
+  @include caret(up);
+}
+
+.dropdown-menu-end[style] {
+  right: 0 !important;
+  left: auto !important;
+}
+
+@media (min-width: 600px) {
+  .dropdown-menu-lg {
+    width: 320px;
+  }
+
+  .dropdown-menu-md {
+    width: 240px;
+  }
+}
+
+.dropdown-divider {
+  border-top-color: $border-color;
+}

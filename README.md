@@ -1,6 +1,6 @@
 # Klubby React App
 
-At the core of this project is a webapp that uses the react framework. Ionic Capacitor is cross-platform deployment solution that is then used to deploy the react app to native iOS and Android code. 
+At the core of this project is a webapp that uses the react framework. [Ionic Capacitor](https://capacitorjs.com/) is cross-platform deployment solution that is then used to deploy the react app to native iOS and Android code.
 
 DevOps best practices are in place to automate the deployment of this application. Examples include:
 - IAC
@@ -10,15 +10,25 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Git Practice
 
-This project is going to follow gitflow with long term strategy of using trunk based deployments.
+This project uses [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) with long term strategy of using [Trunk Based Deployments](https://trunkbaseddevelopment.com/).
 
-[Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
+## Deployment 
 
-[Trunk Based Deployments](https://trunkbaseddevelopment.com/)
-
-## CI/CD
+### CI/CD
 The main and dev branches have cicd in place to automate the following:
 
 - Webapp Deployment
 - iOS Deployment
 - Android Deployment
+
+### Manual Deployment
+
+- Webapp
+
+npm install
+npm build
+#TODO add commands
+
+
+- iOS
+- Android
