@@ -1,0 +1,45 @@
+// 
+// authentication.scss
+//
+
+.auth-logo{
+    .logo{
+        margin: 0px auto;
+    }
+
+    .logo-dark{
+        display: $display-block;
+    }
+
+    .logo-light{
+        display: $display-none;
+    }
+}
+
+.auth-main-btn {
+    background-color: #343434;
+    color: white !important;
+    border: none;
+    width: 100%;
+    height: 45px;
+    margin: auto;
+    &:hover {
+        background-color: #2B2C33;
+    }
+}
+.auth-first h1 {
+    font-size: 60px;
+    color: white !important;
+}
+.auth-first p {
+    font-size: 30px;
+    color: white !important;
+}
+.account-pages {
+    padding-top: 7rem !important;
+}
+
+.alert-success {
+    background-color: transparent !important;
+    border: none !important;
+}

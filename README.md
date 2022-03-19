@@ -39,4 +39,5 @@ npm build
 ionic capacitor add ios
 
 
+
 - Android

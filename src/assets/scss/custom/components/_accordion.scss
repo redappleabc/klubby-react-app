@@ -1,0 +1,32 @@
+
+//
+// accordion.scss
+//
+
+.custom-accordion {
+    .card {
+        + .card {
+            margin-top: 0.5rem;
+        }
+    }
+
+    a {
+        i.accor-plus-icon {
+            font-size: 16px;
+        }
+        &.collapsed {
+            i.accor-plus-icon {
+                &:before {
+                    content: "\F0142";
+                }
+            }
+        }
+    }
+}
+
+.accordion-button {
+    &:after {
+        margin-left: auto/*rtl:0*/;
+        margin-right:0/*rtl:auto*/;
+    }
+}
