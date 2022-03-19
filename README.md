@@ -31,4 +31,12 @@ npm build
 
 
 - iOS
+
+npm install -g @ionic/cli
+
+npm install
+npm build
+ionic capacitor add ios
+
+
 - Android
