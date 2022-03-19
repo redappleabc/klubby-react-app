@@ -230,7 +230,7 @@
 .chat-conversation {
     height: calc(100vh - 184px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 152px);
+        height: calc(100vh - 190px);
     }
 }
 
@@ -298,3 +298,16 @@
 .header-post-info {
     margin-right: 20px !important;
 }
+
+@media (max-width: 992px) {
+    .chat-input {
+        position: fixed;
+        bottom: 0;
+        background-color: #1d1d1d;
+    }
+    .header-post-info {
+        display: none;
+    }
+}
+
+
