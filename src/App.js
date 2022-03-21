@@ -14,8 +14,17 @@ import fakeBackend from './helpers/fake-backend';
 
 
 import ThemeProvider from "./Contexts/ThemeProvider";
+
+import { StatusBar } from '@capacitor/status-bar';
+import { Capacitor } from '@capacitor/core';
+
 // TODO
 fakeBackend();
+
+if (Capacitor.isNativePlatform()) {
+  StatusBar.hide();
+}
+// StatusBar.hide();
 
 // const firebaseConfig = {
 // 	apiKey: process.env.REACT_APP_APIKEY,

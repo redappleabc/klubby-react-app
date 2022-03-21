@@ -178,3 +178,55 @@
         border-radius: 10px;
     }
 }
+
+
+.leftsidebar-home-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    margin-bottom: .5rem;
+    
+    h4 {
+        margin-top: 0.5rem;
+    }
+    .home-header-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: .4rem;
+        background-color: #343434;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 .3rem;
+       .nav-link {
+            color: #929292;
+       }
+       .notification-badge {
+        top: -2%;
+        right: -25%;
+       }
+    }
+    
+    .home-header-btn-group {
+        display: flex;
+    }
+    .profile-user {
+        height: 36px;
+        width: 36px;
+        // background-color: #343434;
+        // padding: 3px;
+        
+    }
+    .chat-search-box {
+        width: 130px;
+        input {
+            padding-left: 5px;
+        }
+        span {
+            padding-left: 10px !important;
+        }
+    }
+    .dropdown-menu.show {
+        transform: translate3d(-135px, 55px, 0px) !important;
+    }
+}

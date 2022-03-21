@@ -243,6 +243,11 @@ label {
     background-color: white;
   }
 
+  .leftsidebar-home-header {
+    .home-header-btn {
+      background-color: #e6ebf5;
+    }
+  }
 }
 
 
@@ -322,6 +327,14 @@ label {
     background-color: c('color') !important;
   }
 }
+
+.form-check-input:checked {
+  @include colored() {
+    background-color: c('color') !important;
+    border-color: c('color') !important;
+  }
+}
+
 
 // .nav-upvote {
 //   @include colored() {
