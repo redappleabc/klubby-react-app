@@ -31,4 +31,16 @@ npm build
 
 
 - iOS
+
+npm install -g @ionic/cli
+
+npm install
+npm build
+npm install -g @ionic/cli
+npm install @capacitor/core --save # this is in project, not needed
+npm install @capacitor/cli --save # this is in project, not needed
+ionic capacitor add ios
+npx cap sync
+npx cap run ios
+
 - Android
