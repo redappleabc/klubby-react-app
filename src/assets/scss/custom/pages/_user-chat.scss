@@ -304,10 +304,14 @@
         position: fixed;
         bottom: 0;
         background-color: #1d1d1d;
+        width: 100%;
     }
     .header-post-info {
         display: none;
     }
 }
-
+.home-chat-container {
+    display: flex;
+    align-items: center;
+}
 

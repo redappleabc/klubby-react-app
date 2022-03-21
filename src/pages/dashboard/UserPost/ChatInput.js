@@ -84,7 +84,7 @@ function ChatInput(props) {
                                             <DropdownToggle id="emoji" color="link" className="text-decoration-none font-size-16 btn-lg waves-effect">
                                                 <i className="ri-emotion-happy-line"></i>
                                             </DropdownToggle>
-                                            <DropdownMenu className="dropdown-menu-end">
+                                            <DropdownMenu className="dropdown-menu-end emotion-dropdown">
                                                 <Picker onSelect={addEmoji} />
                                             </DropdownMenu>
                                         </ButtonDropdown>

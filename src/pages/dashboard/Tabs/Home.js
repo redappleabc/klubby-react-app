@@ -2,27 +2,36 @@ import React, { Component } from 'react';
 import { Input, InputGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { NavLink, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
+
 
 //simplebar
 import SimpleBar from "simplebar-react";
 
 //actions
-import { setconversationNameInOpenChat, activePost } from "../../../redux/actions"
+import { setconversationNameInOpenChat, activePost, setActiveTab } from "../../../redux/actions"
 
+import group1 from "../../../assets/images/group/group1.png";
 //components
 // import OnlineUsers from "./OnlineUsers";
 
 class Home extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
             searchChat: "",
-            recentPostList: this.props.recentPostList
+            activePost: this.props.activeTab,
+            recentPostList: this.props.recentPostList,
+            notiDropdown: false
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.openPostChat = this.openPostChat.bind(this);
+        this.setNoticDropdown = this.setNoticDropdown.bind(this);
     }
+
+    
 
     componentDidMount() {
         var li = document.getElementById("conversation" + this.props.active_post);
@@ -66,7 +75,6 @@ class Home extends Component {
         //if input value is blanck then assign whole recent chatlist to array
         if (search === "") this.setState({ recentPostList: this.props.recentPostList })
     }
-
     openPostChat(e, chat) {
 
         e.preventDefault();
@@ -116,21 +124,52 @@ class Home extends Component {
         }
     }
 
+    toggleTab(tab) {
+        this.props.setActiveTab(tab)
+    }
+   
+    setNoticDropdown() {
+        this.setState(prevState => ({
+            notiDropdown: !prevState.notiDropdown
+          }));
+    }
+    
+
     render() {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-4 pt-4">
-                        <h4 className="mb-4">Home</h4>
+                    <div className="px-4 pt-4 leftsidebar-home-header">
+                        <div>
+                            <h4 className="">Home</h4>
+                        </div>
                         <div className="search-box chat-search-box">
                             <InputGroup size="lg" className="mb-3 rounded-lg">
-                                <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
+                                <span className="input-group-text text-muted bg-light pe-1 ps-3">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
                                 <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search messages or users" />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
+                        <div className='home-header-btn-group'>
+                            <div className='home-header-btn'>
+                                <NavLink onClick={() => { this.toggleTab('post'); }}>
+                                    <i className="ri-advertisement-line"></i>
+                                </NavLink>
+                            </div>
+                            <div className='home-header-btn'>
+                                <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
+                                    <DropdownToggle className="nav-link" tag="a">
+                                    <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Start chat-message-list  */}
@@ -143,7 +182,7 @@ class Home extends Component {
                                         this.state.recentPostList.map((chat, key) =>
                                             <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_post ? "active" : ""}>
                                                 <Link to="#" onClick={(e) => this.openPostChat(e, chat)}>
-                                                    <div className="d-flex">
+                                                    <div className="d-flex home-chat-container">
                                                         {
                                                             chat.profilePicture === "Null" ?
                                                                 <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
@@ -217,4 +256,4 @@ const mapStateToProps = (state) => {
     return { active_post };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activePost })(Home);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activePost, setActiveTab })(Home);
