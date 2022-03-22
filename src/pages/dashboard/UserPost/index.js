@@ -146,11 +146,56 @@ function UserChat(props) {
                             <SimpleBar
                                 style={{ maxHeight: "100%" }}
                                 ref={ref}
-                                className="chat-conversation p-3 p-lg-4"
-                                id="messages">
+                                className="chat-conversation p-4 p-lg-4"
+                                id="posts">
+                                <div className="d-flex home-chat-container">
+                                    {
+                                        props.recentPostList[props.active_post].profilePicture === "Null" ?
+                                            <div className={"chat-user-img " + props.recentPostList[props.active_post].status + " align-self-center me-3 ms-0"}>
+                                                <div className="avatar-xs">
+                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                        {props.recentPostList[props.active_post].name.charAt(0)}
+                                                    </span>
+                                                </div>
+                                                {
+                                                    props.recentPostList[props.active_post].status && <span className="user-status"></span>
+                                                }
+                                            </div>
+                                            :
+                                            <div className={"chat-user-img " + props.recentPostList[props.active_post].status + " align-self-center me-3 ms-0"}>
+                                                <img src={props.recentPostList[props.active_post].profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                {
+                                                    props.recentPostList[props.active_post].status && <span className="user-status"></span>
+                                                }
+                                            </div>
+                                    }
+
+                                    <div className="flex-1 overflow-hidden">
+                                        <h5 className="text-truncate font-size-16 mb-1">{props.recentPostList[props.active_post].name}</h5>
+                                        <p className="chat-user-message mb-0 font-size-12">
+                                            <i className="ri-time-line"></i> {props.recentPostList[props.active_post].time}
+                                        </p>
+                                    </div>
+                                    <div className="font-size-14">{props.recentPostList[props.active_post].upvote + " upvotes"}<br></br>{props.recentPostList[props.active_post].comment + " comments"}</div>
+                                </div>
+                                <div className='font-size-15 mb-3 mt-3' >
+                                    {props.recentPostList[props.active_post].content}
+                                </div>
+                                <div className='nav-post-img'>
+                                    <img src={props.recentPostList[props.active_post].image}/>
+                                </div>
+                                <div className='nav-upvote text-center'>
+                                {
+                                    props.recentPostList[props.active_post].isupvote === true ?
+                                        <div className='nav-upvote-mark font-size-17 mt-3 mb-4'>
+                                            You already upvoted this post <i c="ri-checkbox-circle-line"></i>
+                                        </div>:
+                                        <div className='nav-upvote-mark font-size-17 mt-3 mb-4'>
+                                             <i c="ri-checkbox-circle-line"></i>
+                                        </div>
+                                }
+                                </div>
                                 <ul className="list-unstyled mb-0">
-
-
                                     {
                                         postMessage.map((chat, key) =>
                                             chat.isToday && chat.isToday === true ? <li key={"dayTitle" + key}>

@@ -148,7 +148,7 @@ class Home extends Component {
                                 <span className="input-group-text text-muted bg-light pe-1 ps-3">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
-                                <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search messages or users" />
+                                <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search..." />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
@@ -211,12 +211,6 @@ class Home extends Component {
                                                             </p>
                                                         </div>
                                                         <div className="font-size-12">{chat.upvote + " upvotes"}<br></br>{chat.comment + " comments"}</div>
-                                                        {/* {chat.unRead === 0 ? null :
-                                                            <div className="unread-message" id={"unRead" + chat.id}>
-                                                                <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
-                                                            </div>
-                                                        } */}
-                                                        
                                                     </div>
                                                     <div className='font-size-15 mb-3 mt-3' >
                                                         {chat.content}
