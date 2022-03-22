@@ -108,6 +108,7 @@
             border-radius: 8px 8px 8px 0;
             color: $white;
             position: relative;
+            word-break: break-all;
 
             &:before {
                 content: "";
@@ -230,7 +231,7 @@
 .chat-conversation {
     height: calc(100vh - 184px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 190px);
+        height: calc(100vh - 143px);
     }
 }
 

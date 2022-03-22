@@ -43,16 +43,16 @@
 }
 
 .chat-message-list {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 95px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 194px);
+        height: calc(100vh - 160px);
     }
 }
 
 .chat-group-list {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 90px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 194px);
+        height: calc(100vh - 160px);
     }
 }
 
@@ -173,7 +173,7 @@
 
 .nav-post-img {
     img {
-        width: 100%;
+        max-width: 100%;
         height: auto;
         border-radius: 10px;
     }
@@ -218,7 +218,7 @@
         
     }
     .chat-search-box {
-        width: 130px;
+        width: calc(100% - 200px);
         input {
             padding-left: 5px;
         }

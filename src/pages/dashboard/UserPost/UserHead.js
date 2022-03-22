@@ -50,7 +50,7 @@ function UserHead(props) {
                                 <Link to="#" onClick={(e) => closeUserChat(e)} className="user-chat-remove text-muted font-size-16 p-2">
                                     <i className="ri-arrow-left-s-line"></i></Link>
                             </div>
-                            {
+                            {/* {
                                 props.posts[props.active_post].profilePicture !== "Null" ?
                                     <div className="me-3 ms-0">
                                         <img src={props.posts[props.active_post].profilePicture} className="rounded-circle avatar-xs" alt="Klubby" />
@@ -71,7 +71,7 @@ function UserHead(props) {
                                     </Link>
 
                                 </h5>
-                            </div>
+                            </div> */}
                             
                         </div>
                     </Col>
