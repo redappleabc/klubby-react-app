@@ -63,7 +63,14 @@
 }
 
 .emotion-dropdown {
-  transform: translate3d(307px, -392px, 0px) !important;
+  // transform: none !important;
+  transform: translate3d(calc(50vw - 110px), -392px, 0px) !important;
+}
+
+@media (max-width: 992px) {
+  .emotion-dropdown {
+    transform: translate3d(calc(50vw + 110px), -392px, 0px) !important;
+  }
 }
 
 
@@ -136,7 +143,7 @@
    position: fixed;
    bottom: 0;
   .main-input {
-    width: calc(100% - 50px);
+    width: calc(100% - 60px);
     position: relative;
   }
 }
