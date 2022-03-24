@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button, Input, Row, Col, Modal, ModalBody } from "reactstrap";
+import { Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button, Input, Row, Col, Modal, ModalBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -50,10 +50,19 @@ function UserHead(props) {
                                 <Link to="#" onClick={(e) => closeUserChat(e)} className="user-chat-remove text-muted font-size-16 p-2">
                                     <i className="ri-arrow-left-s-line"></i></Link>
                             </div>
+                            <li className='list-inline-item'>
+                                {/* <div className="list-inline-item upvote-check">
+                                    <Input type="checkbox" id="upvote-check" /><br/>
+                                    <Label className="font-size-12" htmlFor="upvote-check">Upvote</Label>
+                                </div> */}
+                                {/* <Button color="primary" className=" waves-effect waves-light" type="submit">Upvote</Button> */}
+                            </li>
                         </div>
+                        
                     </Col>
                     <Col sm={8} xs={4} >
                         <ul className="list-inline user-chat-nav text-end mb-0">
+                            
                             <li className="list-inline-item">
                                 <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                                     <DropdownToggle color="none" className="btn nav-btn " type="button">

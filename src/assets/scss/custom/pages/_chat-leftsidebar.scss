@@ -42,17 +42,19 @@
     }
 }
 
-.chat-message-list {
+.chat-post-list {
+    background-color: #1d1d1d;
     height: calc(100vh - 95px);
     @media (max-width: 991.98px) {
         height: calc(100vh - 160px);
     }
 }
 
-.chat-group-list {
-    height: calc(100vh - 90px);
+
+.chat-message-list {
+    height: calc(100vh - 155px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 160px);
+        height: calc(100vh - 220px);
     }
 }
 
@@ -204,6 +206,21 @@
        .notification-badge {
         top: -2%;
         right: -25%;
+       }
+
+       .group-add-btn {
+            border-radius: 50%;
+            aspect-ratio: 1 / 1;
+            background: #343434;
+            border: unset !important;
+            color: #929292 !important;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            i {
+                margin-right: 0 !important;
+            }
        }
     }
     

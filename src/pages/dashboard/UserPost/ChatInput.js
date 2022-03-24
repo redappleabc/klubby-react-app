@@ -104,10 +104,6 @@ function ChatInput(props) {
                                 </Label>
                             </div>
                         </div>
-                        {/* <div className="list-inline-item upvote-check">
-                            <Input type="checkbox" id="upvote-check" /><br/>
-                            <Label className="font-size-12" htmlFor="upvote-check">Upvote</Label>
-                        </div> */}
 
                         <div className={`mic-btn ${textMessage.length >= 1 ? "" : "show"}`}>
                             <Button color="primary" onClick={toggleVoiceRecordModal} className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
@@ -152,6 +148,7 @@ function ChatInput(props) {
                     </div>
                 </ModalBody>
             </Modal>
+           
         </React.Fragment>
     );
 }

@@ -71,14 +71,6 @@
   border-radius: 50%;
   aspect-ratio: 1 / 1;
 }
-.main-input-container {
-  .round-btn {
-    width: 45px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
 
  .emoji-input {
    position: absolute;
@@ -114,6 +106,12 @@
      }
      width: 100%;
    }
+   .round-btn {
+    width: 45px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
  }
 
  .chat-send {
@@ -134,6 +132,9 @@
  }
 
  .chat-input {
+   width: calc(100% - 468px);
+   position: fixed;
+   bottom: 0;
   .main-input {
     width: calc(100% - 50px);
     position: relative;
@@ -156,4 +157,9 @@
 
 .voice-record-img {
   font-size: 80px;
+}
+@media (max-width: 992px) {
+  .chat-input {
+    width: 100% !important;
+  }
 }
