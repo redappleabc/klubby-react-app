@@ -382,6 +382,14 @@ label {
     }
 }
 
+.mic-btn {
+  .btn-primary {
+    @include colored() {
+      background-color: c('color') !important;
+    }
+  }
+}
+
 // .nav-upvote {
 //   @include colored() {
 //     color: c('color') !important;
