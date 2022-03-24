@@ -52,6 +52,7 @@
 
 
 .chat-message-list {
+    background-color: #1d1d1d;
     height: calc(100vh - 155px);
     @media (max-width: 991.98px) {
         height: calc(100vh - 220px);

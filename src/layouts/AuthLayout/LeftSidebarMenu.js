@@ -74,15 +74,6 @@ function LeftSidebarMenu(props) {
                             Chats
                         </UncontrolledTooltip>
 
-                        <NavItem id="Klubs" className='_pc'>
-                            <NavLink id="pills-klubs-tab" className={classnames({ active: activeTab === 'klubs' })} onClick={() => { toggleTab('klubs'); }}>
-                                <i className="ri-group-line"></i>
-                            </NavLink>
-                        </NavItem>
-                        <UncontrolledTooltip target="Klubs" placement="top">
-                            Klubs
-                        </UncontrolledTooltip>
-
                         <NavItem id="Post" className='_pc'>
                             <NavLink id="pills-post-tab" className={classnames({ active: activeTab === 'post' })} onClick={() => { toggleTab('post'); }}>
                                 <i className="ri-advertisement-line"></i>
