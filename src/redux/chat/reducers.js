@@ -13,12 +13,11 @@ import avatar8 from "../../assets/images/users/avatar-8.jpg";
 
 import group1 from "../../assets/images/group/group1.png";
 import group2 from "../../assets/images/group/group2.png";
-import group3 from "../../assets/images/group/group3.png";
+// import group3 from "../../assets/images/group/group3.png";
 
 import img6 from "../../assets/images/small/img-1.jpg";
 import img4 from "../../assets/images/small/img-1.jpg";
 import img7 from "../../assets/images/small/img-1.jpg";
-
 
 
 const INIT_STATE = {
@@ -261,9 +260,7 @@ const INIT_STATE = {
     { id : 2, name : "About NFT staking", profilePicture : group2, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Many variations of Lorem Ipsum exist today, and sometimes the text is altered to include humorous phrases」f you're going to be using Lorem Ipsum as filler text on your pages, you need to make sure that the passage doesn't contain potentiolly embarrassing information.",
       upvote: 12, comment: 6, isupvote: true,
         messages: [
-            { id: 1, username: "John Hall", userimg: avatar2, message: "It's too similar to nyan heroes\
-            Need to chanfe the headers\
-            i'll be home in a hour so I can look at it properly on my computer", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
+            { id: 1, username: "John Hall", userimg: avatar2, message: "It's too similar to nyan heroes Need to chanfe the headers i'll be home in a hour so I can look at it properly on my computer", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
             { id: 2, username: "ary Farmer", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
             { id: 3, username: "Rocky Jackson",  userimg: avatar4, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
         ]  },

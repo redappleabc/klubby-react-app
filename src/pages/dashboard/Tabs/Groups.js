@@ -3,8 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, UncontrolledTooltip
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { withTranslation } from 'react-i18next';
-
 //simple bar
 import SimpleBar from "simplebar-react";
 
@@ -106,7 +104,6 @@ class Groups extends Component {
     }
 
     render() {
-        const { t } = this.props;
         return (
             <React.Fragment>
                 <div>
@@ -120,35 +117,34 @@ class Groups extends Component {
                             </div>
                             <UncontrolledTooltip target="create-group" placement="bottom">
                                 Create group
-                                    </UncontrolledTooltip>
-
+                            </UncontrolledTooltip>
                         </div>
-                        <h4 className="mb-4">{t('Klubs')}</h4>
+                        <h4 className="mb-4">Klubs</h4>
 
                         {/* Start add group Modal */}
                         <Modal isOpen={this.state.modal} centered toggle={this.toggle}>
-                            <ModalHeader tag="h5" className="modal-title font-size-14" toggle={this.toggle}>{t('Create New Group')}</ModalHeader>
+                            <ModalHeader tag="h5" className="modal-title font-size-14" toggle={this.toggle}>Create New Group</ModalHeader>
                             <ModalBody className="p-4">
                                 <Form>
                                     <div className="mb-4">
-                                        <Label className="form-label" htmlFor="addgroupname-input">{t('Group Name')}</Label>
+                                        <Label className="form-label" htmlFor="addgroupname-input">Group Name</Label>
                                         <Input type="text" className="form-control" id="addgroupname-input" value={this.state.groupName} onChange={(e) => this.handleChangeGroupName(e)} placeholder="Enter Group Name" />
                                     </div>
                                     <div className="mb-4">
-                                        <Label className="form-label">{t('Group Members')}</Label>
+                                        <Label className="form-label">Group Members</Label>
                                         <Alert isOpen={this.state.isOpenAlert} color="danger">
                                             {this.state.message}
                                         </Alert>
                                         <div className="mb-3">
                                             <Button color="light" size="sm" type="button" onClick={this.toggleCollapse}>
-                                                {t('Select Members')}
+                                                Select Members
                                             </Button>
                                         </div>
 
                                         <Collapse isOpen={this.state.isOpenCollapse} id="groupmembercollapse">
                                             <Card className="border">
                                                 <CardHeader>
-                                                    <h5 className="font-size-15 mb-0">{t('Contacts')}</h5>
+                                                    <h5 className="font-size-15 mb-0">Contacts</h5>
                                                 </CardHeader>
                                                 <CardBody className="p-2">
                                                     <SimpleBar style={{ maxHeight: "150px" }}>
@@ -168,7 +164,7 @@ class Groups extends Component {
                                 </Form>
                             </ModalBody>
                             <ModalFooter>
-                                <Button type="button" color="link" onClick={this.toggle}>{t('Close')}</Button>
+                                <Button type="button" color="link" onClick={this.toggle}>Close</Button>
                                 <Button type="button" color="primary" onClick={this.createGroup}>Create Group</Button>
                             </ModalFooter>
                         </Modal>
@@ -187,8 +183,6 @@ class Groups extends Component {
 
                     {/* Start chat-group-list */}
                     <SimpleBar style={{ maxHeight: "100%" }} className="p-4 chat-message-list chat-group-list">
-
-
                         <ul className="list-unstyled chat-list">
                             {
                                 this.state.groups.map((group, key) =>
@@ -240,4 +234,4 @@ const mapStateToProps = (state) => {
     return { groups, active_user };
 };
 
-export default (connect(mapStateToProps, { createGroup })(withTranslation()(Groups)));
+export default (connect(mapStateToProps, { createGroup })(Groups));

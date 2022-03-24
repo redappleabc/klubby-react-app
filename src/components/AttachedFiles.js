@@ -2,14 +2,10 @@ import React from 'react';
 import { DropdownMenu, DropdownItem, DropdownToggle, Card, UncontrolledDropdown } from "reactstrap";
 import { Link } from "react-router-dom";
 
-//i18n
-import { useTranslation } from 'react-i18next';
 
 function AttachedFiles(props) {
     const files = props.files;
 
-    /* intilize t variable for multi language implementation */
-    const { t } = useTranslation();
 
     return (
         <React.Fragment>
@@ -41,10 +37,10 @@ function AttachedFiles(props) {
                                             <i className="ri-more-fill"></i>
                                         </DropdownToggle>
                                         <DropdownMenu right>
-                                            <DropdownItem>{t('Action')}</DropdownItem>
-                                            <DropdownItem>{t('Another Action')}</DropdownItem>
+                                            <DropdownItem>Action</DropdownItem>
+                                            <DropdownItem>Another Action</DropdownItem>
                                             <DropdownItem divider />
-                                            <DropdownItem>{t('Delete')}</DropdownItem>
+                                            <DropdownItem>Delete</DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
                                 </ul>

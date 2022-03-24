@@ -8,20 +8,20 @@ import { setActiveTab } from "../../redux/actions";
 
 //Import Images
 // import logo from "../../assets/images/logo-small.svg"
-import avatar1 from "../../assets/images/users/avatar-1.jpg";
+// import avatar1 from "../../assets/images/users/avatar-1.jpg";
 import group1 from "../../assets/images/group/group1.png";
 
 function LeftSidebarMenu(props) {
 
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
     const [dropdownOpen2, setDropdownOpen2] = useState(false);
-    const [dropdownOpenMobile1, setDropdownOpenMobile1] = useState(false);
+    // const [dropdownOpenMobile1, setDropdownOpenMobile1] = useState(false);
     const [dropdownOpenMobile2, setDropdownOpenMobile2] = useState(false);
 
 
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
     const toggle2 = () => setDropdownOpen2(!dropdownOpen2);
-    const toggleMobile1 = () => setDropdownOpenMobile1(!dropdownOpenMobile1);
+    // const toggleMobile1 = () => setDropdownOpenMobile1(!dropdownOpenMobile1);
     const toggleMobile2 = () => setDropdownOpenMobile2(!dropdownOpenMobile2);
 
     const toggleTab = tab => {
@@ -74,7 +74,7 @@ function LeftSidebarMenu(props) {
                             Chats
                         </UncontrolledTooltip>
 
-                        <NavItem id="Klubs">
+                        <NavItem id="Klubs" className='_pc'>
                             <NavLink id="pills-klubs-tab" className={classnames({ active: activeTab === 'klubs' })} onClick={() => { toggleTab('klubs'); }}>
                                 <i className="ri-group-line"></i>
                             </NavLink>
@@ -83,7 +83,7 @@ function LeftSidebarMenu(props) {
                             Klubs
                         </UncontrolledTooltip>
 
-                        <NavItem id="Post">
+                        <NavItem id="Post" className='_pc'>
                             <NavLink id="pills-post-tab" className={classnames({ active: activeTab === 'post' })} onClick={() => { toggleTab('post'); }}>
                                 <i className="ri-advertisement-line"></i>
                             </NavLink>
@@ -93,7 +93,7 @@ function LeftSidebarMenu(props) {
                         </UncontrolledTooltip>
 
 
-                        <NavItem id="Settings">
+                        <NavItem id="Settings" className='_pc'>
                             <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
                                 <i className="ri-settings-2-line"></i>
                             </NavLink>
@@ -102,20 +102,9 @@ function LeftSidebarMenu(props) {
                             Settings
                         </UncontrolledTooltip>
 
-                        
-                        <Dropdown nav isOpen={dropdownOpenMobile1} toggle={toggleMobile1} className="profile-user-dropdown d-inline-block d-lg-none">
-                            <DropdownToggle className="nav-link" tag="a">
-                                <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem onClick={() => { toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                                <DropdownItem onClick={() => { toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown> 
-
                         <Dropdown nav isOpen={dropdownOpenMobile2} toggle={toggleMobile2} className="profile-user-dropdown d-inline-block d-lg-none">
                             <DropdownToggle nav>
-                                <img src={avatar1} alt="Klubby" className="profile-user rounded-circle" />
+                            <i className="ri-user-3-line"></i>
                             </DropdownToggle>
                             <DropdownMenu className="dropdown-menu-end">
                                 <DropdownItem onClick={() => { toggleTab('profile'); }}>Profile <i className="ri-profile-line float-end text-muted"></i></DropdownItem>
@@ -142,7 +131,7 @@ function LeftSidebarMenu(props) {
 
                         <Dropdown nav isOpen={dropdownOpen2} className="nav-item btn-group dropup profile-user-dropdown" toggle={toggle2}>
                             <DropdownToggle className="nav-link" tag="a">
-                                <img src={avatar1} alt="" className="profile-user rounded-circle" />
+                            <i className="ri-user-3-line"></i>
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem onClick={() => { toggleTab('profile'); }}>Profile <i className="ri-profile-line float-end text-muted"></i></DropdownItem>
@@ -151,7 +140,6 @@ function LeftSidebarMenu(props) {
                                 <DropdownItem href="/logout">Log out <i className="ri-logout-circle-r-line float-end text-muted"></i></DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        
                     </Nav>
                 </div>
                 {/* Side menu user */}

@@ -111,7 +111,7 @@ function ChatInput(props) {
                                         </UncontrolledTooltip>
                                     </li>
                                     <li className="list-inline-item">
-                                        <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light">
+                                        <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
                                             <i className="ri-send-plane-2-fill"></i>
                                         </Button>
                                     </li>

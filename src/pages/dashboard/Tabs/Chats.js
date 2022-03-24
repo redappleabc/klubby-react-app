@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Input, InputGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { NavLink, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
 
 //simplebar
 import SimpleBar from "simplebar-react";
 
 //actions
 import { setconversationNameInOpenChat, activeUser } from "../../../redux/actions"
+import group1 from "../../../assets/images/group/group1.png";
 
 //components
 // import OnlineUsers from "./OnlineUsers";
@@ -117,7 +119,7 @@ class Chats extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-4 pt-4">
+                    <div className="px-2 pt-4 leftsidebar-home-header">
                         <h4 className="mb-4">Chats</h4>
                         <div className="search-box chat-search-box">
                             <InputGroup size="lg" className="mb-3 rounded-lg">
@@ -128,6 +130,24 @@ class Chats extends Component {
                             </InputGroup>
                         </div>
                         {/* Search Box */}
+                        <div className='home-header-btn-group'>
+                            <div className='home-header-btn'>
+                                <NavLink onClick={() => { this.toggleTab('post'); }}>
+                                    <i className="ri-advertisement-line"></i>
+                                </NavLink>
+                            </div>
+                            <div className='home-header-btn'>
+                                <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
+                                    <DropdownToggle className="nav-link" tag="a">
+                                    <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Start chat-message-list  */}

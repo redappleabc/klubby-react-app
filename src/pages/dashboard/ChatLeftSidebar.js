@@ -24,6 +24,8 @@ function ChatLeftSidebar(props) {
                      <TabPane tabId="home" id="pills-home">
                          <Home recentPostList={props.recentPostList} />
                     </TabPane>
+
+                    
                     {/* End Profile tab-pane  */}
 
                     {/* Start Profile tab-pane */}

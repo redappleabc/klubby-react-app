@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import { Link } from "react-router-dom";
 
-//i18n
-import { useTranslation } from 'react-i18next';
 
 //lightbox
 import Lightbox from 'react-image-lightbox';
@@ -13,10 +11,6 @@ function ImageList(props) {
     const [isOpen, setisOpen] = useState(false);
     const [currentImage, setcurrentImage] = useState(null);
     const [images] = useState(props.images);
-
-    /* intilize t variable for multi language implementation */
-    const { t } = useTranslation();
-
     const toggleLightbox = (currentImage) => {
         setisOpen(!isOpen);
         setcurrentImage(currentImage);
@@ -46,10 +40,10 @@ function ImageList(props) {
                                             <i className="ri-more-fill"></i>
                                         </DropdownToggle>
                                         <DropdownMenu>
-                                            <DropdownItem>{t('Copy')} <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                            <DropdownItem>{t('Save')} <i className="ri-save-line float-end text-muted"></i></DropdownItem>
-                                            <DropdownItem>{t('Forward')} <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
-                                            <DropdownItem>{t('Delete')} <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
+                                            <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
+                                            <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
+                                            <DropdownItem>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
+                                            <DropdownItem>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
                                 </ul>

@@ -192,12 +192,12 @@
     .home-header-btn {
         width: 45px;
         height: 45px;
-        border-radius: .4rem;
+        border-radius: 50%;
         background-color: #343434;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 .3rem;
+        margin: 0 .1rem;
        .nav-link {
             color: #929292;
        }
@@ -218,15 +218,25 @@
         
     }
     .chat-search-box {
-        width: calc(100% - 200px);
+        width: calc(100% - 165px);
+        margin-left: .5rem;
         input {
             padding-left: 5px;
+            border-radius: 0 22.5px 22.5px 0 !important;
         }
         span {
             padding-left: 10px !important;
+            border-radius: 22.5px 0 0 22.5px !important;
         }
     }
     .dropdown-menu.show {
         transform: translate3d(-135px, 55px, 0px) !important;
     }
+}
+
+.nav-post-cover {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }

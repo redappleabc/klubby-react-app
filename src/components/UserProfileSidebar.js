@@ -12,8 +12,6 @@ import CustomCollapse from "./CustomCollapse";
 //actions
 import { closeUserSidebar } from "../redux/actions";
 
-//i18n
-import { useTranslation } from 'react-i18next';
 
 //image
 import avatar7 from "../assets/images/users/avatar-7.jpg";
@@ -29,9 +27,6 @@ function UserProfileSidebar(props) {
         { name: "Image-2.jpg", size: "3.1 MB", thumbnail: "ri-image-fill" },
         { name: "Landing-A.zip", size: "6.7 MB", thumbnail: "ri-file-text-fill" },
     ]);
-
-    /* intilize t variable for multi language implementation */
-    const { t } = useTranslation();
 
     const toggleCollapse1 = () => {
         setIsOpen1(!isOpen1);
@@ -119,7 +114,7 @@ function UserProfileSidebar(props) {
                 {/* Start user-profile-desc */}
                 <SimpleBar style={{ maxHeight: "100%" }} className="p-4 user-profile-desc">
                     <div className="text-muted">
-                        <p className="mb-4">"{t('If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.')}"</p>
+                        <p className="mb-4">"If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.</p>
                     </div>
 
                     <div id="profile-user-accordion" className="custom-accordion">
@@ -133,22 +128,22 @@ function UserProfileSidebar(props) {
                             >
 
                                 <div>
-                                    <p className="text-muted mb-1">{t('Name')}</p>
+                                    <p className="text-muted mb-1">Name</p>
                                     <h5 className="font-size-14">{props.activeUser.name}</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Email')}</p>
+                                    <p className="text-muted mb-1">Email</p>
                                     <h5 className="font-size-14">{props.activeUser.email}</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Time')}</p>
+                                    <p className="text-muted mb-1">Time</p>
                                     <h5 className="font-size-14">11:40 AM</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Location')}</p>
+                                    <p className="text-muted mb-1">Location</p>
                                     <h5 className="font-size-14 mb-0">California, USA</h5>
                                 </div>
                             </CustomCollapse>
@@ -189,8 +184,8 @@ function UserProfileSidebar(props) {
                                             </div>
                                             <div>
                                                 <div className="text-left">
-                                                    <h5 className="font-size-14 mb-1">{t('Sara Muller')}
-                                                        <Badge color="danger" className="badge-soft-danger float-end">{t('Admin')}</Badge>
+                                                    <h5 className="font-size-14 mb-1">Sara Muller
+                                                        <Badge color="danger" className="badge-soft-danger float-end">Admin</Badge>
                                                     </h5>
                                                     {/* <p className="text-muted font-size-13 mb-0">{member.status}</p> */}
                                                 </div>
@@ -209,7 +204,7 @@ function UserProfileSidebar(props) {
                                             </div>
                                             <div>
                                                 <div className="text-left">
-                                                    <h5 className="font-size-14 mb-1">{t('Ossie Wilson')}</h5>
+                                                    <h5 className="font-size-14 mb-1">Ossie Wilson</h5>
                                                     {/* <p className="text-muted font-size-13 mb-0">{member.status}</p> */}
                                                 </div>
                                             </div>
@@ -224,7 +219,7 @@ function UserProfileSidebar(props) {
                                             </div>
                                             <div>
                                                 <div className="text-left">
-                                                    <h5 className="font-size-14 mb-1">{t('Paul Haynes')}</h5>
+                                                    <h5 className="font-size-14 mb-1">Paul Haynes</h5>
                                                     {/* <p className="text-muted font-size-13 mb-0">{member.status}</p> */}
                                                 </div>
                                             </div>
