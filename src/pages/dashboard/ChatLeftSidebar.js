@@ -7,7 +7,7 @@ import { TabContent, TabPane } from "reactstrap";
 import Home from "./Tabs/Home";
 import Profile from "./Tabs/Profile";
 import Chats from "./Tabs/Chats";
-import Groups from "./Tabs/Groups";
+import Klubs from "./Tabs/Klubs";
 // import Notification from "./Tabs/Groups";
 // import Contacts from "./Tabs/Contacts";
 import Settings from "./Tabs/Settings";
@@ -43,9 +43,9 @@ function ChatLeftSidebar(props) {
                     {/* End chats tab-pane */}
 
                     {/* Start groups tab-pane */}
-                    <TabPane tabId="klubs" id="pills-groups">
+                    <TabPane tabId="klubs" id="pills-klubs">
                         {/* Groups content */}
-                        <Groups />
+                        <Klubs />
                     </TabPane>
                     {/* End groups tab-pane */}
                     {/* Start settings tab-pane */}

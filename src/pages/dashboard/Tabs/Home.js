@@ -142,7 +142,7 @@ class Home extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-2 pt-4 leftsidebar-home-header">
+                    <div className="px-3 pt-4 leftsidebar-home-header">
                         <div>
                             <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
                         </div>
@@ -159,7 +159,7 @@ class Home extends Component {
                             <div className='home-header-btn'>
                                 <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
                                     <DropdownToggle className="nav-link" tag="a">
-                                    <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
+                                        <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
@@ -180,7 +180,7 @@ class Home extends Component {
                     <div className="px-2">
                         {/* <h5 className="mb-3 px-3 font-size-16">Recent</h5> */}
                        <div className="_chat-message-list">
-                            <SimpleBar style={{ maxHeight: "100%" }} className="chat-message-list">
+                            <SimpleBar style={{ maxHeight: "100%" }} className="chat-post-list">
                                 <ul className="list-unstyled chat-list chat-user-list" id="chat-list-post">
                                     {
                                         this.state.recentPostList.map((chat, key) =>

@@ -78,7 +78,6 @@ label {
 }
 //------------------------ Theme-light white ---------------------------
 .theme--light {
-
   color: #495057;
   background-color: #f7f7ff;
   min-height: 100vh;
@@ -263,6 +262,25 @@ label {
       background-color: #e6ebf5;
     }
   }
+  .chat-post-list {
+    background-color: white;
+  }
+  .chat-input {
+    background-color: white;
+  }
+  .user-chat-nav .nav-btn {
+    color: #495057;
+  }
+  .leftsidebar-home-header .home-header-btn .group-add-btn {
+    background-color: transparent;
+  }
+  .chat-nav-header-btn {
+    color: #343434;
+    background-color: #e6ebf5;
+  }
+  .chat-nav-header-btn.active {
+    color: white;
+  }
 }
 
 
@@ -349,6 +367,14 @@ label {
     border-color: c('color') !important;
   }
 }
+
+.chat-nav-header-btn.active {
+  @include colored() {
+    background-color: c('color') !important;
+    border-color: c('color') !important;
+  }
+}
+
 
 .voice-record-img {
     @include colored() {

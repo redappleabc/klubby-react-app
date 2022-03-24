@@ -229,7 +229,7 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 168px);
+    height: calc(100vh - 175px);
     @media (max-width: 991.98px) {
         height: calc(100vh - 143px);
     }
@@ -316,3 +316,19 @@
     align-items: center;
 }
 
+.chat-header-btn-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0 !important;
+}
+
+.chat-nav-header-btn {
+    color: white;
+    width: 165px;
+    height: 45px;
+    border-radius: 22.5px;
+    font-size: 16px;
+    background-color: #343434;
+    border: none;
+    // text-align: center;
+}
