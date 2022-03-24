@@ -1,6 +1,21 @@
 @import "./_theme.scss";
 
 
+._sp {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  ._sp {
+    display: block;
+  }
+  ._pc {
+    display: none;
+  }
+}
+
+
+
 // body {
 //   background: red !important;
 // }
@@ -335,9 +350,15 @@ label {
   }
 }
 
+.voice-record-img {
+    @include colored() {
+      color: c('color') !important;
+    }
+}
 
 // .nav-upvote {
 //   @include colored() {
 //     color: c('color') !important;
 //   }
 // }
+

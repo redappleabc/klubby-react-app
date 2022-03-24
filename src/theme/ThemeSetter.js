@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Label, Input } from "reactstrap";
-import ThemeContext from "./Contexts/ThemeContext";
-import  "./assets/scss/custom/components/_themesetter.scss";
+import ThemeContext from "../Contexts/ThemeContext";
+import  "../assets/scss/custom/components/_themesetter.scss";
 
 export default function ThemeSetter() {
   const { setTheme } = useContext(ThemeContext);
   const { setColor } = useContext(ThemeContext);
 
+
+  
   return (
     <div>
       <div className="mt-2 mb-2">

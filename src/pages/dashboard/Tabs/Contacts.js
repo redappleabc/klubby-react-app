@@ -4,7 +4,6 @@ import SimpleBar from "simplebar-react";
 
 import { connect } from "react-redux";
 
-import { withTranslation } from 'react-i18next';
 
 //use sortedContacts variable as global variable to sort contacts
 let sortedContacts = [
@@ -70,7 +69,6 @@ class Contacts extends Component {
     }
 
     render() {
-        const { t } = this.props;
         return (
             <React.Fragment>
                 <div>
@@ -91,16 +89,16 @@ class Contacts extends Component {
                         {/* Start Add contact Modal */}
                         <Modal isOpen={this.state.modal} centered toggle={this.toggle}>
                             <ModalHeader tag="h5" className="font-size-16" toggle={this.toggle}>
-                                {t('Add Contacts')}
+                                Add Contacts
                             </ModalHeader>
                             <ModalBody className="p-4">
                                 <Form>
                                     <div className="mb-4">
-                                        <Label className="form-label" htmlFor="addcontactemail-input">{t('Email')}</Label>
+                                        <Label className="form-label" htmlFor="addcontactemail-input">Email</Label>
                                         <Input type="email" className="form-control" id="addcontactemail-input" placeholder="Enter Email" />
                                     </div>
                                     <div>
-                                        <Label className="form-label" htmlFor="addcontact-invitemessage-input">{t('Invatation Message')}</Label>
+                                        <Label className="form-label" htmlFor="addcontact-invitemessage-input">Invatation Message</Label>
                                         <textarea className="form-control" id="addcontact-invitemessage-input" rows="3" placeholder="Enter Message"></textarea>
                                     </div>
                                 </Form>
@@ -117,7 +115,7 @@ class Contacts extends Component {
                                 <Button color="link" className="text-decoration-none text-muted pr-1" type="button">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </Button>
-                                <Input type="text" className="form-control bg-light " placeholder={t('Search users..')} />
+                                <Input type="text" className="form-control bg-light " placeholder='Search users..' />
                             </InputGroup>
                         </div>
                         {/* End search-box */}
@@ -147,9 +145,9 @@ class Contacts extends Component {
                                                                 <i className="ri-more-2-fill"></i>
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-end">
-                                                                <DropdownItem>{t('Share')} <i className="ri-share-line float-end text-muted"></i></DropdownItem>
-                                                                <DropdownItem>{t('Block')} <i className="ri-forbid-line float-end text-muted"></i></DropdownItem>
-                                                                <DropdownItem>{t('Remove')} <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
+                                                                <DropdownItem>Share <i className="ri-share-line float-end text-muted"></i></DropdownItem>
+                                                                <DropdownItem>Block <i className="ri-forbid-line float-end text-muted"></i></DropdownItem>
+                                                                <DropdownItem>Remove <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                                             </DropdownMenu>
                                                         </UncontrolledDropdown>
                                                     </div>
@@ -174,4 +172,4 @@ const mapStateToProps = (state) => {
     return { contacts };
 };
 
-export default connect(mapStateToProps, null)(withTranslation()(Contacts));
+export default connect(mapStateToProps, null)(Contacts);

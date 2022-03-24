@@ -63,6 +63,97 @@
 }
 
 .emotion-dropdown {
-  transform: translate3d(129px, -392px, 0px) !important;
+  transform: translate3d(307px, -392px, 0px) !important;
+}
 
+
+.round-btn {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+.main-input-container {
+  .round-btn {
+    width: 45px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+ .emoji-input {
+   position: absolute;
+   left: 17px;
+   top: 10px;
+ }
+
+
+.emoji-input-dropdown {
+  border-radius: 50% !important;
+  aspect-ratio: 1 / 1 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  padding: 0px;
+  i {
+    color: #7B7B7B;
+    font-size: 25px !important;
+  }
+ }
+
+
+ .main-input-container {
+   display: flex;
+   position: relative;
+   align-items: center;
+   justify-content: space-between;
+   .round-input {
+     input {
+      border-radius: 21.5px;
+      padding: 0 50px;
+     }
+     width: 100%;
+   }
+ }
+
+ .chat-send {
+   display: none;
+ }
+
+ .input-file {
+   position: absolute;
+   right: 17px;
+   top: 4px;
+   label {
+     padding: 0 !important;
+     i {
+      font-size: 20px;
+      color: #7B7B7B;
+     }
+   }
+ }
+
+ .chat-input {
+  .main-input {
+    width: calc(100% - 50px);
+    position: relative;
+  }
+}
+
+.message-submit-btn, .mic-btn {
+  display: none;
+}
+
+.message-submit-btn.show, .mic-btn.show {
+  display: block;
+}
+
+.mic-btn {
+  .btn-primary {
+    background-color: #343434 !important;
+  }
+}
+
+.voice-record-img {
+  font-size: 80px;
 }

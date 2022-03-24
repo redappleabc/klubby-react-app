@@ -12,6 +12,9 @@ import SimpleBar from "simplebar-react";
 import { setconversationNameInOpenChat, activePost, setActiveTab } from "../../../redux/actions"
 
 import group1 from "../../../assets/images/group/group1.png";
+import avatar1 from "../../../assets/images/users/avatar-1.jpg";
+import megaphone_icon from "../../../assets/images/icons/megaphone.png";
+
 //components
 // import OnlineUsers from "./OnlineUsers";
 
@@ -139,9 +142,9 @@ class Home extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-4 pt-4 leftsidebar-home-header">
+                    <div className="px-2 pt-4 leftsidebar-home-header">
                         <div>
-                            <h4 className="">Home</h4>
+                            <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
                         </div>
                         <div className="search-box chat-search-box">
                             <InputGroup size="lg" className="mb-3 rounded-lg">
@@ -154,11 +157,6 @@ class Home extends Component {
                         {/* Search Box */}
                         <div className='home-header-btn-group'>
                             <div className='home-header-btn'>
-                                <NavLink onClick={() => { this.toggleTab('post'); }}>
-                                    <i className="ri-advertisement-line"></i>
-                                </NavLink>
-                            </div>
-                            <div className='home-header-btn'>
                                 <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
                                     <DropdownToggle className="nav-link" tag="a">
                                     <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
@@ -169,6 +167,12 @@ class Home extends Component {
                                     </DropdownMenu>
                                 </Dropdown>
                             </div>
+                            <div className='home-header-btn'>
+                                <NavLink onClick={() => { this.toggleTab('post'); }}>
+                                    <img src={megaphone_icon} className='' alt='Klubby'/>
+                                </NavLink>
+                            </div>
+                           
                         </div>
                     </div>
 
@@ -210,13 +214,13 @@ class Home extends Component {
                                                                 <i className="ri-time-line"></i> {chat.time}
                                                             </p>
                                                         </div>
-                                                        <div className="font-size-12">{chat.upvote + " upvotes"}<br></br>{chat.comment + " comments"}</div>
+                                                        <div className="font-size-14">{chat.upvote + " upvotes"}<br></br>{chat.comment + " comments"}</div>
                                                     </div>
-                                                    <div className='font-size-15 mb-3 mt-3' >
+                                                    <div className='font-size-15 mb-3 mt-3 nav-post-cover' >
                                                         {chat.content}
                                                     </div>
                                                     <div className='nav-post-img'>
-                                                        <img src={chat.image}/>
+                                                        <img src={chat.image} alt="Klubby"/>
                                                     </div>
                                                     <div className='nav-upvote text-center'>
                                                     {

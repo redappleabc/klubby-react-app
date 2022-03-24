@@ -3,15 +3,13 @@ import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, Unc
 import { Link } from "react-router-dom";
 
 import SimpleBar from "simplebar-react";
-import ThemeSetter from '../../../ThemeSetter';
+import ThemeSetter from '../../../theme/ThemeSetter';
 //Import components
 import CustomCollapse from "../../../components/CustomCollapse";
 
 //Import Images
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 
-//i18n
-import { useTranslation } from 'react-i18next';
 
 function Settings(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -20,9 +18,6 @@ function Settings(props) {
     const [isOpen3, setIsOpen3] = useState(false);
     const [isOpen4, setIsOpen4] = useState(false);
     const [isOpen5, setIsOpen5] = useState(false);
-
-    /* intilize t variable for multi language implementation */
-    const { t } = useTranslation();
 
     const toggleCollapse1 = () => {
         setIsOpen1(!isOpen1);
@@ -72,7 +67,7 @@ function Settings(props) {
         <React.Fragment>
             <div>
                 <div className="px-4 pt-4">
-                    <h4 className="mb-0">{t('Settings')}</h4>
+                    <h4 className="mb-0">Settings</h4>
                 </div>
 
                 <div className="text-center border-bottom p-4">
@@ -84,15 +79,15 @@ function Settings(props) {
 
                     </div>
 
-                    <h5 className="font-size-16 mb-1 text-truncate">{t('Patricia Smith')}</h5>
+                    <h5 className="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
                     <Dropdown isOpen={dropdownOpen} toggle={toggle} className="d-inline-block mb-1">
                         <DropdownToggle tag="a" className="text-muted pb-1 d-block" >
-                            {t('Available')} <i className="mdi mdi-chevron-down"></i>
+                            Available <i className="mdi mdi-chevron-down"></i>
                         </DropdownToggle>
 
                         <DropdownMenu>
-                            <DropdownItem>{t('Available')}</DropdownItem>
-                            <DropdownItem>{t('Busy')}</DropdownItem>
+                            <DropdownItem>Available</DropdownItem>
+                            <DropdownItem>Busy</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </div>
@@ -110,27 +105,27 @@ function Settings(props) {
                             >
 
                                 <div className="float-end">
-                                    <Button color="light" size="sm" type="button" ><i className="ri-edit-fill me-1 align-middle"></i> {t('Edit')}</Button>
+                                    <Button color="light" size="sm" type="button" ><i className="ri-edit-fill me-1 align-middle"></i> Edit</Button>
                                 </div>
 
                                 <div>
-                                    <p className="text-muted mb-1">{t('Name')}</p>
-                                    <h5 className="font-size-14">{t('Patricia Smith')}</h5>
+                                    <p className="text-muted mb-1">Name</p>
+                                    <h5 className="font-size-14">Patricia Smith</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Email')}</p>
-                                    <h5 className="font-size-14">{t('adc@123.com')}</h5>
+                                    <p className="text-muted mb-1">Email</p>
+                                    <h5 className="font-size-14">adc@123.com</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Time')}</p>
-                                    <h5 className="font-size-14">{t('11:40 AM')}</h5>
+                                    <p className="text-muted mb-1">Time</p>
+                                    <h5 className="font-size-14">11:40 AM</h5>
                                 </div>
 
                                 <div className="mt-4">
-                                    <p className="text-muted mb-1">{t('Location')}</p>
-                                    <h5 className="font-size-14 mb-0">{t('California, USA')}</h5>
+                                    <p className="text-muted mb-1">Location</p>
+                                    <h5 className="font-size-14 mb-0">California, USA</h5>
                                 </div>
                             </CustomCollapse>
                         </Card>
@@ -146,16 +141,16 @@ function Settings(props) {
                                 <div className="py-3">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Profile photo')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Profile photo</h5>
                                         </div>
                                         <UncontrolledDropdown className="ms-2">
                                             <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                {t('Everyone')} <i className="mdi mdi-chevron-down"></i>
+                                                Everyone <i className="mdi mdi-chevron-down"></i>
                                             </DropdownToggle>
                                             <DropdownMenu right>
-                                                <DropdownItem>{t('Everyone')}</DropdownItem>
-                                                <DropdownItem>{t('selected')}</DropdownItem>
-                                                <DropdownItem>{t('Nobody')}</DropdownItem>
+                                                <DropdownItem>Everyone</DropdownItem>
+                                                <DropdownItem>selected</DropdownItem>
+                                                <DropdownItem>Nobody</DropdownItem>
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                     </div>
@@ -163,7 +158,7 @@ function Settings(props) {
                                 <div className="py-3 border-top">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Last seen')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Last seen</h5>
 
                                         </div>
                                         <div className="ms-2">
@@ -178,17 +173,17 @@ function Settings(props) {
                                 <div className="py-3 border-top">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Status')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Status</h5>
 
                                         </div>
                                         <UncontrolledDropdown className="ms-2">
                                             <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                {t('Everyone')} <i className="mdi mdi-chevron-down"></i>
+                                                Everyone <i className="mdi mdi-chevron-down"></i>
                                             </DropdownToggle>
                                             <DropdownMenu right>
-                                                <DropdownItem>{t('Everyone')}</DropdownItem>
-                                                <DropdownItem>{t('selected')}</DropdownItem>
-                                                <DropdownItem>{t('Nobody')}</DropdownItem>
+                                                <DropdownItem>Everyone</DropdownItem>
+                                                <DropdownItem>selected</DropdownItem>
+                                                <DropdownItem>Nobody</DropdownItem>
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                     </div>
@@ -197,7 +192,7 @@ function Settings(props) {
                                 <div className="py-3 border-top">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Read receipts')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Read receipts</h5>
 
                                         </div>
                                         <div className="ms-2">
@@ -212,17 +207,17 @@ function Settings(props) {
                                 <div className="py-3 border-top">
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Groups')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Groups</h5>
 
                                         </div>
                                         <UncontrolledDropdown className="ms-2">
                                             <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                {t('Everyone')} <i className="mdi mdi-chevron-down"></i>
+                                                Everyone <i className="mdi mdi-chevron-down"></i>
                                             </DropdownToggle>
                                             <DropdownMenu right>
-                                                <DropdownItem>{t('Everyone')}</DropdownItem>
-                                                <DropdownItem>{t('selected')}</DropdownItem>
-                                                <DropdownItem>{t('Nobody')}</DropdownItem>
+                                                <DropdownItem>Everyone</DropdownItem>
+                                                <DropdownItem>selected</DropdownItem>
+                                                <DropdownItem>Nobody</DropdownItem>
                                             </DropdownMenu>
                                         </UncontrolledDropdown>
                                     </div>
@@ -241,7 +236,7 @@ function Settings(props) {
                                 <div>
                                     <div className="d-flex align-items-center">
                                         <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">{t('Show security notification')}</h5>
+                                            <h5 className="font-size-13 mb-0 text-truncate">Show security notification</h5>
 
                                         </div>
                                         <div className="ms-2 me-0">
@@ -274,13 +269,13 @@ function Settings(props) {
 
                                 <div>
                                     <div className="py-3">
-                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">{t('FAQs')}</Link></h5>
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">FAQs</Link></h5>
                                     </div>
                                     <div className="py-3 border-top">
-                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">{t('Contact')}</Link></h5>
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">Contact</Link></h5>
                                     </div>
                                     <div className="py-3 border-top">
-                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">{t('Terms & Privacy policy')}</Link></h5>
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">Terms & Privacy policy</Link></h5>
                                     </div>
                                 </div>
                             </CustomCollapse>

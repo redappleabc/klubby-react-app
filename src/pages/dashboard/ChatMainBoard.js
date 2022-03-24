@@ -15,33 +15,33 @@ function ChatMainBoard(props) {
             <div className="main-chat-board w-100 chat-main-board">
                 <TabContent activeTab={activeTab}>
                      {/* Start Home tab-pane */}
-                     <TabPane tabId="home" id="pills-home">
+                     <TabPane tabId="home" id="pills-home_">
                          <UserPost recentPostList={props.recentPostList} />
                     </TabPane>
                     {/* End Home tab-pane  */}
 
 
                     {/* Start chats tab-pane  */}
-                    <TabPane tabId="chat" id="pills-chat">
+                    <TabPane tabId="chat" id="pills-cha_t">
                         {/* chats content */}
                         <UserChat recentChatList={props.recentChatList} />
                     </TabPane>
                     {/* End chats tab-pane */}
 
                     {/* Start profile tab-pane */}
-                    <TabPane tabId="profile" id="pills-profile">
+                    <TabPane tabId="profile" id="pills-profile_">
                          <UserPost recentPostList={props.recentPostList} />
                     </TabPane>
                     {/* End profile tab-pane  */}
 
                     {/* Start group tab-pane */}
-                    <TabPane tabId="Klubs" id="pills-klubs">
+                    <TabPane tabId="Klubs" id="pills-klubs_">
                          {/* <UserPost recentPostList={props.recentPostList} /> */}
                     </TabPane>
                     {/* End group tab-pane  */}
 
                     {/* Start setting tab-pane */}
-                    <TabPane tabId="setting" id="pills-setting">
+                    <TabPane tabId="setting" id="pills-setting_">
                          <UserPost recentPostList={props.recentPostList} />
                     </TabPane>
                     {/* End setting tab-pane  */}

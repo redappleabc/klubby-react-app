@@ -21,8 +21,6 @@ import { openUserSidebar, setFullPost } from "../../../redux/actions";
 import avatar4 from "../../../assets/images/users/avatar-4.jpg";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 
-//i18n
-import { useTranslation } from 'react-i18next';
 
 function UserChat(props) {
 
@@ -30,8 +28,6 @@ function UserChat(props) {
 
     const [modal, setModal] = useState(false);
 
-    /* intilize t variable for multi language implementation */
-    const { t } = useTranslation();
 
     //demo conversation messages
     //userType must be required
@@ -182,7 +178,7 @@ function UserChat(props) {
                                     {props.recentPostList[props.active_post].content}
                                 </div>
                                 <div className='nav-post-img'>
-                                    <img src={props.recentPostList[props.active_post].image}/>
+                                    <img src={props.recentPostList[props.active_post].image} alt="klubby"/>
                                 </div>
                                 <div className='nav-upvote text-center'>
                                 {
@@ -262,8 +258,8 @@ function UserChat(props) {
                                                                                 <i className="ri-more-2-fill"></i>
                                                                             </DropdownToggle>
                                                                             <DropdownMenu>
-                                                                                <DropdownItem>{t('Copy')} <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                                <DropdownItem>{t('Save')} <i className="ri-save-line float-end text-muted"></i></DropdownItem>
+                                                                                <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
+                                                                                <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
                                                                                 <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
                                                                                 <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                                                             </DropdownMenu>
@@ -358,8 +354,8 @@ function UserChat(props) {
                                                                                 <i className="ri-more-2-fill"></i>
                                                                             </DropdownToggle>
                                                                             <DropdownMenu>
-                                                                                <DropdownItem>{t('Copy')} <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                                <DropdownItem>{t('Save')} <i className="ri-save-line float-end text-muted"></i></DropdownItem>
+                                                                                <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
+                                                                                <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
                                                                                 <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
                                                                                 <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                                                             </DropdownMenu>
