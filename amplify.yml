@@ -1,9 +1,9 @@
 version: 1
 frontend:
   phases:
-    test:
-      commands:
-        - yarn test
+    # test:
+    #   commands:
+    #     - yarn test
     preBuild:
       commands:
         - yarn install
