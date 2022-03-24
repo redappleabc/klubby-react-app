@@ -9,6 +9,7 @@ frontend:
         - yarn install
     build:
       commands:
+        - env
         - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-1TTBNCRH46WXK" --message "test test test"
         - yarn run build
   artifacts:
