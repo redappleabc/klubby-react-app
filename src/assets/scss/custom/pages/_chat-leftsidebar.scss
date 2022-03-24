@@ -209,20 +209,7 @@
         right: -25%;
        }
 
-       .group-add-btn {
-            border-radius: 50%;
-            aspect-ratio: 1 / 1;
-            background: #343434;
-            border: unset !important;
-            color: #929292 !important;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            i {
-                margin-right: 0 !important;
-            }
-       }
+       
     }
     
     .home-header-btn-group {
@@ -250,6 +237,22 @@
     .dropdown-menu.show {
         transform: translate3d(-135px, 55px, 0px) !important;
     }
+    .group-add-btn {
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        background: #343434;
+        border: unset !important;
+        color: #929292 !important;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        margin-left: 5px;
+        i {
+            margin-right: 0 !important;
+        }
+   }
 }
 
 .nav-post-cover {
