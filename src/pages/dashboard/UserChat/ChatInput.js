@@ -85,7 +85,7 @@ function ChatInput(props) {
                     <div className='main-input-container'>
                         <div className='main-input'>
                             <div className='round-input'>
-                                <Input type="text" value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Comment    ..." />
+                                <Input type="text" value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
                             </div>
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>

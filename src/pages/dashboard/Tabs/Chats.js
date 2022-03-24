@@ -225,13 +225,13 @@ class Chats extends Component {
                                 <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
-                                <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search messages or users" />
+                                <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search..." />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
                         <div className='home-header-btn-container'>
                             <div className="user-chat-nav float-end">
-                                <div className="create-group home-header-btn">
+                                <div className="create-group">
                                     {/* Button trigger modal */}
                                     <button onClick={this.toggle} className="group-add-btn">
                                         <i className="ri-group-line me-1"></i>
