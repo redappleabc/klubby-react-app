@@ -228,7 +228,7 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 175px);
+    height: calc(100vh - 168px);
     @media (max-width: 991.98px) {
         height: calc(100vh - 143px);
     }
@@ -390,7 +390,7 @@
 }
 
 .post-main .post {
-    padding-bottom: 100px;
+    padding-bottom: 40px;
     background-color: #19191b;
 }
 
@@ -409,4 +409,14 @@
 
 .post-icon-container {
     margin-top: -10px;
+}
+
+.post-simplebar {
+    height: 100vh;
+}
+
+@media (max-width: 992px) {
+    .post-main .post {
+        padding-bottom: 100px;
+    }
 }
