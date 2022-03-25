@@ -4,8 +4,6 @@ import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import { connect } from "react-redux";
 
-//import images
-import user from '../../../assets/images/users/avatar-4.jpg'
 import emoji from '../../../assets/images/icons/emoji.png'
 
 

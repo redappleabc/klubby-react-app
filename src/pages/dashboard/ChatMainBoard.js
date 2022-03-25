@@ -22,29 +22,27 @@ function ChatMainBoard(props) {
 
 
                     {/* Start chats tab-pane  */}
-                    <TabPane tabId="chat" id="pills-cha_t">
+                    <TabPane tabId="chat" id="pills-chat_">
                         {/* chats content */}
                         <UserChat recentChatList={props.recentChatList} />
                     </TabPane>
                     {/* End chats tab-pane */}
 
-                    {/* Start profile tab-pane */}
-                    <TabPane tabId="profile" id="pills-profile_">
-                         <UserPost recentPostList={props.recentPostList} />
+                    {/* Start chats tab-pane  */}
+                    <TabPane tabId="post" id="pills-post_">
+                        {/* chats content */}
+                        <UserPost recentPostList={props.recentPostList} />
                     </TabPane>
-                    {/* End profile tab-pane  */}
+                    {/* End chats tab-pane */}
 
-                    {/* Start group tab-pane */}
-                    <TabPane tabId="Klubs" id="pills-klubs_">
-                         {/* <UserPost recentPostList={props.recentPostList} /> */}
+                    {/* Start chats tab-pane  */}
+                    <TabPane tabId="settings" id="pills-setting_">
+                        {/* chats content */}
+                        <UserChat recentChatList={props.recentChatList} />
                     </TabPane>
-                    {/* End group tab-pane  */}
+                    {/* End chats tab-pane */}
 
-                    {/* Start setting tab-pane */}
-                    <TabPane tabId="setting" id="pills-setting_">
-                         <UserPost recentPostList={props.recentPostList} />
-                    </TabPane>
-                    {/* End setting tab-pane  */}
+                    
                 </TabContent>
             </div>
         </React.Fragment>

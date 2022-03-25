@@ -46,7 +46,7 @@
     background-color: #1d1d1d;
     height: calc(100vh - 95px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 160px);
+        height: calc(100vh - 145px);
     }
 }
 
@@ -55,7 +55,7 @@
     background-color: #1d1d1d;
     height: calc(100vh - 155px);
     @media (max-width: 991.98px) {
-        height: calc(100vh - 220px);
+        height: calc(100vh - 214px);
     }
 }
 
@@ -234,9 +234,9 @@
             border-radius: 22.5px 0 0 22.5px !important;
         }
     }
-    .dropdown-menu.show {
-        transform: translate3d(-135px, 55px, 0px) !important;
-    }
+    // .dropdown-menu.show {
+    //     transform: translate3d(-135px, 55px, 0px) !important;
+    // }
     .group-add-btn {
         border-radius: 50%;
         aspect-ratio: 1 / 1;
@@ -269,17 +269,16 @@
         top: 0;
         background-color: #1d1d1d;
         z-index: 99;
+        width: 100%;
     }
     .chat-post-list {
         position: fixed;
         top: 85px;
         width: 100%;
-        overflow-y: scroll;
     }
     .chat-message-list {
         position: fixed;
-        top: 150px;
+        top: 154px;
         width: 100%;
-        overflow-y: scroll;
     }
 }

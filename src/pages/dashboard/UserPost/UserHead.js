@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button, Input, Row, Col, Modal, ModalBody } from "reactstrap";
+import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Input, Row, Col, Modal, ModalBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 

@@ -97,7 +97,7 @@ function LeftSidebarMenu(props) {
                             <DropdownToggle nav>
                             <i className="ri-user-3-line"></i>
                             </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end">
+                            <DropdownMenu className="dropdown-menu-end dropdown-setting">
                                 <DropdownItem onClick={() => { toggleTab('profile'); }}>Profile <i className="ri-profile-line float-end text-muted"></i></DropdownItem>
                                 <DropdownItem onClick={() => { toggleTab('settings'); }}>Setting <i className="ri-settings-3-line float-end text-muted"></i></DropdownItem>
                                 <DropdownItem divider />
