@@ -142,7 +142,7 @@ class Home extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-3 pt-4 leftsidebar-home-header">
+                    <div className="px-3 pt-4 leftsidebar-home-header nav-home-header">
                         <div>
                             <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
                         </div>
@@ -177,70 +177,66 @@ class Home extends Component {
                     </div>
 
                     {/* Start chat-message-list  */}
-                    <div className="px-2">
-                        {/* <h5 className="mb-3 px-3 font-size-16">Recent</h5> */}
-                       <div className="_chat-message-list">
-                            <SimpleBar style={{ maxHeight: "100%" }} className="chat-post-list">
-                                <ul className="list-unstyled chat-list chat-user-list" id="chat-list-post">
-                                    {
-                                        this.state.recentPostList.map((chat, key) =>
-                                            <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_post ? "active" : ""}>
-                                                <Link to="#" onClick={(e) => this.openPostChat(e, chat)}>
-                                                    <div className="d-flex home-chat-container">
-                                                        {
-                                                            chat.profilePicture === "Null" ?
-                                                                <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                    <div className="avatar-xs">
-                                                                        <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                            {chat.name.charAt(0)}
-                                                                        </span>
-                                                                    </div>
-                                                                    {
-                                                                        chat.status && <span className="user-status"></span>
-                                                                    }
-                                                                </div>
-                                                                :
-                                                                <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                    <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                    {
-                                                                        chat.status && <span className="user-status"></span>
-                                                                    }
-                                                                </div>
-                                                        }
-
-                                                        <div className="flex-1 overflow-hidden">
-                                                            <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
-                                                            <p className="chat-user-message mb-0 font-size-11">
-                                                                <i className="ri-time-line"></i> {chat.time}
-                                                            </p>
-                                                        </div>
-                                                        <div className="font-size-14">{chat.upvote + " upvotes"}<br></br>{chat.comment + " comments"}</div>
-                                                    </div>
-                                                    <div className='font-size-15 mb-3 mt-3 nav-post-cover' >
-                                                        {chat.content}
-                                                    </div>
-                                                    <div className='nav-post-img'>
-                                                        <img src={chat.image} alt="Klubby"/>
-                                                    </div>
-                                                    <div className='nav-upvote text-center'>
+                    <div className="chat-post-list">
+                        <div className='px-2'>
+                            <ul className="list-unstyled chat-list chat-user-list" id="chat-list-post">
+                                {
+                                    this.state.recentPostList.map((chat, key) =>
+                                        <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_post ? "active" : ""}>
+                                            <Link to="#" onClick={(e) => this.openPostChat(e, chat)}>
+                                                <div className="d-flex home-chat-container">
                                                     {
-                                                        chat.isupvote === true ?
-                                                            <div className='nav-upvote-mark font-size-17 mt-3 mb-4'>
-                                                                You already upvoted this post <i c="ri-checkbox-circle-line"></i>
-                                                            </div>:
-                                                        <></>
-                
+                                                        chat.profilePicture === "Null" ?
+                                                            <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                <div className="avatar-xs">
+                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                        {chat.name.charAt(0)}
+                                                                    </span>
+                                                                </div>
+                                                                {
+                                                                    chat.status && <span className="user-status"></span>
+                                                                }
+                                                            </div>
+                                                            :
+                                                            <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                {
+                                                                    chat.status && <span className="user-status"></span>
+                                                                }
+                                                            </div>
                                                     }
-                                                    </div>
-                                                </Link> 
-                                                
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            </SimpleBar>
-                        </div>
 
+                                                    <div className="flex-1 overflow-hidden">
+                                                        <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
+                                                        <p className="chat-user-message mb-0 font-size-11">
+                                                            <i className="ri-time-line"></i> {chat.time}
+                                                        </p>
+                                                    </div>
+                                                    <div className="font-size-14">{chat.upvote + " upvotes"}<br></br>{chat.comment + " comments"}</div>
+                                                </div>
+                                                <div className='font-size-15 mb-3 mt-3 nav-post-cover' >
+                                                    {chat.content}
+                                                </div>
+                                                <div className='nav-post-img'>
+                                                    <img src={chat.image} alt="Klubby"/>
+                                                </div>
+                                                <div className='nav-upvote text-center'>
+                                                {
+                                                    chat.isupvote === true ?
+                                                        <div className='nav-upvote-mark font-size-17 mt-3 mb-4'>
+                                                            You already upvoted this post <i c="ri-checkbox-circle-line"></i>
+                                                        </div>:
+                                                    <></>
+            
+                                                }
+                                                </div>
+                                            </Link> 
+                                            
+                                        </li>
+                                    )
+                                }
+                            </ul>
+                        </div>
                     </div>
                     {/* End chat-message-list */}
                 </div>

@@ -216,167 +216,169 @@ class Chats extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <div className="px-3 pt-4 leftsidebar-home-header">
-                        <div>
-                            <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
-                        </div>
-                        <div className="search-box chat-search-box">
-                            <InputGroup size="lg" className="mb-3 rounded-lg">
-                                <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
-                                    <i className="ri-search-line search-icon font-size-18"></i>
-                                </span>
-                                <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search..." />
-                            </InputGroup>
-                        </div>
-                        {/* Search Box */}
-                        <div className='home-header-btn-container'>
-                            <div className="user-chat-nav float-end">
-                                <div className="create-group">
-                                    {/* Button trigger modal */}
-                                    <button onClick={this.toggle} className="group-add-btn">
-                                        <i className="ri-group-line me-1"></i>
-                                    </button>
+                    <div className='nav-message-header'>
+                        <div className="px-3 pt-4 leftsidebar-home-header">
+                            <div>
+                                <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
+                            </div>
+                            <div className="search-box chat-search-box">
+                                <InputGroup size="lg" className="mb-3 rounded-lg">
+                                    <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
+                                        <i className="ri-search-line search-icon font-size-18"></i>
+                                    </span>
+                                    <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search..." />
+                                </InputGroup>
+                            </div>
+                            {/* Search Box */}
+                            <div className='home-header-btn-container'>
+                                <div className="user-chat-nav float-end">
+                                    <div className="create-group">
+                                        {/* Button trigger modal */}
+                                        <button onClick={this.toggle} className="group-add-btn">
+                                            <i className="ri-group-line me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className='home-header-btn'>
+                                    <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
+                                        <DropdownToggle className="nav-link" tag="a">
+                                            <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                            <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
                                 </div>
                             </div>
-                            <div className='home-header-btn'>
-                                <Dropdown nav isOpen={this.state.notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={this.setNoticDropdown}>
-                                    <DropdownToggle className="nav-link" tag="a">
-                                        <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
-                                    </DropdownToggle>
-                                    <DropdownMenu>
-                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                                        <DropdownItem onClick={() => { this.toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </div>
                         </div>
-                    </div>
-                    <div className='chat-header-btn-container p-3'>
-                        <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-klubs' })}`} onClick={() => { this.setSubActiveTab('chat-klubs'); }} >
-                            Klubs
-                        </button>
-                        <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-chat' })}`} onClick={() => { this.setSubActiveTab('chat-chat'); }}>
-                            Messages
-                        </button>
+                        <div className='chat-header-btn-container p-3'>
+                            <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-klubs' })}`} onClick={() => { this.setSubActiveTab('chat-klubs'); }} >
+                                Klubs
+                            </button>
+                            <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-chat' })}`} onClick={() => { this.setSubActiveTab('chat-chat'); }}>
+                                Messages
+                            </button>
+                        </div>
                     </div>
                     <TabContent>
                         <TabPane tabId="chat-chat" id="pills-chat-chat" className={classnames({ active: this.state.activeSubTab === 'chat-chat' })}>
-                            <div className="px-2">
                                 {/* <h5 className="mb-3 px-3 font-size-16">Recent</h5> */}
-                                <SimpleBar style={{ maxHeight: "100%" }} className="chat-message-list">
-
-                                    <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
-                                        {
-                                            this.state.recentChatList.map((chat, key) =>
-                                                <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
-                                                    <Link to="#" onClick={(e) => this.openUserChat(e, chat)}>
-                                                        <div className="d-flex">
-                                                            {
-                                                                chat.profilePicture === "Null" ?
-                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                        <div className="avatar-xs">
-                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                {chat.name.charAt(0)}
-                                                                            </span>
-                                                                        </div>
-                                                                        {
-                                                                            chat.status && <span className="user-status"></span>
-                                                                        }
-                                                                    </div>
-                                                                    :
-                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                        <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                        {
-                                                                            chat.status && <span className="user-status"></span>
-                                                                        }
-                                                                    </div>
-                                                            }
-
-                                                            <div className="flex-1 overflow-hidden">
-                                                                <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
-                                                                <p className="chat-user-message text-truncate mb-0">
-                                                                    {
-                                                                        chat.isTyping ?
-                                                                            <>
-                                                                                typing<span className="animate-typing">
-                                                                                    <span className="dot ms-1"></span>
-                                                                                    <span className="dot ms-1"></span>
-                                                                                    <span className="dot ms-1"></span>
+                               
+                                <div className="chat-message-list">
+                                    <div className='px-2'>
+                                        <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
+                                            {
+                                                this.state.recentChatList.map((chat, key) =>
+                                                    <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
+                                                        <Link to="#" onClick={(e) => this.openUserChat(e, chat)}>
+                                                            <div className="d-flex">
+                                                                {
+                                                                    chat.profilePicture === "Null" ?
+                                                                        <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                            <div className="avatar-xs">
+                                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                    {chat.name.charAt(0)}
                                                                                 </span>
-                                                                            </>
-                                                                            :
-                                                                            <>
+                                                                            </div>
+                                                                            {
+                                                                                chat.status && <span className="user-status"></span>
+                                                                            }
+                                                                        </div>
+                                                                        :
+                                                                        <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                            <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                            {
+                                                                                chat.status && <span className="user-status"></span>
+                                                                            }
+                                                                        </div>
+                                                                }
+
+                                                                <div className="flex-1 overflow-hidden">
+                                                                    <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
+                                                                    <p className="chat-user-message text-truncate mb-0">
+                                                                        {
+                                                                            chat.isTyping ?
+                                                                                <>
+                                                                                    typing<span className="animate-typing">
+                                                                                        <span className="dot ms-1"></span>
+                                                                                        <span className="dot ms-1"></span>
+                                                                                        <span className="dot ms-1"></span>
+                                                                                    </span>
+                                                                                </>
+                                                                                :
+                                                                                <>
+                                                                                    {
+                                                                                        chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
+                                                                                    }
+                                                                                    {
+                                                                                        chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
+                                                                                    }
+                                                                                    {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].message : null}
+                                                                                </>
+                                                                        }
+
+
+
+                                                                    </p>
+                                                                </div>
+                                                                <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].time : null}</div>
+                                                                {chat.unRead === 0 ? null :
+                                                                    <div className="unread-message" id={"unRead" + chat.id}>
+                                                                        <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                        </TabPane>
+                        <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.state.activeSubTab === 'chat-klubs' })}> 
+                            <div className="p-4 chat-message-list chat-group-list">
+                                <div className="px-2">
+                                    <ul className="list-unstyled chat-list">
+                                        {
+                                            this.state.groups.map((group, key) =>
+                                                <li key={key} >
+                                                    <Link to="#">
+                                                        <div className="d-flex align-items-center">
+                                                            <div className="chat-user-img me-3 ms-0">
+                                                                <div className="avatar-xs">
+                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                        {group.name.charAt(1)}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-14 mb-0">
+                                                                    {group.name}
+                                                                    {
+                                                                        group.unRead !== 0
+                                                                            ? <Badge color="none" pill className="badge-soft-danger float-end">
                                                                                 {
-                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
+                                                                                    group.unRead >= 20 ? group.unRead + "+" : group.unRead
                                                                                 }
-                                                                                {
-                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
-                                                                                }
-                                                                                {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].message : null}
-                                                                            </>
+                                                                            </Badge>
+                                                                            : null
                                                                     }
 
+                                                                    {
+                                                                        group.isNew && <Badge color="none" pill className="badge-soft-danger float-end">New</Badge>
+                                                                    }
 
-
-                                                                </p>
+                                                                </h5>
                                                             </div>
-                                                            <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].time : null}</div>
-                                                            {chat.unRead === 0 ? null :
-                                                                <div className="unread-message" id={"unRead" + chat.id}>
-                                                                    <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
-                                                                </div>
-                                                            }
                                                         </div>
                                                     </Link>
                                                 </li>
                                             )
                                         }
                                     </ul>
-                                </SimpleBar>
-                            </div>
-                        </TabPane>
-                        <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.state.activeSubTab === 'chat-klubs' })}>
-                            <div className="px-2">
-                            <SimpleBar style={{ maxHeight: "100%" }} className="p-4 chat-message-list chat-group-list">
-                                <ul className="list-unstyled chat-list">
-                                    {
-                                        this.state.groups.map((group, key) =>
-                                            <li key={key} >
-                                                <Link to="#">
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="chat-user-img me-3 ms-0">
-                                                            <div className="avatar-xs">
-                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                    {group.name.charAt(1)}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex-1 overflow-hidden">
-                                                            <h5 className="text-truncate font-size-14 mb-0">
-                                                                {group.name}
-                                                                {
-                                                                    group.unRead !== 0
-                                                                        ? <Badge color="none" pill className="badge-soft-danger float-end">
-                                                                            {
-                                                                                group.unRead >= 20 ? group.unRead + "+" : group.unRead
-                                                                            }
-                                                                        </Badge>
-                                                                        : null
-                                                                }
-
-                                                                {
-                                                                    group.isNew && <Badge color="none" pill className="badge-soft-danger float-end">New</Badge>
-                                                                }
-
-                                                            </h5>
-                                                        </div>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            </SimpleBar>
+                                </div>
                             </div>
                         </TabPane>
                     </TabContent>

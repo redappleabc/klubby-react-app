@@ -93,6 +93,7 @@
   align-items: center;
   justify-content: center;
   height: 20px;
+  width: 20px;
   padding: 0px;
   i {
     color: #7B7B7B;
@@ -117,6 +118,7 @@
     width: 45px !important;
     display: flex;
     align-items: center;
+    -webkit-align-items: center;
     justify-content: center;
   }
  }
@@ -128,7 +130,7 @@
  .input-file {
    position: absolute;
    right: 17px;
-   top: 4px;
+   top: 5px;
    label {
      padding: 0 !important;
      i {
