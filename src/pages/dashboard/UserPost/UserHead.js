@@ -11,12 +11,10 @@ import user from '../../../assets/images/users/avatar-4.jpg'
 function UserHead(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
-    const [Callmodal, setCallModal] = useState(false);
     const [Videomodal, setVideoModal] = useState(false);
 
     const toggle = () => setDropdownOpen(!dropdownOpen);
     const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
-    const toggleCallModal = () => setCallModal(!Callmodal);
     const toggleVideoModal = () => setVideoModal(!Videomodal);
 
     const openUserSidebar = (e) => {
@@ -50,13 +48,6 @@ function UserHead(props) {
                                 <Link to="#" onClick={(e) => closeUserChat(e)} className="user-chat-remove text-muted font-size-16 p-2">
                                     <i className="ri-arrow-left-s-line"></i></Link>
                             </div>
-                            <li className='list-inline-item'>
-                                {/* <div className="list-inline-item upvote-check">
-                                    <Input type="checkbox" id="upvote-check" /><br/>
-                                    <Label className="font-size-12" htmlFor="upvote-check">Upvote</Label>
-                                </div> */}
-                                {/* <Button color="primary" className=" waves-effect waves-light" type="submit">Upvote</Button> */}
-                            </li>
                         </div>
                         
                     </Col>
@@ -74,12 +65,6 @@ function UserHead(props) {
                                         </div>
                                     </DropdownMenu>
                                 </Dropdown>
-                            </li>
-
-                            <li className="list-inline-item d-none d-lg-inline-block">
-                                <Button type="button" color="none" onClick={(e) => openUserSidebar(e)} className="nav-btn user-profile-show">
-                                    <i className="ri-user-2-line"></i>
-                                </Button>
                             </li>
 
                             <li className="list-inline-item">
@@ -100,8 +85,6 @@ function UserHead(props) {
                     </Col>
                 </Row>
             </div>
-
-
 
             {/* Start VideoCall Modal */}
             <Modal tabIndex="-1" isOpen={Videomodal} toggle={toggleVideoModal} centered>

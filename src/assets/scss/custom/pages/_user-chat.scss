@@ -331,3 +331,10 @@
     border: none;
     // text-align: center;
 }
+
+
+@media (min-width: 1200px) {
+    .chat-input.small {
+        width: calc(100% - 844px);
+    }
+}
