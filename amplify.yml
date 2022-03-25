@@ -6,16 +6,16 @@ frontend:
     #     - yarn test
     preBuild:
       commands:
-        - PIPELINE_NAME=$(aws ssm get-parameter --name webapp-sns-topic-dev --region us-east-1 --query Parameter.Value)
+        - TOPIC_ARN=$(aws ssm get-parameter --name webapp-sns-topic-dev --region us-east-1 --query Parameter.Value)
         - echo $PIPELINE_NAME
-        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-DY8LKR36RRZK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
+        - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
         - yarn install
     build:
       commands:
         - yarn run build
     postBuild:
       commands:
-        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-DY8LKR36RRZK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
+        - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
   artifacts:
     baseDirectory: build
     files:
