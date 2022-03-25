@@ -6,13 +6,13 @@ frontend:
     #     - yarn test
     preBuild:
       commands:
-        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-1TTBNCRH46WXK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
+        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-DY8LKR36RRZK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
         - yarn install
     build:
       commands:
         - yarn run build
     postBuild:
-        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-1TTBNCRH46WXK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
+        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-DY8LKR36RRZK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
   artifacts:
     baseDirectory: build
     files:
