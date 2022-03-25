@@ -3,7 +3,9 @@ import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, For
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 
+import { connect } from "react-redux";
 
+import emoji from '../../../assets/images/icons/emoji.png'
 //import images
 import user from '../../../assets/images/users/avatar-4.jpg'
 
@@ -80,7 +82,7 @@ function ChatInput(props) {
 
     return (
         <React.Fragment>
-            <div className="p-3 p-lg-4 border-top mb-0 chat-input">
+            <div className={`p-3 p-lg-4 border-top mb-0 chat-input ${props.userSidebar == true ? "small": ""}`}>
                 <Form onSubmit={(e) => onaddMessage(e, textMessage)} >
                     <div className='main-input-container'>
                         <div className='main-input'>
@@ -90,7 +92,7 @@ function ChatInput(props) {
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>
                                     <DropdownToggle color="link" className="text-decoration-none font-size-20 emoji-input-dropdown">
-                                        <i className="ri-emotion-happy-line"></i>
+                                        <img src={emoji} alt="klubby"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-menu-end emotion-dropdown">
                                         <Picker onSelect={addEmoji} />
@@ -152,4 +154,9 @@ function ChatInput(props) {
     );
 }
 
-export default ChatInput;
+const mapStatetoProps = state => {
+    const { userSidebar } = state.Layout;
+    return { userSidebar }
+};
+
+export default connect(mapStatetoProps)(ChatInput);
