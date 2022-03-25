@@ -265,7 +265,7 @@ class Chats extends Component {
                         <TabPane tabId="chat-chat" id="pills-chat-chat" className={classnames({ active: this.state.activeSubTab === 'chat-chat' })}>
                                 {/* <h5 className="mb-3 px-3 font-size-16">Recent</h5> */}
                                
-                                <div className="chat-message-list">
+                                <SimpleBar className="chat-message-list">
                                     <div className='px-2'>
                                         <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
                                             {
@@ -335,10 +335,10 @@ class Chats extends Component {
                                             }
                                         </ul>
                                     </div>
-                                </div>
+                                </SimpleBar>
                         </TabPane>
                         <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.state.activeSubTab === 'chat-klubs' })}> 
-                            <div className="p-4 chat-message-list chat-group-list">
+                            <SimpleBar className="p-4 chat-message-list chat-group-list">
                                 <div className="px-2">
                                     <ul className="list-unstyled chat-list">
                                         {
@@ -379,7 +379,7 @@ class Chats extends Component {
                                         }
                                     </ul>
                                 </div>
-                            </div>
+                            </SimpleBar>
                         </TabPane>
                     </TabContent>
                     {/* Start chat-message-list  */}

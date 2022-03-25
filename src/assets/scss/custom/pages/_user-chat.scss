@@ -181,7 +181,7 @@
     }
 
     .right {
-
+        text-align: right;
         .chat-avatar {
             order: 3;
             margin-right: 0px;
@@ -194,7 +194,6 @@
         }
 
         .conversation-list {
-            float: right;
             text-align: right;
 
             .ctext-wrap {

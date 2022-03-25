@@ -177,7 +177,7 @@ class Home extends Component {
                     </div>
 
                     {/* Start chat-message-list  */}
-                    <div className="chat-post-list">
+                    <SimpleBar className="chat-post-list">
                         <div className='px-2'>
                             <ul className="list-unstyled chat-list chat-user-list" id="chat-list-post">
                                 {
@@ -237,7 +237,7 @@ class Home extends Component {
                                 }
                             </ul>
                         </div>
-                    </div>
+                    </SimpleBar>
                     {/* End chat-message-list */}
                 </div>
             </React.Fragment>
