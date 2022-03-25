@@ -6,8 +6,7 @@ import 'emoji-mart/css/emoji-mart.css'
 import { connect } from "react-redux";
 
 import emoji from '../../../assets/images/icons/emoji.png'
-//import images
-import user from '../../../assets/images/users/avatar-4.jpg'
+
 
 function ChatInput(props) {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
@@ -82,7 +81,7 @@ function ChatInput(props) {
 
     return (
         <React.Fragment>
-            <div className={`p-3 p-lg-4 border-top mb-0 chat-input ${props.userSidebar == true ? "small": ""}`}>
+            <div className={`p-3 p-lg-4 border-top mb-0 chat-input ${props.userSidebar === true ? "small": ""}`}>
                 <Form onSubmit={(e) => onaddMessage(e, textMessage)} >
                     <div className='main-input-container'>
                         <div className='main-input'>

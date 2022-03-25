@@ -66,3 +66,9 @@
       }
   }
 }
+
+@media (max-width: 992px) {
+  .dropdown-setting {
+    transform: translate3d(-31px, -144px, 0px) !important;
+  }
+}

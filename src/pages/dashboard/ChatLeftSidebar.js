@@ -11,6 +11,7 @@ import Klubs from "./Tabs/Klubs";
 // import Notification from "./Tabs/Groups";
 // import Contacts from "./Tabs/Contacts";
 import Settings from "./Tabs/Settings";
+import Post from "./Tabs/Post";
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -48,10 +49,18 @@ function ChatLeftSidebar(props) {
                         <Klubs />
                     </TabPane>
                     {/* End groups tab-pane */}
+
                     {/* Start settings tab-pane */}
                     <TabPane tabId="settings" id="pills-setting">
                         {/* Settings content */}
                         <Settings />
+                    </TabPane>
+                    {/* End settings tab-pane */}
+
+                    {/* Start settings tab-pane */}
+                    <TabPane tabId="post" id="pills-post">
+                        {/* Settings content */}
+                        <Post />
                     </TabPane>
                     {/* End settings tab-pane */}
 
