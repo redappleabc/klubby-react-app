@@ -9,7 +9,7 @@ frontend:
         - yarn install
     build:
       commands:
-        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-1TTBNCRH46WXK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"Pending\"}"
+        - aws sns publish --topic-arn "arn:aws:sns:us-east-1:590503010210:status-pipeline-dev-WebappPipelineNotificationSNSTopic-1TTBNCRH46WXK" --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
         - yarn run build
   artifacts:
     baseDirectory: build
