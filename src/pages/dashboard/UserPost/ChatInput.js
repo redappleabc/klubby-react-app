@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, Form, Modal, ModalBody } from "reactstrap";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
-
+import { connect } from "react-redux";
 
 //import images
 import user from '../../../assets/images/users/avatar-4.jpg'
+import emoji from '../../../assets/images/icons/emoji.png'
+
+
 
 function ChatInput(props) {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
@@ -23,6 +26,7 @@ function ChatInput(props) {
     //function for text input value change
     const handleChange = e => {
         settextMessage(e.target.value)
+        // alert(props.userSidebar);
     }
 
     //function for add emojis
@@ -90,7 +94,8 @@ function ChatInput(props) {
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>
                                     <DropdownToggle color="link" className="text-decoration-none font-size-20 emoji-input-dropdown">
-                                        <i className="ri-emotion-happy-line"></i>
+                                        {/* <i className="ri-emotion-happy-line"></i> */}
+                                        <img src={emoji} alt="klubby"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-menu-end emotion-dropdown">
                                         <Picker onSelect={addEmoji} />
@@ -153,4 +158,9 @@ function ChatInput(props) {
     );
 }
 
-export default ChatInput;
+const mapStatetoProps = state => {
+    const { userSidebar } = state.Layout;
+    return { userSidebar }
+};
+
+export default connect(mapStatetoProps)(ChatInput);

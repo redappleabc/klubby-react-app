@@ -1,6 +1,7 @@
 @import "./_theme.scss";
 
 
+
 ._sp {
   display: none;
 }
@@ -262,9 +263,7 @@ label {
       background-color: #e6ebf5;
     }
   }
-  .chat-post-list {
-    background-color: white;
-  }
+
   .chat-input {
     background-color: white;
   }
@@ -280,6 +279,15 @@ label {
   }
   .chat-nav-header-btn.active {
     color: white;
+  }
+  .chat-post-list, .chat-message-list {
+    background-color: white;
+  }
+  .leftsidebar-home-header .group-add-btn {
+    background-color: #e6ebf5;
+  }
+  .nav-home-header, .nav-message-header {
+    background-color: #f5f7fb;
   }
 }
 

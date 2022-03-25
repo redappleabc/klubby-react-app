@@ -274,12 +274,12 @@
         position: fixed;
         top: 90px;
         width: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     .chat-message-list {
         position: fixed;
         top: 150px;
         width: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
     }
 }
