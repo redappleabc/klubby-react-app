@@ -228,7 +228,7 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 168px);
+    height: calc(100vh - 177px);
     @media (max-width: 991.98px) {
         height: calc(100vh - 143px);
     }
@@ -415,8 +415,15 @@
     height: 100vh;
 }
 
+.user-header {
+    height: 82px;
+}
+
 @media (max-width: 992px) {
     .post-main .post {
         padding-bottom: 100px;
+    }
+    .user-header {
+        height: 64px;
     }
 }

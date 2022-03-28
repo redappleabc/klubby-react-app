@@ -34,7 +34,6 @@ function Settings(props) {
         setIsOpen3(false);
         setIsOpen4(false);
         setIsOpen5(false);
-
     };
 
     const toggleCollapse3 = () => {
