@@ -427,3 +427,22 @@
         height: 64px;
     }
 }
+
+.post-main-header {
+    position: fixed;
+    top: 0;
+    width: 380px;
+    z-index: 2;
+    background-color: #19191b;
+}
+@media (max-width: 992px) {
+    .post-main-header {
+        width: 100%;
+    }
+}
+
+.post-main .post {
+    margin-top: 250px;
+    z-index: 1;
+    position: relative;
+}
