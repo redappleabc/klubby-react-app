@@ -26,15 +26,17 @@ function Post(props) {
         <React.Fragment>
             <SimpleBar style={{ maxHeight: "100%" }} className="post-simplebar">
                 <div className='post-main'>
-                    <div className="px-4 pt-4">
-                        <h4 className="mb-0">Post</h4>
-                    </div>
-                
-                        <div className="text-center p-4">
-                            <div className="mb-4">
-                                <img src={avatar1} className="rounded-circle avatar-lg img-thumbnail" alt="klubby" />
+                        <div className='post-main-header'>
+                            <div className="px-4 pt-4">
+                                <h4 className="mb-0">Post</h4>
                             </div>
-                            <h5 className="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
+                    
+                            <div className="text-center p-4">
+                                <div className="mb-4">
+                                    <img src={avatar1} className="rounded-circle avatar-lg img-thumbnail" alt="klubby" />
+                                </div>
+                                <h5 className="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
+                            </div>
                         </div>
                         {/* End profile user  */}
                         <div className='px-3 post'>
