@@ -5,10 +5,12 @@ import { TabContent, TabPane } from "reactstrap";
 
 
 import UserChat from "./UserChat";
+import UserGroup from "./UserGroup";
 import UserPost from "./UserPost";
 
 function ChatMainBoard(props) {
     const activeTab = props.activeTab;
+    const chatActiveTab = props.activeChatSubTab;
 
     return (
         <React.Fragment>
@@ -16,7 +18,7 @@ function ChatMainBoard(props) {
                 <TabContent activeTab={activeTab}>
                      {/* Start Home tab-pane */}
                      <TabPane tabId="home" id="pills-home_">
-                         <UserPost recentPostList={props.recentPostList} />
+                         <UserPost />
                     </TabPane>
                     {/* End Home tab-pane  */}
 
@@ -24,21 +26,28 @@ function ChatMainBoard(props) {
                     {/* Start chats tab-pane  */}
                     <TabPane tabId="chat" id="pills-chat_">
                         {/* chats content */}
-                        <UserChat recentChatList={props.recentChatList} />
+                        <TabContent activeTab={chatActiveTab}>
+                            <TabPane tabId="chat-chat" id="pills-chat-chat">
+                                <UserChat />
+                            </TabPane>
+                            <TabPane tabId="chat-klubs" id="pills-chat-group">
+                                <UserGroup />
+                            </TabPane>
+                        </TabContent>
                     </TabPane>
                     {/* End chats tab-pane */}
 
                     {/* Start chats tab-pane  */}
                     <TabPane tabId="post" id="pills-post_">
                         {/* chats content */}
-                        <UserPost recentPostList={props.recentPostList} />
+                        <UserPost />
                     </TabPane>
                     {/* End chats tab-pane */}
 
                     {/* Start chats tab-pane  */}
                     <TabPane tabId="settings" id="pills-setting_">
                         {/* chats content */}
-                        <UserChat recentChatList={props.recentChatList} />
+                        <UserChat />
                     </TabPane>
                     {/* End chats tab-pane */}
 

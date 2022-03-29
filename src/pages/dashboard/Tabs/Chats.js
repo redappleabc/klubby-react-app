@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Input, InputGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, CardBody, Alert, Collapse, Card, CardHeader, Modal, ModalHeader, ModalBody, Form, Label, ModalFooter, TabContent, TabPane, Badge } from "reactstrap";
+import { Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, CardBody, Alert, Collapse, Card, CardHeader, Modal, ModalHeader, ModalBody, Form, Label, ModalFooter, TabContent, TabPane } from "reactstrap";
 import classnames from "classnames";
 //simplebar
 import SimpleBar from "simplebar-react";
 import SelectContact from "../../../components/SelectContact";
 //actions
-import { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab } from "../../../redux/actions"
+import { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
 import group1 from "../../../assets/images/group/group1.png";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 
@@ -20,7 +20,7 @@ class Chats extends Component {
         super(props);
         this.state = {
             searchChat: "",
-            recentChatList: this.props.recentChatList,
+            recentChatList: this.props.users,
             modal: false,
             isOpenCollapse: false,
             groups: this.props.groups,
@@ -29,20 +29,21 @@ class Chats extends Component {
             message: "",
             groupName: "",
             groupDesc: "",
-            activeSubTab: "chat-chat"
         }
         this.handleChange = this.handleChange.bind(this);
         this.openUserChat = this.openUserChat.bind(this);
         this.setNoticDropdown = this.setNoticDropdown.bind(this);
 
+
         this.toggle = this.toggle.bind(this);
         this.toggleCollapse = this.toggleCollapse.bind(this);
-        this.createGroup = this.createGroup.bind(this);
+        this.addGroup = this.addGroup.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
         this.handleChangeGroupName = this.handleChangeGroupName.bind(this);
         this.handleChangeGroupDesc = this.handleChangeGroupDesc.bind(this);
-        this.setSubActiveTab = this.setSubActiveTab.bind(this);
-    }
+        this.setRecentChatList = this.setRecentChatList.bind(this);
+
+     }
 
     toggle() {
         this.setState({ modal: !this.state.modal });
@@ -52,22 +53,39 @@ class Chats extends Component {
         this.setState({ isOpenCollapse: !this.state.isOpenCollapse });
     }
 
+    setRecentChatList() {
+        this.setState({ recentChatList: !this.state.recentChatList });
+    }
 
-    createGroup() {
+
+    
+    componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) {
+            this.setState({
+                groups: this.props.groups
+            });
+        }
+    }
+
+    addGroup() {
         if (this.state.selectedContact.length > 2) {
             // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
             var obj = {
                 gourpId: this.state.groups.length + 1,
-                name: "#" + this.state.groupName,
+                name: this.state.groupName,
                 profilePicture: "Null",
                 isGroup: true,
                 unRead: 0,
                 isNew: true,
                 desc: this.state.groupDesc,
-                members: this.state.selectedContact
+                members: this.state.selectedContact,
+                messages: [{ id : 33, isToday : true },]
             }
             //call action for creating a group
+           
             this.props.createGroup(obj);
+            console.log(obj);
+            // alert(this.props.groups.length);
             this.toggle();
 
         } else if (this.state.selectedContact.length === 1) {
@@ -101,12 +119,6 @@ class Chats extends Component {
         this.setState({ groupName: e.target.value });
     }
 
-    setSubActiveTab(tab) {
-        this.setState({ activeSubTab: tab });
-        // alert(this.state.activeSubTab);
-    }
-
-
     handleChangeGroupDesc(e) {
         this.setState({ groupDesc: e.target.value });
     }
@@ -122,29 +134,6 @@ class Chats extends Component {
           }));
     }
 
-    componentDidMount() {
-        var li = document.getElementById("conversation" + this.props.active_user);
-        if (li) {
-            li.classList.add("active");
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.setState({
-                recentChatList: this.props.recentChatList
-            });
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props.recentChatList !== nextProps.recentChatList) {
-            this.setState({
-                recentChatList: nextProps.recentChatList,
-            });
-        }
-    }
 
     handleChange(e) {
         this.setState({ searchChat: e.target.value });
@@ -162,17 +151,20 @@ class Chats extends Component {
         this.setState({ recentChatList: filteredArray })
 
         //if input value is blanck then assign whole recent chatlist to array
-        if (search === "") this.setState({ recentChatList: this.props.recentChatList })
+        if (search === "") {
+            this.setState({ recentChatList: this.props.users })
+        }
     }
 
     openUserChat(e, chat) {
         e.preventDefault();
 
         //find index of current chat in array
-        var index = this.props.recentChatList.indexOf(chat);
+        var index = this.props.users.indexOf(chat);
 
         // set activeUser 
         this.props.activeUser(index);
+
 
         var chatList = document.getElementById("chat-list");
         var clickedItem = e.target;
@@ -207,6 +199,55 @@ class Chats extends Component {
 
         //removes unread badge if user clicks
         var unread = document.getElementById("unRead" + chat.id);
+        if (unread) {
+            unread.style.display = "none";
+        }
+    }
+
+    openUserGroup(e, group) {
+
+        e.preventDefault();
+
+        //find index of current chat in array
+        var index = this.props.groups.indexOf(group);
+
+        // set activeUser 
+        this.props.activeGroup(index);
+
+
+        var groupList = document.getElementById("group-list");
+        var clickedItem = e.target;
+        var currentli = null;
+
+        if (groupList) {
+            var li = groupList.getElementsByTagName("li");
+            //remove coversation user
+            for (var i = 0; i < li.length; ++i) {
+                if (li[i].classList.contains('active')) {
+                    li[i].classList.remove('active');
+                }
+            }
+            //find clicked coversation user
+            for (var k = 0; k < li.length; ++k) {
+                if (li[k].contains(clickedItem)) {
+                    currentli = li[k];
+                    break;
+                }
+            }
+        }
+
+        //activation of clicked coversation user
+        if (currentli) {
+            currentli.classList.add('active');
+        }
+
+        var userChat = document.getElementsByClassName("user-group");
+        if (userChat) {
+            userChat[0].classList.add("user-chat-show");
+        }
+
+        //removes unread badge if user clicks
+        var unread = document.getElementById("unRead" + group.id);
         if (unread) {
             unread.style.display = "none";
         }
@@ -253,17 +294,16 @@ class Chats extends Component {
                             </div>
                         </div>
                         <div className='chat-header-btn-container p-3'>
-                            <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-klubs' })}`} onClick={() => { this.setSubActiveTab('chat-klubs'); }} >
+                            <button className={`chat-nav-header-btn ${classnames({ active: this.props.activeChatSubTab === 'chat-klubs' })}`} onClick={() => { this.props.setActiveChatSubTab('chat-klubs'); }} >
                                 Klubs
                             </button>
-                            <button className={`chat-nav-header-btn ${classnames({ active: this.state.activeSubTab === 'chat-chat' })}`} onClick={() => { this.setSubActiveTab('chat-chat'); }}>
+                            <button className={`chat-nav-header-btn ${classnames({ active: this.props.activeChatSubTab === 'chat-chat' })}`} onClick={() => { this.props.setActiveChatSubTab('chat-chat'); }}>
                                 Messages
                             </button>
                         </div>
                     </div>
                     <TabContent>
-                        <TabPane tabId="chat-chat" id="pills-chat-chat" className={classnames({ active: this.state.activeSubTab === 'chat-chat' })}>
-                                {/* <h5 className="mb-3 px-3 font-size-16">Recent</h5> */}
+                        <TabPane tabId="chat-chat" id="pills-chat-chat" className={classnames({ active: this.props.activeChatSubTab === 'chat-chat' })}>
                                
                                 <SimpleBar className="chat-message-list">
                                     <div className='px-2'>
@@ -337,49 +377,71 @@ class Chats extends Component {
                                     </div>
                                 </SimpleBar>
                         </TabPane>
-                        <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.state.activeSubTab === 'chat-klubs' })}> 
-                            <SimpleBar className="p-4 chat-message-list chat-group-list">
-                                <div className="px-2">
-                                    <ul className="list-unstyled chat-list">
-                                        {
-                                            this.state.groups.map((group, key) =>
-                                                <li key={key} >
-                                                    <Link to="#">
-                                                        <div className="d-flex align-items-center">
-                                                            <div className="chat-user-img me-3 ms-0">
-                                                                <div className="avatar-xs">
-                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                        {group.name.charAt(1)}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex-1 overflow-hidden">
-                                                                <h5 className="text-truncate font-size-14 mb-0">
-                                                                    {group.name}
-                                                                    {
-                                                                        group.unRead !== 0
-                                                                            ? <Badge color="none" pill className="badge-soft-danger float-end">
+                        {/* chat tab end */}
+                        {/* klub tab start */}
+                        <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.props.activeChatSubTab === 'chat-klubs' })}>
+                            <SimpleBar className="chat-message-list">
+                                    <div className='px-2'>
+                                        <ul className="list-unstyled chat-list chat-user-list" id="group-list">
+                                            {
+                                                this.state.groups.map((group, key) =>
+                                                    <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
+                                                        <Link to="#" onClick={(e) => this.openUserGroup(e, group)}>
+                                                            <div className="d-flex">
+                                                                {
+                                                                    group.profilePicture === "Null" ?
+                                                                        <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
+                                                                            <div className="avatar-xs">
+                                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                    {group.name.charAt(0)}
+                                                                                </span>
+                                                                            </div>
+                                                                            {
+                                                                                group.status && <span className="user-status"></span>
+                                                                            }
+                                                                        </div>
+                                                                        :
+                                                                        <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
+                                                                            <img src={group.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                            {
+                                                                                group.status && <span className="user-status"></span>
+                                                                            }
+                                                                        </div>
+                                                                }
+
+                                                                <div className="flex-1 overflow-hidden">
+                                                                    <h5 className="text-truncate font-size-15 mb-1">{group.name}</h5>
+                                                                    <p className="chat-user-message text-truncate mb-0">
+                                                                        {
+                                                                            <>
                                                                                 {
-                                                                                    group.unRead >= 20 ? group.unRead + "+" : group.unRead
+                                                                                    group.messages && (group.messages.length > 0 && group.messages[(group.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
                                                                                 }
-                                                                            </Badge>
-                                                                            : null
-                                                                    }
+                                                                                {
+                                                                                    group.messages && (group.messages.length > 0 && group.messages[(group.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
+                                                                                }
+                                                                                {group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].message : null}
+                                                                            </>
+                                                                        }
 
-                                                                    {
-                                                                        group.isNew && <Badge color="none" pill className="badge-soft-danger float-end">New</Badge>
-                                                                    }
 
-                                                                </h5>
+
+                                                                    </p>
+                                                                </div>
+                                                                <div className="font-size-11">{group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].time : null}</div>
+                                                                {group.unRead === 0 ? null :
+                                                                    <div className="unread-message" id={"unRead" + group.id}>
+                                                                        <span className="badge badge-soft-danger rounded-pill">{group.messages && group.messages.length > 0 ? group.unRead >= 20 ? group.unRead + "+" : group.unRead : ""}</span>
+                                                                    </div>
+                                                                }
                                                             </div>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                            )
-                                        }
-                                    </ul>
-                                </div>
-                            </SimpleBar>
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            }
+                                        </ul>
+                                    </div>
+                                </SimpleBar>
                         </TabPane>
                     </TabContent>
                     {/* Start chat-message-list  */}
@@ -431,7 +493,7 @@ class Chats extends Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button type="button" color="link" onClick={this.toggle}>Close</Button>
-                        <Button type="button" color="primary" onClick={this.createGroup}>Create Group</Button>
+                        <Button type="button" color="primary" onClick={this.addGroup}>Create Group</Button>
                     </ModalFooter>
                 </Modal>
                 {/* End add group Modal */}
@@ -441,8 +503,9 @@ class Chats extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { active_user, groups } = state.Chat;
-    return { active_user, groups };
+    const { active_user, users, groups, active_group } = state.Chat;
+    const { activeChatSubTab } = state.Layout;
+    return { active_user, users,  groups, active_group, activeChatSubTab };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);

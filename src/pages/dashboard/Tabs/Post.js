@@ -50,7 +50,7 @@ function Post(props) {
                                         <option value="4">xxxxxxxxx</option>
                                     </Input>
         
-                                <i className="ri-arrow-drop-down-line"></i>
+                                    <label htmlFor="post_type"><i className="ri-arrow-drop-down-line"></i></label>
                             </div>
                             </div>
                             

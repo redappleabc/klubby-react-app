@@ -31,16 +31,16 @@ function UserChat(props) {
 
     //demo conversation messages
     //userType must be required
-    const [allUsers] = useState(props.recentChatList);
-    const [chatMessages, setchatMessages] = useState(props.recentChatList[props.active_user].messages);
+    const [allUsers] = useState(props.users);
+    const [chatMessages, setchatMessages] = useState(props.users[props.active_user].messages);
 
     useEffect(() => {
-        setchatMessages(props.recentChatList[props.active_user].messages);
+        setchatMessages(props.users[props.active_user].messages);
         ref.current.recalculate();
         if (ref.current.el) {
             ref.current.getScrollElement().scrollTop = ref.current.getScrollElement().scrollHeight;
         }
-    }, [props.active_user, props.recentChatList]);
+    }, [props.active_user, props.users]);
 
     const toggle = () => setModal(!modal);
 
@@ -154,13 +154,13 @@ function UserChat(props) {
                                                     <span className="title">Today</span>
                                                 </div>
                                             </li> :
-                                                (props.recentChatList[props.active_user].isGroup === true) ?
+                                                (props.users[props.active_user].isGroup === true) ?
                                                     <li key={key} className={chat.userType === "sender" ? "right" : ""}>
                                                         <div className="conversation-list">
 
                                                             <div className="chat-avatar">
                                                                 {chat.userType === "sender" ? <img src={avatar1} alt="Klubby" /> :
-                                                                    props.recentChatList[props.active_user].profilePicture === "Null" ?
+                                                                    props.users[props.active_user].profilePicture === "Null" ?
                                                                         <div className="chat-user-img align-self-center me-3">
                                                                             <div className="avatar-xs">
                                                                                 <span className="avatar-title rounded-circle bg-soft-primary text-primary">
@@ -168,7 +168,7 @@ function UserChat(props) {
                                                                                 </span>
                                                                             </div>
                                                                         </div>
-                                                                        : <img src={props.recentChatList[props.active_user].profilePicture} alt="Klubby" />
+                                                                        : <img src={props.users[props.active_user].profilePicture} alt="Klubby" />
                                                                 }
                                                             </div>
 
@@ -241,28 +241,28 @@ function UserChat(props) {
                                                                     :
                                                                     <div className="chat-avatar">
                                                                         {chat.userType === "sender" ? <img src={avatar1} alt="Klubby" /> :
-                                                                            props.recentChatList[props.active_user].profilePicture === "Null" ?
+                                                                            props.users[props.active_user].profilePicture === "Null" ?
                                                                                 <div className="chat-user-img align-self-center me-3">
                                                                                     <div className="avatar-xs">
                                                                                         <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                            {props.recentChatList[props.active_user].name.charAt(0)}
+                                                                                            {props.users[props.active_user].name.charAt(0)}
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
-                                                                                : <img src={props.recentChatList[props.active_user].profilePicture} alt="Klubby" />
+                                                                                : <img src={props.users[props.active_user].profilePicture} alt="Klubby" />
                                                                         }
                                                                     </div>
                                                                     : <div className="chat-avatar">
                                                                         {chat.userType === "sender" ? <img src={avatar1} alt="Klubby" /> :
-                                                                            props.recentChatList[props.active_user].profilePicture === "Null" ?
+                                                                            props.users[props.active_user].profilePicture === "Null" ?
                                                                                 <div className="chat-user-img align-self-center me-3">
                                                                                     <div className="avatar-xs">
                                                                                         <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                            {props.recentChatList[props.active_user].name.charAt(0)}
+                                                                                            {props.users[props.active_user].name.charAt(0)}
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
-                                                                                : <img src={props.recentChatList[props.active_user].profilePicture} alt="Klubby" />
+                                                                                : <img src={props.users[props.active_user].profilePicture} alt="Klubby" />
                                                                         }
                                                                     </div>
                                                             }
@@ -319,7 +319,7 @@ function UserChat(props) {
 
                                                                 </div>
                                                                 {
-                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : props.recentChatList[props.active_user].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.recentChatList[props.active_user].name}</div>
+                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : props.users[props.active_user].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.users[props.active_user].name}</div>
                                                                 }
 
                                                             </div>
@@ -347,7 +347,7 @@ function UserChat(props) {
                             <ChatInput onaddMessage={addMessage} />
                         </div>
 
-                        <UserProfileSidebar activeUser={props.recentChatList[props.active_user]} />
+                        <UserProfileSidebar activeUser={props.users[props.active_user]} />
 
                     </div>                   
                 </div>
@@ -356,9 +356,9 @@ function UserChat(props) {
 }
 
 const mapStateToProps = (state) => {
-    const { active_user } = state.Chat;
+    const { active_user, users } = state.Chat;
     const { userSidebar } = state.Layout;
-    return { active_user, userSidebar };
+    return { active_user, userSidebar, users };
 };
 
 export default withRouter(connect(mapStateToProps, { openUserSidebar, setFullUser })(UserChat));
