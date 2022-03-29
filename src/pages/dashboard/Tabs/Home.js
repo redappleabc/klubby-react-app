@@ -25,40 +25,16 @@ class Home extends Component {
         this.state = {
             searchChat: "",
             activePost: this.props.activeTab,
-            recentPostList: this.props.recentPostList,
+            recentPostList: this.props.posts,
             notiDropdown: false
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.openPostChat = this.openPostChat.bind(this);
         this.setNoticDropdown = this.setNoticDropdown.bind(this);
+        this.setrecentPostList = this.setrecentPostList.bind(this);
     }
 
-    
-
-    componentDidMount() {
-        var li = document.getElementById("conversation" + this.props.active_post);
-        if (li) {
-            li.classList.add("active");
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.setState({
-                recentPostList: this.props.recentPostList
-            });
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props.recentPostList !== nextProps.recentPostList) {
-            this.setState({
-                recentPostList: nextProps.recentPostList,
-            });
-        }
-    }
 
     handleChange(e) {
         this.setState({ searchChat: e.target.value });
@@ -76,19 +52,22 @@ class Home extends Component {
         this.setState({ recentPostList: filteredArray })
 
         //if input value is blanck then assign whole recent chatlist to array
-        if (search === "") this.setState({ recentPostList: this.props.recentPostList })
+        if (search === "") this.setState({ recentPostList: this.props.posts })
     }
     openPostChat(e, chat) {
 
         e.preventDefault();
 
+        
         //find index of current chat in array
-        var index = this.props.recentPostList.indexOf(chat);
+        var index = this.props.posts.indexOf(chat);
 
+        
 
         // set activeUser 
         this.props.activePost(index);
 
+        
         var chatList = document.getElementById("chat-list-post");
         var clickedItem = e.target;
         var currentli = null;
@@ -134,6 +113,12 @@ class Home extends Component {
     setNoticDropdown() {
         this.setState(prevState => ({
             notiDropdown: !prevState.notiDropdown
+          }));
+    }
+       
+    setrecentPostList() {
+        this.setState(prevState => ({
+            recentPostList: !prevState.recentPostList
           }));
     }
     
@@ -246,8 +231,8 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { active_post } = state.Chat;
-    return { active_post };
+    const { active_post, posts } = state.Chat;
+    return { active_post, posts };
 };
 
 export default connect(mapStateToProps, { setconversationNameInOpenChat, activePost, setActiveTab })(Home);

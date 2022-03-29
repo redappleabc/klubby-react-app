@@ -15,7 +15,7 @@ class Index extends Component {
                 <ChatLeftSidebar recentChatList={this.props.users} recentPostList={this.props.posts} />
 
                 {/* chat main board */}
-                <ChatMainBoard recentChatList={this.props.users} recentPostList={this.props.posts} />
+                <ChatMainBoard />
 
             </React.Fragment>
         );

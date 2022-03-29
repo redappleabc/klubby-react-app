@@ -114,29 +114,29 @@ class Klubs extends Component {
           }));
     }
 
-    componentDidMount() {
-        var li = document.getElementById("conversation" + this.props.active_user);
-        if (li) {
-            li.classList.add("active");
-        }
-    }
+    // componentDidMount() {
+    //     var li = document.getElementById("conversation" + this.props.active_user);
+    //     if (li) {
+    //         li.classList.add("active");
+    //     }
+    // }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.setState({
-                recentChatList: this.props.recentChatList
-            });
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps !== this.props) {
+    //         this.setState({
+    //             recentChatList: this.props.recentChatList
+    //         });
+    //     }
+    // }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
 
-        if (this.props.recentChatList !== nextProps.recentChatList) {
-            this.setState({
-                recentChatList: nextProps.recentChatList,
-            });
-        }
-    }
+    //     if (this.props.recentChatList !== nextProps.recentChatList) {
+    //         this.setState({
+    //             recentChatList: nextProps.recentChatList,
+    //         });
+    //     }
+    // }
 
     handleChange(e) {
         this.setState({ searchChat: e.target.value });

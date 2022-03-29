@@ -1,5 +1,5 @@
 import {
-    CHAT_USER, ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST
+    CHAT_USER, ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, FULL_GROUP, ACTIVE_GROUP
 } from './constants';
 
 
@@ -23,6 +23,8 @@ import img7 from "../../assets/images/small/img-1.jpg";
 const INIT_STATE = {
 	active_user : 0,
     active_post : 0,
+    active_group: 0,
+    
     users: [
         //admin is sender and user in receiver
         { id : 0, name : "Patrick Hendricks", profilePicture : avatar2, status : "online", unRead : 0, roomType : "contact", isGroup: false, 
@@ -137,7 +139,7 @@ const INIT_STATE = {
             ]  },
     ],
     groups : [
-        { gourpId : 1, name : "#General", profilePicture : avatar3, isGroup : true, unRead : 0, desc : "General Group",
+        { gourpId : 1, name : "General", profilePicture : group1, isGroup : true, unRead : 0, desc : "General Group",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -153,7 +155,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]      
         },
-        { gourpId : 2, name : "#Reporting", profilePicture : "Null", isGroup : true, unRead : 23,  desc : "reporing Group here...",
+        { gourpId : 2, name : "Reporting", profilePicture : "Null", isGroup : true, unRead : 23,  desc : "reporing Group here...",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -169,7 +171,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 3, name : "#Designer", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "designers Group",
+        { gourpId : 3, name : "Designer", profilePicture : group2, isGroup : true, unRead : 0, isNew : true, desc : "designers Group",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -185,7 +187,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 4, name : "#Developers", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "developers Group",
+        { gourpId : 4, name : "Developers", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "developers Group",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -201,7 +203,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
+        { gourpId : 5, name : "Project-aplha", profilePicture : group1, isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -217,7 +219,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 6, name : "#Snacks", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "snacks Group",
+        { gourpId : 6, name : "Snacks", profilePicture : group2, isGroup : true, unRead : 0,  desc : "snacks Group",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -264,8 +266,8 @@ const INIT_STATE = {
             { id: 2, username: "ary Farmer", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
             { id: 3, username: "Rocky Jackson",  userimg: avatar4, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
         ]  },
-        { id : 2,  name : "About NFT staking", profilePicture : group1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Many variations of Lorem Ipsum exist today, and sometimes the text is altered to include humorous phrases」f you're going to be using Lorem Ipsum as filler text on your pages, you need to make sure that the passage doesn't contain potentiolly embarrassing information.",
-      upvote: 12, comment: 6, isupvote: false,
+        { id : 3,  name : "About NFT staking", profilePicture : group1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Many variations of Lorem Ipsum exist today, and sometimes the text is altered to include humorous phrases」f you're going to be using Lorem Ipsum as filler text on your pages, you need to make sure that the passage doesn't contain potentiolly embarrassing information.",
+      upvote: 1, comment: 9, isupvote: false,
       messages: [
         { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
         { id: 2, username: "Hanah Mile", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
@@ -288,6 +290,10 @@ const Chat = (state = INIT_STATE, action) => {
             return { 
             	...state,
                 active_post : action.payload };
+        case ACTIVE_GROUP:
+            return { 
+                ...state,
+                active_group : action.payload };
                 
         case FULL_USER:
             return { 
@@ -297,6 +303,10 @@ const Chat = (state = INIT_STATE, action) => {
             return { 
             	...state,
                 posts : action.payload };
+        case FULL_GROUP:
+            return { 
+            	...state,
+                groups : action.payload };
 
         case ADD_LOGGED_USER:
             const newUser =  action.payload
@@ -306,7 +316,7 @@ const Chat = (state = INIT_STATE, action) => {
                 ]
             };
 
-        case CREATE_GROUP :
+        case CREATE_GROUP:
             const newGroup =  action.payload
             return {
                 ...state, groups : [

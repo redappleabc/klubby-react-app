@@ -23,7 +23,7 @@ function ChatLeftSidebar(props) {
                 <TabContent activeTab={activeTab}>
                      {/* Start Home tab-pane */}
                      <TabPane tabId="home" id="pills-home">
-                         <Home recentPostList={props.recentPostList} />
+                         <Home />
                     </TabPane>
 
                     
@@ -39,7 +39,7 @@ function ChatLeftSidebar(props) {
                     {/* Start chats tab-pane  */}
                     <TabPane tabId="chat" id="pills-chat">
                         {/* chats content */}
-                        <Chats recentChatList={props.recentChatList} />
+                        <Chats/>
                     </TabPane>
                     {/* End chats tab-pane */}
 

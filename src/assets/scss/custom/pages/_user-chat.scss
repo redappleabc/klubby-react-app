@@ -4,7 +4,7 @@
 
 // user chat
 
-.user-chat, .post-chat {
+.user-chat, .post-chat, .user-group {
     background-color: $card-bg;
     box-shadow: 0 2px 4px rgba(15,34,58,.12);
     transition: all 0.4s;
@@ -352,14 +352,15 @@
 }
 
 .post-select-cover {
+    
     position: relative;
     width: 100%;
     background-color: #2B2C33;
     color: white;
     border-radius: 4px;
-    i {
+    label {
         position: absolute;
-        top: -1px;
+        top: 1px;
         right: 5px;
         font-size: 28px;
         color: white;
@@ -392,6 +393,10 @@
 .post-main .post {
     padding-bottom: 40px;
     background-color: #19191b;
+}
+
+textarea:focus {
+    outline: none;
 }
 
 
@@ -445,4 +450,51 @@
     margin-top: 250px;
     z-index: 1;
     position: relative;
+}
+
+.user-header-main {
+    height: 100%;
+}
+
+
+
+.klubs-header-btn {
+    width: auto;
+    padding: 0 20px;
+    margin-right: 4px;
+}
+
+.justify-content-right {
+    justify-content: right;
+}
+.klubs-header-tabs._sp {
+    display: none !important;
+}
+
+@media (max-width: 1220px) {
+    .klubs-header-tabs._pc {
+        display: none !important;
+    }
+
+    .klubs-header-tabs._sp {
+        display: flex;
+        justify-content: right;
+        margin-top: 15px;
+    }
+    .klubs-header-tabs._sp {
+        display: flex !important;
+    }
+    .klubs-header {
+        height: 144px;
+        .user-header-main {
+            height: auto;
+        }
+    }
+    
+}
+
+@media (max-width: 992px) {
+    .chat-conversation.klubs-con {
+        height: calc(100vh - 222px);
+    }    
 }
