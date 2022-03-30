@@ -1,0 +1,25 @@
+version: 1
+frontend:
+  phases:
+    # test:
+    #   commands:
+    #     - yarn test
+    preBuild:
+      commands:
+        - if [$AWS_BRANCH -eq main]; then STAGE=prod; else STAGE=dev; fi
+        - TOPIC_ARN=$(aws ssm get-parameter --name webapp-sns-topic-$STAGE --region us-east-1 --output text --query Parameter.Value)
+        - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
+        - yarn install
+    build:
+      commands:
+        - yarn run build
+    postBuild:
+      commands:
+        - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
