@@ -6,7 +6,8 @@ import {
     REGISTER_USER_SUCCESS,
     FORGET_PASSWORD,
     FORGET_PASSWORD_SUCCESS,
-    API_FAILED
+    API_FAILED,
+    LOGIN_ERROR
 } from './constants';
 
 
@@ -47,5 +48,10 @@ export const forgetPasswordSuccess = (passwordResetStatus) => ({
 
 export const apiError = (error) => ({
     type: API_FAILED,
+    payload: error
+});
+
+export const loginError = (error) => ({
+    type: LOGIN_ERROR,
     payload: error
 });

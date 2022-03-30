@@ -23,7 +23,6 @@ function UserHead(props) {
     const openUserSidebar = (e) => {
         e.preventDefault();
         props.openUserSidebar();
-        alert(props.activeklubTab);
     }
 
     function closeUserChat(e) {

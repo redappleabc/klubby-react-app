@@ -27,11 +27,11 @@ const AuthIndex = () => {
                                 <p className="text-muted mb-4">Find Your Klub</p>
 
                                 <Link to="login" className="d-grid mb-4">
-                                <Button className="auth-main-btn"><i className="fas fa-user"></i>Sign in</Button>
+                                <button className="auth-main-btn"><i className="fas fa-user"></i>Sign in</button>
                                 </Link>
 
                                 <Link to="register" className="d-grid">
-                                    <Button className="auth-main-btn"><i className="fas fa-user"></i>Sign up</Button>
+                                    <button className="auth-main-btn"><i className="fas fa-user"></i>Sign up</button>
                                 </Link>
                             </div>
                         </Col>

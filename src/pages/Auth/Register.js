@@ -135,7 +135,7 @@ const Register = (props) => {
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <Button className="auth-main-btn" type="submit">Sign up</Button>
+                                                <button className="auth-main-btn" type="submit">Sign up</button>
                                             </div>
 
                                         </Form>
