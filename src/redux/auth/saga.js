@@ -38,6 +38,7 @@ const create = new APIClient().create;
  * @param {*} payload - username and password 
  */
 function* login({ payload: { username, password, history } }) {
+    alert();
     try {
         if(process.env.REACT_APP_DEFAULTAUTH == "aws1"){
             const response = yield call(signIn, username, password)

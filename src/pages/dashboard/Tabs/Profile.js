@@ -59,7 +59,7 @@ function Profile(props) {
                             <img src={avatar1} className="rounded-circle avatar-lg img-thumbnail" alt="klubby" />
                         </div>
 
-                        <h5 className="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
+                        <h5 className="font-size-16 mb-1 text-truncate">The Dip Daddy</h5>
                         <p className="text-muted text-truncate mb-1"><i className="ri-record-circle-fill font-size-10 text-success me-1 d-inline-block"></i> Active</p>
                     </div>
                     {/* End profile user  */}
@@ -83,7 +83,7 @@ function Profile(props) {
                                     >
                                             <div>
                                                 <p className="text-muted mb-1">Name</p>
-                                                <h5 className="font-size-14">Patricia Smith</h5>
+                                                <h5 className="font-size-14">The Dip Daddy</h5>
                                             </div>
 
                                             <div className="mt-4">

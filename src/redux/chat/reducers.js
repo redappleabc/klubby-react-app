@@ -11,8 +11,16 @@ import avatar6 from "../../assets/images/users/avatar-6.jpg";
 import avatar7 from "../../assets/images/users/avatar-7.jpg";
 import avatar8 from "../../assets/images/users/avatar-8.jpg";
 
+import post1 from "../../assets/images/post/post1.png";
+import post2 from "../../assets/images/post/post2.png";
+
 import group1 from "../../assets/images/group/group1.png";
 import group2 from "../../assets/images/group/group2.png";
+import group3 from "../../assets/images/group/group3.png";
+import group4 from "../../assets/images/group/group4.png";
+import group5 from "../../assets/images/group/group5.png";
+import group6 from "../../assets/images/group/group6.png";
+
 // import group3 from "../../assets/images/group/group3.png";
 
 import img6 from "../../assets/images/small/img-1.jpg";
@@ -139,7 +147,7 @@ const INIT_STATE = {
             ]  },
     ],
     groups : [
-        { gourpId : 1, name : "General", profilePicture : group1, isGroup : true, unRead : 0, desc : "General Group", groupType: "main",
+        { gourpId : 1, name : "Ethereum Ballers", profilePicture : group1, isGroup : true, unRead : 0, desc : "Wow that’s great", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -155,7 +163,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]      
         },
-        { gourpId : 2, name : "Reporting", profilePicture : "Null", isGroup : true, unRead : 23,  desc : "reporing Group here...", groupType: "main",
+        { gourpId : 2, name : "Klubby First 1000", profilePicture : group2, isGroup : true, unRead : 23,  desc : "We were all early to this", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -171,7 +179,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 3, name : "Designer", profilePicture : group2, isGroup : true, unRead : 0, isNew : true, desc : "designers Group", groupType: "main",
+        { gourpId : 3, name : "Kishu Inu", profilePicture : group3, isGroup : true, unRead : 0, isNew : true, desc : "I remember when this first", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -187,7 +195,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 4, name : "Developers", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "developers Group", groupType: "main",
+        { gourpId : 4, name : "Bitcoin Bullies", profilePicture : group4, isGroup : true, unRead : 0,  desc : "Back in 2009 I was mining BTC", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -203,7 +211,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 5, name : "Project-aplha", profilePicture : group1, isGroup : true, unRead : 0, isNew : true, desc : "project related Group", groupType: "main",
+        { gourpId : 5, name : "CryptoPunks", profilePicture : group5, isGroup : true, unRead : 0, isNew : true, desc : "We used to be number 1 ", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -219,7 +227,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 6, name : "Snacks", profilePicture : group2, isGroup : true, unRead : 0,  desc : "snacks Group", groupType: "main",
+        { gourpId : 6, name : "Bored Ape Yacht Club", profilePicture : group6, isGroup : true, unRead : 0,  desc : "The most elite crypto club", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -259,14 +267,14 @@ const INIT_STATE = {
         { id : 20, name : "Hanah Mile" },
     ],
     posts : [
-    { id : 2, name : "About NFT staking", profilePicture : group2, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Many variations of Lorem Ipsum exist today, and sometimes the text is altered to include humorous phrases」f you're going to be using Lorem Ipsum as filler text on your pages, you need to make sure that the passage doesn't contain potentiolly embarrassing information.",
-      upvote: 12, comment: 6, isupvote: true,
+    { id : 2, name : "Ethereum Ballers", profilePicture : post2, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "That’s what we like to see! 😎",
+      upvote: 113, comment: 34, isupvote: true,
         messages: [
             { id: 1, username: "John Hall", userimg: avatar2, message: "It's too similar to nyan heroes Need to chanfe the headers i'll be home in a hour so I can look at it properly on my computer", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
             { id: 2, username: "ary Farmer", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
             { id: 3, username: "Rocky Jackson",  userimg: avatar4, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
         ]  },
-        { id : 3,  name : "About NFT staking", profilePicture : group1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Many variations of Lorem Ipsum exist today, and sometimes the text is altered to include humorous phrases」f you're going to be using Lorem Ipsum as filler text on your pages, you need to make sure that the passage doesn't contain potentiolly embarrassing information.",
+        { id : 3,  name : "Crypto Cicero", profilePicture : post1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Peace, Love, and Crypto Justice is what I stand for.",
       upvote: 1, comment: 9, isupvote: false,
       messages: [
         { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },

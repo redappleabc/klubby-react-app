@@ -268,7 +268,7 @@ function UserChat(props) {
 
                                                                 </div>
                                                                 {
-                                                                    <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : chat.username}</div>
+                                                                    <div className="conversation-name">{chat.userType === "sender" ? "The Dip Daddy" : chat.username}</div>
                                                                 }
                                                             </div>
                                                         </div>

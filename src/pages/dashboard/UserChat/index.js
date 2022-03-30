@@ -223,7 +223,7 @@ function UserChat(props) {
 
                                                                 </div>
                                                                 {
-                                                                    <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : chat.userName}</div>
+                                                                    <div className="conversation-name">{chat.userType === "sender" ? "The Dip Daddy" : chat.userName}</div>
                                                                 }
                                                             </div>
                                                         </div>
@@ -319,7 +319,7 @@ function UserChat(props) {
 
                                                                 </div>
                                                                 {
-                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : props.users[props.active_user].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.users[props.active_user].name}</div>
+                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "The Dip Daddy" : props.users[props.active_user].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.users[props.active_user].name}</div>
                                                                 }
 
                                                             </div>
