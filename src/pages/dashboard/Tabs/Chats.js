@@ -86,7 +86,6 @@ class Chats extends Component {
             this.props.createGroup(obj);
             console.log(obj);
             console.log(this.state.group);
-            // alert(this.props.groups.length);
             this.toggle();
 
         } else if (this.state.selectedContact.length === 1) {

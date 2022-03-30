@@ -23,6 +23,8 @@
     width: 100%;
     height: 45px;
     margin: auto;
+    border-radius: .4rem;
+    transition: .4s ease;
     &:hover {
         background-color: #2B2C33;
     }

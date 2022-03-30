@@ -5,7 +5,6 @@ import { getFirebaseBackend } from "../../helpers/firebase";
 
 import {signIn, signUp} from "../../helpers/aws"
 
-
 import {
     LOGIN_USER,
     LOGOUT_USER,
@@ -18,7 +17,8 @@ import {
     loginUserSuccess,
     registerUserSuccess,
     forgetPasswordSuccess,
-    apiError
+    apiError,
+    loginError,
 } from './actions';
 
 
@@ -38,12 +38,16 @@ const create = new APIClient().create;
  * @param {*} payload - username and password 
  */
 function* login({ payload: { username, password, history } }) {
-    alert();
+    // alert();
+    // loginError("response");
+    // yield put(loginError("error"));
     try {
         if(process.env.REACT_APP_DEFAULTAUTH == "aws1"){
             const response = yield call(signIn, username, password)
             console.log(response)
+            
             console.log("dfsfsf")
+            
             localStorage.setItem("authUser", JSON.stringify(response));
             yield put(loginUserSuccess(response));
         }
@@ -52,8 +56,9 @@ function* login({ payload: { username, password, history } }) {
             yield put(loginUserSuccess(response));
             
         } else {
+            // alert("hi")
             const response = yield call(create, '/login', { username, password });
-            console.log("dfsfsdfasdfasdf")
+            console.log(response)
             localStorage.setItem("authUser", JSON.stringify(response));
             console.log(JSON.stringify(response))
             yield put(loginUserSuccess(response));

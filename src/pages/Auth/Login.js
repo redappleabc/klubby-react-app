@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, Button, FormFeedback, Label, InputGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link, withRouter, Redirect } from 'react-router-dom';
@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 
 //redux store
 import { loginUser, apiError } from '../../redux/actions';
+import error_img from '../../assets/images/icons/error.png';
+import error_img_white from '../../assets/images/icons/error_white.png';
 
 //Import Images
 
@@ -17,12 +19,12 @@ import { loginUser, apiError } from '../../redux/actions';
  */
 const Login = (props) => {
 
+    const [error, setError] = useState(props.error);
 
-    const clearError = () => {
-        props.apiError("");
-    }
+    useEffect(() => {
+        setError(props.error);
+    }, [props.error])
 
-    useEffect(clearError);
 
     // validation
     const formik = useFormik({
@@ -55,9 +57,9 @@ const Login = (props) => {
                                 <h1>Sign in</h1>
 
                             </div>
-                                {
-                                    props.error && <Alert color="danger">{props.error}</Alert>
-                                }
+                                    {
+                                        error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{error}</Alert>
+                                    }
                                     <div className="p-3">
                                         <Form onSubmit={formik.handleSubmit}>
                                             <div className="mb-3">
@@ -116,7 +118,7 @@ const Login = (props) => {
                                             </div>
 
                                             <div className="d-grid">
-                                                <Button className="auth-main-btn" type="submit">Sign in</Button>
+                                                <button className="auth-main-btn" type="submit">Sign in</button>
                                             </div>
 
                                         </Form>

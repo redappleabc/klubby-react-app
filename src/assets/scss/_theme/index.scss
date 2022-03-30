@@ -15,6 +15,9 @@
   }
 }
 
+.white-img {
+  display: none;
+}
 
 
 // body {
@@ -73,6 +76,12 @@ label {
   }
 }
 
+.alert-danger, .alert-success {
+  background-color: #252526 !important;
+  border-color: #252526 !important;
+  color:white !important;
+  text-align: center;
+}
 
 .bg-light {
   background-color: #343434 !important;
@@ -254,7 +263,7 @@ label {
   //   border: none !important;
   // }
 
-  .user-chat, .post-chat {
+  .user-chat, .post-chat, .user-group {
     background-color: white;
   }
 
@@ -301,6 +310,24 @@ label {
   }
   .post-main .post {
     background-color: #f5f7fb;
+  }
+  .auth-main-btn {
+    background-color: #f0f2fa;
+    color: #262e35 !important;
+    &:hover {
+      background-color: #adb5bd;
+    }
+  }
+  .alert-danger, .alert-success {
+    color: #252526 !important;
+    border: none;
+    background-color: #f0eff5 !important;
+  }
+  .black-img {
+    display: none;
+  }
+  .white-img {
+    display: block;
   }
 }
 

@@ -72,7 +72,7 @@ function Post(props) {
                                 </div>
                             </div>
                             <div className="d-grid mt-3">
-                                <Button className="auth-main-btn post-btn" type="submit"><i className="ri-send-plane-fill"></i>Post</Button>
+                                <button className="auth-main-btn post-btn" type="submit"><i className="ri-send-plane-fill"></i>Post</button>
                             </div>
 
                         </div>

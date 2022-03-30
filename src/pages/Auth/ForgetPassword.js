@@ -85,7 +85,7 @@ const ForgetPassword = (props) => {
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <Button block className="auth-main-btn" type="submit">Reset</Button>
+                                                <button block className="auth-main-btn" type="submit">Reset</button>
                                             </div>
 
                                         </Form>
