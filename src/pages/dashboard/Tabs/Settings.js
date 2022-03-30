@@ -78,7 +78,7 @@ function Settings(props) {
 
                     </div>
 
-                    <h5 className="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
+                    <h5 className="font-size-16 mb-1 text-truncate">The Dip Daddy</h5>
                     <Dropdown isOpen={dropdownOpen} toggle={toggle} className="d-inline-block mb-1">
                         <DropdownToggle tag="a" className="text-muted pb-1 d-block" >
                             Available <i className="mdi mdi-chevron-down"></i>
@@ -109,7 +109,7 @@ function Settings(props) {
 
                                 <div>
                                     <p className="text-muted mb-1">Name</p>
-                                    <h5 className="font-size-14">Patricia Smith</h5>
+                                    <h5 className="font-size-14">The Dip Daddy</h5>
                                 </div>
 
                                 <div className="mt-4">

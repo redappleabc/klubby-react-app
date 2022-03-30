@@ -224,7 +224,7 @@ function UserGroup(props) {
 
                                                                 </div>
                                                                 {
-                                                                    <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : chat.userName}</div>
+                                                                    <div className="conversation-name">{chat.userType === "sender" ? "The Dip Daddy" : chat.userName}</div>
                                                                 }
                                                             </div>
                                                         </div>
@@ -320,7 +320,7 @@ function UserGroup(props) {
 
                                                                 </div>
                                                                 {
-                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "Patricia Smith" : props.groups[props.active_group].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.groups[props.active_group].name}</div>
+                                                                    chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.userType === "sender" ? "The Dip Daddy" : props.groups[props.active_group].name}</div> : <div className="conversation-name">{chat.userType === "sender" ? "Admin" : props.groups[props.active_group].name}</div>
                                                                 }
 
                                                             </div>
