@@ -1,6 +1,7 @@
 import React from 'react';
 import Routes from './routes/';
 
+
 //Import Scss
 import  "./assets/scss/themes.scss";
 
@@ -17,6 +18,7 @@ import ThemeProvider from "./Contexts/ThemeProvider";
 
 // import { StatusBar } from '@capacitor/status-bar';
 // import { Capacitor } from '@capacitor/core';
+
 
 // TODO
 fakeBackend();

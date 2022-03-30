@@ -3,6 +3,8 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
+import {signIn, signUp} from "../../helpers/aws"
+
 
 import {
     LOGIN_USER,
@@ -37,13 +39,22 @@ const create = new APIClient().create;
  */
 function* login({ payload: { username, password, history } }) {
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
+        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
+            const response = yield call(signIn, username, password)
+            console.log(response)
+            console.log("dfsfsf")
+            localStorage.setItem("authUser", JSON.stringify(response));
+            yield put(loginUserSuccess(response));
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
             const response = yield call(fireBaseBackend.loginUser, username, password);
             yield put(loginUserSuccess(response));
             
         } else {
             const response = yield call(create, '/login', { username, password });
+            console.log("dfsfsdfasdfasdf")
             localStorage.setItem("authUser", JSON.stringify(response));
+            console.log(JSON.stringify(response))
             yield put(loginUserSuccess(response));
            
             
@@ -78,7 +89,14 @@ function* register({ payload: { user } }) {
     try {
         const email = user.email;
         const password = user.password;
-        if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
+        const username = user.username
+        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
+            const response = yield call(signUp, username, password, email)
+            console.log(response)
+            console.log("dfsfsf")
+            yield put(registerUserSuccess(response));
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
             const response = yield call(fireBaseBackend.registerUser, email, password);
             yield put(registerUserSuccess(response));
         } else {
