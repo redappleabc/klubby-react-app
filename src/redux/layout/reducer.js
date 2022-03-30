@@ -12,7 +12,7 @@ const INIT_STATE = {
 	activeTab : "home",
 	userSidebar : false,
 	conversationName : "Doris Brown",
-	activeChatSubTab: "chat-chat",
+	activeChatSubTab: "chat-klubs",
 	activeKlubTab: "main"
 };
 
