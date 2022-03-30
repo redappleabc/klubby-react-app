@@ -470,7 +470,9 @@ textarea:focus {
 .klubs-header-tabs._sp {
     display: none !important;
 }
-
+.klubs-header {
+    border-bottom: 1px solid #343434;
+}
 @media (max-width: 1220px) {
     .klubs-header-tabs._pc {
         display: none !important;
@@ -489,6 +491,7 @@ textarea:focus {
         .user-header-main {
             height: auto;
         }
+        
     }
     
 }
@@ -497,4 +500,19 @@ textarea:focus {
     .chat-conversation.klubs-con {
         height: calc(100vh - 222px);
     }    
+}
+
+@media (max-width: 500px) {
+    .klubs-header-tabs._sp {
+        justify-content: space-between;
+        margin-top: 15px;
+        padding: 0 10px;
+    }
+
+    .klubs-header-btn {
+        margin-right: 0;
+    }
+    .klubs-header {
+        border-bottom: none;
+    }
 }

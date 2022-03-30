@@ -39,6 +39,7 @@ async function signIn(username, password) {
         Auth.signIn(username, password).then((user)=>{
             resolve(user)
         }, (error)=>{
+            
             console.log(error)
         })
     });
