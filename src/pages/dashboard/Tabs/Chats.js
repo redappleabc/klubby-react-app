@@ -79,12 +79,13 @@ class Chats extends Component {
                 isNew: true,
                 desc: this.state.groupDesc,
                 members: this.state.selectedContact,
-                messages: [{ id : 33, isToday : true },]
+                messages: [{ id : 33, isToday : true }, { id : 1, message: "hi 👍" }]
             }
             //call action for creating a group
            
             this.props.createGroup(obj);
             console.log(obj);
+            console.log(this.state.group);
             // alert(this.props.groups.length);
             this.toggle();
 
@@ -412,7 +413,7 @@ class Chats extends Component {
                                                                 <div className="flex-1 overflow-hidden">
                                                                     <h5 className="text-truncate font-size-15 mb-1">{group.name}</h5>
                                                                     <p className="chat-user-message text-truncate mb-0">
-                                                                        {
+                                                                        {/* {
                                                                             <>
                                                                                 {
                                                                                     group.messages && (group.messages.length > 0 && group.messages[(group.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
@@ -422,7 +423,8 @@ class Chats extends Component {
                                                                                 }
                                                                                 {group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].message : null}
                                                                             </>
-                                                                        }
+                                                                        } */}
+                                                                        {group.desc === "" ? "none" : group.desc}
 
 
 

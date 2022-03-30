@@ -39,7 +39,7 @@ const create = new APIClient().create;
  */
 function* login({ payload: { username, password, history } }) {
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
+        if(process.env.REACT_APP_DEFAULTAUTH == "aws1"){
             const response = yield call(signIn, username, password)
             console.log(response)
             console.log("dfsfsf")
@@ -56,8 +56,6 @@ function* login({ payload: { username, password, history } }) {
             localStorage.setItem("authUser", JSON.stringify(response));
             console.log(JSON.stringify(response))
             yield put(loginUserSuccess(response));
-           
-            
         }
         history.push('/dashboard');
     } catch (error) {
@@ -90,7 +88,7 @@ function* register({ payload: { user } }) {
         const email = user.email;
         const password = user.password;
         const username = user.username
-        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
+        if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signUp, username, password, email)
             console.log(response)
             console.log("dfsfsf")

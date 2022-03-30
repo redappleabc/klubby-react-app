@@ -139,7 +139,7 @@ const INIT_STATE = {
             ]  },
     ],
     groups : [
-        { gourpId : 1, name : "General", profilePicture : group1, isGroup : true, unRead : 0, desc : "General Group",
+        { gourpId : 1, name : "General", profilePicture : group1, isGroup : true, unRead : 0, desc : "General Group", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -150,12 +150,12 @@ const INIT_STATE = {
             ],
             messages: [
                 { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
+                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
                 { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]      
         },
-        { gourpId : 2, name : "Reporting", profilePicture : "Null", isGroup : true, unRead : 23,  desc : "reporing Group here...",
+        { gourpId : 2, name : "Reporting", profilePicture : "Null", isGroup : true, unRead : 23,  desc : "reporing Group here...", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -171,7 +171,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 3, name : "Designer", profilePicture : group2, isGroup : true, unRead : 0, isNew : true, desc : "designers Group",
+        { gourpId : 3, name : "Designer", profilePicture : group2, isGroup : true, unRead : 0, isNew : true, desc : "designers Group", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -187,7 +187,23 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 4, name : "Developers", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "developers Group",
+        { gourpId : 4, name : "Developers", profilePicture : "Null", isGroup : true, unRead : 0,  desc : "developers Group", groupType: "main",
+            members : [
+                { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
+                { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
+                { userId : 3, name : "Jonathan Miller", profilePicture : "Null", role : null },
+                { userId : 4, name : "Paul Haynes", profilePicture : avatar7, role : null },
+                { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
+                { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
+            ],
+            messages: [
+                { id : 33, isToday : true },
+                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+            ]       
+        },
+        { gourpId : 5, name : "Project-aplha", profilePicture : group1, isGroup : true, unRead : 0, isNew : true, desc : "project related Group", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
@@ -203,23 +219,7 @@ const INIT_STATE = {
                 { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
             ]       
         },
-        { gourpId : 5, name : "Project-aplha", profilePicture : group1, isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
-            members : [
-                { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
-                { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
-                { userId : 3, name : "Jonathan Miller", profilePicture : "Null", role : null },
-                { userId : 4, name : "Paul Haynes", profilePicture : avatar7, role : null },
-                { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
-                { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
-            ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
-        },
-        { gourpId : 6, name : "Snacks", profilePicture : group2, isGroup : true, unRead : 0,  desc : "snacks Group",
+        { gourpId : 6, name : "Snacks", profilePicture : group2, isGroup : true, unRead : 0,  desc : "snacks Group", groupType: "main",
             members : [
                 { userId : 1, name : "Sara Muller", profilePicture : "Null", role : null },
                 { userId : 2, name : "Ossie Wilson", profilePicture : avatar8, role : "admin" },
