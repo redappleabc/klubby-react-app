@@ -23,7 +23,7 @@ function LockScreen(props) {
 
     return (
         <React.Fragment>
-            <div className="account-pages pt-sm-5">
+            <div className="account-pages py-sm-5">
             <Container>
                 <Row className="justify-content-center">
                     <Col md={8} lg={6} xl={5}>
