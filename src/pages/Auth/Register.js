@@ -16,12 +16,13 @@ import { registerUser, apiError } from '../../redux/actions';
  * @param {*} props 
  */
 const Register = (props) => {
-
+    
     const clearError = () => {
         props.apiError("");
     }
 
-    useEffect(clearError);
+    useEffect(clearError)
+
 
     // validation
     const formik = useFormik({
@@ -39,6 +40,9 @@ const Register = (props) => {
         onSubmit: values => {
             props.registerUser(values);
         },
+        handleChange:values=>{
+            console.log("adasd")
+        }
     });
 
 

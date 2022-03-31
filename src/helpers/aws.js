@@ -18,7 +18,7 @@ async function signUp(username, password, email) {
         }).then((user) => {
             resolve(user)
         }).catch((error)=>{
-            console.log(error)
+            reject(error.message)
         })
     });
 }
@@ -39,8 +39,7 @@ async function signIn(username, password) {
         Auth.signIn(username, password).then((user)=>{
             resolve(user)
         }, (error)=>{
-            
-            console.log(error)
+            reject(error.message)
         })
     });
 }
