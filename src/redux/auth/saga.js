@@ -42,12 +42,8 @@ function* login({ payload: { username, password, history } }) {
     // loginError("response");
     // yield put(loginError("error"));
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH == "aws1"){
+        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
             const response = yield call(signIn, username, password)
-            console.log(response)
-            
-            console.log("dfsfsf")
-            
             localStorage.setItem("authUser", JSON.stringify(response));
             yield put(loginUserSuccess(response));
         }
@@ -96,8 +92,6 @@ function* register({ payload: { user } }) {
         const username = user.username
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signUp, username, password, email)
-            console.log(response)
-            console.log("dfsfsf")
             yield put(registerUserSuccess(response));
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
@@ -109,6 +103,7 @@ function* register({ payload: { user } }) {
         }
         
     } catch (error) {
+        console.log(error)
         yield put(apiError(error));
     }
 }
