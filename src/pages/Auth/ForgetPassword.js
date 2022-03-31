@@ -22,7 +22,7 @@ const ForgetPassword = (props) => {
         props.apiError("");
     }
 
-    useEffect(clearError);
+    useEffect(clearError, []);
 
     // validation
     const formik = useFormik({

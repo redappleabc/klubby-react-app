@@ -17,9 +17,9 @@ export const setActiveChatSubTab = (chatSubtabId) => ({
 	payload: chatSubtabId
 });
 
-export const setActiveKlubsTab = (klubstabId) => ({
+export const setActiveKlubsTab = (KlubId) => ({
 	type: SET_KLUBS_ACTIVE_TAB,
-	payload: klubstabId
+	payload: KlubId
 });
 
 export const openUserSidebar = () => ({

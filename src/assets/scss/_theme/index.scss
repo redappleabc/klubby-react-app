@@ -70,11 +70,11 @@ label {
 .form-control:focus {
   color: white;
 }
-@media (max-width: 991.98px) {
-  .chat-main-board .tab-content > .tab-pane {
-    display: block;
-  }
-}
+// @media (max-width: 991.98px) {
+//   .chat-main-board .tab-content > .tab-pane {
+//     display: block;
+//   }
+// }
 
 .alert-danger, .alert-success {
   background-color: #252526 !important;
@@ -329,6 +329,9 @@ label {
   .white-img {
     display: block;
   }
+  .klubs-header {
+    border-bottom: 1px solid #f0eff5;
+}
 }
 
 

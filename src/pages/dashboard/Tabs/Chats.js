@@ -79,7 +79,7 @@ class Chats extends Component {
                 isNew: true,
                 desc: this.state.groupDesc,
                 members: this.state.selectedContact,
-                messages: [{ id : 33, isToday : true }, { id : 1, message: "hi 👍" }]
+                messages: {"main":[{}], "whale":[{}], "announcement":[{}] }
             }
             //call action for creating a group
            

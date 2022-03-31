@@ -13,7 +13,7 @@ function UserHead(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [dropdownOpen1, setDropdownOpen1] = useState(false);
 
-    const [aciveKlubTab, setAciveKlubTab] = useState(props.activeKlubTab);
+    // const [aciveKlubTab, setAciveKlubTab] = useState(props.activeKlubTab);
     
 
     const toggle = () => setDropdownOpen(!dropdownOpen);
@@ -23,6 +23,10 @@ function UserHead(props) {
     const openUserSidebar = (e) => {
         e.preventDefault();
         props.openUserSidebar();
+    }
+
+    const toggleKlubTab = (tab) => {
+        props.setActiveKlubsTab(tab)
     }
 
     function closeUserChat(e) {
@@ -79,13 +83,13 @@ function UserHead(props) {
                     <Col sm={8} xs={4} >
                         <div className='d-flex align-items-center justify-content-right'>
                             <div className='klubs-header-tabs _pc d-flex align-items-center'>
-                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'main' })}`} onClick={() => { setAciveKlubTab('main'); }} >
+                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'main' })}`} onClick={() => { toggleKlubTab('main'); }} >
                                     Main
                                 </button>
-                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'whale' })}`} onClick={() => { setAciveKlubTab('whale'); }}>
+                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'whale' })}`} onClick={() => { toggleKlubTab('whale'); }}>
                                     Whale
                                 </button>
-                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'announcement' })}`} onClick={() => { setAciveKlubTab('announcement'); }}>
+                                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'announcement' })}`} onClick={() => { toggleKlubTab('announcement');}}>
                                     Announcement
                                 </button>
                             </div>
@@ -130,15 +134,15 @@ function UserHead(props) {
 
                 </Row>
                 <div className='klubs-header-tabs _sp d-flex align-items-center'>
-                    <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'main' })}`} onClick={() => { setAciveKlubTab('main'); }} >
-                        Main
-                    </button>
-                    <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'whale' })}`} onClick={() => { setAciveKlubTab('whale'); }}>
-                        Whale
-                    </button>
-                    <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: aciveKlubTab === 'announcement' })}`} onClick={() => { setAciveKlubTab('announcement'); }}>
-                        Announcement
-                    </button>
+                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'main' })}`} onClick={() => { toggleKlubTab('main'); }} >
+                    Main
+                </button>
+                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'whale' })}`} onClick={() => { toggleKlubTab('whale'); }}>
+                    Whale
+                </button>
+                <button className={`chat-nav-header-btn klubs-header-btn ${classnames({ active: props.activeKlubTab === 'announcement' })}`} onClick={() => { toggleKlubTab('announcement');}}>
+                    Announcement
+                </button>
                 </div>
             </div>
 
