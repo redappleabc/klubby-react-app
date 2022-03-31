@@ -25,6 +25,12 @@ const Login = (props) => {
         setError(props.error);
     }, [props.error])
 
+    const clearError = () => {
+        props.apiError("");
+    }
+
+    useEffect(()=>{clearError()},[])
+
 
     // validation
     const formik = useFormik({
