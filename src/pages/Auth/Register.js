@@ -4,10 +4,13 @@ import { withRouter, Link } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Row, Col, FormGroup, Alert, Form, Input, Button, FormFeedback, Label, InputGroup } from 'reactstrap';
+import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import action
-import { registerUser, apiError } from '../../redux/actions';
+import { registerUser, apiError, registerUserSuccess } from '../../redux/actions';
+
+import error_img from '../../assets/images/icons/error.png';
+import error_img_white from '../../assets/images/icons/error_white.png';
 
 
 
@@ -17,11 +20,14 @@ import { registerUser, apiError } from '../../redux/actions';
  */
 const Register = (props) => {
     
+    // const [successMsg, setSuccessMsg] = useState(props.user)
+    // useEffect()
     const clearError = () => {
         props.apiError("");
+        props.registerUserSuccess("")
     }
 
-    useEffect(()=>{clearError()},[])
+    useEffect(clearError, []);
 
 
     // validation
@@ -58,11 +64,11 @@ const Register = (props) => {
 
                             </div>
 
-                                    {
-                                        props.error && <Alert variant="danger">{props.error}</Alert>
+                            {
+                                        props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
                                     {
-                                        props.user && <Alert variant="success">Thank You for registering with us!</Alert>
+                                        props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
                                     }
                                     <div className="p-3">
 
@@ -162,4 +168,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error };
 };
 
-export default withRouter(connect(mapStateToProps, { registerUser, apiError })(Register));
+export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess })(Register));

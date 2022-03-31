@@ -53,4 +53,4 @@ async function resendConfirmationCode(username) {
     }
 }
 
-export {signIn, signUp}
+export {signIn, signUp, confirmSignUp, resendConfirmationCode }
