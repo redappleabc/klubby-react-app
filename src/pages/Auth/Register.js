@@ -21,7 +21,7 @@ const Register = (props) => {
         props.apiError("");
     }
 
-    useEffect(clearError)
+    useEffect(()=>{clearError()},[])
 
 
     // validation
