@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, FormGroup, Alert, Form, Input, Button, FormFeedback, Label, InputGroup } from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link, withRouter, Redirect } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -19,18 +19,18 @@ import error_img_white from '../../assets/images/icons/error_white.png';
  */
 const Login = (props) => {
 
-    const [error, setError] = useState(props.error);
 
-    useEffect(() => {
-        setError(props.error);
-    }, [props.error])
+    const clearError = () => {
+        props.apiError("");
+    }
 
+    useEffect(clearError, [])
 
     // validation
     const formik = useFormik({
         initialValues: {
-            email: 'admin@klubby.com',
-            password: '123456'
+            email: '',
+            password: ''
         },
         validationSchema: Yup.object({
             email: Yup.string().required('Please Enter Your Username'),
@@ -47,7 +47,6 @@ const Login = (props) => {
 
     return (
         <React.Fragment>
-
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -58,7 +57,7 @@ const Login = (props) => {
 
                             </div>
                                     {
-                                        error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{error}</Alert>
+                                        props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
                                     <div className="p-3">
                                         <Form onSubmit={formik.handleSubmit}>

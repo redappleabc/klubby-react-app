@@ -18,7 +18,6 @@ import {
     registerUserSuccess,
     forgetPasswordSuccess,
     apiError,
-    loginError,
 } from './actions';
 
 
@@ -42,9 +41,10 @@ function* login({ payload: { username, password, history } }) {
     // loginError("response");
     // yield put(loginError("error"));
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH == "aws"){
+        if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
             localStorage.setItem("authUser", JSON.stringify(response));
+            
             yield put(loginUserSuccess(response));
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
@@ -61,6 +61,7 @@ function* login({ payload: { username, password, history } }) {
         }
         history.push('/dashboard');
     } catch (error) {
+        // alert();
         yield put(apiError(error));
     }
 }

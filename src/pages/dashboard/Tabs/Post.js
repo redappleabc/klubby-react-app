@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Input, Button, Label } from 'reactstrap';
+import {Input, Label } from 'reactstrap';
 
 //Import Images
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";

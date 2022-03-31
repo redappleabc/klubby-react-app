@@ -7,7 +7,7 @@ import classnames from "classnames";
 import { openUserSidebar, setFullGroup, setActiveKlubsTab } from "../../../redux/actions";
 
 //import images
-import user from '../../../assets/images/users/avatar-4.jpg'
+// import user from '../../../assets/images/users/avatar-4.jpg'
 
 function UserHead(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
