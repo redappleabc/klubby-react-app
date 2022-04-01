@@ -30,3 +30,31 @@
         margin-right:0/*rtl:auto*/;
     }
 }
+
+.card-header {
+    padding-left: 64px;
+    position: relative;
+    color: white;
+}
+
+.setting-collapse-icon {
+    position: absolute;
+    left: 15px;
+    top: 12%;
+    color: #B1B1B1;
+    font-size: 32px;
+}
+
+.setting-collapse-title {
+    font-weight: 500;
+}
+
+.setting-collapse-description {
+    color: #B1B1B1;
+}
+
+.setting-collapse-arrow {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+}

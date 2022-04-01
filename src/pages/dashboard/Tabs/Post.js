@@ -24,13 +24,12 @@ function Post(props) {
 
     return (
         <React.Fragment>
+            <div className="px-4 py-4">
+                <h4 className="mb-0">Post</h4>
+            </div>
             <SimpleBar style={{ maxHeight: "100%" }} className="post-simplebar">
                 <div className='post-main'>
                         <div className='post-main-header'>
-                            <div className="px-4 pt-4">
-                                <h4 className="mb-0">Post</h4>
-                            </div>
-                    
                             <div className="text-center p-4">
                                 <div className="mb-4">
                                     <img src={avatar1} className="rounded-circle avatar-lg img-thumbnail" alt="klubby" />
