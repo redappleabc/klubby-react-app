@@ -346,7 +346,14 @@ const INIT_STATE = {
             { id: 2, username: "ary Farmer", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
             { id: 3, username: "Rocky Jackson",  userimg: avatar4, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
         ]  },
-        { id : 3,  name : "Crypto Cicero", profilePicture : post1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Peace, Love, and Crypto Justice is what I stand for.",
+    { id : 3,  name : "Crypto Cicero", profilePicture : post1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Peace, Love, and Crypto Justice is what I stand for.",
+      upvote: 1, comment: 9, isupvote: false,
+      messages: [
+        { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
+        { id: 2, username: "Hanah Mile", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
+        { id: 3, username: "Michael Hinton", userimg: avatar2, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
+    ]  },
+    { id : 3,  name : "Crypto Cicero", profilePicture : post2, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img6, content: "Peace, Love, and Crypto Justice is what I stand for.",
       upvote: 1, comment: 9, isupvote: false,
       messages: [
         { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
