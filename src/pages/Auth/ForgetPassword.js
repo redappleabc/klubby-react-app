@@ -17,13 +17,16 @@ import { forgetPassword, apiError } from '../../redux/actions';
  * @param {*} props 
  */
 const ForgetPassword = (props) => {
+ 
 
-    const clearError = () => {
-        props.apiError("");
-    }
+    const {apiError} = props;
 
-    useEffect(clearError, []);
+    useEffect( () => {
+        
+        apiError("");
+    } , []);
 
+    
     // validation
     const formik = useFormik({
         initialValues: {
@@ -85,7 +88,7 @@ const ForgetPassword = (props) => {
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <button block className="auth-main-btn" type="submit">Reset</button>
+                                                <button className="auth-main-btn" type="submit">Reset</button>
                                             </div>
 
                                         </Form>
