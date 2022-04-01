@@ -201,7 +201,8 @@ label {
   }
   .card-header {
     background-color: #f5f7fb;
-    border-bottom: 0 solid #f5f7fb;
+    // border-bottom: 0 solid #f5f7fb;
+    border: 1px solid #f0eff5;
   }
   .border {
     border: 1px solid #f0eff5!important;
@@ -331,8 +332,21 @@ label {
   }
   .klubs-header {
     border-bottom: 1px solid #f0eff5;
+  }
+  .setting-collapse-title {
+    color: #495057;
+  }
+  .auth-main-btn {
+    color: white;
+  }
+  .auth-main-btn {
+    @include colored() {
+      background-color: c('color') !important;
+    }
+  }
+  
 }
-}
+
 
 
 
@@ -440,6 +454,8 @@ label {
     }
   }
 }
+
+
 
 // .nav-upvote {
 //   @include colored() {
