@@ -353,7 +353,7 @@ function Settings(props) {
                                 isOpen={isOpen4}
                                 toggleCollapse={toggleCollapse4}
                             >
-                            <ThemeSetter/>
+               
                             </CustomCollapse>
                         </Card>
                         <Card className="shadow-none mb-2">
