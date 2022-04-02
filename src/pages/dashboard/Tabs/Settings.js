@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label } from "reactstrap";
+import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import SimpleBar from "simplebar-react";
@@ -9,6 +9,9 @@ import CustomCollapse from "../../../components/CustomCollapse";
 
 //Import Images
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
+import avatar2 from "../../../assets/images/group/group3.png";
+import ether_img from "../../../assets/images/post/post2.png";
+import bsc_img from "../../../assets/images/post/post3.png";
 
 
 function Settings(props) {
@@ -193,30 +196,99 @@ function Settings(props) {
                                 isOpen={isOpen1}
                                 toggleCollapse={toggleCollapse1}
                             >
-
-                                <div className="float-end">
-                                    <Button color="light" size="sm" type="button" ><i className="ri-edit-fill me-1 align-middle"></i> Edit</Button>
+                            <div className="profile-main">
+                                <div className='profile-container'>
+                                    <div>
+                                        <i className="ri-profile-line"></i>Name   
+                                    </div>
+                                    <div>
+                                        Rahui Gautam
+                                    </div>
+                                </div>
+                                <div className='profile-container'>
+                                    <div>
+                                        <i className="ri-gift-line"></i>Birthday   
+                                    </div>
+                                    <div>
+                                        1989.02.23
+                                    </div>
+                                </div>
+                                <div className='profile-container'>
+                                    <div>
+                                        <i className="ri-women-line"></i>Gender   
+                                    </div>
+                                    <div>
+                                        Male
+                                    </div>
+                                </div>
+                                <div className='border-bottom'></div>
+                                <div className='profile-container'>
+                                    <div>
+                                        <i className="ri-wifi-off-line"></i>Status   
+                                    </div>
+                                    <div className='status'>
+                                        Online
+                                    </div>
+                                </div>
+                                <div className='profile-container'>
+                                    <div>
+                                        <i className="ri-mail-line"></i>Email   
+                                    </div>
+                                    <div>
+                                        Sample@gmail.com
+                                    </div>
+                                </div>
+                                <div className="d-grid mt-4">
+                                    <button className="auth-main-btn post-btn"><i className="ri-edit-2-line"></i>Edit profile</button>
                                 </div>
 
-                                <div>
-                                    <p className="text-muted mb-1">Name</p>
-                                    <h5 className="font-size-14">The Dip Daddy</h5>
+                                <div className='wallet-info-container my-4'>
+                                    <div id="wallet_01" className='icon-cover'>
+                                        <i className="ri-clipboard-fill"></i>
+                                    </div>
+                                    <UncontrolledTooltip target="wallet_01" placement="top">
+                                        Copy Address
+                                    </UncontrolledTooltip>
+                                    <div className='wallet-address'>
+                                       <div> 0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16</div>
+                                    </div>
+                                    <div id='delete_wallet_01' className='icon-cover'>
+                                        <i className="ri-delete-bin-6-fill"></i>
+                                    </div>
+                                    <UncontrolledTooltip target="delete_wallet_01" placement="top">
+                                        Delete Address
+                                    </UncontrolledTooltip>
                                 </div>
+                                <div className="d-grid mt-4">
+                                    <button className="auth-main-btn post-btn"><i className="ri-add-line"></i>Add Wallet</button>
+                                </div>
+                                <div className='owned-nft-main'>
+                                    <div className='header'>Owned NFT</div>
+                                    <div className='nft-container mt-1 mb-3'>
+                                        <div className='net-name'>
+                                            <img src={ether_img} alt='klubby'/>Etherium
+                                        </div>
+                                        <div className='nft-imgs my-2'>
+                                            <img src={avatar1} alt='klubby'/>
+                                            <img src={avatar1} alt='klubby'/>
+                                            <img src={avatar1} alt='klubby'/>
+                                            <img src={avatar1} alt='klubby'/>
+                                        </div>
+                                    </div>
+                                    <div className='nft-container mt-1 mb-3'>
+                                        <div className='net-name'>
+                                            <img src={bsc_img} alt='klubby'/>Etherium
+                                        </div>
+                                        <div className='nft-imgs my-2'>
+                                            <img src={avatar2} alt='klubby'/>
+                                            <img src={avatar2} alt='klubby'/>
+                                            <img src={avatar2} alt='klubby'/>
+                                            <img src={avatar2} alt='klubby'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <div className="mt-4">
-                                    <p className="text-muted mb-1">Email</p>
-                                    <h5 className="font-size-14">adc@123.com</h5>
-                                </div>
-
-                                <div className="mt-4">
-                                    <p className="text-muted mb-1">Time</p>
-                                    <h5 className="font-size-14">11:40 AM</h5>
-                                </div>
-
-                                <div className="mt-4">
-                                    <p className="text-muted mb-1">Location</p>
-                                    <h5 className="font-size-14 mb-0">California, USA</h5>
-                                </div>
                             </CustomCollapse>
                         </Card>
                         {/* end profile card */}
