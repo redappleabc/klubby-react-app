@@ -84,16 +84,17 @@ function LeftSidebarMenu(props) {
                         </UncontrolledTooltip>
 
 
-                        <NavItem id="Settings" className='_pc'>
+                        <NavItem id="Settings">
                             <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
-                                <i className="ri-settings-2-line"></i>
+                                <i className="ri-user-3-line"></i>
                             </NavLink>
                         </NavItem>
                         <UncontrolledTooltip target="Settings" placement="top">
                             Settings
                         </UncontrolledTooltip>
 
-                        <Dropdown nav isOpen={dropdownOpenMobile2} toggle={toggleMobile2} className="profile-user-dropdown d-inline-block d-lg-none">
+
+                        {/* <Dropdown nav isOpen={dropdownOpenMobile2} toggle={toggleMobile2} className="profile-user-dropdown d-inline-block d-lg-none">
                             <DropdownToggle nav>
                             <i className="ri-user-3-line"></i>
                             </DropdownToggle>
@@ -103,12 +104,12 @@ function LeftSidebarMenu(props) {
                                 <DropdownItem divider />
                                 <DropdownItem href="/logout">Log out <i className="ri-logout-circle-r-line float-end text-muted"></i></DropdownItem>
                             </DropdownMenu>
-                        </Dropdown> 
+                        </Dropdown>  */}
                     </Nav>
                 </div>
                 {/* end side-menu nav */}
 
-                <div className="flex-lg-column d-none d-lg-block">
+                {/* <div className="flex-lg-column d-none d-lg-block">
                     <Nav className="side-menu-nav justify-content-center">
                         <Dropdown nav isOpen={dropdownOpen1} className="nav-item btn-group dropup profile-user-dropdown" toggle={toggle1}>
                             <DropdownToggle className="nav-link" tag="a">
@@ -132,7 +133,7 @@ function LeftSidebarMenu(props) {
                             </DropdownMenu>
                         </Dropdown>
                     </Nav>
-                </div>
+                </div> */}
                 {/* Side menu user */}
             </div>
         </React.Fragment>
