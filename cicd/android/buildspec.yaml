@@ -22,5 +22,6 @@ phases:
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add android
+      - gradle --help
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
