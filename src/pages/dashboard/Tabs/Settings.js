@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip } from "reactstrap";
+import React, { useEffect, useState } from 'react';
+import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip } from "reactstrap";
 import { Link } from "react-router-dom";
-
 import SimpleBar from "simplebar-react";
 import ThemeSetter from '../../../theme/ThemeSetter';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 //Import components
 import CustomCollapse from "../../../components/CustomCollapse";
 
@@ -12,9 +13,48 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import avatar2 from "../../../assets/images/group/group3.png";
 import ether_img from "../../../assets/images/post/post2.png";
 import bsc_img from "../../../assets/images/post/post3.png";
+import { array } from 'yup';
 
 
 function Settings(props) {
+
+    const formik = useFormik({
+        initialValues: {
+          full_name: "",
+          email: "",
+          password: "",
+          confirm_password: ""
+        },
+        validationSchema: Yup.object({
+          email: Yup.string()
+            .email("Invalid email format")
+        }),
+        onSubmit: values => {
+          console.log(JSON.stringify(values, null, 2));
+        }
+    })
+
+    const [walletsAddress, setWalletAddress] = useState([]);
+    
+    const addWallet = () => {
+        setWalletAddress([...walletsAddress, "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"]);
+    }
+
+    const copyAddress = () => {
+
+    }
+
+    const deleteWallet = (key) => {
+        console.log(key)
+        let wallet = [...walletsAddress];
+        wallet.splice(key, 1);
+        setWalletAddress([...wallet]);
+    }
+
+    useEffect(() => {
+        let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
+        setWalletAddress(wallets);
+    }, [])
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
@@ -238,55 +278,64 @@ function Settings(props) {
                                         Sample@gmail.com
                                     </div>
                                 </div>
-                                <div className="d-grid mt-4">
+                                {/* <div className="d-grid mt-4">
                                     <button className="auth-main-btn post-btn"><i className="ri-edit-2-line"></i>Edit profile</button>
-                                </div>
+                                </div> */}
 
-                                <div className='wallet-info-container my-4'>
-                                    <div id="wallet_01" className='icon-cover'>
-                                        <i className="ri-clipboard-fill"></i>
-                                    </div>
-                                    <UncontrolledTooltip target="wallet_01" placement="top">
-                                        Copy Address
-                                    </UncontrolledTooltip>
-                                    <div className='wallet-address'>
-                                       <div> 0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16</div>
-                                    </div>
-                                    <div id='delete_wallet_01' className='icon-cover'>
-                                        <i className="ri-delete-bin-6-fill"></i>
-                                    </div>
-                                    <UncontrolledTooltip target="delete_wallet_01" placement="top">
-                                        Delete Address
-                                    </UncontrolledTooltip>
-                                </div>
+                                {
+                                    walletsAddress.map((wallet, key) => 
+                                        <div key={key} className='wallet-info-container my-4'>
+                                            <div id={"wallet_" + key} className='icon-cover' onClick={copyAddress}>
+                                                <i className="ri-clipboard-fill"></i>
+                                            </div>
+                                            <UncontrolledTooltip target={"wallet_" + key} placement="top">
+                                                Copy Address
+                                            </UncontrolledTooltip>
+                                            <div className='wallet-address'>
+                                            <div>{wallet}</div>
+                                            </div>
+                                            <div id={'delete_wallet_' + key} className='icon-cover' onClick={(e) => deleteWallet(key)}>
+                                                <i className="ri-delete-bin-6-fill"></i>
+                                            </div>
+                                            <UncontrolledTooltip target={'delete_wallet_' + key} placement="top">
+                                                Delete Address
+                                            </UncontrolledTooltip>
+                                        </div>
+                                    )
+                                }
+                                
                                 <div className="d-grid mt-4">
-                                    <button className="auth-main-btn post-btn"><i className="ri-add-line"></i>Add Wallet</button>
+                                    <button className="auth-main-btn post-btn" onClick={addWallet}><i className="ri-add-line"></i>Add Wallet</button>
                                 </div>
-                                <div className='owned-nft-main'>
-                                    <div className='header'>Owned NFT</div>
-                                    <div className='nft-container mt-1 mb-3'>
-                                        <div className='net-name'>
-                                            <img src={ether_img} alt='klubby'/>Etherium
+                                {
+                                    walletsAddress.map((wallet, key) => 
+                                        <div key={key} className='owned-nft-main'>
+                                            <div className='header'>Owned NFT <br/>{"(" + wallet + ")"}</div>
+                                            <div className='nft-container mt-1 mb-3'>
+                                                <div className='net-name'>
+                                                    <img src={ether_img} alt='klubby'/>Etherium
+                                                </div>
+                                                <div className='nft-imgs my-2'>
+                                                    <img src={avatar1} alt='klubby'/>
+                                                    <img src={avatar1} alt='klubby'/>
+                                                    <img src={avatar1} alt='klubby'/>
+                                                    <img src={avatar1} alt='klubby'/>
+                                                </div>
+                                            </div>
+                                            <div className='nft-container mt-1 mb-3'>
+                                                <div className='net-name'>
+                                                    <img src={bsc_img} alt='klubby'/>Binance
+                                                </div>
+                                                <div className='nft-imgs my-2'>
+                                                    <img src={avatar2} alt='klubby'/>
+                                                    <img src={avatar2} alt='klubby'/>
+                                                    <img src={avatar2} alt='klubby'/>
+                                                    <img src={avatar2} alt='klubby'/>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className='nft-imgs my-2'>
-                                            <img src={avatar1} alt='klubby'/>
-                                            <img src={avatar1} alt='klubby'/>
-                                            <img src={avatar1} alt='klubby'/>
-                                            <img src={avatar1} alt='klubby'/>
-                                        </div>
-                                    </div>
-                                    <div className='nft-container mt-1 mb-3'>
-                                        <div className='net-name'>
-                                            <img src={bsc_img} alt='klubby'/>Etherium
-                                        </div>
-                                        <div className='nft-imgs my-2'>
-                                            <img src={avatar2} alt='klubby'/>
-                                            <img src={avatar2} alt='klubby'/>
-                                            <img src={avatar2} alt='klubby'/>
-                                            <img src={avatar2} alt='klubby'/>
-                                        </div>
-                                    </div>
-                                </div>
+                                    )
+                                }
                             </div>
 
                             </CustomCollapse>
@@ -399,20 +448,74 @@ function Settings(props) {
                                 toggleCollapse={toggleCollapse3}
                             >
 
-                                <div>
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Show security notification</h5>
-
+                                <Form className='profile-edit-main' onSubmit={formik.handleSubmit}>
+                                    <div className='profile-container'>
+                                        <div>
+                                            <i className="ri-profile-line"></i>Name   
                                         </div>
-                                        <div className="ms-2 me-0">
-                                            <div className="form-check form-switch">
-                                                <Input type="checkbox" className="form-check-input" id="security-notificationswitch" />
-                                                <Label className="form-check-label" htmlFor="security-notificationswitch"></Label>
-                                            </div>
+                                        <div>
+                                            <input type="text" placeholder='Name'></input>
                                         </div>
                                     </div>
-                                </div>
+                                    <div className='profile-container'>
+                                        <div>
+                                            <i className="ri-gift-line"></i>Birthday   
+                                        </div>
+                                        <div>
+                                            <Input
+                                                type='date'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='profile-container'>
+                                        <div>
+                                            <i className="ri-women-line"></i>Gender   
+                                        </div>
+                                        <div>
+                                            <select className="form-select form-select-lg form-custom-select" aria-label="Default select example">
+                                                <option value="0">Select Gender</option>
+                                                <option value="1">man</option>
+                                                <option value="2">woman</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className='border-bottom'></div>
+                                    <div className='profile-container mt-3'>
+                                        <div>
+                                            <i className="ri-wifi-off-line"></i>Status   
+                                        </div>
+                                        <div>
+                                            <select className="form-select form-select-lg form-custom-select" aria-label="Default select example">
+                                                <option value="0">Select Status</option>
+                                                <option value="1">online</option>
+                                                <option value="2">busy</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className='profile-container'>
+                                        <div>
+                                            <i className="ri-mail-line"></i>Email   
+                                        </div>
+                                        <div>
+                                            <Input
+                                            type="text"
+                                            name="email"
+                                            placeholder='sample@email.com'
+                                            value={formik.values.email}
+                                            onChange={formik.handleChange}
+                                            invalid={formik.touched.email && formik.errors.email ? true : false}
+                                            />
+                                            {formik.touched.email && formik.errors.email ? (
+                                                <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
+                                            ) : null}
+                                        </div>
+                                        
+                                    </div>
+                                    <div className="d-grid mt-4">
+                                        <button className="auth-main-btn post-btn" type='submit'><i className="ri-check-double-line"></i>OK</button>
+                                    </div>
+                                </Form>
+
                             </CustomCollapse>
                         </Card>
                         {/* end Security card */}

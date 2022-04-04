@@ -28,6 +28,9 @@
     &:hover {
         background-color: #2B2C33;
     }
+    &:disabled {
+        color: #343434;
+    }
 }
 .auth-first h1 {
     font-size: 60px;
