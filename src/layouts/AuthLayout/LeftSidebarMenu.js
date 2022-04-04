@@ -1,28 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { Nav, NavItem, NavLink, UncontrolledTooltip, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from "reactstrap";
+import { Nav, NavItem, NavLink, UncontrolledTooltip } from "reactstrap";
 import classnames from "classnames";
 import { connect } from "react-redux";
 
 import { setActiveTab } from "../../redux/actions";
 
-//Import Images
-// import logo from "../../assets/images/logo-small.svg"
-// import avatar1 from "../../assets/images/users/avatar-1.jpg";
-import group1 from "../../assets/images/group/group1.png";
 
 function LeftSidebarMenu(props) {
-
-    const [dropdownOpen1, setDropdownOpen1] = useState(false);
-    const [dropdownOpen2, setDropdownOpen2] = useState(false);
-    // const [dropdownOpenMobile1, setDropdownOpenMobile1] = useState(false);
-    const [dropdownOpenMobile2, setDropdownOpenMobile2] = useState(false);
-
-
-    const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
-    const toggle2 = () => setDropdownOpen2(!dropdownOpen2);
-    // const toggleMobile1 = () => setDropdownOpenMobile1(!dropdownOpenMobile1);
-    const toggleMobile2 = () => setDropdownOpenMobile2(!dropdownOpenMobile2);
 
     const toggleTab = tab => {
         props.setActiveTab(tab)

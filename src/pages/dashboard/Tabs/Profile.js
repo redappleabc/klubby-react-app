@@ -32,8 +32,6 @@ function Profile(props) {
         setIsOpen1(false);
     };
 
-    const toggle = () => setDropdownOpen(!dropdownOpen);
-
     return (
         <React.Fragment>
             <div>
@@ -58,8 +56,6 @@ function Profile(props) {
                         <div className="text-muted">
                             <p className="mb-4">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.</p>
                         </div>
-
-                        
                             <div id="profile-user-accordion-1" className="custom-accordion">
                                 <Card className="shadow-none border mb-2">
                                     {/* import collaps */}
