@@ -28,4 +28,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  name: klubby-android-$(date +%Y-%m-%d) 
+  name: 'klubby-android-deployment-dev-BuildArtifact'
