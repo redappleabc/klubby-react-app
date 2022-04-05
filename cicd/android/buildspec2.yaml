@@ -23,8 +23,7 @@ phases:
     commands:
       - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
-      - /opt/gradle/gradle-7.4.2/bin/gradle build
-      - ls /opt/gradle/gradle-7.4.2/bin
+      # - /opt/gradle/gradle-7.4.2/bin/gradle build
       - ls
       - ls build
       # Copy to S3
