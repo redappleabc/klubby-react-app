@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip } from "reactstrap";
+import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
 import ThemeSetter from '../../../theme/ThemeSetter';
@@ -342,7 +342,7 @@ function Settings(props) {
                         </Card>
                         {/* end profile card */}
 
-                        <Card className="shadow-none mb-2">
+                        {/* <Card className="shadow-none mb-2">
                             <CustomCollapse
                                 title="Notifications"
                                 description="See all notifications"
@@ -382,61 +382,8 @@ function Settings(props) {
                                         </div>
                                     </div>
                                 </div>
-
-                                <div className="py-3 border-top">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Status</h5>
-
-                                        </div>
-                                        <UncontrolledDropdown className="ms-2">
-                                            <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                Everyone <i className="mdi mdi-chevron-down"></i>
-                                            </DropdownToggle>
-                                            <DropdownMenu right>
-                                                <DropdownItem>Everyone</DropdownItem>
-                                                <DropdownItem>selected</DropdownItem>
-                                                <DropdownItem>Nobody</DropdownItem>
-                                            </DropdownMenu>
-                                        </UncontrolledDropdown>
-                                    </div>
-                                </div>
-
-                                <div className="py-3 border-top">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Read receipts</h5>
-
-                                        </div>
-                                        <div className="ms-2">
-                                            <div className="form-check form-switch">
-                                                <Input type="checkbox" className="form-check-input" id="privacy-readreceiptSwitch" defaultChecked />
-                                                <Label className="form-check-label" htmlFor="privacy-readreceiptSwitch"></Label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="py-3 border-top">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Groups</h5>
-
-                                        </div>
-                                        <UncontrolledDropdown className="ms-2">
-                                            <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                Everyone <i className="mdi mdi-chevron-down"></i>
-                                            </DropdownToggle>
-                                            <DropdownMenu right>
-                                                <DropdownItem>Everyone</DropdownItem>
-                                                <DropdownItem>selected</DropdownItem>
-                                                <DropdownItem>Nobody</DropdownItem>
-                                            </DropdownMenu>
-                                        </UncontrolledDropdown>
-                                    </div>
-                                </div>
                             </CustomCollapse>
-                        </Card>
+                        </Card> */}
                         {/* end Privacy card */}
 
                         <Card className="accordion-item mb-2">
@@ -528,14 +475,45 @@ function Settings(props) {
                                 isOpen={isOpen4}
                                 toggleCollapse={toggleCollapse4}
                             >
-               
+                                <Form className='profile-edit-main' onSubmit={formik.handleSubmit}>
+                                    <div className='profile-container'>
+                                        <div>
+                                            Old Password     
+                                        </div>
+                                        <div>
+                                            <input type="password" placeholder='Old Password'></input>
+                                        </div>
+                                    </div>
+                                    <div className='border-bottom'></div>
+                                    <div className='profile-container mt-3'>
+                                        <div>
+                                            New Password    
+                                        </div>
+                                        <div>
+                                            <input type="password" placeholder='New Password'></input>
+                                        </div>
+                                    </div>
+                                    <div className='profile-container'>
+                                        <div>
+                                            Confirm  
+                                        </div>
+                                        <div>
+                                            <input type="password" placeholder='Confirm'></input>
+                                        </div>
+                                    </div>
+                                    <div className="d-grid mt-4">
+                                        <button className="auth-main-btn post-btn" type='submit'><i className="ri-check-double-line"></i>OK</button>
+                                    </div>
+                                </Form>
+
                             </CustomCollapse>
+
                         </Card>
                         <Card className="shadow-none mb-2">
                             <CustomCollapse
-                                title="Admin Controls"
-                                description="Control the admin information"
-                                icon="ri-user-settings-line"
+                                title="Group information"
+                                description="group information"
+                                icon="ri-group-line"
                                 isOpen={isOpen5}
                                 toggleCollapse={toggleCollapse5}
                             >
@@ -553,12 +531,11 @@ function Settings(props) {
                                 </div>
                             </CustomCollapse>
                         </Card>
-
                         <Card className="shadow-none mb-2">
                             <CustomCollapse
-                                title="Group information"
-                                description="group information"
-                                icon="ri-group-line"
+                                title="Edit Group information"
+                                description="Edit group information"
+                                icon="ri-user-settings-line"
                                 isOpen={isOpen6}
                                 toggleCollapse={toggleCollapse6}
                             >
@@ -576,14 +553,61 @@ function Settings(props) {
                                 </div>
                             </CustomCollapse>
                         </Card>
+                        <Card className="shadow-none mb-2 admin-control">
+                            <CustomCollapse
+                                title="Admin Controls"
+                                description="Control the admin information"
+                                icon="ri-settings-5-line"
+                                isOpen={isOpen7}
+                                toggleCollapse={toggleCollapse7}
+                            >
+                                <div className="text-dark mb-2 " >
+                                    <CardHeader id="">
+                                        <div className="setting-collapse-title font-size-16 m-0">
+                                            Ban Users
+                                        </div>
+                                        <i className="setting-collapse-icon ri-forbid-2-line"></i>
+                                        <div className="font-size-12 setting-collapse-description">
+                                            You can select ban user in your group
+                                        </div>
+                                    </CardHeader>
+                                </div>
+                                <div className="text-dark mb-2 " >
+                                    <CardHeader id="">
+                                        <div className="setting-collapse-title font-size-16 m-0">
+                                            Select Admin
+                                        </div>
+                                        <i className="setting-collapse-icon ri-admin-line"></i>
+                                        <div className="font-size-12 setting-collapse-description">
+                                            You can select admin in your group
+                                        </div>
+                                    </CardHeader>
+                                </div>
+                                
+                                <div className="text-dark mb-2 " >
+                                    <CardHeader id="">
+                                        <div className="setting-collapse-title font-size-16 m-0">
+                                            Delete Group
+                                        </div>
+                                        <i className="setting-collapse-icon ri-delete-bin-line"></i>
+                                        <div className="font-size-12 setting-collapse-description">
+                                            You can delete group here
+                                        </div>
+                                    </CardHeader>
+                                </div>
+
+                            </CustomCollapse>
+                        </Card>
+
+                        
 
                         <Card className="shadow-none mb-2">
                             <CustomCollapse
                                 title="Appearance"
                                 description="Settings the color, themes"
                                 icon="ri-brush-2-line"
-                                isOpen={isOpen7}
-                                toggleCollapse={toggleCollapse7}
+                                isOpen={isOpen8}
+                                toggleCollapse={toggleCollapse8}
                             >
 
                                 <ThemeSetter/>
@@ -592,35 +616,57 @@ function Settings(props) {
 
                         <Card className="shadow-none mb-2">
                             <CustomCollapse
-                                title="Logout"
-                                description="Logout here"
-                                icon="ri-logout-box-line"
-                                isOpen={isOpen8}
-                                toggleCollapse={toggleCollapse8}
-                            >
-                            </CustomCollapse>
-                        </Card>
-                        <Card className="shadow-none mb-2">
-                            <CustomCollapse
-                                title="Delete account"
-                                description="Delete this account"
-                                icon="ri-delete-bin-5-line"
-                                isOpen={isOpen9}
-                                toggleCollapse={toggleCollapse9}
-                            >
-                            </CustomCollapse>
-                        </Card>
-                        <Card className="shadow-none mb-2">
-                            <CustomCollapse
                                 title="Help, feedback"
                                 description="You can get help and feedback here"
                                 icon="ri-question-line"
-                                isOpen={isOpen10}
-                                toggleCollapse={toggleCollapse10}
+                                isOpen={isOpen9}
+                                toggleCollapse={toggleCollapse9}
                             >
+                                <div>
+                                    <div className="py-3">
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">FAQs</Link></h5>
+                                    </div>
+                                    <div className="py-3 border-top">
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">Contact</Link></h5>
+                                    </div>
+                                    <div className="py-3 border-top">
+                                        <h5 className="font-size-13 mb-0"><Link to="#" className="text-body d-block">Terms & Privacy policy</Link></h5>
+                                    </div>
+                                </div>
                             </CustomCollapse>
                         </Card>
 
+
+                        <Card className="shadow-none mb-2">
+                            <Link to="/logout">
+                                <div className="text-dark" >
+                                    <CardHeader id="">
+                                        <div className="setting-collapse-title font-size-16 m-0">
+                                            logout
+                                        </div>
+                                        <i className="setting-collapse-icon ri-logout-box-line"></i>
+                                        <div className="font-size-12 setting-collapse-description">
+                                            Logout here
+                                        </div>
+                                    </CardHeader>
+                                </div>
+                            </Link>
+                        </Card>
+                        <Card className="shadow-none mb-2">
+                            <div>
+                                <div className="text-dark" >
+                                    <CardHeader id="">
+                                        <div className="setting-collapse-title font-size-16 m-0">
+                                            Delete account
+                                        </div>
+                                        <i className="setting-collapse-icon ri-delete-bin-5-line"></i>
+                                        <div className="font-size-12 setting-collapse-description">
+                                            Delete this account
+                                        </div>
+                                    </CardHeader>
+                                </div>
+                            </div>
+                        </Card>
                         {/* end Help card */}
                     </div>
                     {/* end profile-setting-accordion */}
