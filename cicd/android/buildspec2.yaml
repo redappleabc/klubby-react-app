@@ -26,7 +26,9 @@ phases:
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
       - ls
       - ls $CODEBUILD_SRC_DIR
-      - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/build/build.gradle
+      - cd android
+      - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
+      # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
 
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
