@@ -12,7 +12,7 @@ phases:
     commands:
       - ANDROID_VERSION=25
       - ANDROID_TOOLS_VERSION=25.0.2
-      - android-accept-licenses.sh "android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
+      - sudo android-accept-licenses.sh "android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
       - ls /usr/local/android-sdk-linux
       - ls /usr/local/android-sdk-linux/tools
       - ls /usr/local/android-sdk-linux/tools/bin
