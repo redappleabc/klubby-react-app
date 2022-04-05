@@ -10,6 +10,8 @@ env:
 phases:
   pre_build:
     commands:
+      - ANDROID_VERSION=25
+      - ANDROID_TOOLS_VERSION=25.0.2
       - android-accept-licenses.sh "android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
       - echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   build:
