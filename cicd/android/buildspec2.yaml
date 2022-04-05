@@ -23,7 +23,8 @@ phases:
     commands:
       - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
-      - ls /opt/gradle
-      # - gradlew build
+      - /opt/gradle/gradle-7.4.2 build
+      - ls
+      - ls build
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
