@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useCallback } from 'react';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link, withRouter, Redirect } from 'react-router-dom';
@@ -18,13 +18,10 @@ import error_img_white from '../../assets/images/icons/error_white.png';
  * @param {*} props 
  */
 const Login = (props) => {
-
-
-    const clearError = () => {
-        props.apiError("");
-    }
-
-    useEffect(clearError, [])
+    const clearError= useCallback(() => { props.apiError("");}, [])
+    useEffect(()=>{
+        clearError();
+    }, [clearError])
 
     // validation
     const formik = useFormik({
