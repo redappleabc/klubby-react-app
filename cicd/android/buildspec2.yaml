@@ -8,6 +8,10 @@ env:
 #TODO this needs to know env so it can add to save location, rn conflict with prod
 
 phases:
+  pre_build:
+    commands:
+      - android-accept-licenses.sh "android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
+      - echo "y" | $ANDROID_HOME/tools/bin/sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
   build:
     commands:
       - gradlew build
