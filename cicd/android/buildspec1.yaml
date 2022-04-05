@@ -11,12 +11,10 @@ phases:
   build:
     commands:
       # Install AWS Cli
-      # - yum install -y unzip
-      # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      # - unzip awscliv2.zip
-      # - ./aws/install
-      #install npm
-      - apt install npm
+      - yum install -y unzip
+      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      - unzip awscliv2.zip
+      - ./aws/install
       # Install TypeScript
       - npm install -D typescript
       # Build iOS app
@@ -24,6 +22,5 @@ phases:
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add android
-      - gradle --help
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT

@@ -1,0 +1,15 @@
+
+version: 0.2
+
+env:
+  variables:
+    ENVIRONMENT: 'dev'
+
+#TODO this needs to know env so it can add to save location, rn conflict with prod
+
+phases:
+  build:
+    commands:
+      - gradel --help
+      # Copy to S3
+      # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
