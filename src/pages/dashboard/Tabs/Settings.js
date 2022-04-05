@@ -342,48 +342,7 @@ function Settings(props) {
                         </Card>
                         {/* end profile card */}
 
-                        {/* <Card className="shadow-none mb-2">
-                            <CustomCollapse
-                                title="Notifications"
-                                description="See all notifications"
-                                icon="ri-notification-3-line"
-                                isOpen={isOpen2}
-                                toggleCollapse={toggleCollapse2}
-                            >
-
-                                <div className="py-3">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Profile photo</h5>
-                                        </div>
-                                        <UncontrolledDropdown className="ms-2">
-                                            <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
-                                                Everyone <i className="mdi mdi-chevron-down"></i>
-                                            </DropdownToggle>
-                                            <DropdownMenu right>
-                                                <DropdownItem>Everyone</DropdownItem>
-                                                <DropdownItem>selected</DropdownItem>
-                                                <DropdownItem>Nobody</DropdownItem>
-                                            </DropdownMenu>
-                                        </UncontrolledDropdown>
-                                    </div>
-                                </div>
-                                <div className="py-3 border-top">
-                                    <div className="d-flex align-items-center">
-                                        <div className="flex-1 overflow-hidden">
-                                            <h5 className="font-size-13 mb-0 text-truncate">Last seen</h5>
-
-                                        </div>
-                                        <div className="ms-2">
-                                            <div className="form-check form-switch">
-                                                <Input type="checkbox" className="form-check-input" id="privacy-lastseenSwitch" defaultChecked />
-                                                <Label className="form-check-label" htmlFor="privacy-lastseenSwitch"></Label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CustomCollapse>
-                        </Card> */}
+                        
                         {/* end Privacy card */}
 
                         <Card className="accordion-item mb-2">
@@ -600,7 +559,48 @@ function Settings(props) {
                         </Card>
 
                         
+                        <Card className="shadow-none mb-2">
+                            <CustomCollapse
+                                title="Notifications"
+                                description="See all notifications"
+                                icon="ri-notification-3-line"
+                                isOpen={isOpen2}
+                                toggleCollapse={toggleCollapse2}
+                            >
 
+                                <div className="py-3">
+                                    <div className="d-flex align-items-center">
+                                        <div className="flex-1 overflow-hidden">
+                                            <h5 className="font-size-13 mb-0 text-truncate">Profile photo</h5>
+                                        </div>
+                                        <UncontrolledDropdown className="ms-2">
+                                            <DropdownToggle className="btn btn-light btn-sm w-sm" tag="button">
+                                                Everyone <i className="mdi mdi-chevron-down"></i>
+                                            </DropdownToggle>
+                                            <DropdownMenu right>
+                                                <DropdownItem>Everyone</DropdownItem>
+                                                <DropdownItem>selected</DropdownItem>
+                                                <DropdownItem>Nobody</DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                    </div>
+                                </div>
+                                <div className="py-3 border-top">
+                                    <div className="d-flex align-items-center">
+                                        <div className="flex-1 overflow-hidden">
+                                            <h5 className="font-size-13 mb-0 text-truncate">Last seen</h5>
+
+                                        </div>
+                                        <div className="ms-2">
+                                            <div className="form-check form-switch">
+                                                <Input type="checkbox" className="form-check-input" id="privacy-lastseenSwitch" defaultChecked />
+                                                <Label className="form-check-label" htmlFor="privacy-lastseenSwitch"></Label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CustomCollapse>
+                        </Card>
                         <Card className="shadow-none mb-2">
                             <CustomCollapse
                                 title="Appearance"
