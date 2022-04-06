@@ -13,6 +13,7 @@ phases:
       - ANDROID_VERSION=30
       - ANDROID_TOOLS_VERSION=30.0.2
       - android-accept-licenses.sh "sudo android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
+      - cat android-accept-licenses.sh
       # - ls /usr/local/android-sdk-linux
       # - ls /usr/local/android-sdk-linux/tools
       # - ls /usr/local/android-sdk-linux/tools/build-tools
@@ -22,25 +23,25 @@ phases:
   build:
     commands:
       - env
-      - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
-      # download android sdk
-      - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
-      - tar -xvf android-sdk_r24.2-linux.tgz
-      - echo "y" | ./android-sdk-linux/tools/android update sdk --licenses
-      - ./android-sdk-linux/tools/android update sdk --no-ui
+      # - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
+      # # download android sdk
+      # - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+      # - tar -xvf android-sdk_r24.2-linux.tgz
+      # - echo "y" | ./android-sdk-linux/tools/android update sdk --licenses
+      # - ./android-sdk-linux/tools/android update sdk --no-ui
 
 
 
 
-      - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
-      # - ls
-      # - ls $CODEBUILD_SRC_DIR
-      - ls ~
-      # - sudo apt update && sudo apt install android-sdk
-      - ls $ANDROID_HOME/tools
-      # - cd android
-      - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
-      # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
+      # - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
+      # # - ls
+      # # - ls $CODEBUILD_SRC_DIR
+      # - ls ~
+      # # - sudo apt update && sudo apt install android-sdk
+      # - ls $ANDROID_HOME/tools
+      # # - cd android
+      # - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
+      # # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
 
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
