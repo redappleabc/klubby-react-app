@@ -24,8 +24,12 @@ phases:
       - env
       - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
-      - ls
-      - ls $CODEBUILD_SRC_DIR
+      # - ls
+      # - ls $CODEBUILD_SRC_DIR
+      - ls ~/Android/Sdk/tools
+      - ls ~/Android/Sdk/tools/bin
+      - ls $ANDROID_HOME/tools
+      - ls $ANDROID_HOME/tools/bin
       # - cd android
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
       # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
