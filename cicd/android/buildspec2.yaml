@@ -26,8 +26,7 @@ phases:
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
       # - ls
       # - ls $CODEBUILD_SRC_DIR
-      - ls ~/Android/Sdk/tools
-      - ls ~/Android/Sdk/tools/bin
+      - ls ~
       - ls $ANDROID_HOME/tools
       - ls $ANDROID_HOME/tools/bin
       # - cd android
