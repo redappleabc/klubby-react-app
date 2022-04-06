@@ -14,7 +14,7 @@ phases:
       - ANDROID_TOOLS_VERSION=30.0.2
       # - android-accept-licenses.sh "sudo android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
       - env
-      - ls /usr/local/android-sdk-linux/tools/bin
+      - which android-accept-licenses.sh
       # - ls /usr/local/android-sdk-linux/platform-tools
       # - cat android-accept-licenses.sh
       # - ls /usr/local/android-sdk-linux
