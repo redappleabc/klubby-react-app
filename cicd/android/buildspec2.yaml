@@ -36,6 +36,11 @@ phases:
       # - tar -xvf android-sdk_r24.2-linux.tgz
       # - echo "y" | ./android-sdk-linux/tools/android update sdk --licenses
       # - ./android-sdk-linux/tools/android update sdk --no-ui
+      - wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+      - unzip sdk-tools-linux-3859397.zip
+      - ls
+      - ls sdk-tools-linux-3859397
+
 
 
 
