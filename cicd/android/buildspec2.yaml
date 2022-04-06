@@ -10,13 +10,16 @@ env:
 phases:
   pre_build:
     commands:
-      - ANDROID_VERSION=30
-      - ANDROID_TOOLS_VERSION=30.0.2
+      # - ANDROID_VERSION=30
+      # - ANDROID_TOOLS_VERSION=30.0.2
+      - ANDROID_VERSION=25
+      - ANDROID_TOOLS_VERSION=25.0.2
       - ls /opt/tools
       - android-accept-licenses.sh "android update sdk --no-ui --all --filter \"android-$ANDROID_VERSION,tools,platform-tools,build-tools-$ANDROID_TOOLS_VERSION,extra-android-m2repository\""
       - env
+      #empty
       - ls $ANDROID_HOME/tools/
-      - which sdkmanager
+      - android update sdk --help
       # - ls /usr/local/android-sdk-linux/platform-tools
       # - cat android-accept-licenses.sh
       # - ls /usr/local/android-sdk-linux
@@ -28,7 +31,6 @@ phases:
   build:
     commands:
       - env
-      # - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
       # # download android sdk
       # - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
       # - tar -xvf android-sdk_r24.2-linux.tgz
@@ -37,15 +39,15 @@ phases:
 
 
 
-
-      # - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
+      - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
+      - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
       # # - ls
       # # - ls $CODEBUILD_SRC_DIR
       # - ls ~
       # # - sudo apt update && sudo apt install android-sdk
       # - ls $ANDROID_HOME/tools
       # # - cd android
-      # - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
+      - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
       # # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
 
       # Copy to S3
