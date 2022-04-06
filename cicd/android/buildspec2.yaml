@@ -23,13 +23,20 @@ phases:
     commands:
       - env
       - wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip -P /tmp
+      # download android sdk
+      - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+      - tar -xvf android-sdk_r24.2-linux.tgz
+      - ./android-sdk-linux/tools/android update sdk --no-ui
+      - echo "y" | ./android-sdk-linux/tools/android --licenses
+
+
+
       - unzip -d /opt/gradle /tmp/gradle-7.4.2-bin.zip
       # - ls
       # - ls $CODEBUILD_SRC_DIR
       - ls ~
-      - sudo apt update && sudo apt install android-sdk
+      # - sudo apt update && sudo apt install android-sdk
       - ls $ANDROID_HOME/tools
-      - ls $ANDROID_HOME/tools/bin
       # - cd android
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b android/build.gradle
       # - /opt/gradle/gradle-7.4.2/bin/gradle build -b $CODEBUILD_SRC_DIR/android/build.gradle
