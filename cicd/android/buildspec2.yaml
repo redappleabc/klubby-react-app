@@ -40,7 +40,7 @@ phases:
       - unzip sdk-tools-linux-3859397.zip
       # - ls tools
       # - ls tools/bin/sdkmanager
-      - tools/bin/sdkmanager --licenses
+      - echo "y" | tools/bin/sdkmanager --licenses
 
 
 
