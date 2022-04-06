@@ -26,8 +26,9 @@ phases:
       # download android sdk
       - wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
       - tar -xvf android-sdk_r24.2-linux.tgz
+      - echo "y" | ./android-sdk-linux/tools/android update sdk --licenses
       - ./android-sdk-linux/tools/android update sdk --no-ui
-      - echo "y" | ./android-sdk-linux/tools/android --licenses
+
 
 
 
