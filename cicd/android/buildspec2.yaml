@@ -27,6 +27,7 @@ phases:
       # - ls
       # - ls $CODEBUILD_SRC_DIR
       - ls ~
+      - sudo apt update && sudo apt install android-sdk
       - ls $ANDROID_HOME/tools
       - ls $ANDROID_HOME/tools/bin
       # - cd android
