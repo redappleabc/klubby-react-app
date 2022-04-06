@@ -38,9 +38,8 @@ phases:
       # - ./android-sdk-linux/tools/android update sdk --no-ui
       - wget https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
       - unzip sdk-tools-linux-3859397.zip
-      - ls
-      - ls sdk-tools-linux-3859397
-
+      - ls tools
+      - ls tools/bin
 
 
 
