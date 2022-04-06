@@ -19,7 +19,7 @@ phases:
       - env
       #empty
       - ls $ANDROID_HOME/tools/
-      - android update sdk --help
+      # - android update sdk --help
       # - ls /usr/local/android-sdk-linux/platform-tools
       # - cat android-accept-licenses.sh
       # - ls /usr/local/android-sdk-linux
