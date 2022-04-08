@@ -5,11 +5,6 @@ import SimpleBar from "simplebar-react";
 import ThemeSetter from '../../../theme/ThemeSetter';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import { apiGetAccountAssets, apiGetGasPrices, apiGetAccountNonce } from "../../../helpers/walletconnecctApi";
-
 //Import components
 import CustomCollapse from "../../../components/CustomCollapse";
 
@@ -24,51 +19,6 @@ import { array } from 'yup';
 
 
 function Settings(props) {
-
-    const [walletConnect, setWalletConnect] = useState(null);
-    const [walletsAddress, setWalletAddress] = useState([]);
-
-    useEffect(async () => {
-        const bridge = "https://bridge.walletconnect.org";
-        const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
-        if (connector.connected) {
-            await connector.killSession();
-        }
-        
-        let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
-        setWalletAddress(wallets);
-    }, [])
-
-
-     const connect = async () => {
-        // bridge url
-        const bridge = "https://bridge.walletconnect.org";
-        const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
-
-
-
-        if (!connector.connected) {
-          await connector.createSession();
-        }
-        else {
-            alert("please connect another wallet!")
-        }
-
-        connector.on("connect", (error, payload) => {
-            console.log(`connector.on("connect")`);
-      
-            if (error) {
-              throw error;
-            }
-      
-            const { accounts } = payload.params[0];
-            console.log(accounts);
-            setWalletAddress([...walletsAddress, ...accounts]);
-          });
-        
-      };
-
-
 
     const formik = useFormik({
         initialValues: {
@@ -86,11 +36,10 @@ function Settings(props) {
         }
     })
 
-   
+    const [walletsAddress, setWalletAddress] = useState([]);
     
-    const addWallet = async () => {
-        connect();
-        // setWalletAddress([...walletsAddress])
+    const addWallet = () => {
+        setWalletAddress([...walletsAddress, "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"]);
     }
 
     const copyAddress = () => {
@@ -104,7 +53,10 @@ function Settings(props) {
         setWalletAddress([...wallet]);
     }
 
-
+    useEffect(() => {
+        let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
+        setWalletAddress(wallets);
+    }, [])
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
