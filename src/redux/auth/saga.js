@@ -3,7 +3,7 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
-import {signIn, signUp} from "../../helpers/aws"
+import {signIn, signUp, _forgetPassword} from "../../helpers/aws"
 
 import {
     LOGIN_USER,
@@ -114,7 +114,18 @@ function* register({ payload: { user } }) {
  */
 function* forgetPassword({ payload: { email } }) {
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
+        if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
+            const response = yield call(_forgetPassword, email)
+                console.log(response);
+            if (response) {
+                yield put(
+                    forgetPasswordSuccess(
+                      "Reset link are sended to your mailbox, check there first"
+                    )
+                  );
+            }  
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
             const response = yield call(fireBaseBackend.forgetPassword, email);
             if (response) {
               yield put(
@@ -128,10 +139,11 @@ function* forgetPassword({ payload: { email } }) {
             yield put(forgetPasswordSuccess(response));
         }
     } catch (error) {
+        console.log(error)
+
         yield put(apiError(error));
     }
 }
-
 
 export function* watchLoginUser() {
     yield takeEvery(LOGIN_USER, login);

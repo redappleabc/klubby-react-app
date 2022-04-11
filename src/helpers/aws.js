@@ -44,6 +44,18 @@ async function signIn(username, password) {
     });
 }
 
+async function _forgetPassword(username) {
+    return new Promise((resolve, reject) => {
+         //resolve("success");
+        Auth.forgotPassword(username).then((user)=>{
+            resolve(user)
+
+        }, (error)=>{
+            reject(error.message)
+        })
+    });
+}
+
 async function resendConfirmationCode(username) {
     try {
         await Auth.resendSignUp(username);
@@ -53,4 +65,4 @@ async function resendConfirmationCode(username) {
     }
 }
 
-export {signIn, signUp, confirmSignUp, resendConfirmationCode }
+export {signIn, signUp, confirmSignUp, resendConfirmationCode, _forgetPassword }

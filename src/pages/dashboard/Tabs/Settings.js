@@ -35,12 +35,12 @@ function Settings(props) {
     
     const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
 
-    useEffect(async () => {
+    useEffect(() => {
         const bridge = "https://bridge.walletconnect.org";
       
         const connector = new WalletConnect({bridge, qrcodeModal: QRCodeModal });
         if (connector.connected) {
-            await connector.killSession();
+            connector.killSession();
         }
         
         let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
