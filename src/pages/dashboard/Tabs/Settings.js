@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip, CardHeader, CardBody } from "reactstrap";
+import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip, CardHeader, Modal, ModalBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
 import ThemeSetter from '../../../theme/ThemeSetter';
@@ -25,8 +25,11 @@ import { array } from 'yup';
 
 function Settings(props) {
 
-    const [walletConnect, setWalletConnect] = useState(null);
+    // const [walletConnect, setWalletConnect] = useState(null);
     const [walletsAddress, setWalletAddress] = useState([]);
+    const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
+    
+    const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
 
     useEffect(async () => {
         const bridge = "https://bridge.walletconnect.org";
@@ -45,8 +48,12 @@ function Settings(props) {
         const bridge = "https://bridge.walletconnect.org";
         const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
 
+        
 
 
+        // console.log(connector._chainId)
+        // connector._chainId = 1;
+        // console.log(connector._chainId)
         if (!connector.connected) {
           await connector.createSession();
         }
@@ -63,7 +70,9 @@ function Settings(props) {
       
             const { accounts } = payload.params[0];
             console.log(accounts);
+            toggleWalletConnectResultModal();
             setWalletAddress([...walletsAddress, ...accounts]);
+            
           });
         
       };
@@ -89,7 +98,8 @@ function Settings(props) {
    
     
     const addWallet = async () => {
-        connect();
+        await connect();
+       
         // setWalletAddress([...walletsAddress])
     }
 
@@ -360,7 +370,12 @@ function Settings(props) {
                                 {
                                     walletsAddress.map((wallet, key) => 
                                         <div key={key} className='owned-nft-main'>
-                                            <div className='header'>Owned NFT <br/>{"(" + wallet + ")"}</div>
+                                            <div className='header wallet-address'>
+                                                Owned NFT 
+                                                <div className='address-con'>
+                                                    { wallet }
+                                                </div>
+                                            </div>
                                             <div className='nft-container mt-1 mb-3'>
                                                 <div className='net-name'>
                                                     <img src={ether_img} alt='klubby'/>Etherium
@@ -720,6 +735,17 @@ function Settings(props) {
                     {/* end profile-setting-accordion */}
                 </SimpleBar>
                 {/* End User profile description */}
+                <Modal tabIndex="-1" isOpen={WalletConnectResultModal} toggle={toggleWalletConnectResultModal} centered>
+                    <ModalBody>
+                        <div className="text-center p-4">
+                            <div className="avatar-lg mx-auto mb-4 voice-record-img">
+                                <i className="ri-wallet-3-line"></i>
+                            </div>
+                            <p className="text-muted">New wallet address added!</p>
+
+                        </div>
+                    </ModalBody>
+                </Modal>
             </div>
         </React.Fragment>
     );

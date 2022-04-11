@@ -79,6 +79,13 @@
  }
 }
 
+.address-con {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+
 .wallet-info-container {
     display: flex;
     align-items: center;
