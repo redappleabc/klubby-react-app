@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.1.9",
     "@walletconnect/client": "^1.7.7",
     "@walletconnect/qrcode-modal": "^1.7.7",
+    "@walletconnect/web3-provider": "^1.7.7",
     "amplify": "0.0.11",
     "availity-reactstrap-validation": "^2.7.1",
     "aws-amplify": "^4.3.18",

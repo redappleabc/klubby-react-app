@@ -344,6 +344,16 @@ label {
       background-color: c('color') !important;
     }
   }
+  .owned-nft-main .header {
+    color: #495057;
+  }
+  .wallet-info-container .wallet-address, .wallet-info-container .icon-cover, .wallet-info-container .icon-cover i {
+    background-color: #f5f7fb;
+    color: #495057;
+  }
+  .profile-container > div:nth-child(2) {
+    color: #495057;
+  }
   
 }
 
