@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import WalletConnect from "@walletconnect/client";
 import QRCodeModal from "@walletconnect/qrcode-modal";
-import { apiGetAccountAssets, apiGetGasPrices, apiGetAccountNonce } from "../../../helpers/walletconnecctApi";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 //Import components
 import CustomCollapse from "../../../components/CustomCollapse";
@@ -18,7 +18,7 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import avatar2 from "../../../assets/images/group/group3.png";
 import ether_img from "../../../assets/images/post/post2.png";
 import bsc_img from "../../../assets/images/post/post3.png";
-import { array } from 'yup';
+// import { array } from 'yup';
 
 
 
@@ -26,6 +26,10 @@ import { array } from 'yup';
 function Settings(props) {
 
     // const [walletConnect, setWalletConnect] = useState(null);
+    const ModalTextSuccess = "New wallet address successfully added!";
+    const ModalTextError = "Please connect new wallet address!";
+
+    const [walletModalText, setWalletModalText] = useState("");
     const [walletsAddress, setWalletAddress] = useState([]);
     const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
     
@@ -33,7 +37,8 @@ function Settings(props) {
 
     useEffect(async () => {
         const bridge = "https://bridge.walletconnect.org";
-        const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
+      
+        const connector = new WalletConnect({bridge, qrcodeModal: QRCodeModal });
         if (connector.connected) {
             await connector.killSession();
         }
@@ -46,10 +51,7 @@ function Settings(props) {
      const connect = async () => {
         // bridge url
         const bridge = "https://bridge.walletconnect.org";
-        const connector = new WalletConnect({ bridge, qrcodeModal: QRCodeModal });
-
-        
-
+        const connector = new WalletConnect({bridge, qrcodeModal: QRCodeModal });
 
         // console.log(connector._chainId)
         // connector._chainId = 1;
@@ -58,7 +60,8 @@ function Settings(props) {
           await connector.createSession();
         }
         else {
-            alert("please connect another wallet!")
+            setWalletModalText(ModalTextError);
+            toggleWalletConnectResultModal();
         }
 
         connector.on("connect", (error, payload) => {
@@ -70,6 +73,7 @@ function Settings(props) {
       
             const { accounts } = payload.params[0];
             console.log(accounts);
+            setWalletModalText(ModalTextSuccess);
             toggleWalletConnectResultModal();
             setWalletAddress([...walletsAddress, ...accounts]);
             
@@ -741,7 +745,7 @@ function Settings(props) {
                             <div className="avatar-lg mx-auto mb-4 voice-record-img">
                                 <i className="ri-wallet-3-line"></i>
                             </div>
-                            <p className="text-muted">New wallet address added!</p>
+                            <p className="text-muted">{walletModalText}</p>
 
                         </div>
                     </ModalBody>
