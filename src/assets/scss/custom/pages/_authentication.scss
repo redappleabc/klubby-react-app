@@ -48,3 +48,41 @@
     background-color: transparent !important;
     border: none !important;
 }
+
+.code-input {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  .code-label {
+    margin-bottom: 16px;
+  }
+  .code-inputs {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 36px;
+  }
+  .code-inputs input {
+    border: none;
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    text-align: center;
+    height: 50px;
+    width: 40px;
+    border-radius: 10px;
+    margin: 0 4px;
+    border: 2px solid white;
+    font-size: 28px;
+    color: white;
+  }
+  .code-inputs input:focus {
+    outline: none;
+  }
+
+  

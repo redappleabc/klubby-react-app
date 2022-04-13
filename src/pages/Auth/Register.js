@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, useHistory } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -20,6 +20,7 @@ import error_img_white from '../../assets/images/icons/error_white.png';
  */
 const Register = (props) => {
     
+    let history = useHistory();
     // const [successMsg, setSuccessMsg] = useState(props.user)
     // useEffect()
     const clearError = () => {
@@ -29,6 +30,11 @@ const Register = (props) => {
 
     useEffect(clearError, []);
 
+    useEffect(() => {
+        if (props.user) {
+            history.push('/verify')
+        }
+    }, [props.user])
 
     // validation
     const formik = useFormik({
@@ -44,9 +50,11 @@ const Register = (props) => {
                 .required('Required')
         }),
         onSubmit: values => {
+            console.log(values);
             props.registerUser(values);
+            
         },
-        handleChange: values=>{
+        handleChange: values=> {
             console.log("adasd")
         }
     });
@@ -67,9 +75,9 @@ const Register = (props) => {
                             {
                                         props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
-                                    {
+                                    {/* {
                                         props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
-                                    }
+                                    } */}
                                     <div className="p-3">
 
                                         <Form onSubmit={formik.handleSubmit}>

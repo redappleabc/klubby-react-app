@@ -11,6 +11,7 @@ const Login = React.lazy(() => import("../pages/Auth/Login"));
 const Logout = React.lazy(() => import("../pages/Auth/Logout"));
 const ForgetPassword = React.lazy(() => import("../pages/Auth/ForgetPassword"));
 const Register = React.lazy(() => import("../pages/Auth/Register"));
+const Verify = React.lazy(() => import("../pages/Auth/Verify"));
 const LockScreen = React.lazy(() => import("../pages/Auth/LockScreen"));
 
 // declare all routes
@@ -31,6 +32,7 @@ const publicRoutes = [
   { path: "/login", component: Login },
   { path: "/forget-password", component: ForgetPassword },
   { path: "/register", component: Register },
+  { path: "/verify", component: Verify },
   { path: "/lock-screen", component: LockScreen}
 ];
 

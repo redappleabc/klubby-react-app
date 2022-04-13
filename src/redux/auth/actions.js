@@ -7,7 +7,8 @@ import {
     FORGET_PASSWORD,
     FORGET_PASSWORD_SUCCESS,
     API_FAILED,
-    LOGIN_ERROR
+    LOGIN_ERROR,
+    VERIRY_CODE_SUCCESS
 } from './constants';
 
 
@@ -30,6 +31,11 @@ export const registerUserSuccess = (user) => ({
     type: REGISTER_USER_SUCCESS,
     payload: user
 });
+
+export const verifyCodeSuccess = (user) => ({
+    type: VERIRY_CODE_SUCCESS,
+    payload: user
+})
 
 export const logoutUser = (history) => ({
     type: LOGOUT_USER,
