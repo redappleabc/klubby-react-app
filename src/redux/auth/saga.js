@@ -41,6 +41,7 @@ function* login({ payload: { username, password, history } }) {
     // alert();
     // loginError("response");
     // yield put(loginError("error"));
+    
     try {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws1"){
             const response = yield call(signIn, username, password)
