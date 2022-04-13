@@ -36,7 +36,10 @@ const Verify = (props) => {
             code6: "",
           },
         onSubmit: values => {
-            console.log(values);
+            // console.log(values);
+            const code = values.code1 + values.code2 + values.code3 + values.code4 + values.code5 + values.code6;
+            
+            props.verifyCodeSuccess(props.user.user.username, code, props.history)
             // alert()
             // console.log(values);
             // props.verifyCodeSuccess();
@@ -51,8 +54,11 @@ const Verify = (props) => {
                         <Col md={8} lg={6} xl={5} >
                             <div className="text-center mb-4">
 
-                                <h1>Please input the verify code</h1>
+                                <h1>Please input verify code</h1>
                             </div>
+                                    {
+                                        props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
+                                    }
                                     <div className="p-3">
                                         <Form onSubmit={formik.handleSubmit}>
                                             <div className="mb-3">
