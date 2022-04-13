@@ -32,9 +32,9 @@ export const registerUserSuccess = (user) => ({
     payload: user
 });
 
-export const verifyCodeSuccess = (user) => ({
+export const verifyCodeSuccess = (username, code, history) => ({
     type: VERIRY_CODE_SUCCESS,
-    payload: user
+    payload: {username, code, history}
 })
 
 export const logoutUser = (history) => ({

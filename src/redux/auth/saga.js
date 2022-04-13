@@ -41,9 +41,9 @@ function* login({ payload: { username, password, history } }) {
     // alert();
     // loginError("response");
     // yield put(loginError("error"));
-    
+
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH === "aws1"){
+        if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
             localStorage.setItem("authUser", JSON.stringify(response));
             
@@ -147,11 +147,14 @@ function* forgetPassword({ payload: { email } }) {
     }
 }
 
-function* verifycode({payload: username, code}) {
+function* verifycode({payload: {username, code, history}}) {
+    console.log(username + code);
     try {
         if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
-            const response = yield call(verifycode, username, code);
-            alert(response);
+            const response = yield call(confirmSignUp, username, code);
+            if (response) {
+                history.push('/login');
+            }
         }
     } catch (error) {
         console.log(error)
@@ -176,7 +179,7 @@ export function* watchForgetPassword() {
 }
 
 export function* watchVerifyCode() {
-    yield takeEvery(VERIRY_CODE_SUCCESS, confirmSignUp);
+    yield takeEvery(VERIRY_CODE_SUCCESS, verifycode);
 }
 
 function* authSaga() {
@@ -185,6 +188,7 @@ function* authSaga() {
         fork(watchLogoutUser),
         fork(watchRegisterUser),
         fork(watchForgetPassword),
+        fork(watchVerifyCode),
     ]);
 }
 

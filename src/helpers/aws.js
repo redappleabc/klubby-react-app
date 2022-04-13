@@ -25,6 +25,9 @@ async function signUp(username, password, email) {
 
 
 async function confirmSignUp(username, code) {
+    console.log("----------------------------------------")
+    console.log(username)
+    console.log(code);
     return new Promise((resolve, reject) => {
         Auth.confirmSignUp(username, code).then((user) => {
             resolve(user)

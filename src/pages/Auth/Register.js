@@ -52,7 +52,6 @@ const Register = (props) => {
         onSubmit: values => {
             console.log(values);
             props.registerUser(values);
-            
         },
         handleChange: values=> {
             console.log("adasd")
