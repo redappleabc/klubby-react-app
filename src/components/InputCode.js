@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const InputCode = ({ length, label, loading, onComplete }) => {
+const InputCode = ({ length, label, loading, onComplete, formik }) => {
   const [code, setCode] = useState([...Array(length)].map(() => ""));
   const inputs = useRef([]);
   // Typescript
@@ -40,12 +40,23 @@ const InputCode = ({ length, label, loading, onComplete }) => {
               type="text"
               inputMode="numeric"
               maxLength={1}
-              value={num}
+              value={eval("formik.values"+"code"+(idx+1))}
+              
               autoFocus={!code[0].length && idx === 0}
               readOnly={loading}
-              onChange={e => processInput(e, idx)}
+              onChange={e=> {
+                const num = e.target.value;
+                if (/[^0-9]/.test(num)){
+                  e.target.value=""
+                  return
+                };
+                processInput(e,idx);
+                formik.handleChange(e);
+              }
+              }
               onKeyUp={e => onKeyUp(e, idx)}
               ref={ref => inputs.current.push(ref)}
+              name={"code"+(idx+1)}
             />
           );
         })}

@@ -7,7 +7,7 @@ import InputCode from '../../components/InputCode';
 import * as Yup from 'yup';
 
 //redux store
-import { loginUser, apiError } from '../../redux/actions';
+import { verifyCodeSuccess, apiError } from '../../redux/actions';
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 
@@ -18,7 +18,7 @@ import error_img_white from '../../assets/images/icons/error_white.png';
  * Login component
  * @param {*} props 
  */
-const Login = (props) => {
+const Verify = (props) => {
     const [loading, setLoading] = useState(false);
     const clearError= useCallback(() => { props.apiError("");}, [])
     useEffect(()=>{
@@ -28,21 +28,20 @@ const Login = (props) => {
     // validation
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: ''
-        },
-        validationSchema: Yup.object({
-            email: Yup.string().required('Please Enter Your Username'),
-            password: Yup.string().required('Please Enter Your Password')
-        }),
+            code1: "",
+            code2: "",
+            code3: "",
+            code4: "",
+            code5: "",
+            code6: "",
+          },
         onSubmit: values => {
-            props.loginUser(values.email, values.password, props.history);
+            console.log(values);
+            // alert()
+            // console.log(values);
+            // props.verifyCodeSuccess();
         },
     });
-
-    if (localStorage.getItem("authUser")) {
-        return <Redirect to="/" />;
-    }
 
     return (
         <React.Fragment>
@@ -53,7 +52,6 @@ const Login = (props) => {
                             <div className="text-center mb-4">
 
                                 <h1>Please input the verify code</h1>
-
                             </div>
                                     <div className="p-3">
                                         <Form onSubmit={formik.handleSubmit}>
@@ -63,9 +61,10 @@ const Login = (props) => {
                                                     <InputCode
                                                         length={6}
                                                         loading={loading}
+                                                        formik={formik}
                                                         onComplete={code => {
                                                         setLoading(true);
-                                                        setTimeout(() => setLoading(false), 10000);
+                                                        setTimeout(() => setLoading(false), 100);
                                                         }}
                                                     />
  
@@ -95,4 +94,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error };
 };
 
-export default withRouter(connect(mapStateToProps, { loginUser, apiError })(Login));
+export default withRouter(connect(mapStateToProps, { verifyCodeSuccess, apiError })(Verify));
