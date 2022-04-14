@@ -3,14 +3,15 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
-import {signIn, signUp, _forgetPassword, confirmSignUp} from "../../helpers/aws"
+import {signIn, signUp, _forgetPassword, confirmSignUp, ResetPwdSuccess} from "../../helpers/aws"
 
 import {
     LOGIN_USER,
     LOGOUT_USER,
     REGISTER_USER,
     FORGET_PASSWORD,
-    VERIRY_CODE_SUCCESS
+    VERIRY_CODE_SUCCESS,
+    FORGET_PASSWORD_SUCCESS
 } from './constants';
 
 
@@ -114,30 +115,33 @@ function* register({ payload: { user } }) {
 /**
  * forget password
  */
-function* forgetPassword({ payload: { email } }) {
+function* forgetPassword({ payload: { username, history } }) {
     try {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
-            const response = yield call(_forgetPassword, email)
+            const response = yield call(_forgetPassword, username)
                 console.log(response);
             if (response) {
+                history.push("/verify-pwd-reset");
                 yield put(
                     forgetPasswordSuccess(
-                      "Reset link are sended to your mailbox, check there first"
+                      "Reset code are sended to your mailbox, check there first"
                     )
                   );
             }  
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
-            const response = yield call(fireBaseBackend.forgetPassword, email);
+            const response = yield call(fireBaseBackend.forgetPassword, username);
             if (response) {
-              yield put(
-                forgetPasswordSuccess(
-                  "Reset link are sended to your mailbox, check there first"
-                )
-              );
+               
+                yield put(
+                    forgetPasswordSuccess(
+                    "Reset link are sended to your mailbox, check there first"
+                    )
+                
+                );
             }
         } else {
-            const response = yield call(create, '/forget-pwd', { email });
+            const response = yield call(create, '/forget-pwd', { username });
             yield put(forgetPasswordSuccess(response));
         }
     } catch (error) {
@@ -162,6 +166,19 @@ function* verifycode({payload: {username, code, history}}) {
     }
 }
 
+function* ForgetPasswordSuccess({payload: {username, code, new_password, history}}) {
+    try {
+        if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
+            const response = yield call(ResetPwdSuccess, username, code, new_password);
+            if (response) {
+                history.push('/login');
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        yield put(apiError(error))
+    }
+}
 export function* watchLoginUser() {
     yield takeEvery(LOGIN_USER, login);
 }
@@ -182,12 +199,17 @@ export function* watchVerifyCode() {
     yield takeEvery(VERIRY_CODE_SUCCESS, verifycode);
 }
 
+export function* watchForgetPasswordSuccess() {
+    yield takeEvery(FORGET_PASSWORD_SUCCESS, ForgetPasswordSuccess);
+}
+
 function* authSaga() {
     yield all([
         fork(watchLoginUser),
         fork(watchLogoutUser),
         fork(watchRegisterUser),
         fork(watchForgetPassword),
+        fork(watchForgetPasswordSuccess),
         fork(watchVerifyCode),
     ]);
 }

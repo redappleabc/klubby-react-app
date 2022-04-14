@@ -25,9 +25,6 @@ async function signUp(username, password, email) {
 
 
 async function confirmSignUp(username, code) {
-    console.log("----------------------------------------")
-    console.log(username)
-    console.log(code);
     return new Promise((resolve, reject) => {
         Auth.confirmSignUp(username, code).then((user) => {
             resolve(user)
@@ -54,7 +51,6 @@ async function _forgetPassword(username) {
          //resolve("success");
         Auth.forgotPassword(username).then((user)=>{
             resolve(user)
-
         }, (error)=>{
             reject(error.message)
         })
@@ -70,4 +66,16 @@ async function resendConfirmationCode(username) {
     }
 }
 
-export {signIn, signUp, confirmSignUp, resendConfirmationCode, _forgetPassword }
+async function ResetPwdSuccess(username, code, new_password) {
+    return new Promise((resolve, reject) => {
+        //resolve("success");
+       Auth.forgotPasswordSubmit(username, code, new_password).then((user)=>{
+           resolve(user)
+
+       }, (error)=>{
+           reject(error.message)
+       })
+   });
+}
+
+export {signIn, signUp, confirmSignUp, resendConfirmationCode, _forgetPassword, ResetPwdSuccess }

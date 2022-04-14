@@ -42,14 +42,14 @@ export const logoutUser = (history) => ({
     payload: { history }
 });
 
-export const forgetPassword = (email) => ({
+export const forgetPassword = (username, history) => ({
     type: FORGET_PASSWORD,
-    payload: { email }
+    payload: { username, history }
 });
 
-export const forgetPasswordSuccess = (passwordResetStatus) => ({
+export const forgetPasswordSuccess = (username, code, new_password, history) => ({
     type: FORGET_PASSWORD_SUCCESS,
-    payload: passwordResetStatus
+    payload: { username, code, new_password, history }
 });
 
 export const apiError = (error) => ({
