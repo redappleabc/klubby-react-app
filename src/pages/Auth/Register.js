@@ -32,7 +32,7 @@ const Register = (props) => {
 
     useEffect(() => {
         if (props.user) {
-            history.push('/verify')
+            history.push('/verify-register')
         }
     }, [props.user])
 

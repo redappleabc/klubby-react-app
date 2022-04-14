@@ -30,14 +30,14 @@ const ForgetPassword = (props) => {
     // validation
     const formik = useFormik({
         initialValues: {
-            email: ''
+            username: ''
         },
         validationSchema: Yup.object({
-            email: Yup.string()
+            username: Yup.string()
                 .required('Required')
         }),
         onSubmit: values => {
-            props.forgetPassword(values.email);
+            props.forgetPassword(values.username, props.history);
         },
     });
 
@@ -60,29 +60,29 @@ const ForgetPassword = (props) => {
                                         }
                                         {
                                             props.passwordResetStatus ? <Alert className="text-center mb-4">{props.passwordResetStatus}</Alert>
-                                                : <Alert className="text-center mb-4">Enter your Email and instructions will be sent to you</Alert>
+                                                : <Alert className="text-center mb-4">Enter your Username and instructions will be sent to you</Alert>
                                         }
                                         <Form onSubmit={formik.handleSubmit}>
 
                                             <FormGroup className="mb-4">
-                                                <Label className="form-label">Email</Label>
+                                                <Label className="form-label">Username</Label>
                                                 <InputGroup className="mb-3 bg-soft-light rounded-3">
                                                     <span className="input-group-text border-light text-muted">
                                                         <i className="ri-mail-line"></i>
                                                     </span>
                                                     <Input
                                                         type="text"
-                                                        id="email"
-                                                        name="email"
+                                                        id="username"
+                                                        name="username"
                                                         className="form-control form-control-lg border-light bg-soft-light"
                                                         placeholder="Enter Email"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
-                                                        value={formik.values.email}
-                                                        invalid={formik.touched.email && formik.errors.email ? true : false}
+                                                        value={formik.values.username}
+                                                        invalid={formik.touched.username && formik.errors.username ? true : false}
                                                     />
-                                                    {formik.touched.email && formik.errors.email ? (
-                                                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
+                                                    {formik.touched.username && formik.errors.username ? (
+                                                        <FormFeedback type="invalid">{formik.errors.username}</FormFeedback>
                                                     ) : null}
                                                 </InputGroup>
                                             </FormGroup>
