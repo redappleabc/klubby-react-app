@@ -39,10 +39,22 @@ async function confirmSignUp(username, code) {
 async function signIn(username, password) {
     return new Promise((resolve, reject) => {
         Auth.signIn(username, password).then((user)=>{
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user);
             resolve(user)
         }, (error)=>{
             reject(error.message)
         })
+    });
+}
+
+async function signOut(){
+    return new Promise((resolve, reject)=>{
+        Auth.signOut().then(()=>{
+            resolve("signout succeed")
+        },(error)=>{
+            reject("signout error")
+        })
+
     });
 }
 
@@ -78,4 +90,8 @@ async function ResetPwdSuccess(username, code, new_password) {
    });
 }
 
-export {signIn, signUp, confirmSignUp, resendConfirmationCode, _forgetPassword, ResetPwdSuccess }
+async function isAuthenticated(){
+    return  Auth.currentAuthenticatedUser();
+}
+
+export {signIn, signUp, confirmSignUp, resendConfirmationCode, _forgetPassword, ResetPwdSuccess, signOut, isAuthenticated }

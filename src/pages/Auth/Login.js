@@ -1,14 +1,16 @@
 import React, { useEffect,useCallback } from 'react';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 import { connect } from 'react-redux';
-import { Link, withRouter, Redirect } from 'react-router-dom';
+import { Link, withRouter, Redirect, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 //redux store
-import { loginUser, apiError } from '../../redux/actions';
+import { loginUser, apiError, loginUserSuccess } from '../../redux/actions';
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
+import { Auth } from 'aws-amplify';
+import { isAuthenticated } from '../../helpers/aws';
 
 //Import Images
 
@@ -18,6 +20,7 @@ import error_img_white from '../../assets/images/icons/error_white.png';
  * @param {*} props 
  */
 const Login = (props) => {
+    let history = useHistory();
     const clearError= useCallback(() => { props.apiError("");}, [])
     useEffect(()=>{
         clearError();
@@ -37,8 +40,17 @@ const Login = (props) => {
             props.loginUser(values.email, values.password, props.history);
         },
     });
+    if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
+        isAuthenticated().then((user)=>{
+            if(user){
+                //return <Redirect to="/" />;
+                history.push("/")
+            }
+        }).catch((error=>{
 
-    if (localStorage.getItem("authUser")) {
+        }))
+    }
+    else if (localStorage.getItem("authUser")) {
         return <Redirect to="/" />;
     }
 
@@ -136,4 +148,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error };
 };
 
-export default withRouter(connect(mapStateToProps, { loginUser, apiError })(Login));
+export default withRouter(connect(mapStateToProps, { loginUser, apiError, loginUserSuccess })(Login));

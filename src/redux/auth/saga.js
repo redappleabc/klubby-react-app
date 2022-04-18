@@ -3,7 +3,7 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
-import {signIn, signUp, _forgetPassword, confirmSignUp, ResetPwdSuccess} from "../../helpers/aws"
+import {signIn, signUp, _forgetPassword, confirmSignUp, ResetPwdSuccess, signOut} from "../../helpers/aws"
 
 import {
     LOGIN_USER,
@@ -46,9 +46,8 @@ function* login({ payload: { username, password, history } }) {
     try {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
-            localStorage.setItem("authUser", JSON.stringify(response));
-            
             yield put(loginUserSuccess(response));
+            localStorage.setItem("authUser", JSON.stringify(response));
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
             const response = yield call(fireBaseBackend.loginUser, username, password);
@@ -79,6 +78,9 @@ function* logout({ payload: { history } }) {
         localStorage.removeItem("authUser");
         if (process.env.REACT_APP_DEFAULTAUTH === 'firebase') {
             yield call(fireBaseBackend.logout);
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === 'aws'){
+            yield call(signOut);
         }
         yield call(() => {
             history.push("/login");
