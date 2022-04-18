@@ -16,6 +16,11 @@ import fakeBackend from './helpers/fake-backend';
 
 import ThemeProvider from "./Contexts/ThemeProvider";
 
+import {ApolloProvider} from "@apollo/client";
+
+import apollo_client from "./apollo"
+
+
 // import { StatusBar } from '@capacitor/status-bar';
 // import { Capacitor } from '@capacitor/core';
 
@@ -44,9 +49,12 @@ fakeBackend();
 
 function App() {
   return (
-    <ThemeProvider>
-      <Routes />
-    </ThemeProvider>
+    <ApolloProvider client={apollo_client}>
+      <ThemeProvider>
+        <Routes />
+      </ThemeProvider>
+    </ApolloProvider>
+    
   );
 }
 

@@ -18,12 +18,21 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import avatar2 from "../../../assets/images/group/group3.png";
 import ether_img from "../../../assets/images/post/post2.png";
 import bsc_img from "../../../assets/images/post/post3.png";
+
+import {connect}  from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+
+
+
+import { gql, useQuery, useMutation } from '@apollo/client';
 // import { array } from 'yup';
 
 
 
 
 function Settings(props) {
+    
 
     // const [walletConnect, setWalletConnect] = useState(null);
     const ModalTextSuccess = "New wallet address successfully added!";
@@ -34,6 +43,29 @@ function Settings(props) {
     const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
     
     const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
+    console.log("settings",props)
+    const username = props.user.username
+    // apollo
+    const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username)}`;
+
+    const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
+
+
+    const { wallet_loading, wallet_error, data } = useQuery(GET_WALLETS,
+        {variables:{username}});
+    
+    console.log((data))
+    console.log(wallet_loading)
+    console.log(wallet_error)
+    
+
+    /*const  [mutateFunction, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
+    mutateFunction({variables:{username:username,wallets:wallet_address}})
+    console.log(mutateFunction)
+    if(error){
+        console.log(error)
+    }
+    console.log(data)*/
 
     useEffect(() => {
         const bridge = "https://bridge.walletconnect.org";
@@ -42,9 +74,11 @@ function Settings(props) {
         if (connector.connected) {
             connector.killSession();
         }
-        
+
+      
         let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
         setWalletAddress(wallets);
+
     }, [])
 
 
@@ -754,5 +788,10 @@ function Settings(props) {
         </React.Fragment>
     );
 }
-
-export default Settings;
+const mapStateToProps = (state) => {
+    const { user, loading, error } = state.Auth;
+    console.log("ddddddddd")
+    console.log(state)
+    return { user, loading, error };
+};
+export default withRouter(connect(mapStateToProps)(Settings));

@@ -17,10 +17,12 @@ export const loginUser = (username, password, history) => ({
     payload: { username, password, history }
 });
 
-export const loginUserSuccess = (user) => ({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-});
+export const loginUserSuccess = (user) => {
+    return{
+        type: LOGIN_USER_SUCCESS,
+        payload: user
+    }
+};
 
 export const registerUser = (user) => ({
     type: REGISTER_USER,
