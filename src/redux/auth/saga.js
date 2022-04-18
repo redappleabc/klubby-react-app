@@ -47,7 +47,7 @@ function* login({ payload: { username, password, history } }) {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
             yield put(loginUserSuccess(response));
-            localStorage.setItem("authUser", JSON.stringify(response));
+           
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
             const response = yield call(fireBaseBackend.loginUser, username, password);

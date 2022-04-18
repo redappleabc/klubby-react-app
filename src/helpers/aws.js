@@ -39,7 +39,7 @@ async function confirmSignUp(username, code) {
 async function signIn(username, password) {
     return new Promise((resolve, reject) => {
         Auth.signIn(username, password).then((user)=>{
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",user);
+           
             resolve(user)
         }, (error)=>{
             reject(error.message)

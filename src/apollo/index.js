@@ -3,15 +3,15 @@ import {
     InMemoryCache,
     createHttpLink,
   } from "@apollo/client";
-  import Auth from "aws-amplify";
+  import {Auth} from "aws-amplify";
 
 
 
 import {createAuthLink} from "aws-appsync-auth-link";
 
-const getToken = () =>{
-    const authUser =  JSON.parse(localStorage.getItem("authUser"))
-    return authUser.signInUserSession.idToken.jwtToken;
+const getToken = async () =>{
+    const token = (await Auth.currentSession()).getIdToken().getJwtToken();
+    return token;
 }
 
 
