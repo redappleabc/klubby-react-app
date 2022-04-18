@@ -39,33 +39,32 @@ function Settings(props) {
     const ModalTextError = "Please connect new wallet address!";
 
     const [walletModalText, setWalletModalText] = useState("");
-    const [walletsAddress, setWalletAddress] = useState([]);
+    const [walletsAddress, setWalletsAddress] = useState([]);
+    const [walletsAddressLoaded, setWalletsAddressLoaded] = useState(false);
     const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
     
     const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
-    console.log("settings",props)
+    
     const username = props.user.username
     // apollo
-    const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username)}`;
+    const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username){wallets}}`;
 
     const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
 
-
-    const { wallet_loading, wallet_error, data } = useQuery(GET_WALLETS,
-        {variables:{username}});
-    
-    console.log((data))
-    console.log(wallet_loading)
-    console.log(wallet_error)
-    
-
-    /*const  [mutateFunction, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
-    mutateFunction({variables:{username:username,wallets:wallet_address}})
-    console.log(mutateFunction)
-    if(error){
-        console.log(error)
+    const { wallet_loading, wallet_error, data } = useQuery(GET_WALLETS, {variables:{username}});
+    if(!walletsAddressLoaded && data){
+        const _str_walletsAddress = data.getUserWallets.wallets;
+        if(_str_walletsAddress !== ""){
+            setWalletsAddress(_str_walletsAddress.split(","));
+        }
+        setWalletsAddressLoaded(true)
+        
     }
-    console.log(data)*/
+   
+
+    const  [mutateWalletAddress, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
+    //mutateWalletAddress({variables:{username:username,wallets:wallet_address}})
+    
 
     useEffect(() => {
         const bridge = "https://bridge.walletconnect.org";
@@ -74,11 +73,6 @@ function Settings(props) {
         if (connector.connected) {
             connector.killSession();
         }
-
-      
-        let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
-        setWalletAddress(wallets);
-
     }, [])
 
 
@@ -109,7 +103,11 @@ function Settings(props) {
             console.log(accounts);
             setWalletModalText(ModalTextSuccess);
             toggleWalletConnectResultModal();
-            setWalletAddress([...walletsAddress, ...accounts]);
+            
+            const _walletsAddress = [...walletsAddress, ...accounts]
+            setWalletsAddress(_walletsAddress);
+            const _str_walletsAddress = _walletsAddress.join();
+            mutateWalletAddress({variables:{username:username, wallets:_str_walletsAddress}})
             
           });
         
@@ -149,7 +147,10 @@ function Settings(props) {
         console.log(key)
         let wallet = [...walletsAddress];
         wallet.splice(key, 1);
-        setWalletAddress([...wallet]);
+        const _walletsAddress = [...wallet];
+        setWalletsAddress(_walletsAddress);
+        const _str_walletsAddress = _walletsAddress.join();
+        mutateWalletAddress({variables:{username:username, wallets:_str_walletsAddress}})
     }
 
 
@@ -790,8 +791,6 @@ function Settings(props) {
 }
 const mapStateToProps = (state) => {
     const { user, loading, error } = state.Auth;
-    console.log("ddddddddd")
-    console.log(state)
     return { user, loading, error };
 };
 export default withRouter(connect(mapStateToProps)(Settings));
