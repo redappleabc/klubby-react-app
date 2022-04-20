@@ -58,7 +58,7 @@ function Settings(props) {
     
     if(!walletsAddressLoaded && data){
         const _str_walletsAddress = data.getUserWallets.wallets;
-        if(_str_walletsAddress !== ""){
+        if(_str_walletsAddress !== "" && _str_walletsAddress !== null){
             setWalletsAddress(_str_walletsAddress.split(","));
         }
         setWalletsAddressLoaded(true)
