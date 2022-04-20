@@ -42,16 +42,20 @@ function Settings(props) {
     const [walletsAddress, setWalletsAddress] = useState([]);
     const [walletsAddressLoaded, setWalletsAddressLoaded] = useState(false);
     const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
+
     
     const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
     
     const username = props.user.username
+    const email = props.user.attributes.email;
     // apollo
     const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username){wallets}}`;
 
     const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
 
-    const { wallet_loading, wallet_error, data } = useQuery(GET_WALLETS, {variables:{username}});
+    const { loading, error, data } = useQuery(GET_WALLETS, {variables:{username}});
+
+    
     if(!walletsAddressLoaded && data){
         const _str_walletsAddress = data.getUserWallets.wallets;
         if(_str_walletsAddress !== ""){
@@ -63,6 +67,7 @@ function Settings(props) {
    
 
     const  [mutateWalletAddress, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
+    
     //mutateWalletAddress({variables:{username:username,wallets:wallet_address}})
     
 
@@ -314,7 +319,7 @@ function Settings(props) {
 
                         </div>
 
-                        <h5 className="font-size-16 mb-1 text-truncate">The Dip Daddy</h5>
+                        <h5 className="font-size-16 mb-1 text-truncate">{username}</h5>
                         <Dropdown isOpen={dropdownOpen} toggle={toggle} className="d-inline-block mb-1">
                             <DropdownToggle tag="a" className="text-muted pb-1 d-block" >
                                 Available <i className="mdi mdi-chevron-down"></i>
@@ -341,7 +346,7 @@ function Settings(props) {
                                         <i className="ri-profile-line"></i>Name   
                                     </div>
                                     <div>
-                                        Rahui Gautam
+                                        {username}
                                     </div>
                                 </div>
                                 <div className='profile-container'>
@@ -374,7 +379,7 @@ function Settings(props) {
                                         <i className="ri-mail-line"></i>Email   
                                     </div>
                                     <div>
-                                        Sample@gmail.com
+                                        {email}
                                     </div>
                                 </div>
                                 {/* <div className="d-grid mt-4">
