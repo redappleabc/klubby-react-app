@@ -91,7 +91,6 @@ async function ResetPwdSuccess(username, code, new_password) {
 }
 
 async function isAuthenticated(){
-    console.log((await Auth.currentAuthenticatedUser()))
     return  Auth.currentAuthenticatedUser();
 }
 
