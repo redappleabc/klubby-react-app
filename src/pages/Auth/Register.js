@@ -50,7 +50,7 @@ const Register = (props) => {
                 .required('Required')
         }),
         onSubmit: values => {
-            console.log(values);
+            //console.log(values);
             props.registerUser(values);
         },
         handleChange: values=> {

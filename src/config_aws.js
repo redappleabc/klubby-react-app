@@ -1,7 +1,7 @@
 const config = {
     region: 'us-east-1',
-    userPoolId: 'us-east-1_CgP3u6TjR',
-    userPoolWebClientId: '7ohf70ttvsd0thgq2ebu0695pu'
+    userPoolId: 'us-east-1_picEXpb5v',
+    userPoolWebClientId: '79f3mof59ks2p1oi9jn3thuv63'
 };
 
 export default config;

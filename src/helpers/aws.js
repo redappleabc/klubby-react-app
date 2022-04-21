@@ -6,13 +6,12 @@ import {Auth} from 'aws-amplify';
 
 async function signUp(username, password, email) {
     return new Promise((resolve, reject) => {
-        let name = "testawsname"
         Auth.signUp({
             username,
             password,
             attributes: {
-                email,          // optional
-                name
+                email:email,          // optional
+                name:username
                 // other custom attributes 
             }
         }).then((user) => {
