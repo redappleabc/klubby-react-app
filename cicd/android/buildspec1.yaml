@@ -21,7 +21,7 @@ phases:
       - cd yo
       - ls
       - npm cache clean -f
-      # - npm install axios
+      - npm install axios
       # - npm install axios
       # Install TypeScript
       # - npm install -D typescript
