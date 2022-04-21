@@ -15,16 +15,9 @@ phases:
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - unzip awscliv2.zip
       - ./aws/install
-      - ls
       - node --version
-      - mkdir yo
-      - cd yo
-      - ls
-      - npm cache clean -f
-      - npm install axios
-      # - npm install axios
       # Install TypeScript
-      # - npm install -D typescript
+      - npm install -D typescript
       # Build iOS app
       # - npm install
       # - npm run build
