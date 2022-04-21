@@ -19,7 +19,8 @@ phases:
       - node --version
       - mkdir yo
       - cd yo
-      - npm install axios
+      - ls
+      # - npm install axios
       # - npm install axios
       # Install TypeScript
       # - npm install -D typescript
