@@ -20,7 +20,7 @@ phases:
       - mkdir yo
       - cd yo
       - ls
-      # - npm install axios
+      - npm install axios
       # - npm install axios
       # Install TypeScript
       # - npm install -D typescript
