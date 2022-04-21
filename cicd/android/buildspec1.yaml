@@ -19,7 +19,7 @@ phases:
       - node --version
       # - npm install axios
       # Install TypeScript
-      # - npm install -D typescript
+      - npm install -D typescript
       # Build iOS app
       # - npm install
       # - npm run build
