@@ -10,8 +10,7 @@ async function signUp(username, password, email) {
             username,
             password,
             attributes: {
-                email:email,          // optional
-                name:username
+                email:email          // optional
                 // other custom attributes 
             }
         }).then((user) => {
