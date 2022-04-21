@@ -18,7 +18,7 @@ phases:
       # Install TypeScript
       # - npm install -D typescript
       # Build iOS app
-      - npm install
+      # - npm install
       # - npm run build
       # - npm install -g @ionic/cli
       # - ionic capacitor add android
