@@ -16,7 +16,8 @@ phases:
       - unzip awscliv2.zip
       - ./aws/install
       - ls
-      - npm install axios
+      - node --version
+      # - npm install axios
       # Install TypeScript
       # - npm install -D typescript
       # Build iOS app
