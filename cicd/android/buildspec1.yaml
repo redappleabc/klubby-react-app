@@ -17,6 +17,9 @@ phases:
       - ./aws/install
       - ls
       - node --version
+      - mkdir yo
+      - cd yo
+      - npm install axios
       # - npm install axios
       # Install TypeScript
       # - npm install -D typescript
