@@ -16,6 +16,7 @@ phases:
       # - unzip awscliv2.zip
       # - ./aws/install
       - ls
+      - /bin/bash
       - node --version
       # Install TypeScript
       # - npm install -D typescript
