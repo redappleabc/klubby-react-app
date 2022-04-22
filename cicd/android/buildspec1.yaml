@@ -18,6 +18,7 @@ phases:
       - ls
       - ls ~
       - pwd
+      - env
       - node --version
       # Install TypeScript
       # - npm install -D typescript
