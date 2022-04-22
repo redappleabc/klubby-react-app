@@ -15,14 +15,15 @@ phases:
       # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       # - unzip awscliv2.zip
       # - ./aws/install
-      - node --version
+      # - node --version
+      - ls
       # Install TypeScript
-      - npm install -D typescript
+      # - npm install -D typescript
       # Build iOS app
-      - npm install
-      - npm run build
-      - npm install -g @ionic/cli
-      - ionic capacitor add android
+      # - npm install
+      # - npm run build
+      # - npm install -g @ionic/cli
+      # - ionic capacitor add android
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
 # artifacts:
