@@ -16,25 +16,25 @@ phases:
       # - unzip awscliv2.zip
       # - ./aws/install
 
-      # - export NVM_PATH=/usr/local/nvm/versions/node/v14.17.4/lib/node
-      # - export NVM_BIN=/usr/local/nvm/versions/node/v14.17.4/bin
+      # update path to include intalled node version
       - export PATH=$PATH:/usr/local/nvm/versions/node/v14.17.4/bin
+
       # Install TypeScript
       - npm install -D typescript
-      # Build iOS app
+
+      # Build android app
       - npm install
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add android
       - cd android
+
+      #build android native app
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b build.gradle
-      - ls app/build/outputs/apk/release
-      - pwd
-      - env
+
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
 artifacts:
   files:
     - 'android/app/build/outputs/apk/release/**/*'
-    # - '/codebuild/output/src583553025/src/android/app/build/outputs/apk/release/*'
   name: 'klubby-android-deployment-dev-BuildArtifact'
