@@ -15,18 +15,12 @@ phases:
       # - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       # - unzip awscliv2.zip
       # - ./aws/install
-      - ls
-      - ls ~
-      - pwd
-      - export NVM_PATH=/usr/local/nvm/versions/node/v14.17.4/lib/node
-      - export NVM_BIN=/usr/local/nvm/versions/node/v14.17.4/bin
+
+      # - export NVM_PATH=/usr/local/nvm/versions/node/v14.17.4/lib/node
+      # - export NVM_BIN=/usr/local/nvm/versions/node/v14.17.4/bin
       - export PATH=$PATH:/usr/local/nvm/versions/node/v14.17.4/bin
-      - /usr/local/nvm/versions/node/v14.17.4/bin/node --version
-      - env
-      # - nvm versions
-      - node --version
       # Install TypeScript
-      # - npm install -D typescript
+      - npm install -D typescript
       # Build iOS app
       # - npm install
       # - npm run build
