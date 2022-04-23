@@ -27,9 +27,9 @@ phases:
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add android
-      - cd android
 
       #build android native app
+      - cd android
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b build.gradle
 
       # Copy to S3
