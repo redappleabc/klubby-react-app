@@ -30,10 +30,11 @@ phases:
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b build.gradle
       - ls app/build/outputs/apk/release
       - pwd
+      - env
       # Copy to S3
       # - aws s3 cp --recursive android s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
-artifacts:
-  files:
-    - 'android/**/*'
+# artifacts:
+  # files:
+    # - 'android/**/*'
     # - '/codebuild/output/src583553025/src/android/app/build/outputs/apk/release/*'
-  name: 'klubby-android-deployment-dev-BuildArtifact'
+  # name: 'klubby-android-deployment-dev-BuildArtifact'
