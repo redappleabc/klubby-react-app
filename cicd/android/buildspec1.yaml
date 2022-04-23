@@ -21,9 +21,9 @@ phases:
       - export NVM_PATH=/usr/local/nvm/versions/node/v14.17.4/lib/node
       - export NVM_BIN=/usr/local/nvm/versions/node/v14.17.4/bin
       - export PATH=$PATH:/usr/local/nvm/versions/node/v14.17.4/bin
-      - ls /usr/local/nvm/versions/node/v14.17.4/bin
+      - /usr/local/nvm/versions/node/v14.17.4/bin/node --version
       - env
-      - nvm versions
+      # - nvm versions
       - node --version
       # Install TypeScript
       # - npm install -D typescript
