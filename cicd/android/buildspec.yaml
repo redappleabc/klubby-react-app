@@ -34,7 +34,7 @@ phases:
 
       # Copy to S3
       - echo $ENVIRONMENT
-      - aws s3 cp --recursive android/app/build/outputs/apk/release s3://klubby-${ENVIRONMENT}-andrioid-pipeline-atifacts-bucket
+      - aws s3 cp --recursive app/build/outputs/apk/release s3://klubby-${ENVIRONMENT}-andrioid-pipeline-atifacts-bucket/build
       #  s3://klubby-deployment-ios-dev-pipelineartifactsbucket-1gw13zwjh93vj/android/$ENVIRONMENT
 artifacts:
   files:
