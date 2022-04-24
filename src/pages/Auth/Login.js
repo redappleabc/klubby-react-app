@@ -81,7 +81,7 @@ const Login = (props) => {
                                                         id="email"
                                                         name="email"
                                                         className="form-control form-control-lg border-light bg-soft-light"
-                                                        placeholder="Enter email"
+                                                        placeholder="Enter username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.email}
