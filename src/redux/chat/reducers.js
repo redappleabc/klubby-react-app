@@ -156,12 +156,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]      
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }      
         },
         { gourpId : 2, name : "Klubby First 1000", profilePicture : group2, isGroup : true, unRead : 23,  desc : "We were all early to this", groupType: "main",
             members : [
@@ -172,12 +184,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }       
         },
         { gourpId : 3, name : "Kishu Inu", profilePicture : group3, isGroup : true, unRead : 0, isNew : true, desc : "I remember when this first", groupType: "main",
             members : [
@@ -188,12 +212,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }      
         },
         { gourpId : 4, name : "Bitcoin Bullies", profilePicture : group4, isGroup : true, unRead : 0,  desc : "Back in 2009 I was mining BTC", groupType: "main",
             members : [
@@ -204,12 +240,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }       
         },
         { gourpId : 5, name : "CryptoPunks", profilePicture : group5, isGroup : true, unRead : 0, isNew : true, desc : "We used to be number 1 ", groupType: "main",
             members : [
@@ -220,12 +268,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }       
         },
         { gourpId : 6, name : "Bored Ape Yacht Club", profilePicture : group6, isGroup : true, unRead : 0,  desc : "The most elite crypto club", groupType: "main",
             members : [
@@ -236,12 +296,24 @@ const INIT_STATE = {
                 { userId : 5, name : "Yana sha", profilePicture : avatar3, role : null },
                 { userId : 6, name : "Steve Walker", profilePicture : avatar6, role : null },
             ],
-            messages: [
-                { id : 33, isToday : true },
-                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false },
-                { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
-                { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
-            ]       
+            messages: {
+                "main": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "whale": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }
+                ],
+                "announcement": [
+                    { id : 33, isToday : true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage : false, isFileMessage : false }, 
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage : true, isFileMessage : false, imageMessage : [ { image : img6 } ] },
+                ]
+            }      
         },
     ],
     contacts : [
@@ -274,7 +346,14 @@ const INIT_STATE = {
             { id: 2, username: "ary Farmer", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
             { id: 3, username: "Rocky Jackson",  userimg: avatar4, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
         ]  },
-        { id : 3,  name : "Crypto Cicero", profilePicture : post1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Peace, Love, and Crypto Justice is what I stand for.",
+    { id : 3,  name : "Crypto Cicero", profilePicture : post1, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img4, content: "Peace, Love, and Crypto Justice is what I stand for.",
+      upvote: 1, comment: 9, isupvote: false,
+      messages: [
+        { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },
+        { id: 2, username: "Hanah Mile", userimg: avatar3, message: "So you can start now!", time: "10:30", userType: "receiver", isFileMessage : false },
+        { id: 3, username: "Michael Hinton", userimg: avatar2, message: "yes, but first of all I need the logo image!", time: "10:31", userType: "receiver", isImageMessage : false, isFileMessage : false },
+    ]  },
+    { id : 3,  name : "Crypto Cicero", profilePicture : post2, unRead : 0,  isGroup: true, time: "2days ago", isImagepost: true, image: img6, content: "Peace, Love, and Crypto Justice is what I stand for.",
       upvote: 1, comment: 9, isupvote: false,
       messages: [
         { id: 1, username: "Simon Velez", userimg: avatar4, message: "So you can start now!", time: "09:05", userType: "receiver", isImageMessage : false, isFileMessage : false },

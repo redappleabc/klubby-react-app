@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip, CardHeader, Modal, ModalBody } from "reactstrap";
+import {FormFeedback, Form, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Card, Button, UncontrolledDropdown, Input, Label, UncontrolledTooltip, CardHeader, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 import SimpleBar from "simplebar-react";
 import ThemeSetter from '../../../theme/ThemeSetter';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "@walletconnect/qrcode-modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-
 //Import components
 import CustomCollapse from "../../../components/CustomCollapse";
 
@@ -18,107 +13,12 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import avatar2 from "../../../assets/images/group/group3.png";
 import ether_img from "../../../assets/images/post/post2.png";
 import bsc_img from "../../../assets/images/post/post3.png";
-
-import {connect}  from 'react-redux';
-import { withRouter } from 'react-router-dom';
-
-
-
-
-import { gql, useQuery, useMutation } from '@apollo/client';
-// import { array } from 'yup';
+import { array } from 'yup';
 
 
 
 
 function Settings(props) {
-    
-
-    // const [walletConnect, setWalletConnect] = useState(null);
-    const ModalTextSuccess = "New wallet address successfully added!";
-    const ModalTextError = "Please connect new wallet address!";
-
-    const [walletModalText, setWalletModalText] = useState("");
-    const [walletsAddress, setWalletsAddress] = useState([]);
-    const [walletsAddressLoaded, setWalletsAddressLoaded] = useState(false);
-    const [WalletConnectResultModal, setWalletConnectResultModal] = useState(false);
-
-    
-    const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
-    
-    const username = props.user.username
-    const email = props.user.attributes.email;
-    // apollo
-    const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username){wallets}}`;
-
-    const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
-
-    const { loading, error, data } = useQuery(GET_WALLETS, {variables:{username}});
-
-    
-    if(!walletsAddressLoaded && data){
-        const _str_walletsAddress = data.getUserWallets.wallets;
-        if(_str_walletsAddress !== "" && _str_walletsAddress !== null){
-            setWalletsAddress(_str_walletsAddress.split(","));
-        }
-        setWalletsAddressLoaded(true)
-        
-    }
-   
-
-    const  [mutateWalletAddress, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
-    
-    //mutateWalletAddress({variables:{username:username,wallets:wallet_address}})
-    
-
-    useEffect(() => {
-        const bridge = "https://bridge.walletconnect.org";
-      
-        const connector = new WalletConnect({bridge, qrcodeModal: QRCodeModal });
-        if (connector.connected) {
-            connector.killSession();
-        }
-    }, [])
-
-
-     const connect = async () => {
-        // bridge url
-        const bridge = "https://bridge.walletconnect.org";
-        const connector = new WalletConnect({bridge, qrcodeModal: QRCodeModal });
-
-        // console.log(connector._chainId)
-        // connector._chainId = 1;
-        // console.log(connector._chainId)
-        if (!connector.connected) {
-          await connector.createSession();
-        }
-        else {
-            setWalletModalText(ModalTextError);
-            toggleWalletConnectResultModal();
-        }
-
-        connector.on("connect", (error, payload) => {
-            console.log(`connector.on("connect")`);
-      
-            if (error) {
-              throw error;
-            }
-      
-            const { accounts } = payload.params[0];
-            console.log(accounts);
-            setWalletModalText(ModalTextSuccess);
-            toggleWalletConnectResultModal();
-            
-            const _walletsAddress = [...walletsAddress, ...accounts]
-            setWalletsAddress(_walletsAddress);
-            const _str_walletsAddress = _walletsAddress.join();
-            mutateWalletAddress({variables:{username:username, wallets:_str_walletsAddress}})
-            
-          });
-        
-      };
-
-
 
     const formik = useFormik({
         initialValues: {
@@ -136,12 +36,10 @@ function Settings(props) {
         }
     })
 
-   
+    const [walletsAddress, setWalletAddress] = useState([]);
     
-    const addWallet = async () => {
-        await connect();
-       
-        // setWalletAddress([...walletsAddress])
+    const addWallet = () => {
+        setWalletAddress([...walletsAddress, "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"]);
     }
 
     const copyAddress = () => {
@@ -152,13 +50,13 @@ function Settings(props) {
         console.log(key)
         let wallet = [...walletsAddress];
         wallet.splice(key, 1);
-        const _walletsAddress = [...wallet];
-        setWalletsAddress(_walletsAddress);
-        const _str_walletsAddress = _walletsAddress.join();
-        mutateWalletAddress({variables:{username:username, wallets:_str_walletsAddress}})
+        setWalletAddress([...wallet]);
     }
 
-
+    useEffect(() => {
+        let wallets = ["0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16", "0x1BeDfcDfC446371aaE3B633C07429C1Bf3492d16"];
+        setWalletAddress(wallets);
+    }, [])
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isOpen1, setIsOpen1] = useState(false);
     const [isOpen2, setIsOpen2] = useState(false);
@@ -319,7 +217,7 @@ function Settings(props) {
 
                         </div>
 
-                        <h5 className="font-size-16 mb-1 text-truncate">{username}</h5>
+                        <h5 className="font-size-16 mb-1 text-truncate">The Dip Daddy</h5>
                         <Dropdown isOpen={dropdownOpen} toggle={toggle} className="d-inline-block mb-1">
                             <DropdownToggle tag="a" className="text-muted pb-1 d-block" >
                                 Available <i className="mdi mdi-chevron-down"></i>
@@ -346,7 +244,7 @@ function Settings(props) {
                                         <i className="ri-profile-line"></i>Name   
                                     </div>
                                     <div>
-                                        {username}
+                                        Rahui Gautam
                                     </div>
                                 </div>
                                 <div className='profile-container'>
@@ -379,7 +277,7 @@ function Settings(props) {
                                         <i className="ri-mail-line"></i>Email   
                                     </div>
                                     <div>
-                                        {email}
+                                        Sample@gmail.com
                                     </div>
                                 </div>
                                 {/* <div className="d-grid mt-4">
@@ -414,12 +312,7 @@ function Settings(props) {
                                 {
                                     walletsAddress.map((wallet, key) => 
                                         <div key={key} className='owned-nft-main'>
-                                            <div className='header wallet-address'>
-                                                Owned NFT 
-                                                <div className='address-con'>
-                                                    { wallet }
-                                                </div>
-                                            </div>
+                                            <div className='header'>Owned NFT <br/>{"(" + wallet + ")"}</div>
                                             <div className='nft-container mt-1 mb-3'>
                                                 <div className='net-name'>
                                                     <img src={ether_img} alt='klubby'/>Etherium
@@ -779,23 +672,9 @@ function Settings(props) {
                     {/* end profile-setting-accordion */}
                 </SimpleBar>
                 {/* End User profile description */}
-                <Modal tabIndex="-1" isOpen={WalletConnectResultModal} toggle={toggleWalletConnectResultModal} centered>
-                    <ModalBody>
-                        <div className="text-center p-4">
-                            <div className="avatar-lg mx-auto mb-4 voice-record-img">
-                                <i className="ri-wallet-3-line"></i>
-                            </div>
-                            <p className="text-muted">{walletModalText}</p>
-
-                        </div>
-                    </ModalBody>
-                </Modal>
             </div>
         </React.Fragment>
     );
 }
-const mapStateToProps = (state) => {
-    const { user, loading, error } = state.Auth;
-    return { user, loading, error };
-};
-export default withRouter(connect(mapStateToProps)(Settings));
+
+export default Settings;

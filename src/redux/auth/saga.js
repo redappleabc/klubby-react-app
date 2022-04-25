@@ -3,13 +3,15 @@ import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
-import {signIn, signUp} from "../../helpers/aws"
+import {signIn, signUp, _forgetPassword, confirmSignUp, ResetPwdSuccess, signOut} from "../../helpers/aws"
 
 import {
     LOGIN_USER,
     LOGOUT_USER,
     REGISTER_USER,
-    FORGET_PASSWORD
+    FORGET_PASSWORD,
+    VERIRY_CODE_SUCCESS,
+    FORGET_PASSWORD_SUCCESS
 } from './constants';
 
 
@@ -40,12 +42,12 @@ function* login({ payload: { username, password, history } }) {
     // alert();
     // loginError("response");
     // yield put(loginError("error"));
+
     try {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
-            localStorage.setItem("authUser", JSON.stringify(response));
-            
             yield put(loginUserSuccess(response));
+           
         }
         else if(process.env.REACT_APP_DEFAULTAUTH === "firebase") {
             const response = yield call(fireBaseBackend.loginUser, username, password);
@@ -76,6 +78,9 @@ function* logout({ payload: { history } }) {
         localStorage.removeItem("authUser");
         if (process.env.REACT_APP_DEFAULTAUTH === 'firebase') {
             yield call(fireBaseBackend.logout);
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === 'aws'){
+            yield call(signOut);
         }
         yield call(() => {
             history.push("/login");
@@ -112,27 +117,70 @@ function* register({ payload: { user } }) {
 /**
  * forget password
  */
-function* forgetPassword({ payload: { email } }) {
+function* forgetPassword({ payload: { username, history } }) {
     try {
-        if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
-            const response = yield call(fireBaseBackend.forgetPassword, email);
+        if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
+            const response = yield call(_forgetPassword, username)
+                console.log(response);
             if (response) {
-              yield put(
-                forgetPasswordSuccess(
-                  "Reset link are sended to your mailbox, check there first"
-                )
-              );
+                history.push("/verify-pwd-reset");
+                yield put(
+                    forgetPasswordSuccess(
+                      "Reset code are sended to your mailbox, check there first"
+                    )
+                  );
+            }  
+        }
+        else if(process.env.REACT_APP_DEFAULTAUTH === "firebase"){
+            const response = yield call(fireBaseBackend.forgetPassword, username);
+            if (response) {
+               
+                yield put(
+                    forgetPasswordSuccess(
+                    "Reset link are sended to your mailbox, check there first"
+                    )
+                
+                );
             }
         } else {
-            const response = yield call(create, '/forget-pwd', { email });
+            const response = yield call(create, '/forget-pwd', { username });
             yield put(forgetPasswordSuccess(response));
         }
     } catch (error) {
+        console.log(error)
+
         yield put(apiError(error));
     }
 }
 
+function* verifycode({payload: {username, code, history}}) {
+    console.log(username + code);
+    try {
+        if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
+            const response = yield call(confirmSignUp, username, code);
+            if (response) {
+                history.push('/login');
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        yield put(apiError(error))
+    }
+}
 
+function* ForgetPasswordSuccess({payload: {username, code, new_password, history}}) {
+    try {
+        if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
+            const response = yield call(ResetPwdSuccess, username, code, new_password);
+            if (response) {
+                history.push('/login');
+            }
+        }
+    } catch (error) {
+        console.log(error)
+        yield put(apiError(error))
+    }
+}
 export function* watchLoginUser() {
     yield takeEvery(LOGIN_USER, login);
 }
@@ -149,12 +197,22 @@ export function* watchForgetPassword() {
     yield takeEvery(FORGET_PASSWORD, forgetPassword);
 }
 
+export function* watchVerifyCode() {
+    yield takeEvery(VERIRY_CODE_SUCCESS, verifycode);
+}
+
+export function* watchForgetPasswordSuccess() {
+    yield takeEvery(FORGET_PASSWORD_SUCCESS, ForgetPasswordSuccess);
+}
+
 function* authSaga() {
     yield all([
         fork(watchLoginUser),
         fork(watchLogoutUser),
         fork(watchRegisterUser),
         fork(watchForgetPassword),
+        fork(watchForgetPasswordSuccess),
+        fork(watchVerifyCode),
     ]);
 }
 

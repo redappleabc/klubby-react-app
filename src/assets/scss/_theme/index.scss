@@ -70,11 +70,13 @@ label {
 .form-control:focus {
   color: white;
 }
-@media (max-width: 991.98px) {
-  .chat-main-board .tab-content > .tab-pane {
-    display: block;
-  }
-}
+// @media (max-width: 991.98px) {
+//   .chat-main-board .tab-content > .tab-pane {
+//     display: block;
+//   }
+// }
+
+
 
 .alert-danger, .alert-success {
   background-color: #252526 !important;
@@ -107,16 +109,20 @@ label {
     color: #495057;
   }
 
-  .text-muted {
-    color: #7a7f9a!important;
-  }
   .form-control {
     color: #495057;
     background-color: #fff !important;
     border: 1px solid #e6ebf5 !important;
   }
   .text-muted {
-    color: #7a7f9a!important;
+    color: #343434!important;
+  }
+  .code-inputs input {
+    border-color: #343434;
+    color: #242424;
+  }
+  .auth-first h1, .auth-first .h1 {
+    color: #343434 !important;
   }
   .bg-soft-light {
     background-color: rgba(230,235,245,.25)!important;
@@ -201,7 +207,8 @@ label {
   }
   .card-header {
     background-color: #f5f7fb;
-    border-bottom: 0 solid #f5f7fb;
+    // border-bottom: 0 solid #f5f7fb;
+    border: 1px solid #f0eff5;
   }
   .border {
     border: 1px solid #f0eff5!important;
@@ -312,10 +319,10 @@ label {
     background-color: #f5f7fb;
   }
   .auth-main-btn {
-    background-color: #f0f2fa;
-    color: #262e35 !important;
+    // background-color: #f0f2fa;
+    // color: #262e35 !important;
     &:hover {
-      background-color: #adb5bd;
+      // background-color: #adb5bd;
     }
   }
   .alert-danger, .alert-success {
@@ -329,7 +336,39 @@ label {
   .white-img {
     display: block;
   }
+  .alert-danger .white-img {
+    display: inline-block;
+  }
+  .klubs-header {
+    border-bottom: 1px solid #f0eff5;
+  }
+  .setting-collapse-title {
+    color: #495057;
+  }
+  .auth-main-btn {
+    color: white;
+  }
+  .auth-main-btn {
+    @include colored() {
+      background-color: c('color') !important;
+    }
+  }
+  .owned-nft-main .header {
+    color: #495057;
+  }
+  .wallet-info-container .wallet-address, .wallet-info-container .icon-cover, .wallet-info-container .icon-cover i {
+    background-color: #f5f7fb;
+    color: #495057;
+  }
+  .profile-container > div:nth-child(2) {
+    color: #495057;
+  }
+  .auth-first h1 {
+    color: #19191B;
+  }
+  
 }
+
 
 
 
@@ -437,6 +476,8 @@ label {
     }
   }
 }
+
+
 
 // .nav-upvote {
 //   @include colored() {

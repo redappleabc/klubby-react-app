@@ -5,9 +5,10 @@ const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(initialThemeState.theme);
   const [color, setColor] = useState(initialThemeState.color);
 
-  const localStorage = window.localStorage;
+  
 
   useEffect(() => {
+    const localStorage = window.localStorage;
     const savedThemeLocal = localStorage.getItem("globalTheme");
     const savedColorLocal = localStorage.getItem("globalColor");
 
@@ -21,6 +22,7 @@ const ThemeProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const localStorage = window.localStorage;
     localStorage.setItem("globalTheme", theme);
     localStorage.setItem("globalColor", color);
   }, [theme, color]);

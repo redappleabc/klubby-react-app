@@ -24,13 +24,12 @@ function Post(props) {
 
     return (
         <React.Fragment>
+            <div className="px-4 py-4">
+                <h4 className="mb-0">Post</h4>
+            </div>
             <SimpleBar style={{ maxHeight: "100%" }} className="post-simplebar">
                 <div className='post-main'>
                         <div className='post-main-header'>
-                            <div className="px-4 pt-4">
-                                <h4 className="mb-0">Post</h4>
-                            </div>
-                    
                             <div className="text-center p-4">
                                 <div className="mb-4">
                                     <img src={avatar1} className="rounded-circle avatar-lg img-thumbnail" alt="klubby" />
@@ -42,16 +41,14 @@ function Post(props) {
                         <div className='px-3 post'>
                             <div className='post-select-container'>
                                 <p>Post type</p>
-                                <div className='post-select-cover mb-4'>
-                                    <Input type='select' name="post_type" id="post_type" className='post-select'>
-                                        <option value="1">free</option>
-                                        <option value="2">xxxxx</option>
-                                        <option value="3">xxxxxxxx</option>
-                                        <option value="4">xxxxxxxxx</option>
-                                    </Input>
-        
-                                    <label htmlFor="post_type"><i className="ri-arrow-drop-down-line"></i></label>
-                            </div>
+                                <div className='mb-4'>
+                                    <select className="form-select form-select-lg form-custom-select" aria-label="Default select example">
+                                        <option value='0'>Open this select Post Type</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
                             </div>
                             
 
@@ -71,6 +68,7 @@ function Post(props) {
                                     </Label>
                                 </div>
                             </div>
+                            
                             <div className="d-grid mt-3">
                                 <button className="auth-main-btn post-btn" type="submit"><i className="ri-send-plane-fill"></i>Post</button>
                             </div>

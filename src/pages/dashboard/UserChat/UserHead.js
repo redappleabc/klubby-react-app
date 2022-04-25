@@ -117,11 +117,11 @@ function UserHead(props) {
                                 </Dropdown>
                             </li>
 
-                            <li className="list-inline-item d-none d-lg-inline-block">
+                            {/* <li className="list-inline-item d-none d-lg-inline-block">
                                 <Button type="button" color="none" onClick={(e) => openUserSidebar(e)} className="nav-btn user-profile-show">
                                     <i className="ri-user-2-line"></i>
                                 </Button>
-                            </li>
+                            </li> */}
 
                             <li className="list-inline-item">
                                 <Dropdown isOpen={dropdownOpen1} toggle={toggle1}>

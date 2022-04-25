@@ -7,7 +7,8 @@ import {
     FORGET_PASSWORD,
     FORGET_PASSWORD_SUCCESS,
     API_FAILED,
-    LOGIN_ERROR
+    LOGIN_ERROR,
+    VERIRY_CODE_SUCCESS
 } from './constants';
 
 
@@ -16,10 +17,12 @@ export const loginUser = (username, password, history) => ({
     payload: { username, password, history }
 });
 
-export const loginUserSuccess = (user) => ({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-});
+export const loginUserSuccess = (user) => {
+    return{
+        type: LOGIN_USER_SUCCESS,
+        payload: user
+    }
+};
 
 export const registerUser = (user) => ({
     type: REGISTER_USER,
@@ -31,19 +34,24 @@ export const registerUserSuccess = (user) => ({
     payload: user
 });
 
+export const verifyCodeSuccess = (username, code, history) => ({
+    type: VERIRY_CODE_SUCCESS,
+    payload: {username, code, history}
+})
+
 export const logoutUser = (history) => ({
     type: LOGOUT_USER,
     payload: { history }
 });
 
-export const forgetPassword = (email) => ({
+export const forgetPassword = (username, history) => ({
     type: FORGET_PASSWORD,
-    payload: { email }
+    payload: { username, history }
 });
 
-export const forgetPasswordSuccess = (passwordResetStatus) => ({
+export const forgetPasswordSuccess = (username, code, new_password, history) => ({
     type: FORGET_PASSWORD_SUCCESS,
-    payload: passwordResetStatus
+    payload: { username, code, new_password, history }
 });
 
 export const apiError = (error) => ({
