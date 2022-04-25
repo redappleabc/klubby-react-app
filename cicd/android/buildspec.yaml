@@ -26,7 +26,6 @@ phases:
       - cd android
       - /opt/gradle/gradle-7.4.2/bin/gradle build -b build.gradle
 
-
       # Copy to S3
       - aws s3 cp --recursive app/build/outputs/apk/release s3://klubby-${ENVIRONMENT}-release-bucket/android
 artifacts:
