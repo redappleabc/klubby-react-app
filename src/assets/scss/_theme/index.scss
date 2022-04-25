@@ -76,6 +76,8 @@ label {
 //   }
 // }
 
+
+
 .alert-danger, .alert-success {
   background-color: #252526 !important;
   border-color: #252526 !important;
@@ -333,6 +335,9 @@ label {
   }
   .white-img {
     display: block;
+  }
+  .alert-danger .white-img {
+    display: inline-block;
   }
   .klubs-header {
     border-bottom: 1px solid #f0eff5;
