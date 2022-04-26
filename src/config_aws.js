@@ -8,8 +8,8 @@ if(process.env.REACT_APP_ENVIRONMENT === "development"){
 }else if(process.env.REACT_APP_ENVIRONMENT === "production"){
     config_userPool = {
         region: 'us-east-1',
-        userPoolId: 'us-east-1_O44xuYX6z',
-        userPoolWebClientId: '6irj935dduuu0lm0aslj6mo237'
+        userPoolId: 'us-east-1_Se7EAAzAP',
+        userPoolWebClientId: '3et7u65bmjp6doas8cgttbi6qu'
     };
 }
 
