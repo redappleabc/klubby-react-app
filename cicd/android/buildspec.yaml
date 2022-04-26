@@ -10,6 +10,7 @@ env:
 phases:
   build:
     commands:
+      - cp .env.${ENVIRONMENT} .env
       # update path to include intalled node version
       - export PATH=$PATH:/usr/local/nvm/versions/node/v14.17.4/bin
 
