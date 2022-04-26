@@ -8,6 +8,7 @@ frontend:
       commands:
         - if [$AWS_BRANCH -eq main]; then STAGE=prod; else STAGE=dev; fi
         - cp .env.${STAGE} .env
+        - ls
         - TOPIC_ARN=$(aws ssm get-parameter --name webapp-sns-topic-$STAGE --region us-east-1 --output text --query Parameter.Value)
         - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
         - yarn install
