@@ -29,9 +29,8 @@ const Register = (props) => {
     }
 
     useEffect(clearError, []);
-
+    
     useEffect(() => {
-        
         if (props.user !==null && props.user !== "") {
             history.push('/verify-register')
         }
