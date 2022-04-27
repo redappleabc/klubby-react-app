@@ -21,16 +21,16 @@ import {ApolloProvider} from "@apollo/client";
 import apollo_client from "./apollo"
 
 
-// import { StatusBar } from '@capacitor/status-bar';
-// import { Capacitor } from '@capacitor/core';
+import { StatusBar } from '@capacitor/status-bar';
+ import { Capacitor } from '@capacitor/core';
 
 
 // TODO
 fakeBackend();
 
-// if (Capacitor.isNativePlatform()) {
-//   StatusBar.hide();
-// }
+ if (Capacitor.isNativePlatform()) {
+   StatusBar.hide();
+ }
 // StatusBar.hide();
 
 // const firebaseConfig = {
