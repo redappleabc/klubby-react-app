@@ -5,6 +5,7 @@
   position: fixed;
   z-index: 9999;
   top: 0;
+  color: white;
 }
 .iphone-footer {
   height: env(safe-area-inset-bottom);
@@ -101,6 +102,9 @@ label {
 }
 //------------------------ Theme-light white ---------------------------
 .theme--light {
+  .iphone-header {
+    color: black;
+  }
   color: #495057;
   background-color: #f7f7ff;
   min-height: 100vh;
