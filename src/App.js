@@ -51,7 +51,9 @@ function App() {
   return (
     <ApolloProvider client={apollo_client}>
       <ThemeProvider>
+        <div className='iphone-header'></div>
         <Routes />
+        <div className='iphone-footer'></div>
       </ThemeProvider>
     </ApolloProvider>
     

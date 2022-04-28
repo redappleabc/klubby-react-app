@@ -44,7 +44,7 @@
 
 .chat-post-list {
     background-color: #1d1d1d;
-    height: calc(100vh - 95px);
+    height: calc(100vh - 95px - env(safe-area-inset-top) - env(safe-area-inset-bottom) );
     @media (max-width: 991.98px) {
         // height: calc(100vh - 145px);
         // height: 100vh;
@@ -55,7 +55,7 @@
 
 .chat-message-list {
     background-color: #1d1d1d;
-    height: calc(100vh - 155px);
+    height: calc(100vh - 155px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     @media (max-width: 991.98px) {
         // height: calc(100vh - 214px);
         // height: 100vh;
@@ -270,7 +270,7 @@
 @media (max-width: 992px) {
     .nav-home-header, .nav-message-header {
         position:fixed;
-        top: 0;
+        top: env(safe-area-inset-top);
         background-color: #1d1d1d;
         z-index: 99;
         width: 100%;
