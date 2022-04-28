@@ -419,7 +419,8 @@ textarea:focus {
 }
 
 .post-simplebar {
-    height: calc(100vh - 76px);
+    margin-top: calc(env(safe-area-inset-top) + 73px);
+    height: calc(100vh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 
 .user-header {

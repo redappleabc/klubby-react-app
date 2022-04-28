@@ -2,9 +2,15 @@
 
 .iphone-header {
   height: env(safe-area-inset-top);
+  position: fixed;
+  z-index: 9999;
+  top: 0;
 }
 .iphone-footer {
   height: env(safe-area-inset-bottom);
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
 }
 
 ._sp {

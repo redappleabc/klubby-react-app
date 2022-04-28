@@ -301,7 +301,7 @@ function Settings(props) {
     return (
         <React.Fragment>
             <div>
-                <div className="px-4 py-4">
+                <div className="px-4 py-4 nav-home-header">
                     <h4 className="mb-0">Settings</h4>
                 </div>
 

@@ -29,6 +29,7 @@
 
 .user-profile-desc {
     height: calc(100vh - 76px);
+    margin-top: calc(env(safe-area-inset-top) + 73px);;
 
     @media (max-width: 991.98px) {
         height: calc(100vh - 136px - env(safe-area-inset-top) - env(safe-area-inset-bottom) );
