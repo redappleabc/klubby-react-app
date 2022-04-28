@@ -141,9 +141,10 @@
  }
 
  .chat-input {
+   height: 78px;
    width: calc(100% - 468px);
    position: fixed;
-   bottom: 0;
+   bottom: env(safe-area-inset-bottom) !important;
   .main-input {
     width: calc(100% - 60px);
     position: relative;

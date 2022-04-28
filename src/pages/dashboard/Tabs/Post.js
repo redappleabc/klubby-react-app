@@ -24,7 +24,7 @@ function Post(props) {
 
     return (
         <React.Fragment>
-            <div className="px-4 py-4">
+            <div className="px-4 py-4 nav-home-header">
                 <h4 className="mb-0">Post</h4>
             </div>
             <SimpleBar style={{ maxHeight: "100%" }} className="post-simplebar">
