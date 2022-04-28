@@ -1,6 +1,11 @@
 @import "./_theme.scss";
 
-
+.iphone-header {
+  height: env(safe-area-inset-top);
+}
+.iphone-footer {
+  height: env(safe-area-inset-bottom);
+}
 
 ._sp {
   display: none;
