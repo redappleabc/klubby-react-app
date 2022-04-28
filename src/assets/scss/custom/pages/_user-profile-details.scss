@@ -31,7 +31,7 @@
     height: calc(100vh - 76px);
 
     @media (max-width: 991.98px) {
-        height: calc(100vh - 136px);
+        height: calc(100vh - 136px - env(safe-area-inset-top) - env(safe-area-inset-bottom) );
     }
 }
 
