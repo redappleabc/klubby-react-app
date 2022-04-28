@@ -277,12 +277,12 @@
     }
     .chat-post-list {
         position: fixed;
-        top: 85px;
+        top: calc(85px + env(safe-area-inset-top));
         width: 100%;
     }
     .chat-message-list {
         position: fixed;
-        top: 154px;
+        top:  calc(154px + env(safe-area-inset-top));
         width: 100%;
     }
 }
