@@ -14,7 +14,7 @@
         left: 0;
         top: env(safe-area-inset-top);
         width: 100%;
-        height: 100%;
+        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
         visibility: hidden;
         transform: translateX(100%);
         z-index: 99;
@@ -229,7 +229,7 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 177px);
+    height: calc(100vh - 177px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     
     @media (max-width: 991.98px) {
         position: fixed;
@@ -307,7 +307,7 @@
 @media (max-width: 992px) {
     .chat-input {
         position: fixed;
-        bottom: env(safe-area-inset-bottom);
+        bottom: 0;
         background-color: #1d1d1d;
         width: 100%;
     }
@@ -422,8 +422,14 @@ textarea:focus {
 }
 
 .post-simplebar {
-    margin-top: calc(env(safe-area-inset-top) + 73px);
+    margin-top: 0;
     height: calc(100vh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    @media (max-width: 992px) {
+        width: 100%;
+        position: fixed;
+        top: calc(75px + env(safe-area-inset-top));
+        height: calc(100vh - 135px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
 }
 
 .user-header {
@@ -435,7 +441,10 @@ textarea:focus {
         padding-bottom: 100px;
     }
     .user-header {
+        position: fixed;
+        top: 0;
         height: 64px;
+        width: 100%;
     }
 }
 

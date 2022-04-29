@@ -4,9 +4,19 @@ import ThemeContext from "../Contexts/ThemeContext";
 import "../assets/scss/custom/components/_themesetter.scss";
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
+
+if (Capacitor.isNativePlatform()) {
+  if(localStorage.getItem("globalTheme") == "dark"){
+    StatusBar.setStyle({ style: Style.Dark })
+  }else{
+    StatusBar.setStyle({ style: Style.Light })
+  }
+  
+}
 export default function ThemeSetter() {
   const { setTheme } = useContext(ThemeContext);
   const { setColor } = useContext(ThemeContext);
+
 
 
 
