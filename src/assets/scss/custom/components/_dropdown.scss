@@ -144,7 +144,7 @@
    height: 78px;
    width: calc(100% - 468px);
    position: fixed;
-   bottom: env(safe-area-inset-bottom);
+   bottom: 0;
   .main-input {
     width: calc(100% - 60px);
     position: relative;

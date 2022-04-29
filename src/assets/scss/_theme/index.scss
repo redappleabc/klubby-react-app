@@ -6,6 +6,7 @@
   position: fixed;
   z-index: 9999;
   top: 0;
+  background-color: black;
 }
 
 .iphone-footer {
@@ -14,6 +15,7 @@
   position: fixed;
   z-index: 9999;
   bottom: 0;
+  background-color: black;
 }
 
 ._sp {
@@ -104,6 +106,9 @@ label {
 .theme--light {
   color: #495057;
   background-color: #f7f7ff;
+  .iphone-header, .iphone-footer {
+    background-color: white;
+  }
   .side-menu {
     background: white;
   }
