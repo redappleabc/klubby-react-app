@@ -3,11 +3,11 @@
 .iphone-header {
   width: 100%;
   height: env(safe-area-inset-top);
-  height: 30px;
   position: fixed;
   z-index: 9999;
   top: 0;
 }
+
 .iphone-footer {
   width: 100%;
   height: env(safe-area-inset-bottom);

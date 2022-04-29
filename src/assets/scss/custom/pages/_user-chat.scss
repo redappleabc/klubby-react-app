@@ -229,7 +229,7 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 177px);
+    height: calc(100vh - 177px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     
     @media (max-width: 991.98px) {
         position: fixed;
@@ -422,8 +422,14 @@ textarea:focus {
 }
 
 .post-simplebar {
-    margin-top: calc(env(safe-area-inset-top) + 73px);
+    margin-top: 0;
     height: calc(100vh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    @media (max-width: 992px) {
+        width: 100%;
+        position: fixed;
+        top: calc(75px + env(safe-area-inset-top));
+        height: calc(100vh - 135px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
 }
 
 .user-header {
@@ -435,7 +441,10 @@ textarea:focus {
         padding-bottom: 100px;
     }
     .user-header {
+        position: fixed;
+        top: env(safe-area-inset-top);
         height: 64px;
+        width: 100%;
     }
 }
 
