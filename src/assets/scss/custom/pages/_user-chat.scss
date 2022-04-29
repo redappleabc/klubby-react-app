@@ -307,7 +307,7 @@
 @media (max-width: 992px) {
     .chat-input {
         position: fixed;
-        bottom: env(safe-area-inset-bottom);
+        bottom: 0;
         background-color: #1d1d1d;
         width: 100%;
     }
