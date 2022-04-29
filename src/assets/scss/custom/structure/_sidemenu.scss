@@ -8,7 +8,7 @@
 .side-menu{
     min-width: 75px;
     max-width: 75px;
-    height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(var(--app-height) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     min-height: 570px;
     background-color: $sidebar-bg;
     display: flex;
