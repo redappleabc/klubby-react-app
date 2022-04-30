@@ -5,6 +5,11 @@
 //
 
 // Vertical Sidebar - Default Light
+$app-height: var(--app-height);
+:root {
+  --app-height: #{$app-height};
+}
+
 $sidebar-bg: #373737;
 $sidebar-menu-item-color: #929292;
 $sidebar-menu-item-active-color: #7269ef;

@@ -4,6 +4,7 @@ import ThemeContext from "../Contexts/ThemeContext";
 import "../assets/scss/custom/components/_themesetter.scss";
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { Keyboard } from '@capacitor/keyboard';
 
 if (Capacitor.isNativePlatform()) {
   if(localStorage.getItem("globalTheme") == "dark"){
@@ -11,7 +12,7 @@ if (Capacitor.isNativePlatform()) {
   }else{
     StatusBar.setStyle({ style: Style.Light })
   }
-  
+  Keyboard.setScroll({ isDisabled: true});
 }
 export default function ThemeSetter() {
   const { setTheme } = useContext(ThemeContext);

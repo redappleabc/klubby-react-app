@@ -15,8 +15,16 @@ const getToken = async () =>{
 }
 
 
+let URL;
 
-const URL = "https://tntqao5pj5eblmhvww7nd4byne.appsync-api.us-east-1.amazonaws.com/graphql"
+
+
+if(process.env.REACT_APP_ENVIRONMENT === "development"){
+    URL = "https://tntqao5pj5eblmhvww7nd4byne.appsync-api.us-east-1.amazonaws.com/graphql"
+}else if(process.env.REACT_APP_ENVIRONMENT === "production"){
+    URL = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
+}
+
 const httpLink = createHttpLink({
     uri: URL,
 });

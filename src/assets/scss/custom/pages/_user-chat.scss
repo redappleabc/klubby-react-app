@@ -14,7 +14,7 @@
         left: 0;
         top: env(safe-area-inset-top);
         width: 100%;
-        height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        height: calc(calc(var(--app-height) - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
         visibility: hidden;
         transform: translateX(100%);
         z-index: 99;
@@ -229,13 +229,13 @@
 }
 
 .chat-conversation {
-    height: calc(100vh - 177px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(calc(var(--app-height) - 177px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     
     @media (max-width: 991.98px) {
         position: fixed;
         width: 100%;
-        top: calc(env(safe-area-inset-top) + 64px);
-        height: calc(100vh - 143px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        top: 64px;
+        height: calc(calc(var(--app-height) - 143px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }
 }
 
@@ -423,12 +423,12 @@ textarea:focus {
 
 .post-simplebar {
     margin-top: 0;
-    height: calc(100vh - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(calc(var(--app-height) - 76px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     @media (max-width: 992px) {
         width: 100%;
         position: fixed;
         top: calc(75px + env(safe-area-inset-top));
-        height: calc(100vh - 135px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        height: calc(calc(var(--app-height) - 135px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }
 }
 
@@ -505,8 +505,8 @@ textarea:focus {
 
 @media (max-width: 992px) {
     .chat-conversation.klubs-con {
-        top: calc(env(safe-area-inset-top) + 144px);;
-        height: calc(100vh - 222px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        top: 144px;
+        height: calc(calc(var(--app-height) - 222px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }    
 }
 

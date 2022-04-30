@@ -4,7 +4,8 @@
 
 
 .chat-leftsidebar {
-    height: calc(100vh - env(safe-area-inset-top) -env(safe-area-inset-bottom));
+    height: calc(calc(var(--app-height) - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+
     background-color: $sidebar-sub-bg;
 
     @media (min-width: 992px) {
@@ -44,10 +45,10 @@
 
 .chat-post-list {
     background-color: #1d1d1d;
-    height: calc(100vh - 95px - env(safe-area-inset-top) - env(safe-area-inset-bottom) );
+    height: calc(calc(var(--app-height) - 95px - env(safe-area-inset-top)) - env(safe-area-inset-bottom) );
     @media (max-width: 991.98px) {
-        // height: calc(100vh - 145px);
-        // height: 100vh;
+        // height: calc(var(--app-height) - 145px);
+        // height: var(--app-height);
         padding-bottom: 60px;
     }
 }
@@ -55,10 +56,10 @@
 
 .chat-message-list {
     background-color: #1d1d1d;
-    height: calc(100vh - 155px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    height: calc(calc(var(--app-height) - 155px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     @media (max-width: 991.98px) {
-        // height: calc(100vh - 214px);
-        // height: 100vh;
+        // height: calc(var(--app-height) - 214px);
+        // height: var(--app-height);
         padding-bottom: 60px;
     }
 }
