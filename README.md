@@ -25,7 +25,6 @@ The main and dev branches have cicd in place to automate the following:
 
 - Webapp
 
-
 npm install
 npm build
 #TODO add commands
