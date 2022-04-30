@@ -66,7 +66,7 @@ function UserHead(props) {
 
                             <div className="flex-1 overflow-hidden">
                                 <h5 className="font-size-16 mb-0 text-truncate">
-                                    <Link to="#" onClick={(e) => openUserSidebar(e)} className="text-reset user-profile-show">
+                                    <Link to="#" className="text-reset user-profile-show">
                                         {props.users[props.active_user].name}
                                     </Link>
                                     {(() => {
@@ -123,7 +123,7 @@ function UserHead(props) {
                                 </Button>
                             </li> */}
 
-                            <li className="list-inline-item">
+                            {/* <li className="list-inline-item">
                                 <Dropdown isOpen={dropdownOpen1} toggle={toggle1}>
                                     <DropdownToggle className="btn nav-btn " color="none" type="button" >
                                         <i className="ri-more-fill"></i>
@@ -135,7 +135,7 @@ function UserHead(props) {
                                         <DropdownItem onClick={(e) => deleteMessage(e)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
-                            </li>
+                            </li> */}
 
                         </ul>
                     </Col>
