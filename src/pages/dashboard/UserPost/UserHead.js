@@ -66,7 +66,7 @@ function UserHead(props) {
                                     </DropdownMenu>
                                 </Dropdown>
                             </li>
-
+{/* 
                             <li className="list-inline-item">
                                 <Dropdown isOpen={dropdownOpen1} toggle={toggle1}>
                                     <DropdownToggle className="btn nav-btn " color="none" type="button" >
@@ -79,7 +79,7 @@ function UserHead(props) {
                                         <DropdownItem onClick={(e) => deleteMessage(e)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
-                            </li>
+                            </li> */}
 
                         </ul>
                     </Col>
