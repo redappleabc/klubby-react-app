@@ -234,7 +234,7 @@
     @media (max-width: 991.98px) {
         position: fixed;
         width: 100%;
-        top: calc(env(safe-area-inset-top) + 64px);
+        top: 64px;
         height: calc(calc(var(--app-height) - 143px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }
 }
@@ -505,7 +505,7 @@ textarea:focus {
 
 @media (max-width: 992px) {
     .chat-conversation.klubs-con {
-        top: calc(env(safe-area-inset-top) + 144px);;
+        top: 144px;
         height: calc(calc(var(--app-height) - 222px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }    
 }
