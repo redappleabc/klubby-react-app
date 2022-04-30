@@ -4,4 +4,11 @@ const appHeight = () => {
     console.log(window.innerHeight);
 }
 window.addEventListener('resize', appHeight)
+window.addEventListener('keyboardDidShow', (ev) => {
+    appHeight()
+});
+
+window.addEventListener('keyboardDidHide', () => {
+    appHeight()
+});
 appHeight()

@@ -7,12 +7,15 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import { Keyboard } from '@capacitor/keyboard';
 
 if (Capacitor.isNativePlatform()) {
-  if(localStorage.getItem("globalTheme") == "dark"){
-    StatusBar.setStyle({ style: Style.Dark })
-  }else{
-    StatusBar.setStyle({ style: Style.Light })
+  if (Capacitor.getPlatform() === "ios") {
+    if (localStorage.getItem("globalTheme") == "dark") {
+      StatusBar.setStyle({ style: Style.Dark })
+    } else {
+      StatusBar.setStyle({ style: Style.Light })
+    }
   }
-  Keyboard.setScroll({ isDisabled: true});
+  Keyboard.setScroll({ isDisabled: true });
+  StatusBar.setOverlaysWebView({ overlay: false });
 }
 export default function ThemeSetter() {
   const { setTheme } = useContext(ThemeContext);
@@ -30,7 +33,7 @@ export default function ThemeSetter() {
         <Label check>
           <Input type="radio" name="radio1" value="dark" onChange={() => {
             setTheme("dark")
-            if (Capacitor.isNativePlatform()) {
+            if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === "ios") {
               StatusBar.setStyle({ style: Style.Dark })
             }
           }} />  Dark mode
@@ -39,7 +42,7 @@ export default function ThemeSetter() {
         <Label check>
           <Input type="radio" name="radio1" value="light" onChange={() => {
             setTheme("light")
-            if (Capacitor.isNativePlatform()) {
+            if (Capacitor.isNativePlatform() && Capacitor.getPlatform() === "ios") {
               StatusBar.setStyle({ style: Style.Light })
             }
           }} /> Light mode
