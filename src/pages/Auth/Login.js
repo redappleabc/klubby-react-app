@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import { loginUser, apiError, loginUserSuccess } from '../../redux/actions';
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
-import { Auth } from 'aws-amplify';
 import { isAuthenticated } from '../../helpers/aws';
 
 //Import Images
