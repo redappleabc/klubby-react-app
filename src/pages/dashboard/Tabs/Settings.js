@@ -45,16 +45,21 @@ function Settings(props) {
 
     
     const toggleWalletConnectResultModal = () => setWalletConnectResultModal(!WalletConnectResultModal)
+
+    let username = "";
+    let email = "";
+    if(props.user){
+        username = props.user.username
+        email = props.user.attributes.email;
+    }
     
-    const username = props.user.username
-    const email = props.user.attributes.email;
     // apollo
     const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username){wallets}}`;
 
     const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
 
     const { loading, error, data } = useQuery(GET_WALLETS, {variables:{username}});
-
+    
     
     if(!walletsAddressLoaded && data){
         const _str_walletsAddress = data.getUserWallets.wallets;
