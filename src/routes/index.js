@@ -18,7 +18,7 @@ const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props
     let history = useHistory();
     return <Route {...rest} render={props => {
         if (isAuthProtected && process.env.REACT_APP_DEFAULTAUTH === "aws") {
-            console.log(props_user)
+           
             isAuthenticated().then((user) => {
                
                 if (props_user === null)

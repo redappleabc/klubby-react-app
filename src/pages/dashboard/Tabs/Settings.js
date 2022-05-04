@@ -25,7 +25,11 @@ import { withRouter } from 'react-router-dom';
 
 
 
-import { gql, useQuery, useMutation } from '@apollo/client';
+import {useQuery, useMutation } from '@apollo/client';
+import GET_WALLETS from '../../../apollo/queries/getWallets'
+import SET_WALLETS from '../../../apollo/mutations/setWallets'
+
+
 // import { array } from 'yup';
 
 
@@ -53,10 +57,7 @@ function Settings(props) {
         email = props.user.attributes.email;
     }
     
-    // apollo
-    const GET_WALLETS = gql`query getUserWallets($username:String!) {getUserWallets(username:$username){wallets}}`;
 
-    const SET_WALLETS = gql`mutation SetWallet ($username:String!, $wallets:String!) {updateUser(username:$username, wallets:$wallets){wallets}}`;
 
     const { loading, error, data } = useQuery(GET_WALLETS, {variables:{username}});
     
@@ -71,7 +72,7 @@ function Settings(props) {
     }
    
 
-    const  [mutateWalletAddress, { data1, loading1, error1 }] = useMutation(SET_WALLETS)
+    const  [mutateWalletAddress, {}] = useMutation(SET_WALLETS)
     
     //mutateWalletAddress({variables:{username:username,wallets:wallet_address}})
     
