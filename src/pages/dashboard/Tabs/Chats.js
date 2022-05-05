@@ -20,6 +20,7 @@ class Chats extends Component {
         super(props);
         this.state = {
             searchChat: "",
+            focusSearch: false,
             recentChatList: this.props.users,
             modal: false,
             isOpenCollapse: false,
@@ -30,6 +31,7 @@ class Chats extends Component {
             groupName: "",
             groupDesc: "",
         }
+        this.toggleSearchFocus = this.toggleSearchFocus.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.openUserChat = this.openUserChat.bind(this);
         this.setNoticDropdown = this.setNoticDropdown.bind(this);
@@ -44,6 +46,12 @@ class Chats extends Component {
         this.setRecentChatList = this.setRecentChatList.bind(this);
 
      }
+
+     toggleSearchFocus() {
+        console.log(this.state.focusSearch);
+        this.setState({focusSearch: !this.state.focusSearch});
+        console.log(this.state.focusSearch);
+    }
 
     toggle() {
         this.setState({ modal: !this.state.modal });
@@ -262,16 +270,16 @@ class Chats extends Component {
                             <div>
                                 <img src={avatar1} className="rounded-circle avatar-xs" alt="Klubby" />
                             </div>
-                            <div className="search-box chat-search-box">
+                            <div className={this.state.focusSearch ? "search-box chat-search-box active" : "search-box chat-search-box"}>
                                 <InputGroup size="lg" className="mb-3 rounded-lg">
                                     <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                         <i className="ri-search-line search-icon font-size-18"></i>
                                     </span>
-                                    <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} className="form-control bg-light" placeholder="Search..." />
+                                    <Input type="text" value={this.state.searchChat} onChange={(e) => this.handleChange(e)} onFocus={this.toggleSearchFocus} onBlur={this.toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
                                 </InputGroup>
                             </div>
                             {/* Search Box */}
-                            <div className='home-header-btn-container'>
+                            <div className={this.state.focusSearch ? 'home-header-btn-container hidden' : 'home-header-btn-container'}>
                                 <div className="user-chat-nav float-end">
                                     <div className="create-group">
                                         {/* Button trigger modal */}
