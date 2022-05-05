@@ -156,7 +156,7 @@ function* forgetPassword({ payload: { username, history } }) {
 function* verifycode({payload: {username, code, history}}) {
     console.log(username + code);
     try {
-        if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
+        if (process.env.REACT_APP_DEFAULTAUTH === "aws") {
             const response = yield call(confirmSignUp, username, code);
             if (response) {
                 history.push('/login');
@@ -170,7 +170,7 @@ function* verifycode({payload: {username, code, history}}) {
 
 function* ForgetPasswordSuccess({payload: {username, code, new_password, history}}) {
     try {
-        if (process.env.REACT_APP_DEFAULTAUTH == "aws") {
+        if (process.env.REACT_APP_DEFAULTAUTH === "aws") {
             const response = yield call(ResetPwdSuccess, username, code, new_password);
             if (response) {
                 history.push('/login');

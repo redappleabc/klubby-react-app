@@ -11,7 +11,11 @@ import SelectContact from "../../../components/SelectContact";
 import { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
 import group1 from "../../../assets/images/group/group1.png";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
+import { v4 as uuidv4 } from 'uuid';
 
+import createConversationGQL from '../../../apollo/mutations/createConversation';
+import apollo_client from '../../../apollo';
+import { create } from 'yup/lib/Reference';
 //components
 // import OnlineUsers from "./OnlineUsers";
 
@@ -75,11 +79,13 @@ class Chats extends Component {
         }
     }
 
+    
+
     addGroup() {
         if (this.state.selectedContact.length > 2) {
             // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
             var obj = {
-                gourpId: this.state.groups.length + 1,
+                gourpId: uuidv4(),
                 name: this.state.groupName,
                 profilePicture: "Null",
                 isGroup: true,
@@ -90,7 +96,17 @@ class Chats extends Component {
                 messages: {"main":[{}], "whale":[{}], "announcement":[{}] }
             }
             //call action for creating a group
-           
+            const newGroup = {
+                createdAt:`${Date.now()}`,
+                id:obj.gourpId,
+                name:obj.name
+            }
+            console.log(newGroup)
+            apollo_client.mutate({
+                mutation:createConversationGQL,
+                variables:newGroup
+            }).then((res)=>{console.log(res)})
+            .catch((err)=>{console.log(err)})
             this.props.createGroup(obj);
             console.log(obj);
             console.log(this.state.group);
