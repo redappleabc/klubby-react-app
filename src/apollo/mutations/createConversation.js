@@ -1,4 +1,4 @@
-import {gql, useMutation} from "@apollo/client";
+import {gql} from "@apollo/client";
 
 export default gql`
 mutation createConversation($createdAt: String, $id: ID!, $name: String!) {

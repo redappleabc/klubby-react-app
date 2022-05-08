@@ -8,7 +8,7 @@ import classnames from "classnames";
 import SimpleBar from "simplebar-react";
 import SelectContact from "../../../components/SelectContact";
 //actions
-import { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
+import { setconversationNameInOpenChat, activeUser, createGroup,setFullUser, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
 import group1 from "../../../assets/images/group/group1.png";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import { v4 as uuidv4 } from 'uuid';
@@ -16,10 +16,15 @@ import { v4 as uuidv4 } from 'uuid';
 import createConversationGQL from '../../../apollo/mutations/createConversation';
 import apollo_client from '../../../apollo';
 import { create } from 'yup/lib/Reference';
+import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
+import getUserConversationsGQL from '../../../apollo/queries/getUserConversations';
+
+import subscribeToNewMessagesGQL from '../../../apollo/subscriptions/subscribeToNewMessages';
 //components
 // import OnlineUsers from "./OnlineUsers";
 
 class Chats extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +39,7 @@ class Chats extends Component {
             message: "",
             groupName: "",
             groupDesc: "",
+            searchedUserList: []
         }
         this.toggleSearchFocus = this.toggleSearchFocus.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -49,12 +55,68 @@ class Chats extends Component {
         this.handleChangeGroupDesc = this.handleChangeGroupDesc.bind(this);
         this.setRecentChatList = this.setRecentChatList.bind(this);
 
-     }
+       
 
-     toggleSearchFocus() {
-        console.log(this.state.focusSearch);
-        this.setState({focusSearch: !this.state.focusSearch});
-        console.log(this.state.focusSearch);
+
+        apollo_client.query({
+            query: getUserConversationsGQL
+        }).then((res) => {
+            if(res.data.me.conversations.userConversations){
+                const _recentConversations = res.data.me.conversations.userConversations
+                
+                if(_recentConversations.length>0)
+                {
+                    let _recentChatList = {}
+                    for(var i = 0; i < _recentConversations.length; i++){
+                        let _recentUser = {};
+                        _recentUser.username = _recentConversations[i].associated;
+                        _recentUser.name = _recentConversations[i].associated;
+                        _recentUser.conversationId = _recentConversations[i].conversationId
+                        _recentUser.isGroup = false;
+                        _recentUser.status = "online";
+                        _recentUser.profilePicture = "Null"
+                        _recentUser.messages = []
+                        _recentChatList[_recentUser.username] = _recentUser
+                    }
+                    this.props.setFullUser(_recentChatList)
+                    this.props.activeUser(Object.keys(_recentChatList)[0]);
+                }
+            }
+           
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        // apollo_client.subscribe({
+        //     subscribe:subscribeToNewMessagesGQL
+        // }).then((res)=>{
+        //     console.log("new message")
+        // })
+
+
+    }
+
+    toggleSearchFocus() {
+
+        this.setState({ focusSearch: !this.state.focusSearch });
+        if (this.props.activeChatSubTab === "chat-chat") {
+            this.props.setActiveChatSubTab('search-chat-chat');
+            apollo_client.query({
+                query: getUsersByUserNameGQL,
+                variables: { username: "" }
+            }).then((res) => {
+                let searchedUsers = res.data.getUsers;
+                this.setState({ searchedUserList: searchedUsers })
+                console.log(searchedUsers)
+            }).catch((err) => {
+                console.log(err)
+            })
+
+        }
+
+
+        
+
     }
 
     toggle() {
@@ -70,16 +132,22 @@ class Chats extends Component {
     }
 
 
-    
+
     componentDidUpdate(prevProps) {
+        
         if (prevProps !== this.props) {
             this.setState({
                 groups: this.props.groups
             });
+            
+
+            this.setState({recentChatList:this.props.users})
         }
+
+
     }
 
-    
+
 
     addGroup() {
         if (this.state.selectedContact.length > 2) {
@@ -93,20 +161,20 @@ class Chats extends Component {
                 isNew: true,
                 desc: this.state.groupDesc,
                 members: this.state.selectedContact,
-                messages: {"main":[{}], "whale":[{}], "announcement":[{}] }
+                messages: { "main": [{}], "whale": [{}], "announcement": [{}] }
             }
             //call action for creating a group
             const newGroup = {
-                createdAt:`${Date.now()}`,
-                id:obj.gourpId,
-                name:obj.name
+                createdAt: `${Date.now()}`,
+                id: obj.gourpId,
+                name: obj.name
             }
             console.log(newGroup)
             apollo_client.mutate({
-                mutation:createConversationGQL,
-                variables:newGroup
-            }).then((res)=>{console.log(res)})
-            .catch((err)=>{console.log(err)})
+                mutation: createConversationGQL,
+                variables: newGroup
+            }).then((res) => { console.log(res) })
+                .catch((err) => { console.log(err) })
             this.props.createGroup(obj);
             console.log(obj);
             console.log(this.state.group);
@@ -155,8 +223,9 @@ class Chats extends Component {
     setNoticDropdown() {
         this.setState(prevState => ({
             notiDropdown: !prevState.notiDropdown
-          }));
+        }));
     }
+
 
 
     handleChange(e) {
@@ -164,6 +233,20 @@ class Chats extends Component {
         var search = e.target.value;
         let conversation = this.state.recentChatList;
         let filteredArray = [];
+
+        if (this.props.activeChatSubTab === 'search-chat-chat') {
+            apollo_client.query({
+                query: getUsersByUserNameGQL,
+                variables: { username: search }
+            }).then((res) => {
+                let searchedUsers = res.data.getUsers;
+                this.setState({ searchedUserList: searchedUsers })
+                console.log(searchedUsers)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
 
         //find conversation name from array
         for (let i = 0; i < conversation.length; i++) {
@@ -184,7 +267,7 @@ class Chats extends Component {
         e.preventDefault();
 
         //find index of current chat in array
-        var index = this.props.users.indexOf(chat);
+        var index = chat.name;
 
         // set activeUser 
         this.props.activeUser(index);
@@ -226,6 +309,64 @@ class Chats extends Component {
         if (unread) {
             unread.style.display = "none";
         }
+    }
+
+    createUserChat(e, user) {
+        e.preventDefault();
+        //find index of current chat in array
+        var index = user.username;
+
+        if(typeof this.props.users[index] === "undefined")
+        {
+            let _searchedUser = {};
+            _searchedUser.username = user.username;
+            _searchedUser.name = user.username;
+            _searchedUser.conversationId = null
+            _searchedUser.isGroup = false;
+            _searchedUser.status = "online";
+            _searchedUser.profilePicture = "Null"
+            _searchedUser.messages = []
+            
+        
+            this.props.setFullUser({...this.props.users, [_searchedUser.username]:_searchedUser})
+            console.log("aaaaaaaaaaaaaaaaaaaa", this.props.users)
+        }
+        // set activeUser 
+
+        this.props.activeUser(index);
+
+
+        const searchedUserList = document.getElementById("chat-list");
+        var clickedItem = e.target;
+        var currentli = null;
+
+        if (searchedUserList) {
+            var li = searchedUserList.getElementsByTagName("li");
+            //remove coversation user
+            for (var i = 0; i < li.length; ++i) {
+                if (li[i].classList.contains('active')) {
+                    li[i].classList.remove('active');
+                }
+            }
+            //find clicked coversation user
+            for (var k = 0; k < li.length; ++k) {
+                if (li[k].contains(clickedItem)) {
+                    currentli = li[k];
+                    break;
+                }
+            }
+        }
+
+        //activation of clicked coversation user
+        if (currentli) {
+            currentli.classList.add('active');
+        }
+
+        var userChat = document.getElementsByClassName("user-chat");
+        if (userChat) {
+            userChat[0].classList.add("user-chat-show");
+        }
+
     }
 
     openUserGroup(e, group) {
@@ -328,115 +469,160 @@ class Chats extends Component {
                     </div>
                     <TabContent>
                         <TabPane tabId="chat-chat" id="pills-chat-chat" className={classnames({ active: this.props.activeChatSubTab === 'chat-chat' })}>
-                               
-                                <SimpleBar className="chat-message-list">
-                                    <div className='px-2'>
-                                        <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
-                                            {
-                                                this.state.recentChatList.map((chat, key) =>
-                                                    <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
-                                                        <Link to="#" onClick={(e) => this.openUserChat(e, chat)}>
-                                                            <div className="d-flex">
-                                                                {
-                                                                    chat.profilePicture === "Null" ?
-                                                                        <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                            <div className="avatar-xs">
-                                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                    {chat.name.charAt(0)}
-                                                                                </span>
-                                                                            </div>
-                                                                            {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            }
-                                                                        </div>
-                                                                        :
-                                                                        <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                            <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                            {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            }
-                                                                        </div>
-                                                                }
 
-                                                                <div className="flex-1 overflow-hidden">
-                                                                    <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
-                                                                    <p className="chat-user-message text-truncate mb-0">
+                            <SimpleBar className="chat-message-list">
+                                <div className='px-2'>
+                                    <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
+                                        {
+                                            Object.entries(this.state.recentChatList).map(([key, chat]) =>
+                                                <li key={key} id={"conversation" + key} className={chat.unRead ? "unread" : chat.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
+                                                    <Link to="#" onClick={(e) => this.openUserChat(e, chat)}>
+                                                        <div className="d-flex">
+                                                            {
+                                                                chat.profilePicture === "Null" || typeof chat.profilePicture === "undefined"?
+                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {chat.name.charAt(0)}
+                                                                            </span>
+                                                                        </div>
                                                                         {
-                                                                            chat.isTyping ?
-                                                                                <>
-                                                                                    typing<span className="animate-typing">
-                                                                                        <span className="dot ms-1"></span>
-                                                                                        <span className="dot ms-1"></span>
-                                                                                        <span className="dot ms-1"></span>
-                                                                                    </span>
-                                                                                </>
-                                                                                :
-                                                                                <>
-                                                                                    {
-                                                                                        chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
-                                                                                    }
-                                                                                    {
-                                                                                        chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
-                                                                                    }
-                                                                                    {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].message : null}
-                                                                                </>
+                                                                            chat.status && <span className="user-status"></span>
                                                                         }
-
-
-
-                                                                    </p>
-                                                                </div>
-                                                                <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].time : null}</div>
-                                                                {chat.unRead === 0 ? null :
-                                                                    <div className="unread-message" id={"unRead" + chat.id}>
-                                                                        <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
                                                                     </div>
-                                                                }
+                                                                    :
+                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                        <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {
+                                                                            chat.status && <span className="user-status"></span>
+                                                                        }
+                                                                    </div>
+                                                            }
+
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
+                                                                <p className="chat-user-message text-truncate mb-0">
+                                                                    {
+                                                                        chat.isTyping ?
+                                                                            <>
+                                                                                typing<span className="animate-typing">
+                                                                                    <span className="dot ms-1"></span>
+                                                                                    <span className="dot ms-1"></span>
+                                                                                    <span className="dot ms-1"></span>
+                                                                                </span>
+                                                                            </>
+                                                                            :
+                                                                            <>
+                                                                                {
+                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
+                                                                                }
+                                                                                {
+                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
+                                                                                }
+                                                                                {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].message : null}
+                                                                            </>
+                                                                    }
+
+
+
+                                                                </p>
                                                             </div>
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            }
-                                        </ul>
-                                    </div>
-                                </SimpleBar>
+                                                            <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].time : null}</div>
+                                                            {chat.unRead === 0 ? null :
+                                                                <div className="unread-message" id={"unRead" + chat.id}>
+                                                                    <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </div>
+                            </SimpleBar>
+                        </TabPane>
+                        <TabPane tabId="search-chat-chat" id="search-pills-chat-chat" className={classnames({ active: this.props.activeChatSubTab === 'search-chat-chat' })}>
+
+                            <SimpleBar className="chat-message-list">
+                                <div className='px-2'>
+                                    <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
+                                        {
+                                            this.state.searchedUserList.map((searchedUser, key) =>
+                                                <li key={key} id={"searchedUser" + key}>
+                                                    <Link to="#" onClick={(e) => this.createUserChat(e, searchedUser)}>
+                                                        <div className="d-flex">
+                                                            {
+                                                                searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {searchedUser.username.charAt(0)}
+                                                                            </span>
+                                                                        </div>
+                                                                        {/* {
+                                                                                chat.status && <span className="user-status"></span>
+                                                                            } */}
+                                                                    </div>
+                                                                    :
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {/* {
+                                                                                chat.status && <span className="user-status"></span>
+                                                                            } */}
+                                                                    </div>
+                                                            }
+
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </div>
+                            </SimpleBar>
                         </TabPane>
                         {/* chat tab end */}
                         {/* klub tab start */}
                         <TabPane tabId="chat-klubs" id="pills-chat-klubs" className={classnames({ active: this.props.activeChatSubTab === 'chat-klubs' })}>
                             <SimpleBar className="chat-message-list">
-                                    <div className='px-2'>
-                                        <ul className="list-unstyled chat-list chat-user-list" id="group-list">
-                                            {
-                                                this.state.groups.map((group, key) =>
-                                                    <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
-                                                        <Link to="#" onClick={(e) => this.openUserGroup(e, group)}>
-                                                            <div className="d-flex">
-                                                                {
-                                                                    group.profilePicture === "Null" ?
-                                                                        <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
-                                                                            <div className="avatar-xs">
-                                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                    {group.name.charAt(0)}
-                                                                                </span>
-                                                                            </div>
-                                                                            {
-                                                                                group.status && <span className="user-status"></span>
-                                                                            }
+                                <div className='px-2'>
+                                    <ul className="list-unstyled chat-list chat-user-list" id="group-list">
+                                        {
+                                            this.state.groups.map((group, key) =>
+                                                <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === this.props.active_user ? "active" : ""}>
+                                                    <Link to="#" onClick={(e) => this.openUserGroup(e, group)}>
+                                                        <div className="d-flex">
+                                                            {
+                                                                group.profilePicture === "Null" ?
+                                                                    <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {group.name.charAt(0)}
+                                                                            </span>
                                                                         </div>
-                                                                        :
-                                                                        <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
-                                                                            <img src={group.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                            {
-                                                                                group.status && <span className="user-status"></span>
-                                                                            }
-                                                                        </div>
-                                                                }
+                                                                        {
+                                                                            group.status && <span className="user-status"></span>
+                                                                        }
+                                                                    </div>
+                                                                    :
+                                                                    <div className={"chat-user-img " + group.status + " align-self-center me-3 ms-0"}>
+                                                                        <img src={group.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {
+                                                                            group.status && <span className="user-status"></span>
+                                                                        }
+                                                                    </div>
+                                                            }
 
-                                                                <div className="flex-1 overflow-hidden">
-                                                                    <h5 className="text-truncate font-size-15 mb-1">{group.name}</h5>
-                                                                    <p className="chat-user-message text-truncate mb-0">
-                                                                        {/* {
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{group.name}</h5>
+                                                                <p className="chat-user-message text-truncate mb-0">
+                                                                    {/* {
                                                                             <>
                                                                                 {
                                                                                     group.messages && (group.messages.length > 0 && group.messages[(group.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
@@ -447,34 +633,34 @@ class Chats extends Component {
                                                                                 {group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].message : null}
                                                                             </>
                                                                         } */}
-                                                                        {group.desc === "" ? "none" : group.desc}
+                                                                    {group.desc === "" ? "none" : group.desc}
 
 
 
-                                                                    </p>
-                                                                </div>
-                                                                <div className="font-size-11">{group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].time : null}</div>
-                                                                {group.unRead === 0 ? null :
-                                                                    <div className="unread-message" id={"unRead" + group.id}>
-                                                                        <span className="badge badge-soft-danger rounded-pill">{group.messages && group.messages.length > 0 ? group.unRead >= 20 ? group.unRead + "+" : group.unRead : ""}</span>
-                                                                    </div>
-                                                                }
+                                                                </p>
                                                             </div>
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            }
-                                        </ul>
-                                    </div>
-                                </SimpleBar>
+                                                            <div className="font-size-11">{group.messages && group.messages.length > 0 ? group.messages[(group.messages).length - 1].time : null}</div>
+                                                            {group.unRead === 0 ? null :
+                                                                <div className="unread-message" id={"unRead" + group.id}>
+                                                                    <span className="badge badge-soft-danger rounded-pill">{group.messages && group.messages.length > 0 ? group.unRead >= 20 ? group.unRead + "+" : group.unRead : ""}</span>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </div>
+                            </SimpleBar>
                         </TabPane>
                     </TabContent>
                     {/* Start chat-message-list  */}
-                    
+
                     {/* End chat-message-list */}
                 </div>
 
-                 {/* Start add group Modal */}
+                {/* Start add group Modal */}
                 <Modal isOpen={this.state.modal} centered toggle={this.toggle}>
                     <ModalHeader tag="h5" className="modal-title font-size-14" toggle={this.toggle}>Create New Group</ModalHeader>
                     <ModalBody className="p-4">
@@ -530,7 +716,7 @@ class Chats extends Component {
 const mapStateToProps = (state) => {
     const { active_user, users, groups, active_group } = state.Chat;
     const { activeChatSubTab } = state.Layout;
-    return { active_user, users,  groups, active_group, activeChatSubTab };
+    return { active_user, users, groups, active_group, activeChatSubTab };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup,setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);

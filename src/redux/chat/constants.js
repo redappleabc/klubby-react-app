@@ -7,3 +7,4 @@ export const FULL_POST = "FULL_POST";
 export const FULL_GROUP = "FULL_GROUP";
 export const ADD_LOGGED_USER = "ADD_LOGGED_USER";
 export const CREATE_GROUP = "CREATE_GROUP";
+export const CREATE_USER = "CREATE_USER";

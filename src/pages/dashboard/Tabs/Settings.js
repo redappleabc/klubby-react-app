@@ -58,21 +58,24 @@ function Settings(props) {
     }
     
 
+    const  [mutateWalletAddress, {}] = useMutation(SET_WALLETS)
 
     const { loading, error, data } = useQuery(GET_WALLETS, {variables:{username}});
     
     
     if(!walletsAddressLoaded && data){
-        const _str_walletsAddress = data.getUserWallets.wallets;
-        if(_str_walletsAddress !== "" && _str_walletsAddress !== null){
-            setWalletsAddress(_str_walletsAddress.split(","));
+        if(data.getUserWallets == null){
+            mutateWalletAddress({variables:{username:username, wallets:""}})
+        }else{
+            const _str_walletsAddress = data.getUserWallets.wallets;
+            if(_str_walletsAddress !== "" && _str_walletsAddress !== null){
+                setWalletsAddress(_str_walletsAddress.split(","));
+            }
+            setWalletsAddressLoaded(true)
         }
-        setWalletsAddressLoaded(true)
-        
     }
    
 
-    const  [mutateWalletAddress, {}] = useMutation(SET_WALLETS)
     
     //mutateWalletAddress({variables:{username:username,wallets:wallet_address}})
     
