@@ -38,11 +38,13 @@ if (process.env.REACT_APP_ENVIRONMENT === "development") {
     socketURL = "wss://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
 }
 
+
+console.log(JSON.parse(localStorage.getItem("authUser")).signInUserSession.idToken.jwtToken)
 const wsLink = new GraphQLWsLink(createClient({
     url: socketURL,
 
     connectionParams: {
-        authToken: () => getToken(),
+        authToken: JSON.parse(localStorage.getItem("authUser")).signInUserSession.idToken.jwtToken,
     },
 }));
 
