@@ -1,7 +1,7 @@
 import {gql} from "@apollo/client";
 
 export default gql`
-subscription subscribeToNewUCs($userId: ID!) {
+subscription subscribeToNewUserConversations($userId: ID!) {
   subscribeToNewUCs(userId: $userId) {
     __typename
     userId

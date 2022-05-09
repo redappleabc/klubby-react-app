@@ -46,6 +46,7 @@ function* login({ payload: { username, password, history } }) {
     try {
         if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
             const response = yield call(signIn, username, password)
+            localStorage.setItem("authUser", JSON.stringify(response));
             yield put(loginUserSuccess(response));
            
         }
