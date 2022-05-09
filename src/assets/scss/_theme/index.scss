@@ -104,6 +104,9 @@ label {
 }
 //------------------------ Theme-light white ---------------------------
 .theme--light {
+  .preloader {
+    background-color: white;
+  }
   color: #495057;
   background-color: #f7f7ff;
   .iphone-header, .iphone-footer {

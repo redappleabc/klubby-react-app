@@ -17,9 +17,7 @@ import createConversationGQL from '../../../apollo/mutations/createConversation'
 import apollo_client from '../../../apollo';
 import { create } from 'yup/lib/Reference';
 import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
-import getUserConversationsGQL from '../../../apollo/queries/getUserConversations';
 
-import subscribeToNewMessagesGQL from '../../../apollo/subscriptions/subscribeToNewMessages';
 //components
 // import OnlineUsers from "./OnlineUsers";
 
@@ -58,41 +56,7 @@ class Chats extends Component {
        
 
 
-        apollo_client.query({
-            query: getUserConversationsGQL
-        }).then((res) => {
-            if(res.data.me.conversations.userConversations){
-                const _recentConversations = res.data.me.conversations.userConversations
-                
-                if(_recentConversations.length>0)
-                {
-                    let _recentChatList = {}
-                    for(var i = 0; i < _recentConversations.length; i++){
-                        let _recentUser = {};
-                        _recentUser.username = _recentConversations[i].associated;
-                        _recentUser.name = _recentConversations[i].associated;
-                        _recentUser.conversationId = _recentConversations[i].conversationId
-                        _recentUser.isGroup = false;
-                        _recentUser.status = "online";
-                        _recentUser.profilePicture = "Null"
-                        _recentUser.messages = []
-                        _recentChatList[_recentUser.username] = _recentUser
-                    }
-                    this.props.setFullUser(_recentChatList)
-                    this.props.activeUser(Object.keys(_recentChatList)[0]);
-                }
-            }
-           
-        }).catch((err) => {
-            console.log(err)
-        })
-
-        // apollo_client.subscribe({
-        //     subscribe:subscribeToNewMessagesGQL
-        // }).then((res)=>{
-        //     console.log("new message")
-        // })
-
+        
 
     }
 
@@ -153,7 +117,7 @@ class Chats extends Component {
         if (this.state.selectedContact.length > 2) {
             // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
             var obj = {
-                gourpId: uuidv4(),
+                gourpId: `${Date.now()}-${uuidv4()}`,
                 name: this.state.groupName,
                 profilePicture: "Null",
                 isGroup: true,
@@ -519,7 +483,7 @@ class Chats extends Component {
                                                                                 {
                                                                                     chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
                                                                                 }
-                                                                                {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].message : null}
+                                                                                {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].content : null}
                                                                             </>
                                                                     }
 
@@ -527,7 +491,7 @@ class Chats extends Component {
 
                                                                 </p>
                                                             </div>
-                                                            <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].time : null}</div>
+                                                            <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
                                                             {chat.unRead === 0 ? null :
                                                                 <div className="unread-message" id={"unRead" + chat.id}>
                                                                     <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
@@ -553,7 +517,7 @@ class Chats extends Component {
                                                     <Link to="#" onClick={(e) => this.createUserChat(e, searchedUser)}>
                                                         <div className="d-flex">
                                                             {
-                                                                searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
+                                                                typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
                                                                     <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
                                                                         <div className="avatar-xs">
                                                                             <span className="avatar-title rounded-circle bg-soft-primary text-primary">

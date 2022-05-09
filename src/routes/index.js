@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 //import routes
@@ -10,33 +10,54 @@ import AuthLayout from "../layouts/AuthLayout/";
 
 import { isAuthenticated } from "./../helpers/aws"
 import { loginUserSuccess } from '../redux/actions';
+import Preloader from '../components/preloader';
 
 
 // handle auth and authorization
 const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props_user, ...rest }) => {
     const dispatch = useDispatch();
+    const [loggedin, setLoggedin] = useState(false)
     let history = useHistory();
-    return <Route {...rest} render={props => {
+    useEffect(()=>{
         if (isAuthProtected && process.env.REACT_APP_DEFAULTAUTH === "aws") {
            
             isAuthenticated().then((user) => {
                
-                if (props_user === null)
+ 
+                setLoggedin(true)
+                if(props_user === null){
                     dispatch(loginUserSuccess(user))
+                    
+                }
             }, (error) => {
                 history.push("/index")
 
             })
         }
-        else if (isAuthProtected && !localStorage.getItem("authUser")) {
-            return (
-                <Redirect to={{ pathname: "/index", state: { from: props.location } }} />
-            );
-        }
+    },[])
+    
+    console.log("afasfsdafasdfdasfdsfsdfdsfsfsfsf")
+    return (
+    <> 
+  
+        <Route {...rest} render={props => {
+            // else if (isAuthProtected && !localStorage.getItem("authUser")) {
+            //     return (
+            //         <Redirect to={{ pathname: "/index", state: { from: props.location } }} />
+            //     );
+            // }
 
-        // authorised so return component
-        return <Layout><Component {...props} /></Layout>
-    }} />
+            // authorised so return component
+            return(<>
+                {
+                    isAuthProtected && loggedin === false?<Preloader/>: 
+                    <Layout><Component {...props} /></Layout>
+                }
+                </>
+            )
+        }} />
+    </>)
+    
 }
 
 /**
