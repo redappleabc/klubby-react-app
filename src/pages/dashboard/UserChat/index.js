@@ -190,7 +190,8 @@ function UserChat(props) {
         }).then((res)=>{    
             //setchatMessages(res.data.getAllMessageConnection.messages)
             let copyallUsers = allUsers;
-            copyallUsers[props.active_user].messages =res.data.getAllMessageConnection.messages;
+            const _messages = [...res.data.getAllMessageConnection.messages];
+            copyallUsers[props.active_user].messages = _messages.reverse();
             props.setFullUser(copyallUsers);
             console.log(res)
         }).catch((err)=>{
