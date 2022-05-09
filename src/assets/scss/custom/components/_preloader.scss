@@ -1,0 +1,192 @@
+.preloader {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    // background-color: var(--main-gray);
+    background-color: black;
+}
+.outCircle {
+    width: 65px;
+    height: 65px;
+    position: relative;
+}
+.rotate {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.counterrotate {
+    width: 15px;
+    height: 15px;
+    border-radius: 20px;
+    background-color: #6355fa;
+}
+.circle1 {
+    -webkit-transform: rotateZ(0deg);
+    transform: rotateZ(0deg);
+}
+.circle2 {
+    -webkit-transform: rotateZ(45deg);
+    transform: rotateZ(45deg);
+}
+.circle3 {
+    -webkit-transform: rotateZ(90deg);
+    transform: rotateZ(90deg);
+}
+.circle4 {
+    -webkit-transform: rotateZ(135deg);
+    transform: rotateZ(135deg);
+}
+.circle5 {
+    -webkit-transform: rotateZ(180deg);
+    transform: rotateZ(180deg);
+}
+.circle6 {
+    -webkit-transform: rotateZ(225deg);
+    transform: rotateZ(225deg);
+}
+.circle7 {
+    -webkit-transform: rotateZ(270deg);
+    transform: rotateZ(270deg);
+}
+.circle8 {
+    -webkit-transform: rotateZ(315deg);
+    transform: rotateZ(315deg);
+}
+.circle1 .counterrotate {
+    animation: preload1 1.2s linear infinite;
+}
+.circle2 .counterrotate {
+    animation: preload2 1.2s linear infinite;
+}
+.circle3 .counterrotate {
+    animation: preload3 1.2s linear infinite;
+}
+.circle4 .counterrotate {
+    animation: preload4 1.2s linear infinite;
+}
+.circle5 .counterrotate {
+    animation: preload5 1.2s linear infinite;
+}
+.circle6 .counterrotate {
+    animation: preload6 1.2s linear infinite;
+}
+.circle7 .counterrotate {
+    animation: preload7 1.2s linear infinite;
+}
+.circle8 .counterrotate {
+    animation: preload8 1.2s linear infinite;
+}
+@keyframes preload1 {
+    0% {opacity: 1;}
+    12.4% {opacity: 1;}
+    12.5% {opacity: .75;}
+    24.9% {opacity: .75;}
+    25% {opacity: .5;}
+    37.4% {opacity: .5;}
+    37.5% {opacity: .25;}
+    49.9% {opacity: .25;}
+    50% {opacity: 0;}
+    99.9% {opacity: 0;}
+}
+@keyframes preload2 {
+    0% {opacity: 0;}
+    12.4% {opacity: 0;}
+    12.5% {opacity: 1;}
+    24.9% {opacity: 1;}
+    25% {opacity: .75;}
+    37.4% {opacity: .75;}
+    37.5% {opacity: .5;}
+    49.9% {opacity: .5;}
+    50% {opacity: .25;}
+    62.4% {opacity: .25;}
+    62.5% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes preload3 {
+    0% {opacity: 0;}
+    24.9% {opacity: 0;}
+    25% {opacity: 1;}
+    37.4% {opacity: 1;}
+    37.5% {opacity: .75;}
+    49.9% {opacity: .75;}
+    50% {opacity: .5;}
+    62.4% {opacity: .5;}
+    62.5% {opacity: .25;}
+    74.9% {opacity: .25;}
+    75% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes preload4 {
+    0% {opacity: 0;}
+    37.4% {opacity: 0;}
+    37.5% {opacity: 1;}
+    49.9% {opacity: 1;}
+    50% {opacity: .75;}
+    62.4% {opacity: .75;}
+    62.5% {opacity: .5;}
+    74.9% {opacity: .5;}
+    75% {opacity: .25;}
+    87.4% {opacity: .25;}
+    87.5% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes preload5 {
+    0% {opacity: 0;}
+    49.9% {opacity: 0;}
+    50% {opacity: 1;}
+    62.4% {opacity: 1;}
+    62.5% {opacity: .75;}
+    74.9% {opacity: .75;}
+    75% {opacity: .5;}
+    87.4% {opacity: .5;}
+    87.5% {opacity: .25;}
+    99.9% {opacity: .25;}
+    100% {opacity: 0;}
+}
+@keyframes preload6 {
+    0% {opacity: .25;}
+    12.4% {opacity: .25;}
+    12.5% {opacity: 0;}
+    62.4% {opacity: 0;}
+    62.5% {opacity: 1;}
+    74.9% {opacity: 1;}
+    75% {opacity: .75;}
+    87.4% {opacity: .75;}
+    87.5% {opacity: .5;}
+    99.9% {opacity: .5;}
+    100% {opacity: .25;}
+}
+@keyframes preload7 {
+    0% {opacity: .5;}
+    12.4% {opacity: .5;}
+    12.5% {opacity: .25;}
+    24.9% {opacity: .25;}
+    25% {opacity: 0;}
+    74.9% {opacity: 0;}
+    75% {opacity: 1;}
+    87.4% {opacity: 1;}
+    87.5% {opacity: .75;}
+    99.9% {opacity: .75;}
+    100% {opacity: .5;}
+}
+@keyframes preload8 {
+    0% {opacity: .75;}
+    12.4% {opacity: .75;}
+    12.5% {opacity: .5;}
+    24.9% {opacity: .5;}
+    25% {opacity: .25;}
+    37.4% {opacity: .25;}
+    37.5% {opacity: 0;}
+    87.4% {opacity: 0;}
+    87.5% {opacity: 1;}
+    99.9% {opacity: 1;}
+    100% {opacity: .75;}
+}

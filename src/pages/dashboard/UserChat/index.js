@@ -49,7 +49,7 @@ function UserChat(props) {
 
     useEffect(() => {
         console.log("userchat.js")
-        console.log(props)
+        
         setchatMessages(props.active_user?props.users[props.active_user].messages:[]);
         ref.current.recalculate();
         if (ref.current.el) {
@@ -70,7 +70,7 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    id: uuidv4(),
+                    id: `${Date.now()}-${uuidv4()}`,
                     content: message,
                     createdAt: `${Date.now()}`,
                     conversationId:props.users[props.active_user].conversationId,
@@ -83,7 +83,7 @@ function UserChat(props) {
 
             case "fileMessage":
                 messageObj = {
-                    id: uuidv4(),
+                    id: `${Date.now()}-${uuidv4()}`,
                     message: 'file',
                     fileMessage: message.name,
                     size: message.size,
@@ -101,7 +101,7 @@ function UserChat(props) {
                 ]
 
                 messageObj = {
-                    id: uuidv4(),
+                    id: `${Date.now()}-${uuidv4()}`,
                     message: 'image',
                     imageMessage: imageMessage,
                     size: message.size,
@@ -129,7 +129,7 @@ function UserChat(props) {
         }else{
             const newConversation = {
                 createdAt: `${Date.now()}`,
-                id: uuidv4(),
+                id: `${Date.now()}-${uuidv4()}`,
                 name: "noname"
             }
             createConversationApollo({
@@ -147,7 +147,7 @@ function UserChat(props) {
             }).then((res)=>{
                 console.log("create userconversation 2 succeed")
                 const first_messageObj = {
-                    id: uuidv4(),
+                    id: `${Date.now()}-${uuidv4()}`,
                     content: message,
                     createdAt: `${Date.now()}`,
                     conversationId:newConversation.id,
@@ -181,23 +181,24 @@ function UserChat(props) {
 
 
 
-    if(props.active_user && props.users[props.active_user].conversationId){
-        apollo_client.query({
-            query:getConversationMessagesGQL,
-            variables:{
-                conversationId:props.users[props.active_user].conversationId
-            }
-        }).then((res)=>{    
-            //setchatMessages(res.data.getAllMessageConnection.messages)
-            let copyallUsers = allUsers;
-            const _messages = [...res.data.getAllMessageConnection.messages];
-            copyallUsers[props.active_user].messages = _messages.reverse();
-            props.setFullUser(copyallUsers);
-            console.log(res)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    }
+    // if(props.active_user && props.users[props.active_user].conversationId){
+    //     apollo_client.query({
+    //         query:getConversationMessagesGQL,
+    //         variables:{
+    //             conversationId:props.users[props.active_user].conversationId
+    //         }
+    //     }).then((res)=>{    
+    //         //setchatMessages(res.data.getAllMessageConnection.messages)
+    //         let copyallUsers = allUsers;
+    //         const _messages = [...res.data.getAllMessageConnection.messages];
+            
+    //         copyallUsers[props.active_user].messages = _messages.reverse();
+    //         props.setFullUser(copyallUsers);
+    //         console.log(res)
+    //     }).catch((err)=>{
+    //         console.log(err)
+    //     })
+    // }
     
 
     function scrolltoBottom() {

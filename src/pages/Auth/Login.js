@@ -1,4 +1,4 @@
-import React, { useEffect,useCallback } from 'react';
+import React, { useEffect,useCallback, useState } from 'react';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link, withRouter, Redirect, useHistory } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { loginUser, apiError, loginUserSuccess } from '../../redux/actions';
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import { isAuthenticated } from '../../helpers/aws';
+import Preloader from '../../components/preloader';
 
 //Import Images
 
@@ -21,6 +22,10 @@ import { isAuthenticated } from '../../helpers/aws';
 const Login = (props) => {
     let history = useHistory();
     const clearError= useCallback(() => { props.apiError("");}, [])
+
+   
+
+
     useEffect(()=>{
         clearError();
     }, [clearError])
@@ -36,25 +41,28 @@ const Login = (props) => {
             password: Yup.string().required('Please Enter Your Password')
         }),
         onSubmit: values => {
+            
             props.loginUser(values.email, values.password, props.history);
+          
         },
     });
     if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
         isAuthenticated().then((user)=>{
             if(user){
                 //return <Redirect to="/" />;
-                history.push("/")
+                history.push("/dashboard")
             }
         }).catch((error=>{
 
         }))
     }
     else if (localStorage.getItem("authUser")) {
-        return <Redirect to="/" />;
+        return <Redirect to="/dashboard" />;
     }
 
     return (
         <React.Fragment>
+        {   props.loading ? <Preloader/>:
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -137,6 +145,7 @@ const Login = (props) => {
                     </Row>
                 </Container>
             </div>
+        }
         </React.Fragment>
     )
 }
