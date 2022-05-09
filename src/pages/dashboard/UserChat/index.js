@@ -165,16 +165,21 @@ function UserChat(props) {
 
         
 
-        //add message object to chat        
-        setchatMessages([...chatMessages, messageObj]);
+        //add message object to chat    
+       
+        setchatMessages([...chatMessages, messageObj])
 
         let copyallUsers = allUsers;
         copyallUsers[props.active_user].messages = [...chatMessages, messageObj];
         copyallUsers[props.active_user].isTyping = false;
+        console.log("copyallusers", copyallUsers)
         props.setFullUser(copyallUsers);
-
+        console.log(copyallUsers)
         scrolltoBottom();
     }
+
+
+
 
     if(props.active_user && props.users[props.active_user].conversationId){
         apollo_client.query({
@@ -183,7 +188,10 @@ function UserChat(props) {
                 conversationId:props.users[props.active_user].conversationId
             }
         }).then((res)=>{    
-            setchatMessages(res.data.getAllMessageConnection.messages)
+            //setchatMessages(res.data.getAllMessageConnection.messages)
+            let copyallUsers = allUsers;
+            copyallUsers[props.active_user].messages =res.data.getAllMessageConnection.messages;
+            props.setFullUser(copyallUsers);
             console.log(res)
         }).catch((err)=>{
             console.log(err)
