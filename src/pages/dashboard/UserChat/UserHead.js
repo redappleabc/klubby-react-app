@@ -50,8 +50,9 @@ function UserHead(props) {
                                 <Link to="#" onClick={(e) => closeUserChat(e)} className="user-chat-remove text-muted font-size-16 p-2">
                                     <i className="ri-arrow-left-s-line"></i></Link>
                             </div>
-                            {
-                                props.users[props.active_user].profilePicture !== "Null" ?
+                            
+                            {   props.active_user?
+                                 props.users[props.active_user].profilePicture !== "Null" ?
                                     <div className="me-3 ms-0">
                                         <img src={props.users[props.active_user].profilePicture} className="rounded-circle avatar-xs" alt="Klubby" />
                                     </div>
@@ -61,9 +62,10 @@ function UserHead(props) {
                                                 {props.users[props.active_user].name.charAt(0)}
                                             </span>
                                         </div>
-                                    </div>
+                                    </div>:<div></div>
                             }
 
+                            {props.active_user?
                             <div className="flex-1 overflow-hidden">
                                 <h5 className="font-size-16 mb-0 text-truncate">
                                     <Link to="#" className="text-reset user-profile-show">
@@ -98,7 +100,8 @@ function UserHead(props) {
                                     })()}
 
                                 </h5>
-                            </div>
+                            </div>:<div></div>
+                            }
                         </div>
                     </Col>
                     <Col sm={8} xs={4} >

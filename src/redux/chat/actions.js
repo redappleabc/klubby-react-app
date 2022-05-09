@@ -1,5 +1,5 @@
 import {
-    CHAT_USER,ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, ACTIVE_GROUP, FULL_GROUP
+    CHAT_USER,ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, ACTIVE_GROUP, FULL_GROUP, CREATE_USER
 } from './constants';
 
 
@@ -46,3 +46,10 @@ export const createGroup = (groupData) => ({
     type : CREATE_GROUP,
     payload : groupData
 })
+
+export const createUser = (user) => ({
+    type: CREATE_USER,
+    payload:user
+})
+
+

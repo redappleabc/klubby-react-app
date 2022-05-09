@@ -8,7 +8,7 @@ import { Keyboard } from '@capacitor/keyboard';
 
 if (Capacitor.isNativePlatform()) {
   if (Capacitor.getPlatform() === "ios") {
-    if (localStorage.getItem("globalTheme") == "dark") {
+    if (localStorage.getItem("globalTheme") === "dark") {
       StatusBar.setStyle({ style: Style.Dark })
     } else {
       StatusBar.setStyle({ style: Style.Light })

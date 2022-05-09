@@ -27,7 +27,10 @@ function ChatMainBoard(props) {
                     <TabPane tabId="chat" id="pills-chat_">
                         {/* chats content */}
                         <TabContent activeTab={chatActiveTab}>
-                            <TabPane tabId="chat-chat" id="pills-chat-chat">
+                            <TabPane tabId= "chat-chat" id="pills-chat-chat">
+                                <UserChat />
+                            </TabPane>
+                            <TabPane tabId= "search-chat-chat" id="pills-chat-chat">
                                 <UserChat />
                             </TabPane>
                             <TabPane tabId="chat-klubs" id="pills-chat-group">

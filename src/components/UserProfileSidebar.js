@@ -53,6 +53,7 @@ function UserProfileSidebar(props) {
     // style={{display: props.userSidebar  ? "block" : "none"}}
     return (
         <React.Fragment>
+            {props.activeUser?
             <div style={{ display: (props.userSidebar === true) ? "block" : "none" }} className="user-profile-sidebar">
                 <div className="px-3 px-lg-4 pt-3 pt-lg-4">
                     <div className="user-chat-nav  text-end">
@@ -231,9 +232,9 @@ function UserProfileSidebar(props) {
                     </div>
                 </SimpleBar>
                 {/* end user-profile-desc */}
-            </div>
+            </div>:<></>
 
-
+        }
         </React.Fragment>
     );
 }

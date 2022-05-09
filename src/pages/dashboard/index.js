@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 class Index extends Component {
 
     render() {
+        console.log("dashboard")
         return (
             <React.Fragment>
                 {/* chat left sidebar */}
