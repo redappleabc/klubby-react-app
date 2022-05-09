@@ -42,9 +42,7 @@ const Index = (props) => {
                                 }
                             })
     
-                            const _messages = [...res.data.getAllMessageConnection.messages];
-    
-                            _recentUser.messages = _messages.reverse();
+                            _recentUser.messages = res.data.getAllMessageConnection.messages;
     
                         }
     
