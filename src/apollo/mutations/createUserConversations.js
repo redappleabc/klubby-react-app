@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation createUserConversations($conversationId: ID!, $username: ID!) {
-  createUserConversations(conversationId: $conversationId, username: $username) {
+mutation createUserConversationBridge($conversationId: ID!, $username: ID!) {
+  createUserConversationBridge(conversationId: $conversationId, username: $username) {
     __typename
     username
     conversationId

@@ -1,7 +1,7 @@
 import {gql} from "@apollo/client";
 //$username:String!
 export default gql`query getUserConversations { 
-    me {
+    getMe {
         username
         wallets
         conversations {

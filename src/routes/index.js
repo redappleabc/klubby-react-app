@@ -27,7 +27,7 @@ const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props
                 setLoggedin(true)
                 if(props_user === null){
                     dispatch(loginUserSuccess(user))
-                    localStorage.setItem("authUser", JSON.stringify(user));
+                    //localStorage.setItem("authUser", JSON.stringify(user));
                 }
             }, (error) => {
                 history.push("/index")

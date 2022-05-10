@@ -24,8 +24,9 @@ const Index = (props) => {
             apollo_client.query({
                 query: getUserConversationsGQL
             }).then(async (res) => {
-                if (res.data.me.conversations.userConversations) {
-                    const _recentConversations = res.data.me.conversations.userConversations
+                console.log(res)
+                if (res.data.getMe && res.data.getMe.conversations.userConversations) {
+                    const _recentConversations = res.data.getMe.conversations.userConversations
 
                     if (_recentConversations.length > 0) {
                         let _recentChatList = {}
@@ -45,16 +46,18 @@ const Index = (props) => {
                                     conversationId: _recentUser.conversationId
                                 }
                             })
+                           
 
-                            _recentUser.messages = res.data.getAllMessageConnection.messages;
+                            _recentUser.messages = res.data.getAllMessageConnections.messages;
 
                         }
 
                         props.setFullUser(_recentChatList)
                         props.activeUser(Object.keys(_recentChatList)[0]);
                     }
-                    setConversationLoad(true)
+                    
                 }
+                setConversationLoad(true)
 
             }).catch((err) => {
                 console.log(err)
@@ -64,9 +67,6 @@ const Index = (props) => {
     }, [])
 
 
- 
-    const { data, loading, error } = useSubscription(subscribeToNewMessagesGQL);
-    console.log("subscription" ,data)
 
     
     // apollo_client.subscribe({
