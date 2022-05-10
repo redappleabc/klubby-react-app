@@ -15,7 +15,9 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 import { createAuthLink } from "aws-appsync-auth-link";
 
-//import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
+//import AWSAppSyncClient from 'aws-appsync'
+
+import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
 // import { WebSocketLink } from '@apollo/client/link/ws';
 
@@ -72,13 +74,6 @@ if (process.env.REACT_APP_ENVIRONMENT === "development") {
 // );
 
 
-const wsLink = new GraphQLWsLink(createClient({
-    url: socketURL,
-    connectionParams: {
-        authToken: async () => getToken() ,
-    },
-}));
-
 
 
 
@@ -90,7 +85,23 @@ const auth = {
     jwtToken: async () => getToken()
 }
 
+
+
+
+
+
+
 const region = 'us-east-1';
+
+
+
+const wsLink = new GraphQLWsLink(createClient({
+    url: socketURL,
+    connectionParams: {
+        authToken: async () => getToken() ,
+    },
+}));
+
 
 const httpLink = createHttpLink({
     uri: URL,
@@ -123,6 +134,7 @@ const splitLink = split(
 //   ]);
 
 
+
 const apollo_client = new ApolloClient({
     //fetch,
     link: splitLink,
@@ -132,6 +144,15 @@ const apollo_client = new ApolloClient({
         console.log('networkError', networkError)
     }
 });
+
+
+
+  
+// const apollo_client = new AWSAppSyncClient({
+//     url: URL,
+//     region: region,
+//     auth: auth
+//   })
 
 
 

@@ -70,8 +70,13 @@ function UserChat(props) {
         },
         updateQuery: (prev, { subscriptionData }) => {
             console.log('subscribeToMore - updateQuery:', subscriptionData);
+        },
+        onError:(err)=>{
+            console.log(err)
         }
     });
+
+    console.log( props.users[props.active_user].conversationId)
 
     // const  { data: createSubData, error: createSubError } = useSubscription(subscribeToNewMessagesGQL, {
     //     variables: {
@@ -352,7 +357,7 @@ function UserChat(props) {
                                                                         </p>
                                                                     }
                                                                     {
-                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toISOString())}</span></p>
+                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toString())}</span></p>
                                                                     }
                                                                 </div>
                                                                 {
@@ -448,7 +453,7 @@ function UserChat(props) {
                                                                         </p>
                                                                     }
                                                                     {
-                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toISOString())}</span></p>
+                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toString())}</span></p>
                                                                     }
                                                                 </div>
                                                                 {
