@@ -9,18 +9,18 @@ import {
 
 import { Auth } from "aws-amplify";
 
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
+// import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+// import { createClient } from 'graphql-ws';
+
+
+
 import { getMainDefinition } from '@apollo/client/utilities';
-
 import { createAuthLink } from "aws-appsync-auth-link";
-
-//import AWSAppSyncClient from 'aws-appsync'
-
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
 
-// import { WebSocketLink } from '@apollo/client/link/ws';
 
+//import AWSAppSyncClient from 'aws-appsync'
+// import { WebSocketLink } from '@apollo/client/link/ws';
 // import { SubscriptionClient } from "subscriptions-transport-ws";
 
 
@@ -33,11 +33,11 @@ const getToken = async () => {
 
 
 
-let URL;
+let url;
 if (process.env.REACT_APP_ENVIRONMENT === "development") {
-    URL = "https://4ze3wlpbnzfohpg4l347prseyq.appsync-api.us-east-1.amazonaws.com/graphql"
+    url = "https://4ze3wlpbnzfohpg4l347prseyq.appsync-api.us-east-1.amazonaws.com/graphql"
 } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
-    URL = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
+    url = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
 }
 
 
@@ -95,25 +95,26 @@ const region = 'us-east-1';
 
 
 
-const wsLink = new GraphQLWsLink(createClient({
-    url: socketURL,
-    connectionParams: {
-        authToken: async () => getToken() ,
-    },
-}));
+// const wsLink = new GraphQLWsLink(createClient({
+//     url: socketURL,
+//     connectionParams: {
+//         authToken: async () => getToken() ,
+//     },
+// }));
 
 
 const httpLink = createHttpLink({
-    uri: URL,
+    uri: url,
 });
 
 const authLink = createAuthLink({
-    url: URL,
+    url: url,
     region: region,
     auth: auth
 })
 
-//const wsLink = createSubscriptionHandshakeLink({ URL, region, auth }, httpLink)
+
+const wsLink = createSubscriptionHandshakeLink({ url, region, auth }, httpLink)
 
 const splitLink = split(
     ({ query }) => {

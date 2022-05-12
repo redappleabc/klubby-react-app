@@ -1,5 +1,5 @@
 import {
-    CHAT_USER,ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, ACTIVE_GROUP, FULL_GROUP, CREATE_USER
+    CHAT_USER,ACTIVE_USER,FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, ACTIVE_GROUP, FULL_GROUP, CREATE_USER, SUBSCRIBE_DIRECT_MESSAGE
 } from './constants';
 
 
@@ -50,6 +50,11 @@ export const createGroup = (groupData) => ({
 export const createUser = (user) => ({
     type: CREATE_USER,
     payload:user
+})
+
+export const subscribeDirectMessage = (subscriptionData) =>({
+    type: SUBSCRIBE_DIRECT_MESSAGE,
+    payload: subscriptionData
 })
 
 
