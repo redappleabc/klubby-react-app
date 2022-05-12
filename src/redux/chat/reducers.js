@@ -1,5 +1,5 @@
 import {
-    CHAT_USER, ACTIVE_USER, FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, FULL_GROUP, ACTIVE_GROUP, CREATE_USER
+    CHAT_USER, ACTIVE_USER, FULL_USER, ADD_LOGGED_USER, CREATE_GROUP, ACTIVE_POST, FULL_POST, FULL_GROUP, ACTIVE_GROUP, CREATE_USER, SUBSCRIBE_DIRECT_MESSAGE
 } from './constants';
 
 
@@ -33,6 +33,7 @@ const INIT_STATE = {
     active_user: null,
     active_post: 0,
     active_group: 0,
+    newDirectMessage:null,
 
 
     users: {
@@ -50,65 +51,6 @@ const INIT_STATE = {
         //         { id: 7, message: "image", time: "10:30", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img4 }, { image: img7 }] },
         //         { id: 8, message: "please, save this pictures to your file and give it to me after you have done with editing!", time: "10:31", userType: "receiver", isImageMessage: false, isFileMessage: false },
         //         { id: 9, message: "okay sure😄👍", time: "02:50", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //     ]
-        // },
-        // "Mark Messer":{
-        //     id: 1, name: "Mark Messer", profilePicture: avatar3, status: "away", unRead: 2, isGroup: false,
-        //     messages: [
-        //         { id: 33, isToday: true },
-        //         { id: 1, message: "hello", time: "10.00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 2, message: "images", time: "10:30", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img4 }, { image: img7 }] },
-        //     ]
-        // },
-       
-
-        // "Doris Brown":{
-        //     id: 4, name: "Doris Brown", profilePicture: avatar4, status: "online", unRead: 0, isGroup: false, isTyping: true,
-        //     messages: [
-        //         { id: 1, userName: "Doris Brown", message: "Good Morning", time: "10:00", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 2, userName: "admin", message: "Good morning, How are you? What about our next meeting?", time: "10:02", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 33, isToday: true },
-        //         { id: 3, message: "Yeah everything is fine", time: "10:05", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 4, message: "& Next meeting tomorrow 10.00AM", time: "10:05", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 5, message: "Wow that's great", time: "10:06", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 6, message: "images", time: "10:30", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img4 }, { image: img7 }] },
-        //         { id: 7, userName: "admin", message: "Files", time: "01:30", userType: "sender", isImageMessage: false, isFileMessage: true, fileMessage: "admin_v1.0.zip", size: "12.5 MB" },
-        //         { id: 8, message: "", time: "10:05", userType: "receiver", isImageMessage: false, isFileMessage: false, isTyping: true },
-        //     ]
-        // },
-      
-        // "Steve Walker":{
-        //     id: 6, name: "Steve Walker", profilePicture: avatar6, status: "away", unRead: 0, isGroup: false,
-        //     messages: [
-        //         { id: 33, isToday: true },
-        //         { id: 1, message: "file", time: "01:16", userType: "receiver", isImageMessage: false, isFileMessage: true, fileMessage: "Minible-Vertical.zip" },
-        //         { id: 2, message: "Okay 👍, let me check it and get back to you soon", time: "01:16", userType: "sender", isImageMessage: false, isFileMessage: false }
-        //     ]
-        // },
-
-
-      
-
-
-        // "Jonathan Miller":{
-        //     id: 2, name: "Jonathan Miller", profilePicture: avatar2, status: "online", unRead: 0, isGroup: false,
-        //     messages: [
-        //         { id: 33, isToday: true },
-        //         { id: 1, message: "hello Admin", time: "08:00", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 2, message: "Good morning", time: "08:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 3, message: "is everything is fine ?", time: "08:00", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 4, message: "i can help you😊", time: "08:00", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //         { id: 5, message: "Hi, How are You?", time: "08:00", userType: "receiver", isImageMessage: false, isFileMessage: false },
-        //     ]
-        // },
-
-        // "Ossie Wilson":{
-        //     id: 3, name: "Ossie Wilson", profilePicture: avatar3, status: "away", unRead: 0, isGroup: false,
-        //     messages: [
-        //         { id: 33, isToday: true },
-        //         { id: 1, message: "hi", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 2, message: "Did you finished it?", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //         { id: 2, message: "I've finished it! See you so", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] }
         //     ]
         // },
     },
@@ -401,6 +343,11 @@ const Chat = (state = INIT_STATE, action) => {
                     ...state.users, newUser
                 ]
             };
+        
+        case SUBSCRIBE_DIRECT_MESSAGE:
+            return {... state, 
+                newDirectMessage:action.payload
+            }
 
         default: return { ...state };
     }

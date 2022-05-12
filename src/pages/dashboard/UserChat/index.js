@@ -50,42 +50,34 @@ function UserChat(props) {
     const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
     const [createMessageApollo, { }] = useMutation(createMessageGQL)
 
-    const {
-        data,
-        loading,
-        error,
-        subscribeToMore
-    } = useQuery(getConversationMessagesGQL, {
-        variables: {
-            conversationId: props.users[props.active_user].conversationId
-        }
-    });
-
-
-    subscribeToMore({
-        // ...
-        document: subscribeToNewMessagesGQL,
-        variables: {
-            conversationId: props.users[props.active_user].conversationId
-        },
-        updateQuery: (prev, { subscriptionData }) => {
-            console.log('subscribeToMore - updateQuery:', subscriptionData);
-        },
-        onError:(err)=>{
-            console.log(err)
-        }
-    });
-
-    console.log( props.users[props.active_user].conversationId)
-
-    // const  { data: createSubData, error: createSubError } = useSubscription(subscribeToNewMessagesGQL, {
+    // const {
+    //     data,
+    //     loading,
+    //     error,
+    //     subscribeToMore
+    // } = useQuery(getConversationMessagesGQL, {
     //     variables: {
     //         conversationId: props.users[props.active_user].conversationId
     //     }
-    // })
+    // });
 
-    // console.log(createSubData)
-    // console.log(createSubError)
+
+    // subscribeToMore({
+    //     // ...
+    //     document: subscribeToNewMessagesGQL,
+    //     variables: {
+    //         conversationId: props.users[props.active_user].conversationId
+    //     },
+    //     updateQuery: (prev, { subscriptionData }) => {
+    //         console.log('subscribeToMore - updateQuery:', subscriptionData);
+    //     },
+    //     onError:(err)=>{
+    //         console.log(err)
+    //     }
+    // });
+
+    //console.log( props.users[props.active_user].conversationId)
+
 
 
 
@@ -123,8 +115,14 @@ function UserChat(props) {
         if (ref.current.el) {
             ref.current.getScrollElement().scrollTop = ref.current.getScrollElement().scrollHeight;
         }
-        setAllUsers(props.users)
-    }, [props.active_user, props.users]);
+        //setAllUsers(props.users)
+        scrolltoBottom();
+
+    }, [props.active_user, props.users, props.newDirectMessage]);
+
+    useEffect(()=>{
+        scrolltoBottom();
+    },[chatMessages])
 
     const toggle = () => setModal(!modal);
 
@@ -232,14 +230,14 @@ function UserChat(props) {
 
         //add message object to chat    
 
-        setchatMessages([...chatMessages, messageObj])
+        //setchatMessages([...chatMessages, messageObj])
 
-        let copyallUsers = allUsers;
-        copyallUsers[props.active_user].messages = [...chatMessages, messageObj];
-        copyallUsers[props.active_user].isTyping = false;
-        console.log("copyallusers", copyallUsers)
-        props.setFullUser(copyallUsers);
-        scrolltoBottom();
+        //let copyallUsers = allUsers;
+        //copyallUsers[props.active_user].messages = [...chatMessages, messageObj];
+        //copyallUsers[props.active_user].isTyping = false;
+        //console.log("copyallusers", copyallUsers)
+        //props.setFullUser(copyallUsers);
+        
     }
 
 
@@ -308,7 +306,7 @@ function UserChat(props) {
                                                 <span className="title">Today</span>
                                             </div>
                                         </li> :
-                                            (props.users[props.active_user].isGroup === true) ?
+                                           
                                                 <li key={key} className={chat.sender === props.user.username ? "right" : ""}>
                                                     <div className="conversation-list">
 
@@ -318,7 +316,7 @@ function UserChat(props) {
                                                                     <div className="chat-user-img align-self-center me-3">
                                                                         <div className="avatar-xs">
                                                                             <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                {chat.userName && chat.userName.charAt(0)}
+                                                                                {chat.sender && chat.sender.charAt(0)}
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -382,103 +380,7 @@ function UserChat(props) {
                                                         </div>
                                                     </div>
                                                 </li>
-                                                :
-                                                <li key={key} className={chat.sender === props.user.username ? "right" : ""}>
-                                                    <div className="conversation-list">
-                                                        {
-                                                            //logic for display user name and profile only once, if current and last messaged sent by same receiver
-                                                            chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ?
-
-                                                                <div className="chat-avatar">
-                                                                    <div className="blank-div"></div>
-                                                                </div>
-                                                                :
-                                                                <div className="chat-avatar">
-                                                                    {chat.sender === props.user.username ? <img src={avatar1} alt="Klubby" /> :
-                                                                        props.users[props.active_user].profilePicture === "Null" ?
-                                                                            <div className="chat-user-img align-self-center me-3">
-                                                                                <div className="avatar-xs">
-                                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                        {props.users[props.active_user].name.charAt(0)}
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            : <img src={props.users[props.active_user].profilePicture} alt="Klubby" />
-                                                                    }
-                                                                </div>
-                                                                : <div className="chat-avatar">
-                                                                    {chat.sender === props.user.username ? <img src={avatar1} alt="Klubby" /> :
-                                                                        props.users[props.active_user].profilePicture === "Null" ?
-                                                                            <div className="chat-user-img align-self-center me-3">
-                                                                                <div className="avatar-xs">
-                                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                        {props.users[props.active_user].name.charAt(0)}
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            : <img src={props.users[props.active_user].profilePicture} alt="Klubby" />
-                                                                    }
-                                                                </div>
-                                                        }
-
-
-                                                        <div className="user-chat-content">
-                                                            <div className="ctext-wrap">
-                                                                <div className="ctext-wrap-content">
-                                                                    {
-                                                                        chat.content &&
-                                                                        <p className="mb-0">
-                                                                            {chat.content}
-                                                                        </p>
-                                                                    }
-                                                                    {
-                                                                        chat.imageMessage &&
-                                                                        // image list component
-                                                                        <ImageList images={chat.imageMessage} />
-                                                                    }
-                                                                    {
-                                                                        chat.fileMessage &&
-                                                                        //file input component
-                                                                        <FileList fileName={chat.fileMessage} fileSize={chat.size} />
-                                                                    }
-                                                                    {
-                                                                        chat.isTyping &&
-                                                                        <p className="mb-0">
-                                                                            typing
-                                                                            <span className="animate-typing">
-                                                                                <span className="dot ms-1"></span>
-                                                                                <span className="dot ms-1"></span>
-                                                                                <span className="dot ms-1"></span>
-                                                                            </span>
-                                                                        </p>
-                                                                    }
-                                                                    {
-                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toString())}</span></p>
-                                                                    }
-                                                                </div>
-                                                                {
-                                                                    !chat.isTyping &&
-                                                                    <UncontrolledDropdown className="align-self-start">
-                                                                        <DropdownToggle tag="a">
-                                                                            <i className="ri-more-2-fill"></i>
-                                                                        </DropdownToggle>
-                                                                        <DropdownMenu>
-                                                                            <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                            <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
-                                                                            <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
-                                                                            <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
-                                                                        </DropdownMenu>
-                                                                    </UncontrolledDropdown>
-                                                                }
-
-                                                            </div>
-                                                            {
-                                                                chatMessages[key + 1] ? chatMessages[key].userType === chatMessages[key + 1].userType ? null : <div className="conversation-name">{chat.sender === props.user.username ? "The Dip Daddy" : props.users[props.active_user].name}</div> : <div className="conversation-name">{chat.sender === props.user.username ? "Admin" : props.users[props.active_user].name}</div>
-                                                            }
-
-                                                        </div>
-                                                    </div>
-                                                </li>
+ 
                                     )
                                 }
                             </ul>
@@ -510,10 +412,10 @@ function UserChat(props) {
 }
 
 const mapStateToProps = (state) => {
-    const { active_user, users } = state.Chat;
+    const { active_user, users , newDirectMessage} = state.Chat;
     const { userSidebar } = state.Layout;
     const { user, loading, error } = state.Auth;
-    return { user, active_user, userSidebar, users };
+    return { user, active_user, userSidebar, users, newDirectMessage };
 };
 
 export default withRouter(connect(mapStateToProps, { openUserSidebar, setFullUser })(UserChat));
