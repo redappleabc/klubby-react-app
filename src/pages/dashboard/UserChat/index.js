@@ -190,13 +190,11 @@ function UserChat(props) {
                 console.log("create message error   ", err)
             })
         } else {
-            const newConversation = {
-                createdAt: `${Date.now()}`,
-                id: `${Date.now()}-${uuidv4()}`
-            }
+             let newConversation = {}
             createConversationApollo({
-                variables: newConversation
+                //variables: newConversation
             }).then((res) => {
+                newConversation.id = res.data.createConversation.id;
                 console.log("create conversation succeed");
                 createUserConversationApollo({
                     variables: { conversationId: newConversation.id, username: props.user.username, name: props.users[props.active_user].username}
@@ -208,12 +206,9 @@ function UserChat(props) {
                 })
             }).then((res) => {
                 console.log("create userconversation 2 succeed")
-                const first_messageObj = {
-                    id: `${Date.now()}-${uuidv4()}`,
-                    content: message,
-                    createdAt: `${Date.now()}`,
+                const first_messageObj = {    
+                    content: message,   
                     conversationId: newConversation.id,
-                    sender: props.user.username,
                 }
                 createMessageApollo({
                     variables: first_messageObj
