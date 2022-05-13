@@ -44,25 +44,25 @@ const Chats = (props) => {
         setFocusSearch(!focusSearch)
     }
 
-    function toggleMemberSearchFocus() {
-        apollo_client.query({
-            query: getUsersByUserNameGQL,
-            variables: { username: "" }
-        }).then((res) => {
-            let searchedUsers = res.data.getAllUsers;
-            if (searchedUsers)
-                setSearchedUserList(searchedUsers)
-            // console.log(searchedUsers)
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
 
     function toggleAddGroupModal() {
         setModalGroup(!modalGroup)
     }
 
     function toggleAddMemberModal() {
+        if (!modalMember) {
+            apollo_client.query({
+                query: getUsersByUserNameGQL,
+                variables: { username: "" }
+            }).then((res) => {
+                let searchedUsers = res.data.getAllUsers;
+                if (searchedUsers)
+                    setSearchedUserList(searchedUsers)
+                // console.log(searchedUsers)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
         setModalMember(!modalMember)
     }
 
@@ -641,7 +641,7 @@ const Chats = (props) => {
                     <Form>
                         <div className="mb-4">
                             <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
-                            <Input type="text" className="form-control" id="addgroupname-input" onFocus={toggleMemberSearchFocus} onBlur={toggleMemberSearchFocus}/>
+                            <Input type="text" className="form-control" id="addgroupname-input" />
                         </div>
                         <div className="mb-4">
                             <SimpleBar className="chat-search-container">
@@ -651,7 +651,7 @@ const Chats = (props) => {
                                             searchedUserList.map((searchedUser, key) =>
                                                 <li key={key} id={"searchedUser" + key}>
                                                     <Link to="#">
-                                                        <div className="d-flex">
+                                                        <div className="d-flex align-items-center">
                                                             {
                                                                 typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
                                                                     <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
