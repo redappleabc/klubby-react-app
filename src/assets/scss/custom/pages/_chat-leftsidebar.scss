@@ -194,7 +194,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 24px;
-    margin-bottom: .5rem;
+    height: 80px;
     
     h4 {
         margin-top: 0.5rem;
@@ -232,16 +232,29 @@
     .chat-search-box {
         width: calc(100% - 165px);
         margin-left: .5rem;
+       
         input {
             padding-left: 5px;
-            border-radius: 0 22.5px 22.5px 0 !important;
+            border-radius: 0 22.5px 22.5px 0 !important; 
+            transition: none !important;
         }
         span {
             padding-left: 10px !important;
-            border-radius: 22.5px 0 0 22.5px !important;
+            border-radius: 22.5px 0 0 22.5px !important; 
         }
         &.active {
-            width: 100%;
+            input {
+                border: solid 2px #7269ef;
+                border-left: none;
+            }
+            span {
+                border: solid 2px #7269ef;
+                
+                border-right: none; 
+                i::before {
+                    color: #7269ef;
+                }
+            }
         }
     }
 
@@ -292,4 +305,8 @@
         top:  calc(154px + env(safe-area-inset-top));
         width: 100%;
     }
+}
+
+.chat-search-container {
+    max-height: 40vh;
 }
