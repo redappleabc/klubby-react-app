@@ -107,18 +107,26 @@ const Index = (props) => {
                 console.log(res)
                 if (res.data.getMe && res.data.getMe.conversations.userConversations) {
                     const _recentConversations = res.data.getMe.conversations.userConversations
+                    
 
                     if (_recentConversations.length > 0) {
                         let _recentChatList = {}
                         for (var i = 0; i < _recentConversations.length; i++) {
-                            
+
+                            let _readIndexNumber = 0
+                            let _readIndex = "";
+                            if(_recentConversations[i].read){
+                                _readIndex = _recentConversations[i].read;
+                                _readIndexNumber = parseInt(_recentConversations[i].read.substring(0,13))
+                            }
+
                             let _recentUser = {};
                             _recentUser.username = _recentConversations[i].associated;
                             _recentUser.name = _recentConversations[i].name? _recentConversations[i].name: _recentConversations[i].associated;
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.isGroup = false;
                             _recentUser.status = "online";
-                            _recentUser.profilePicture = "Null"
+                            //_recentUser.profilePicture = null
                             _recentUser.unRead = 0;
 
                             const res = await apollo_client.query({
@@ -127,7 +135,23 @@ const Index = (props) => {
                                     conversationId: _recentUser.conversationId
                                 }
                             })
-                            _recentUser.messages = [...res.data.getAllMessageConnections.messages].reverse();
+                            if(res.data.getAllMessageConnections.messages){
+                                let messages = [...res.data.getAllMessageConnections.messages]
+                                console.log(messages.length)
+                                console.log(messages)
+                                for(let j = 0; j< messages.length; j++){
+                                    if(messages[j].sender === props.user.username || messages[j].id === _readIndex){
+                                        break;
+                                    }else if(_readIndexNumber < parseInt(messages[j].id.substring(0,13))){
+                                        _recentUser.unRead++
+                                    }
+                                }
+                                _recentUser.messages = messages.reverse();
+
+                            }else{
+                                _recentUser.messages = []
+                            }
+                            
 
                             _recentChatList[_recentUser.username] = _recentUser
 

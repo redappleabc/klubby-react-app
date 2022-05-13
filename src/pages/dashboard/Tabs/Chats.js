@@ -252,10 +252,11 @@ const Chats = (props) => {
                 mutation: setReadGQL,
                 variables: {
                     conversationId: props.users[index].conversationId,
-                    username: index,
+                    username: props.user.username,
                     messageId: props.users[index].messages[props.users[index].messages.length - 1].id
                 }
             }).then((res) => {
+
                 console.log("set read success");
             }).catch((err) => {
                 console.log("set read error ", err)
@@ -447,7 +448,7 @@ const Chats = (props) => {
                                                 <Link to="#" onClick={(e) => openUserChat(e, chat)}>
                                                     <div className="d-flex">
                                                         {
-                                                            chat.profilePicture === "Null" || typeof chat.profilePicture === "undefined" ?
+                                                            chat.profilePicture === null || typeof chat.profilePicture === "undefined" ?
                                                                 <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
                                                                     <div className="avatar-xs">
                                                                         <span className="avatar-title rounded-circle bg-soft-primary text-primary">
@@ -700,9 +701,10 @@ const Chats = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const { active_user, users, groups, active_group, newDirectMessage } = state.Chat;
+    const { active_user, users, groups, active_group, newDirectMessage} = state.Chat;
     const { activeChatSubTab } = state.Layout;
-    return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage };
+    const { user, loading, error } = state.Auth;
+    return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
 export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
