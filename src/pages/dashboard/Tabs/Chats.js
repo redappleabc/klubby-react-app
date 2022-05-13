@@ -27,7 +27,8 @@ const Chats = (props) => {
     const [searchChat, setSearchChat] = useState("")
     const [focusSearch, setFocusSearch] = useState(false)
     const [recentChatList, setRecentChatList] = useState(props.users)
-    const [modal, setModal] = useState(false)
+    const [modalMember, setModalMember] = useState(false)
+    const [modalGroup, setModalGroup] = useState(false)
     const [isOpenCollapse, setIsOpenCollapse] = useState(false)
     const [groups, setGroups] = useState(props.groups)
     const [selectedContact, setSelectedContact] = useState([])
@@ -40,32 +41,29 @@ const Chats = (props) => {
 
 
     function toggleSearchFocus() {
-
-
         setFocusSearch(!focusSearch)
-        if (props.activeChatSubTab === "chat-chat") {
-            props.setActiveChatSubTab('search-chat-chat');
-            apollo_client.query({
-                query: getUsersByUserNameGQL,
-                variables: { username: "" }
-            }).then((res) => {
-                let searchedUsers = res.data.getAllUsers;
-                if (searchedUsers)
-                    setSearchedUserList(searchedUsers)
-                console.log(searchedUsers)
-            }).catch((err) => {
-                console.log(err)
-            })
-
-        }
-
-
-
-
     }
 
-    function toggle() {
-        setModal(!modal)
+    function toggleMemberSearchFocus() {
+        apollo_client.query({
+            query: getUsersByUserNameGQL,
+            variables: { username: "" }
+        }).then((res) => {
+            let searchedUsers = res.data.getAllUsers;
+            if (searchedUsers)
+                setSearchedUserList(searchedUsers)
+            // console.log(searchedUsers)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    function toggleAddGroupModal() {
+        setModalGroup(!modalGroup)
+    }
+
+    function toggleAddMemberModal() {
+        setModalMember(!modalMember)
     }
 
     function toggleCollapse() {
@@ -113,7 +111,7 @@ const Chats = (props) => {
             props.createGroup(obj);
             console.log(obj);
             console.log(groups);
-            toggle();
+            toggleAddGroupModal();
 
         } else if (selectedContact.length === 1) {
             setMessage("Minimum 2 members required!!!")
@@ -388,19 +386,33 @@ const Chats = (props) => {
                                 <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
-                                <Input type="text" value={searchChat} onChange={(e) => handleChange(e)} onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
+                                <Input type="text"  onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
-                        <div className={focusSearch ? 'home-header-btn-container hidden' : 'home-header-btn-container'}>
-                            <div className="user-chat-nav float-end">
-                                <div className="create-group">
-                                    {/* Button trigger modal */}
-                                    <button onClick={toggle} className="group-add-btn">
-                                        <i className="ri-group-line me-1"></i>
-                                    </button>
+                        <div className='home-header-btn-container'>
+                            
+                            {
+                                props.activeChatSubTab === 'chat-chat'? 
+                                <div className="user-chat-nav float-end">
+                                    <div className="new-member">
+                                        {/* Button trigger modal */}
+                                        <button onClick={toggleAddMemberModal} className="group-add-btn">
+                                            <i className="ri-user-add-line"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                                :
+                                <div className="user-chat-nav float-end">
+                                    <div className="create-group">
+                                        {/* Button trigger modal */}
+                                        <button onClick={toggleAddGroupModal} className="group-add-btn">
+                                            <i className="ri-group-line me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            
                             <div className='home-header-btn'>
                                 <Dropdown nav isOpen={notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={setNoticDropdown}>
                                     <DropdownToggle className="nav-link" tag="a">
@@ -480,7 +492,6 @@ const Chats = (props) => {
                                                                 }
 
 
-
                                                             </p>
                                                         </div>
                                                         <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
@@ -500,48 +511,7 @@ const Chats = (props) => {
                     </TabPane>
                     <TabPane tabId="search-chat-chat" id="search-pills-chat-chat" className={classnames({ active: props.activeChatSubTab === 'search-chat-chat' })}>
 
-                        <SimpleBar className="chat-message-list">
-                            <div className='px-2'>
-                                <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
-                                    {
-                                        searchedUserList.map((searchedUser, key) =>
-                                            <li key={key} id={"searchedUser" + key}>
-                                                <Link to="#" onClick={(e) => createUserChat(e, searchedUser)}>
-                                                    <div className="d-flex">
-                                                        {
-                                                            typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
-                                                                <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
-                                                                    <div className="avatar-xs">
-                                                                        <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                            {searchedUser.username.charAt(0)}
-                                                                        </span>
-                                                                    </div>
-                                                                    {/* {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            } */}
-                                                                </div>
-                                                                :
-                                                                <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
-                                                                    <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                    {/* {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            } */}
-                                                                </div>
-                                                        }
 
-                                                        <div className="flex-1 overflow-hidden">
-                                                            <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
-
-                                                        </div>
-                                                    </div>
-
-                                                </Link>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            </div>
-                        </SimpleBar>
                     </TabPane>
                     {/* chat tab end */}
                     {/* klub tab start */}
@@ -617,8 +587,8 @@ const Chats = (props) => {
             </div>
 
             {/* Start add group Modal */}
-            <Modal isOpen={modal} centered toggle={toggle}>
-                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggle}>Create New Group</ModalHeader>
+            <Modal isOpen={modalGroup} centered toggle={toggleAddGroupModal}>
+                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggleAddGroupModal}>Create New Group</ModalHeader>
                 <ModalBody className="p-4">
                     <Form>
                         <div className="mb-4">
@@ -659,8 +629,69 @@ const Chats = (props) => {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type="button" color="link" onClick={toggle}>Close</Button>
+                    <Button type="button" color="link" onClick={toggleAddGroupModal}>Close</Button>
                     <Button type="button" color="primary" onClick={addGroup}>Create Group</Button>
+                </ModalFooter>
+            </Modal>
+            {/* End add group Modal */}
+            {/* Start add group Modal */}
+            <Modal isOpen={modalMember} centered toggle={toggleAddMemberModal}>
+                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggleAddMemberModal}>Add New Member</ModalHeader>
+                <ModalBody className="p-4">
+                    <Form>
+                        <div className="mb-4">
+                            <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
+                            <Input type="text" className="form-control" id="addgroupname-input" onFocus={toggleMemberSearchFocus} onBlur={toggleMemberSearchFocus}/>
+                        </div>
+                        <div className="mb-4">
+                            <SimpleBar className="chat-search-container">
+                                <div className='px-2'>
+                                    <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
+                                        {
+                                            searchedUserList.map((searchedUser, key) =>
+                                                <li key={key} id={"searchedUser" + key}>
+                                                    <Link to="#">
+                                                        <div className="d-flex">
+                                                            {
+                                                                typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {searchedUser.username.charAt(0)}
+                                                                            </span>
+                                                                        </div>
+                                                                        {/* {
+                                                                                    chat.status && <span className="user-status"></span>
+                                                                                } */}
+                                                                    </div>
+                                                                    :
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {/* {
+                                                                                    chat.status && <span className="user-status"></span>
+                                                                                } */}
+                                                                    </div>
+                                                            }
+
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </div>
+                            </SimpleBar>
+                        </div>
+                    </Form>
+                </ModalBody>
+                <ModalFooter>
+                    <Button type="button" color="link" onClick={toggleAddMemberModal}>Close</Button>
+                    <Button type="button" color="primary" onClick={addGroup}>Add Member</Button>
                 </ModalFooter>
             </Modal>
             {/* End add group Modal */}
