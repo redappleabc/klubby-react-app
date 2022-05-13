@@ -28,7 +28,6 @@ const Index = (props) => {
         onSubscriptionData: ({client, subscriptionData}) => {
             console.log("newUserConversationBridgescriptionData")
             console.log(subscriptionData)
-
             setNewUserConversationBridgescriptionData(subscriptionData)
         }
     })
@@ -39,8 +38,8 @@ const Index = (props) => {
         if(newUserConversationBridgescriptionData){
             let copyallUsers = props.users;
             const newUser = {}
-            newUser.username = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.associated;
-            newUser.name = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.associated;
+            newUser.username = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
+            newUser.name = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
             newUser.conversationId = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId;
             newUser.status = "online";
             newUser.profilePicture = "Null"
@@ -112,9 +111,10 @@ const Index = (props) => {
                     if (_recentConversations.length > 0) {
                         let _recentChatList = {}
                         for (var i = 0; i < _recentConversations.length; i++) {
+                            
                             let _recentUser = {};
                             _recentUser.username = _recentConversations[i].associated;
-                            _recentUser.name = _recentConversations[i].associated;
+                            _recentUser.name = _recentConversations[i].name? _recentConversations[i].name: _recentConversations[i].associated;
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.isGroup = false;
                             _recentUser.status = "online";

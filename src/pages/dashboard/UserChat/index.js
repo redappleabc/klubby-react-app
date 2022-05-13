@@ -200,12 +200,12 @@ function UserChat(props) {
             }).then((res) => {
                 console.log("create conversation succeed");
                 createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username }
+                    variables: { conversationId: newConversation.id, username: props.user.username, name: props.users[props.active_user].username}
                 })
             }).then((res) => {
                 console.log("create user conversation 1 succeed");
                 createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.users[props.active_user].username }
+                    variables: { conversationId: newConversation.id, username: props.users[props.active_user].username, name: props.user.username}
                 })
             }).then((res) => {
                 console.log("create userconversation 2 succeed")
@@ -221,8 +221,7 @@ function UserChat(props) {
                 })
             }).then((res) => {
                 console.log("first message send succeed")
-            })
-                .catch((err) => { console.log(err) })
+            }).catch((err) => { console.log("new conversation creation", err) })
 
         }
 

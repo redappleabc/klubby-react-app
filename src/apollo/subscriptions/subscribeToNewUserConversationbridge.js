@@ -5,6 +5,7 @@ subscription subscribeToNewUserConversationBridge($username: ID!) {
   subscribeToNewUserConversationBridge(username: $username) {
     __typename
     username
+    name
     conversationId
     associated
   }

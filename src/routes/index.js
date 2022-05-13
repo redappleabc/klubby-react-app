@@ -37,7 +37,6 @@ const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props
         }
     },[])
     
-    console.log("afasfsdafasdfdasfdsfsdfdsfsfsfsf")
     return (
     <> 
   
