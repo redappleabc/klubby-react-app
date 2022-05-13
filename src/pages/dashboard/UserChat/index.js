@@ -25,8 +25,7 @@ import createMessageGQL from '../../../apollo/mutations/createMessage';
 
 import apollo_client from '../../../apollo';
 import getConversationMessagesGQL from '../../../apollo/queries/getConversationMessages';
-import createUserConversationsGQL from '../../../apollo/mutations/createUserConversations';
-import createConversationGQL from '../../../apollo/mutations/createConversation';
+
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import subscribeToNewMessagesGQL from '../../../apollo/subscriptions/subscribeToNewMessages';
 
@@ -46,8 +45,6 @@ function UserChat(props) {
 
     const [chatMessages, setchatMessages] = useState(props.active_user ? props.users[props.active_user].messages : []);
 
-    const [createConversationApollo, { }] = useMutation(createConversationGQL)
-    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
     const [createMessageApollo, { }] = useMutation(createMessageGQL)
 
     // const {
@@ -136,21 +133,18 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    id: `${Date.now()}-${uuidv4()}`,
                     content: message,
-                    createdAt: `${Date.now()}`,
                     conversationId: props.users[props.active_user].conversationId,
-                    sender: props.user.username
                 }
                 break;
 
             case "fileMessage":
                 messageObj = {
-                    id: `${Date.now()}-${uuidv4()}`,
+                  
                     message: 'file',
                     fileMessage: message.name,
                     size: message.size,
-                    createdAt: `${Date.now()}`,
+                    
                     userType: "sender",
                     image: avatar4,
                     isFileMessage: true,
@@ -164,11 +158,11 @@ function UserChat(props) {
                 ]
 
                 messageObj = {
-                    id: `${Date.now()}-${uuidv4()}`,
+                  
                     message: 'image',
                     imageMessage: imageMessage,
                     size: message.size,
-                    createdAt: `${Date.now()}`,
+                   
                     userType: "sender",
                     image: avatar4,
                     isImageMessage: true,
@@ -189,35 +183,7 @@ function UserChat(props) {
             }).catch((err) => {
                 console.log("create message error   ", err)
             })
-        } else {
-             let newConversation = {}
-            createConversationApollo({
-                //variables: newConversation
-            }).then((res) => {
-                newConversation.id = res.data.createConversation.id;
-                console.log("create conversation succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username, name: props.users[props.active_user].username}
-                })
-            }).then((res) => {
-                console.log("create user conversation 1 succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.users[props.active_user].username, name: props.user.username}
-                })
-            }).then((res) => {
-                console.log("create userconversation 2 succeed")
-                const first_messageObj = {    
-                    content: message,   
-                    conversationId: newConversation.id,
-                }
-                createMessageApollo({
-                    variables: first_messageObj
-                })
-            }).then((res) => {
-                console.log("first message send succeed")
-            }).catch((err) => { console.log("new conversation creation", err) })
-
-        }
+        } 
 
 
 
@@ -357,7 +323,7 @@ function UserChat(props) {
                                                                         </p>
                                                                     }
                                                                     {
-                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toString())}</span></p>
+                                                                        !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toISOString())}</span></p>
                                                                     }
                                                                 </div>
                                                                 {

@@ -42,7 +42,7 @@ const Index = (props) => {
             newUser.name = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
             newUser.conversationId = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId;
             newUser.status = "online";
-            newUser.profilePicture = "Null"
+            newUser.profilePicture = null
             newUser.isGroup = false
             newUser.unRead = 0;
             newUser.messages = []
@@ -137,8 +137,6 @@ const Index = (props) => {
                             })
                             if(res.data.getAllMessageConnections.messages){
                                 let messages = [...res.data.getAllMessageConnections.messages]
-                                console.log(messages.length)
-                                console.log(messages)
                                 for(let j = 0; j< messages.length; j++){
                                     if(messages[j].sender === props.user.username || messages[j].id === _readIndex){
                                         break;

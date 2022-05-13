@@ -52,7 +52,7 @@ function UserHead(props) {
                             </div>
                             
                             {   props.active_user?
-                                 props.users[props.active_user].profilePicture !== "Null" ?
+                                props.users[props.active_user].profilePicture ?
                                     <div className="me-3 ms-0">
                                         <img src={props.users[props.active_user].profilePicture} className="rounded-circle avatar-xs" alt="Klubby" />
                                     </div>

@@ -14,9 +14,13 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import { v4 as uuidv4 } from 'uuid';
 
 import createConversationGQL from '../../../apollo/mutations/createConversation';
+import createUserConversationsGQL from '../../../apollo/mutations/createUserConversations';
 import apollo_client from '../../../apollo';
 import { create } from 'yup/lib/Reference';
 import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
+
+
+import { useMutation } from '@apollo/client';
 
 import setReadGQL from '../../../apollo/mutations/setRead';
 
@@ -40,6 +44,11 @@ const Chats = (props) => {
     const [notiDropdown, setNotiDropdown] = useState(false)
 
 
+    const [createConversationApollo, { }] = useMutation(createConversationGQL)
+    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
+
+    let addNewUser = "";
+
     function toggleSearchFocus() {
         setFocusSearch(!focusSearch)
     }
@@ -56,8 +65,11 @@ const Chats = (props) => {
                 variables: { username: "" }
             }).then((res) => {
                 let searchedUsers = res.data.getAllUsers;
-                if (searchedUsers)
+
+                if (searchedUsers) {
+                    searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
                     setSearchedUserList(searchedUsers)
+                }
                 // console.log(searchedUsers)
             }).catch((err) => {
                 console.log(err)
@@ -203,6 +215,7 @@ const Chats = (props) => {
         //find index of current chat in array
         var index = chat.name;
 
+
         // set activeUser 
         props.activeUser(index);
 
@@ -269,61 +282,37 @@ const Chats = (props) => {
 
     function createUserChat(e, user) {
         e.preventDefault();
-        //find index of current chat in array
-        var index = user.username;
-
-        if (typeof props.users[index] === "undefined") {
-            let _searchedUser = {};
-            _searchedUser.username = user.username;
-            _searchedUser.name = user.username;
-            _searchedUser.conversationId = null
-            _searchedUser.isGroup = false;
-            _searchedUser.status = "online";
-            _searchedUser.profilePicture = "Null"
-            _searchedUser.messages = []
-
-
-            props.setFullUser({ ...props.users, [_searchedUser.username]: _searchedUser })
-            console.log("aaaaaaaaaaaaaaaaaaaa", props.users)
-        }
-        // set activeUser 
-
-        props.activeUser(index);
+        let newConversation = {}
+        createConversationApollo({
+            //variables: newConversation
+        }).then((res) => {
+            newConversation.id = res.data.createConversation.id;
+            console.log("create conversation succeed");
+            createUserConversationApollo({
+                variables: { conversationId: newConversation.id, username: props.user.username, name: user.username }
+            })
+        }).then((res) => {
+            console.log("create user conversation 1 succeed");
+            createUserConversationApollo({
+                variables: { conversationId: newConversation.id, username: user.username, name: props.user.username }
+            })
+        }).then((res) => {
+            console.log("create userconversation 2 succeed")
+        }).catch((err) => { console.log("new conversation creation", err) })
 
 
-        const searchedUserList = document.getElementById("chat-list");
-        var clickedItem = e.target;
-        var currentli = null;
 
-        if (searchedUserList) {
-            var li = searchedUserList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
-            for (var k = 0; k < li.length; ++k) {
-                if (li[k].contains(clickedItem)) {
-                    currentli = li[k];
-                    break;
-                }
-            }
-        }
 
-        //activation of clicked coversation user
-        if (currentli) {
-            currentli.classList.add('active');
-        }
 
-        var userChat = document.getElementsByClassName("user-chat");
-        if (userChat) {
-            userChat[0].classList.add("user-chat-show");
-        }
 
     }
 
+    function onclickAddNewUser() {
+        if (addNewUser != "")
+            alert(addNewUser)
+        addNewUser = "";
+        toggleAddMemberModal();
+    }
     function openUserGroup(e, group) {
 
         e.preventDefault();
@@ -387,33 +376,33 @@ const Chats = (props) => {
                                 <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
-                                <Input type="text"  onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
+                                <Input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
                         <div className='home-header-btn-container'>
-                            
+
                             {
-                                props.activeChatSubTab === 'chat-chat'? 
-                                <div className="user-chat-nav float-end">
-                                    <div className="new-member">
-                                        {/* Button trigger modal */}
-                                        <button onClick={toggleAddMemberModal} className="group-add-btn">
-                                            <i className="ri-user-add-line"></i>
-                                        </button>
+                                props.activeChatSubTab === 'chat-chat' ?
+                                    <div className="user-chat-nav float-end">
+                                        <div className="new-member">
+                                            {/* Button trigger modal */}
+                                            <button onClick={toggleAddMemberModal} className="group-add-btn">
+                                                <i className="ri-user-add-line"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                                :
-                                <div className="user-chat-nav float-end">
-                                    <div className="create-group">
-                                        {/* Button trigger modal */}
-                                        <button onClick={toggleAddGroupModal} className="group-add-btn">
-                                            <i className="ri-group-line me-1"></i>
-                                        </button>
+                                    :
+                                    <div className="user-chat-nav float-end">
+                                        <div className="create-group">
+                                            {/* Button trigger modal */}
+                                            <button onClick={toggleAddGroupModal} className="group-add-btn">
+                                                <i className="ri-group-line me-1"></i>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                             }
-                            
+
                             <div className='home-header-btn'>
                                 <Dropdown nav isOpen={notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={setNoticDropdown}>
                                     <DropdownToggle className="nav-link" tag="a">
@@ -647,11 +636,11 @@ const Chats = (props) => {
                         <div className="mb-4">
                             <SimpleBar className="chat-search-container">
                                 <div className='px-2'>
-                                    <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
+                                    <ul className="list-unstyled chat-list" id="search-chat-list">
                                         {
                                             searchedUserList.map((searchedUser, key) =>
                                                 <li key={key} id={"searchedUser" + key}>
-                                                    <Link to="#">
+                                                    <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
                                                         <div className="d-flex align-items-center">
                                                             {
                                                                 typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
@@ -692,7 +681,7 @@ const Chats = (props) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button type="button" color="link" onClick={toggleAddMemberModal}>Close</Button>
-                    <Button type="button" color="primary" onClick={addGroup}>Add Member</Button>
+                    <Button type="button" color="primary" onClick={onclickAddNewUser}>Add Member</Button>
                 </ModalFooter>
             </Modal>
             {/* End add group Modal */}
@@ -701,7 +690,7 @@ const Chats = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const { active_user, users, groups, active_group, newDirectMessage} = state.Chat;
+    const { active_user, users, groups, active_group, newDirectMessage } = state.Chat;
     const { activeChatSubTab } = state.Layout;
     const { user, loading, error } = state.Auth;
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
