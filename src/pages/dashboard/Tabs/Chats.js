@@ -14,9 +14,13 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import { v4 as uuidv4 } from 'uuid';
 
 import createConversationGQL from '../../../apollo/mutations/createConversation';
+import createUserConversationsGQL from '../../../apollo/mutations/createUserConversations';
 import apollo_client from '../../../apollo';
 import { create } from 'yup/lib/Reference';
 import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
+
+
+import { useMutation } from '@apollo/client';
 
 import setReadGQL from '../../../apollo/mutations/setRead';
 
@@ -27,7 +31,8 @@ const Chats = (props) => {
     const [searchChat, setSearchChat] = useState("")
     const [focusSearch, setFocusSearch] = useState(false)
     const [recentChatList, setRecentChatList] = useState(props.users)
-    const [modal, setModal] = useState(false)
+    const [modalMember, setModalMember] = useState(false)
+    const [modalGroup, setModalGroup] = useState(false)
     const [isOpenCollapse, setIsOpenCollapse] = useState(false)
     const [groups, setGroups] = useState(props.groups)
     const [selectedContact, setSelectedContact] = useState([])
@@ -39,33 +44,38 @@ const Chats = (props) => {
     const [notiDropdown, setNotiDropdown] = useState(false)
 
 
+    const [createConversationApollo, { }] = useMutation(createConversationGQL)
+    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
+
+    let addNewUser = "";
+
     function toggleSearchFocus() {
-
-
         setFocusSearch(!focusSearch)
-        if (props.activeChatSubTab === "chat-chat") {
-            props.setActiveChatSubTab('search-chat-chat');
+    }
+
+
+    function toggleAddGroupModal() {
+        setModalGroup(!modalGroup)
+    }
+
+    function toggleAddMemberModal() {
+        if (!modalMember) {
             apollo_client.query({
                 query: getUsersByUserNameGQL,
                 variables: { username: "" }
             }).then((res) => {
                 let searchedUsers = res.data.getAllUsers;
-                if (searchedUsers)
+
+                if (searchedUsers) {
+                    searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
                     setSearchedUserList(searchedUsers)
-                console.log(searchedUsers)
+                }
+                // console.log(searchedUsers)
             }).catch((err) => {
                 console.log(err)
             })
-
         }
-
-
-
-
-    }
-
-    function toggle() {
-        setModal(!modal)
+        setModalMember(!modalMember)
     }
 
     function toggleCollapse() {
@@ -113,7 +123,7 @@ const Chats = (props) => {
             props.createGroup(obj);
             console.log(obj);
             console.log(groups);
-            toggle();
+            toggleAddGroupModal();
 
         } else if (selectedContact.length === 1) {
             setMessage("Minimum 2 members required!!!")
@@ -205,6 +215,7 @@ const Chats = (props) => {
         //find index of current chat in array
         var index = chat.name;
 
+
         // set activeUser 
         props.activeUser(index);
 
@@ -254,10 +265,11 @@ const Chats = (props) => {
                 mutation: setReadGQL,
                 variables: {
                     conversationId: props.users[index].conversationId,
-                    username: index,
+                    username: props.user.username,
                     messageId: props.users[index].messages[props.users[index].messages.length - 1].id
                 }
             }).then((res) => {
+
                 console.log("set read success");
             }).catch((err) => {
                 console.log("set read error ", err)
@@ -270,61 +282,37 @@ const Chats = (props) => {
 
     function createUserChat(e, user) {
         e.preventDefault();
-        //find index of current chat in array
-        var index = user.username;
-
-        if (typeof props.users[index] === "undefined") {
-            let _searchedUser = {};
-            _searchedUser.username = user.username;
-            _searchedUser.name = user.username;
-            _searchedUser.conversationId = null
-            _searchedUser.isGroup = false;
-            _searchedUser.status = "online";
-            _searchedUser.profilePicture = "Null"
-            _searchedUser.messages = []
-
-
-            props.setFullUser({ ...props.users, [_searchedUser.username]: _searchedUser })
-            console.log("aaaaaaaaaaaaaaaaaaaa", props.users)
-        }
-        // set activeUser 
-
-        props.activeUser(index);
+        let newConversation = {}
+        createConversationApollo({
+            //variables: newConversation
+        }).then((res) => {
+            newConversation.id = res.data.createConversation.id;
+            console.log("create conversation succeed");
+            createUserConversationApollo({
+                variables: { conversationId: newConversation.id, username: props.user.username, name: user.username }
+            })
+        }).then((res) => {
+            console.log("create user conversation 1 succeed");
+            createUserConversationApollo({
+                variables: { conversationId: newConversation.id, username: user.username, name: props.user.username }
+            })
+        }).then((res) => {
+            console.log("create userconversation 2 succeed")
+        }).catch((err) => { console.log("new conversation creation", err) })
 
 
-        const searchedUserList = document.getElementById("chat-list");
-        var clickedItem = e.target;
-        var currentli = null;
 
-        if (searchedUserList) {
-            var li = searchedUserList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
-            for (var k = 0; k < li.length; ++k) {
-                if (li[k].contains(clickedItem)) {
-                    currentli = li[k];
-                    break;
-                }
-            }
-        }
 
-        //activation of clicked coversation user
-        if (currentli) {
-            currentli.classList.add('active');
-        }
 
-        var userChat = document.getElementsByClassName("user-chat");
-        if (userChat) {
-            userChat[0].classList.add("user-chat-show");
-        }
 
     }
 
+    function onclickAddNewUser() {
+        if (addNewUser != "")
+            alert(addNewUser)
+        addNewUser = "";
+        toggleAddMemberModal();
+    }
     function openUserGroup(e, group) {
 
         e.preventDefault();
@@ -388,19 +376,33 @@ const Chats = (props) => {
                                 <span className="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                                     <i className="ri-search-line search-icon font-size-18"></i>
                                 </span>
-                                <Input type="text" value={searchChat} onChange={(e) => handleChange(e)} onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
+                                <Input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} className="form-control bg-light" placeholder="Search..." />
                             </InputGroup>
                         </div>
                         {/* Search Box */}
-                        <div className={focusSearch ? 'home-header-btn-container hidden' : 'home-header-btn-container'}>
-                            <div className="user-chat-nav float-end">
-                                <div className="create-group">
-                                    {/* Button trigger modal */}
-                                    <button onClick={toggle} className="group-add-btn">
-                                        <i className="ri-group-line me-1"></i>
-                                    </button>
-                                </div>
-                            </div>
+                        <div className='home-header-btn-container'>
+
+                            {
+                                props.activeChatSubTab === 'chat-chat' ?
+                                    <div className="user-chat-nav float-end">
+                                        <div className="new-member">
+                                            {/* Button trigger modal */}
+                                            <button onClick={toggleAddMemberModal} className="group-add-btn">
+                                                <i className="ri-user-add-line"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="user-chat-nav float-end">
+                                        <div className="create-group">
+                                            {/* Button trigger modal */}
+                                            <button onClick={toggleAddGroupModal} className="group-add-btn">
+                                                <i className="ri-group-line me-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                            }
+
                             <div className='home-header-btn'>
                                 <Dropdown nav isOpen={notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={setNoticDropdown}>
                                     <DropdownToggle className="nav-link" tag="a">
@@ -435,7 +437,7 @@ const Chats = (props) => {
                                                 <Link to="#" onClick={(e) => openUserChat(e, chat)}>
                                                     <div className="d-flex">
                                                         {
-                                                            chat.profilePicture === "Null" || typeof chat.profilePicture === "undefined" ?
+                                                            chat.profilePicture === null || typeof chat.profilePicture === "undefined" ?
                                                                 <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
                                                                     <div className="avatar-xs">
                                                                         <span className="avatar-title rounded-circle bg-soft-primary text-primary">
@@ -480,7 +482,6 @@ const Chats = (props) => {
                                                                 }
 
 
-
                                                             </p>
                                                         </div>
                                                         <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
@@ -500,48 +501,7 @@ const Chats = (props) => {
                     </TabPane>
                     <TabPane tabId="search-chat-chat" id="search-pills-chat-chat" className={classnames({ active: props.activeChatSubTab === 'search-chat-chat' })}>
 
-                        <SimpleBar className="chat-message-list">
-                            <div className='px-2'>
-                                <ul className="list-unstyled chat-list chat-user-list" id="chat-list">
-                                    {
-                                        searchedUserList.map((searchedUser, key) =>
-                                            <li key={key} id={"searchedUser" + key}>
-                                                <Link to="#" onClick={(e) => createUserChat(e, searchedUser)}>
-                                                    <div className="d-flex">
-                                                        {
-                                                            typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
-                                                                <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
-                                                                    <div className="avatar-xs">
-                                                                        <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                            {searchedUser.username.charAt(0)}
-                                                                        </span>
-                                                                    </div>
-                                                                    {/* {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            } */}
-                                                                </div>
-                                                                :
-                                                                <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
-                                                                    <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                    {/* {
-                                                                                chat.status && <span className="user-status"></span>
-                                                                            } */}
-                                                                </div>
-                                                        }
 
-                                                        <div className="flex-1 overflow-hidden">
-                                                            <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
-
-                                                        </div>
-                                                    </div>
-
-                                                </Link>
-                                            </li>
-                                        )
-                                    }
-                                </ul>
-                            </div>
-                        </SimpleBar>
                     </TabPane>
                     {/* chat tab end */}
                     {/* klub tab start */}
@@ -617,8 +577,8 @@ const Chats = (props) => {
             </div>
 
             {/* Start add group Modal */}
-            <Modal isOpen={modal} centered toggle={toggle}>
-                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggle}>Create New Group</ModalHeader>
+            <Modal isOpen={modalGroup} centered toggle={toggleAddGroupModal}>
+                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggleAddGroupModal}>Create New Group</ModalHeader>
                 <ModalBody className="p-4">
                     <Form>
                         <div className="mb-4">
@@ -659,8 +619,69 @@ const Chats = (props) => {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button type="button" color="link" onClick={toggle}>Close</Button>
+                    <Button type="button" color="link" onClick={toggleAddGroupModal}>Close</Button>
                     <Button type="button" color="primary" onClick={addGroup}>Create Group</Button>
+                </ModalFooter>
+            </Modal>
+            {/* End add group Modal */}
+            {/* Start add group Modal */}
+            <Modal isOpen={modalMember} centered toggle={toggleAddMemberModal}>
+                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggleAddMemberModal}>Add New Member</ModalHeader>
+                <ModalBody className="p-4">
+                    <Form>
+                        <div className="mb-4">
+                            <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
+                            <Input type="text" className="form-control" id="addgroupname-input" />
+                        </div>
+                        <div className="mb-4">
+                            <SimpleBar className="chat-search-container">
+                                <div className='px-2'>
+                                    <ul className="list-unstyled chat-list" id="search-chat-list">
+                                        {
+                                            searchedUserList.map((searchedUser, key) =>
+                                                <li key={key} id={"searchedUser" + key}>
+                                                    <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
+                                                        <div className="d-flex align-items-center">
+                                                            {
+                                                                typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {searchedUser.username.charAt(0)}
+                                                                            </span>
+                                                                        </div>
+                                                                        {/* {
+                                                                                    chat.status && <span className="user-status"></span>
+                                                                                } */}
+                                                                    </div>
+                                                                    :
+                                                                    <div className={"chat-user-img " + "chat.status" + " align-self-center me-3 ms-0"}>
+                                                                        <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {/* {
+                                                                                    chat.status && <span className="user-status"></span>
+                                                                                } */}
+                                                                    </div>
+                                                            }
+
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </div>
+                            </SimpleBar>
+                        </div>
+                    </Form>
+                </ModalBody>
+                <ModalFooter>
+                    <Button type="button" color="link" onClick={toggleAddMemberModal}>Close</Button>
+                    <Button type="button" color="primary" onClick={onclickAddNewUser}>Add Member</Button>
                 </ModalFooter>
             </Modal>
             {/* End add group Modal */}
@@ -671,7 +692,8 @@ const Chats = (props) => {
 const mapStateToProps = (state) => {
     const { active_user, users, groups, active_group, newDirectMessage } = state.Chat;
     const { activeChatSubTab } = state.Layout;
-    return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage };
+    const { user, loading, error } = state.Auth;
+    return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
 export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);

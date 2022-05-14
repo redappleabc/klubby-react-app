@@ -11,6 +11,7 @@ export default gql`query getUserConversations {
             conversationId
             username
             associated
+            read
             #conversation {
             #  id
             #  name
