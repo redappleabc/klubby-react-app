@@ -19,11 +19,8 @@ const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props
     const [loggedin, setLoggedin] = useState(false)
     let history = useHistory();
     useEffect(()=>{
-        if (isAuthProtected && process.env.REACT_APP_DEFAULTAUTH === "aws") {
-           
+        if (isAuthProtected && process.env.REACT_APP_DEFAULTAUTH === "aws") {         
             isAuthenticated().then((user) => {
-               
- 
                 setLoggedin(true)
                 if(props_user === null){
                     dispatch(loginUserSuccess(user))
