@@ -10,6 +10,7 @@ import apollo_client from '../../apollo';
 import getUserConversationsGQL from '../../apollo/queries/getUserConversations';
 import getConversationMessagesGQL from '../../apollo/queries/getConversationMessages';
 import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNewMessages';
+import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeToRemovedMessages';
 import subscribeToNewUserConversationbridge from '../../apollo/subscriptions/subscribeToNewUserConversationbridge';
 import { useSubscription } from '@apollo/client';
 import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
@@ -19,23 +20,24 @@ import Preloader from '../../components/preloader';
 const Index = (props) => {
 
     const [subscriptionData, setSubscriptionData] = useState()
+    const [subscriptionToRemovedMessageData, setSubscriptionToRemovedMessageData] = useState()
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
 
     const { data, loading } = useSubscription(subscribeToNewUserConversationbridge, {
         variables: {
             username: props.user.username
         },
-        onSubscriptionData: ({client, subscriptionData}) => {
+        onSubscriptionData: ({ client, subscriptionData }) => {
             console.log("newUserConversationBridgescriptionData")
             console.log(subscriptionData)
             setNewUserConversationBridgescriptionData(subscriptionData)
         }
     })
-    
 
-    useEffect(()=>{
 
-        if(newUserConversationBridgescriptionData){
+    useEffect(() => {
+
+        if (newUserConversationBridgescriptionData) {
             let copyallUsers = props.users;
             const newUser = {}
             newUser.username = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
@@ -47,7 +49,7 @@ const Index = (props) => {
             newUser.unRead = 0;
             newUser.messages = []
             //copyallUsers[newUser.username] = newUser;
-            props.setFullUser({...copyallUsers, [newUser.username]:newUser})
+            props.setFullUser({ ...copyallUsers, [newUser.username]: newUser })
 
             const observable = apollo_client.watchQuery({
                 query: getConversationMessagesGQL,
@@ -91,10 +93,28 @@ const Index = (props) => {
         }
         props.setFullUser(copyallUsers)
 
-        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id)
+        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id + " created")
 
 
     }, [subscriptionData])
+
+    useEffect(() => {
+        if (!subscriptionToRemovedMessageData) return;
+        const conversationId = subscriptionToRemovedMessageData.data.subscribeToRemovedMessage.conversationId;
+        let copyallUsers = props.users
+
+        for (const userKey in copyallUsers) {
+            const user = copyallUsers[userKey]
+            if (user.conversationId === conversationId) {
+                copyallUsers[props.active_user].messages = copyallUsers[props.active_user].messages.filter(({ id }) => id !== subscriptionToRemovedMessageData.data.subscribeToRemovedMessage.id)
+            }
+        }
+
+        props.setFullUser(copyallUsers)
+
+        props.subscribeDirectMessage(subscriptionToRemovedMessageData.data.subscribeToRemovedMessage.id + " removed")
+
+    }, [subscriptionToRemovedMessageData])
 
 
 
@@ -107,7 +127,7 @@ const Index = (props) => {
                 console.log(res)
                 if (res.data.getMe && res.data.getMe.conversations.userConversations) {
                     const _recentConversations = res.data.getMe.conversations.userConversations
-                    
+
 
                     if (_recentConversations.length > 0) {
                         let _recentChatList = {}
@@ -115,14 +135,14 @@ const Index = (props) => {
 
                             let _readIndexNumber = 0
                             let _readIndex = "";
-                            if(_recentConversations[i].read){
+                            if (_recentConversations[i].read) {
                                 _readIndex = _recentConversations[i].read;
-                                _readIndexNumber = parseInt(_recentConversations[i].read.substring(0,13))
+                                _readIndexNumber = parseInt(_recentConversations[i].read.substring(0, 13))
                             }
 
                             let _recentUser = {};
                             _recentUser.username = _recentConversations[i].associated;
-                            _recentUser.name = _recentConversations[i].name? _recentConversations[i].name: _recentConversations[i].associated;
+                            _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated;
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
@@ -136,25 +156,25 @@ const Index = (props) => {
                                     conversationId: _recentUser.conversationId
                                 }
                             })
-                            if(res.data.getAllMessageConnections){
+                            if (res.data.getAllMessageConnections) {
                                 _recentUser.nextToken = res.data.getAllMessageConnections.nextToken
                             }
-                            if(res.data.getAllMessageConnections.messages){
+                            if (res.data.getAllMessageConnections.messages) {
                                 let messages = [...res.data.getAllMessageConnections.messages]
-                                for(let j = 0; j< messages.length; j++){
-                                    if(messages[j].sender === props.user.username || messages[j].id === _readIndex){
+                                for (let j = 0; j < messages.length; j++) {
+                                    if (messages[j].sender === props.user.username || messages[j].id === _readIndex) {
                                         break;
-                                    }else if(_readIndexNumber < parseInt(messages[j].id.substring(0,13))){
+                                    } else if (_readIndexNumber < parseInt(messages[j].id.substring(0, 13))) {
                                         _recentUser.unRead++
                                     }
                                 }
                                 _recentUser.messages = messages.reverse();
-                                
 
-                            }else{
+
+                            } else {
                                 _recentUser.messages = []
                             }
-                            
+
 
                             _recentChatList[_recentUser.username] = _recentUser
 
@@ -176,6 +196,19 @@ const Index = (props) => {
                                 updateQuery: (prev, { subscriptionData }) => {
                                     setSubscriptionData(subscriptionData)
                                     console.log('subscribeToMore - updateQuery:', subscriptionData);
+                                },
+                            })
+
+
+
+                            observable.subscribeToMore({
+                                document: subscribeToRemovedMessagesGQL,
+                                variables: {
+                                    conversationId: _recentUser.conversationId
+                                },
+                                updateQuery: (prev, { subscriptionData }) => {
+                                    setSubscriptionToRemovedMessageData(subscriptionData)
+                                    console.log('subscribeToRemovedMessage - updateQuery:', subscriptionData);
                                 },
                             })
 

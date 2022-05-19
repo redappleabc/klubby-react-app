@@ -25,6 +25,7 @@ import createMessageGQL from '../../../apollo/mutations/createMessage';
 
 import apollo_client from '../../../apollo';
 import getConversationMessagesGQL from '../../../apollo/queries/getConversationMessages';
+import removeMessageGQL from '../../../apollo/mutations/removeMessage';
 
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import subscribeToNewMessagesGQL from '../../../apollo/subscriptions/subscribeToNewMessages';
@@ -110,18 +111,24 @@ function UserChat(props) {
         console.log("userchat.js")
         setchatMessages(props.active_user ? props.users[props.active_user].messages : []);
         ref.current.recalculate();
-        scrolltoBottom();
+        setLoadedMessagesMore(true)
 
-    }, [props.active_user, props.users, props.newDirectMessage]);
+    }, [props.users, props.newDirectMessage]);
 
     useEffect(()=>{
-        if(!loadedMessagesMore)
-        {
+        setchatMessages(props.active_user ? props.users[props.active_user].messages : []);
+        ref.current.recalculate();
+        scrolltoBottom();
+    },[props.active_user])
+
+
+    useEffect(() => {
+        if (!loadedMessagesMore) {
             scrolltoBottom()
-        }else{
+        } else {
             console.log((ref.current.getScrollElement().scrollHeight))
             console.log(scrollHeight)
-            ref.current.getScrollElement().scrollTop +=  (ref.current.getScrollElement().scrollHeight - scrollHeight)
+            ref.current.getScrollElement().scrollTop += (ref.current.getScrollElement().scrollHeight - scrollHeight)
             setLoadedMessagesMore(false)
         }
         setScrollHeight(ref.current.getScrollElement().scrollHeight)
@@ -239,27 +246,46 @@ function UserChat(props) {
 
 
     const deleteMessage = (id) => {
-        let conversation = chatMessages;
+        console.log(id)
+        if (props.users[props.active_user].conversationId) {
+            apollo_client.mutate({
+                mutation: removeMessageGQL,
+                variables: {
+                    conversationId: props.users[props.active_user].conversationId,
+                    id: id
+                }
+            }).then((res) => {
+                //console.log(res)
+                // let allUsers = props.users
+                // allUsers[props.active_user].messages = allUsers[props.active_user].messages.filter(({ id }) => id !== res.data.removeMessage.id)
+                // props.setFullUser(allUsers)
+                // setchatMessages(allUsers[props.active_user].messages)
+                console.log("delete message success")
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+        // let conversation = chatMessages;
 
-        var filtered = conversation.filter(function (item) {
-            return item.id !== id;
-        });
+        // var filtered = conversation.filter(function (item) {
+        //     return item.id !== id;
+        // });
 
-        setchatMessages(filtered);
+        // setchatMessages(filtered);
     }
 
 
     const handleScroll = (e) => {
         if (ref.current.getScrollElement().scrollTop === 0) {
-            if(props.users[props.active_user].nextToken){
+            if (props.users[props.active_user].nextToken) {
                 apollo_client.query({
-                    query:getConversationMessagesGQL,
-                    variables:{
-                        conversationId:props.users[props.active_user].conversationId,
-                        after:props.users[props.active_user].nextToken,
+                    query: getConversationMessagesGQL,
+                    variables: {
+                        conversationId: props.users[props.active_user].conversationId,
+                        after: props.users[props.active_user].nextToken,
                     }
-                }).then((res)=>{
-                    if(res.data.getAllMessageConnections){
+                }).then((res) => {
+                    if (res.data.getAllMessageConnections) {
                         const loadedMessages = [...res.data.getAllMessageConnections.messages].reverse()
                         let allUsers = props.users
                         allUsers[props.active_user].messages = [...loadedMessages, ...allUsers[props.active_user].messages]
@@ -288,8 +314,8 @@ function UserChat(props) {
                         <UserHead />
 
                         <SimpleBar
-                            onScrollCapture={(e)=>{handleScroll(e)}}
-                            style={{ maxHeight: "100%"}}
+                            onScrollCapture={(e) => { handleScroll(e) }}
+                            style={{ maxHeight: "100%" }}
                             ref={ref}
                             className="chat-conversation p-3 p-lg-4"
                             id="messages">
@@ -371,8 +397,8 @@ function UserChat(props) {
                                                                     <DropdownMenu>
                                                                         <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
                                                                         <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
-                                                                        <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
-                                                                        <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
+                                                                        {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
+                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>
                                                                 </UncontrolledDropdown>
                                                             }
