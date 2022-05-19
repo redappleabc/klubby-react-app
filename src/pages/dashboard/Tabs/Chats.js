@@ -47,7 +47,7 @@ const Chats = (props) => {
     const [createConversationApollo, { }] = useMutation(createConversationGQL)
     const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
 
-    let addNewUser = "";
+    let addNewUser = null;
 
     function toggleSearchFocus() {
         setFocusSearch(!focusSearch)
@@ -60,11 +60,12 @@ const Chats = (props) => {
 
     function toggleAddMemberModal() {
         if (!modalMember) {
+            addNewUser = null
             apollo_client.query({
                 query: getUsersByUserNameGQL,
                 variables: { username: "" }
             }).then((res) => {
-                let searchedUsers = res.data.getAllUsers;
+                let searchedUsers = res.data.searchUsers;
 
                 if (searchedUsers) {
                     searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
@@ -75,6 +76,7 @@ const Chats = (props) => {
                 console.log(err)
             })
         }
+
         setModalMember(!modalMember)
     }
 
@@ -172,6 +174,25 @@ const Chats = (props) => {
     }
 
 
+    function searchUsersByUsername(e) {
+
+        apollo_client.query({
+            query: getUsersByUserNameGQL,
+            variables: { username: e.target.value }
+        }).then((res) => {
+            let searchedUsers = res.data.searchUsers;
+            if (searchedUsers) {
+                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                setSearchedUserList(searchedUsers)
+            }
+            console.log(searchedUsers)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+    }
+
+
 
     function handleChange(e) {
         setSearchChat(e.target.value)
@@ -179,18 +200,7 @@ const Chats = (props) => {
         let conversation = recentChatList;
         let filteredArray = [];
 
-        if (props.activeChatSubTab === 'search-chat-chat') {
-            apollo_client.query({
-                query: getUsersByUserNameGQL,
-                variables: { username: search }
-            }).then((res) => {
-                let searchedUsers = res.data.getAllUsers;
-                setSearchedUserList(searchedUsers)
-                console.log(searchedUsers)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
+
 
 
         //find conversation name from array
@@ -282,35 +292,64 @@ const Chats = (props) => {
 
     function createUserChat(e, user) {
         e.preventDefault();
-        let newConversation = {}
-        createConversationApollo({
-            //variables: newConversation
-        }).then((res) => {
-            newConversation.id = res.data.createConversation.id;
-            console.log("create conversation succeed");
-            createUserConversationApollo({
-                variables: { conversationId: newConversation.id, username: props.user.username, name: user.username }
-            })
-        }).then((res) => {
-            console.log("create user conversation 1 succeed");
-            createUserConversationApollo({
-                variables: { conversationId: newConversation.id, username: user.username, name: props.user.username }
-            })
-        }).then((res) => {
-            console.log("create userconversation 2 succeed")
-        }).catch((err) => { console.log("new conversation creation", err) })
+        addNewUser = user
 
 
+        var chatList = document.getElementById("search-chat-list");
+        var clickedItem = e.target;
+        var currentli = null;
 
+        if (chatList) {
+            var li = chatList.getElementsByTagName("li");
+            //remove coversation user
+            for (var i = 0; i < li.length; ++i) {
+                if (li[i].classList.contains('active')) {
+                    li[i].classList.remove('active');
+                }
+            }
+            //find clicked coversation user
+            for (var k = 0; k < li.length; ++k) {
+                if (li[k].contains(clickedItem)) {
+                    currentli = li[k];
+                    break;
+                }
+            }
+        }
 
+        //activation of clicked coversation user
+        if (currentli) {
+            currentli.classList.add('active');
+        }
 
+        
 
     }
 
     function onclickAddNewUser() {
-        if (addNewUser != "")
-            alert(addNewUser)
-        addNewUser = "";
+
+        if(addNewUser){
+            let newConversation = {}
+            createConversationApollo({
+                //variables: newConversation
+            }).then((res) => {
+                newConversation.id = res.data.createConversation.id;
+                console.log("create conversation succeed");
+                createUserConversationApollo({
+                    variables: { conversationId: newConversation.id, username: props.user.username, name: addNewUser.username }
+                })
+            }).then((res) => {
+                console.log("create user conversation 1 succeed");
+                createUserConversationApollo({
+                    variables: { conversationId: newConversation.id, username: addNewUser.username, name: props.user.username }
+                })
+            }).then((res) => {
+                console.log("create userconversation 2 succeed")
+            }).catch((err) => { 
+                console.log("new conversation creation", err)
+                
+             })
+        }
+        
         toggleAddMemberModal();
     }
     function openUserGroup(e, group) {
@@ -631,7 +670,7 @@ const Chats = (props) => {
                     <Form>
                         <div className="mb-4">
                             <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
-                            <Input type="text" className="form-control" id="addgroupname-input" />
+                            <Input type="text" className="form-control" id="addgroupname-input" onChange={(e)=>{searchUsersByUsername(e)}}/>
                         </div>
                         <div className="mb-4">
                             <SimpleBar className="chat-search-container">
