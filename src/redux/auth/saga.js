@@ -160,6 +160,7 @@ function* verifycode({payload: {username, code, history}}) {
         if (process.env.REACT_APP_DEFAULTAUTH === "aws") {
             const response = yield call(confirmSignUp, username, code);
             if (response) {
+                yield put(registerUserSuccess(""));
                 history.push('/login');
             }
         }
