@@ -124,6 +124,7 @@ const Index = (props) => {
                             _recentUser.username = _recentConversations[i].associated;
                             _recentUser.name = _recentConversations[i].name? _recentConversations[i].name: _recentConversations[i].associated;
                             _recentUser.conversationId = _recentConversations[i].conversationId
+                            _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
                             _recentUser.status = "online";
                             //_recentUser.profilePicture = null
@@ -135,6 +136,9 @@ const Index = (props) => {
                                     conversationId: _recentUser.conversationId
                                 }
                             })
+                            if(res.data.getAllMessageConnections){
+                                _recentUser.nextToken = res.data.getAllMessageConnections.nextToken
+                            }
                             if(res.data.getAllMessageConnections.messages){
                                 let messages = [...res.data.getAllMessageConnections.messages]
                                 for(let j = 0; j< messages.length; j++){
@@ -145,6 +149,7 @@ const Index = (props) => {
                                     }
                                 }
                                 _recentUser.messages = messages.reverse();
+                                
 
                             }else{
                                 _recentUser.messages = []
@@ -177,6 +182,7 @@ const Index = (props) => {
                         }
 
                         props.setFullUser(_recentChatList)
+                        console.log(_recentChatList)
                         //props.activeUser(Object.keys(_recentChatList)[0]);
                     }
 
