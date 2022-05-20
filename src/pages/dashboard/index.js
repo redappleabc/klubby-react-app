@@ -70,6 +70,17 @@ const Index = (props) => {
                     console.log('subscribeToMore - updateQuery:', subscriptionData);
                 },
             })
+
+            observable.subscribeToMore({
+                document: subscribeToRemovedMessagesGQL,
+                variables: {
+                    conversationId: newUser.conversationId
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                    setSubscriptionToRemovedMessageData(subscriptionData)
+                    console.log('subscribeToRemovedMessage - updateQuery:', subscriptionData);
+                },
+            })
         }
 
     }, [newUserConversationBridgescriptionData])
