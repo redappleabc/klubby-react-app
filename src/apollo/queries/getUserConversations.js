@@ -12,11 +12,22 @@ export default gql`query getUserConversations {
             username
             associated
             read
-            #conversation {
-            #  id
-            #  name
-            #  createdAt
-            #}
+            conversation {
+              id
+              createdAt
+              messages{
+                messages {
+                  __typename
+                  id
+                  conversationId
+                  content
+                  createdAt
+                  sender
+                  isSent
+                }
+                nextToken
+              }
+            }
           }
         }
     }
