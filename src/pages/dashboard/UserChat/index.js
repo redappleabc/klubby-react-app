@@ -126,8 +126,6 @@ function UserChat(props) {
         if (!loadedMessagesMore) {
             scrolltoBottom()
         } else {
-            console.log((ref.current.getScrollElement().scrollHeight))
-            console.log(scrollHeight)
             ref.current.getScrollElement().scrollTop += (ref.current.getScrollElement().scrollHeight - scrollHeight)
             setLoadedMessagesMore(false)
         }
@@ -274,6 +272,10 @@ function UserChat(props) {
         // setchatMessages(filtered);
     }
 
+    function editMessage(){
+
+    }
+
 
     const handleScroll = (e) => {
         if (ref.current.getScrollElement().scrollTop === 0) {
@@ -396,7 +398,7 @@ function UserChat(props) {
                                                                     </DropdownToggle>
                                                                     <DropdownMenu>
                                                                         <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                        <DropdownItem>Save <i className="ri-save-line float-end text-muted"></i></DropdownItem>
+                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id)}>Edit <i className="ri-save-line float-end text-muted"></i></DropdownItem>}
                                                                         {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>

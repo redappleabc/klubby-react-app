@@ -150,17 +150,11 @@ const Index = (props) => {
                             //_recentUser.profilePicture = null
                             _recentUser.unRead = 0;
 
-                            const res = await apollo_client.query({
-                                query: getConversationMessagesGQL,
-                                variables: {
-                                    conversationId: _recentUser.conversationId
-                                }
-                            })
-                            if (res.data.getAllMessageConnections) {
-                                _recentUser.nextToken = res.data.getAllMessageConnections.nextToken
+                            if (_recentConversations[i].conversation.messages) {
+                                _recentUser.nextToken = _recentConversations[i].conversation.messages.nextToken
                             }
-                            if (res.data.getAllMessageConnections.messages) {
-                                let messages = [...res.data.getAllMessageConnections.messages]
+                            if (_recentConversations[i].conversation.messages.messages) {
+                                let messages = [..._recentConversations[i].conversation.messages.messages]
                                 for (let j = 0; j < messages.length; j++) {
                                     if (messages[j].sender === props.user.username || messages[j].id === _readIndex) {
                                         break;
