@@ -50,6 +50,7 @@ const Login = (props) => {
         isAuthenticated().then((user)=>{
             if(user){
                 //return <Redirect to="/" />;
+                props.loginUserSuccess(user)
                 history.push("/dashboard")
             }
         }).catch((error=>{

@@ -4,6 +4,7 @@ import { APIClient } from '../../helpers/apiClient';
 import { getFirebaseBackend } from "../../helpers/firebase";
 
 import {signIn, signUp, _forgetPassword, confirmSignUp, ResetPwdSuccess, signOut} from "../../helpers/aws"
+import apollo_client from '../../apollo';
 
 import {
     LOGIN_USER,
@@ -84,6 +85,7 @@ function* logout({ payload: { history } }) {
             yield call(signOut);
         }
         yield call(() => {
+            apollo_client.clearStore()
             history.push("/login");
         });
     } catch (error) { }

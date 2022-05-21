@@ -230,9 +230,10 @@ const Index = (props) => {
                 }
                 setConversationLoad(true)
             }).catch((err) => {
+                console.log(err)
                 alert("unsuccessfully registered user")
                 history.push("/logout")
-                console.log(err)
+                
             })
         }
 
