@@ -11,6 +11,7 @@ query getConversationMessages($conversationId: ID!, $after: String, $first: Int)
       conversationId
       content
       createdAt
+      updatedAt
       sender
       isSent
     }

@@ -24,6 +24,9 @@ const Index = (props) => {
     const [subscriptionToRemovedMessageData, setSubscriptionToRemovedMessageData] = useState()
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
 
+    const [conversationLoaded, setConversationLoad] = useState(false)
+
+
     let history = useHistory();
 
     const { data, loading } = useSubscription(subscribeToNewUserConversationbridge, {
@@ -91,23 +94,37 @@ const Index = (props) => {
 
     useEffect(() => {
         if (!subscriptionData) return
+
         const newMessage = subscriptionData.data.subscribeToNewMessage;
         const conversationId = subscriptionData.data.subscribeToNewMessage.conversationId;
         const sender = subscriptionData.data.subscribeToNewMessage.sender;
-
+        const updatedAt = subscriptionData.data.subscribeToNewMessage.updatedAt;
+        const createdAt = subscriptionData.data.subscribeToNewMessage.createdAt;
+        const id = subscriptionData.data.subscribeToNewMessage.id;
+        
         let copyallUsers = props.users;
 
         for (const userKey in copyallUsers) {
             const user = copyallUsers[userKey]
             if (user.conversationId === conversationId) {
-                user.messages = [...user.messages, newMessage]
-                if (sender != props.user.username && sender != props.active_user)
-                    user.unRead += 1;
+                if (updatedAt) {
+                    for(var i = 0; i<user.messages.length; i++){
+                        if(user.messages[i].id === id){
+                            user.messages[i] = newMessage
+                            break;
+                        }
+                    }
+
+                } else {
+                    user.messages = [...user.messages, newMessage]
+                    if (sender != props.user.username && sender != props.active_user)
+                        user.unRead += 1;
+                }
             }
         }
         props.setFullUser(copyallUsers)
 
-        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id + " created")
+        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id + (updatedAt?updatedAt:createdAt) + " created")
 
 
     }, [subscriptionData])
@@ -132,7 +149,6 @@ const Index = (props) => {
 
 
 
-    const [conversationLoaded, setConversationLoad] = useState(false)
     useEffect(() => {
         if (!conversationLoaded) {
             apollo_client.query({
@@ -233,7 +249,7 @@ const Index = (props) => {
                 console.log(err)
                 alert("unsuccessfully registered user")
                 history.push("/logout")
-                
+
             })
         }
 

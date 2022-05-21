@@ -22,6 +22,7 @@ export default gql`query getUserConversations {
                   conversationId
                   content
                   createdAt
+                  updatedAt
                   sender
                   isSent
                 }
