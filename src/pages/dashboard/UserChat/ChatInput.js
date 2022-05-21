@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, Form, Modal, ModalBody } from "reactstrap";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
@@ -11,6 +11,8 @@ import emoji from '../../../assets/images/icons/emoji.png'
 function ChatInput(props) {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
     const [textMessage, settextMessage] = useState("");
+    const textAreaRef = useRef(null);
+    const mainInputRef = useRef(null);
     const [isOpen, setisOpen] = useState(false);
     const [file, setfile] = useState({
         name: "",
@@ -24,6 +26,7 @@ function ChatInput(props) {
     //function for text input value change
     const handleChange = e => {
         settextMessage(e.target.value)
+        
     }
 
     //function for add emojis
@@ -79,14 +82,38 @@ function ChatInput(props) {
         }
     }
 
+    const resizeTextArea = () => {
+        textAreaRef.current.style.height = "auto";
+        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+        if (textAreaRef.current.scrollHeight > 230) {
+            textAreaRef.current.classList.add('max-h');
+            return;
+        } 
+        else textAreaRef.current.classList.remove('max-h');
+        let mainInputHeight = textAreaRef.current.scrollHeight + 34;
+        if (textAreaRef.current.scrollHeight != 0) mainInputRef.current.style.height = mainInputHeight + "px";
+        console.log(mainInputHeight);
+      };
+    
+    useEffect(resizeTextArea, [textMessage]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', (e) => {  
+            // e.preventDefault();
+            if ((e.metaKey || e.ctrlKey) && e.code === 'KeyC') {
+                console.log('fire!')
+            }  
+        })
+    })
+
     return (
         <React.Fragment>
-            <div className={`p-3 p-lg-4 border-top mb-0 chat-input ${props.userSidebar === true ? "small": ""}`}>
+            <div ref={mainInputRef} className={`p-3 p-lg-3 border-top mb-0 chat-input ${props.userSidebar === true ? "small": ""}`}>
                 <Form onSubmit={(e) => onaddMessage(e, textMessage)} >
                     <div className='main-input-container'>
                         <div className='main-input'>
                             <div className='round-input'>
-                                <Input type="text" value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
+                                <textarea ref={textAreaRef} rows={1} value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
                             </div>
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>
