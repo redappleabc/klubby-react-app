@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, Form, Modal, ModalBody } from "reactstrap";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
@@ -8,8 +8,10 @@ import { connect } from "react-redux";
 import emoji from '../../../assets/images/icons/emoji.png'
 
 
-function ChatInput(props) {
+const ChatInput = forwardRef((props, ref) => {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
+    const [editMsgState, setEditMsgState] = useState(false);
+    const [editMsgId, setEditMsgId] = useState("")
     const [textMessage, settextMessage] = useState("");
     const textAreaRef = useRef(null);
     const mainInputRef = useRef(null);
@@ -26,6 +28,9 @@ function ChatInput(props) {
     //function for text input value change
     const handleChange = e => {
         settextMessage(e.target.value)
+        if(e.target.value === ""){
+            setEditMsgState(false)
+        }
         
     }
 
@@ -57,11 +62,12 @@ function ChatInput(props) {
     //function for send data to onaddMessage function(in userChat/index.js component)
     const onaddMessage = (e, textMessage) => {
         e.preventDefault();
+        
 
         //if text value is not emptry then call onaddMessage function
         if (textMessage !== "") {
             
-            props.onaddMessage(textMessage, "textMessage");
+            props.onaddMessage(textMessage, "textMessage", editMsgState, editMsgId);
             settextMessage("");
         }
 
@@ -80,6 +86,7 @@ function ChatInput(props) {
             props.onaddMessage(fileImage, "imageMessage");
             setfileImage("")
         }
+        setEditMsgState(false);
     }
 
     const resizeTextArea = () => {
@@ -95,16 +102,41 @@ function ChatInput(props) {
         console.log(mainInputHeight);
       };
     
+      const closeEdit = () => {
+        setEditMsgState(false);
+        settextMessage("");
+      }
     useEffect(resizeTextArea, [textMessage]);
 
-    useEffect(() => {
-        document.addEventListener('keydown', (e) => {  
-            // e.preventDefault();
-            if ((e.metaKey || e.ctrlKey) && e.code === 'KeyC') {
-                console.log('fire!')
-            }  
-        })
-    })
+    // useEffect(() => {
+    //     document.addEventListener('keydown', (e) => {  
+    //         // e.preventDefault();
+    //         if ((e.metaKey || e.ctrlKey) && e.code === 'KeyC') {
+    //             console.log('fire!')
+    //         }  
+    //     })
+    // })
+
+
+    useImperativeHandle(ref, () => ({
+        editMessage(id, msg) {
+            setEditMsgId(id)
+            settextMessage(msg);
+            setEditMsgState(true);
+        }
+    }))
+
+    const keyDownHandler = (e) =>{
+        if (e.key === "Enter" && e.ctrlKey) {
+            settextMessage(textMessage + "\n")
+            console.log("pressed ctrl + enter");
+        }else if(e.key === "Enter" && e.shiftKey){
+            console.log("press shift + Enter")
+        }else if(e.key === "Enter"){
+            console.log("press only enter")
+            onaddMessage(e, textMessage)
+        }
+    }
 
     return (
         <React.Fragment>
@@ -113,7 +145,7 @@ function ChatInput(props) {
                     <div className='main-input-container'>
                         <div className='main-input'>
                             <div className='round-input'>
-                                <textarea ref={textAreaRef} rows={1} value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
+                                <textarea onKeyDownCapture={keyDownHandler} ref={textAreaRef} rows={1} value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
                             </div>
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>
@@ -132,18 +164,29 @@ function ChatInput(props) {
                                 </Label>
                             </div>
                         </div>
-
-                        <div className={`mic-btn ${textMessage.length >= 1 ? "" : "show"}`}>
-                            <Button color="primary" onClick={toggleVoiceRecordModal} className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
-                                <i className="ri-mic-line"></i>
-                            </Button>
-                        </div>
-                        <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
-                            <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
-                                <i className="ri-send-plane-2-fill"></i>
-                            </Button>
-                        </div>
+                        {
+                            editMsgState == false ?
+                            <div>
+                                <div className={`mic-btn ${textMessage.length >= 1 ? "" : "show"}`}>
+                                    <Button color="primary" onClick={toggleVoiceRecordModal} className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                        <i className="ri-mic-line"></i>
+                                    </Button>
+                                </div>
+                                <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
+                                    <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                        <i className="ri-send-plane-2-fill"></i>
+                                    </Button>
+                                </div>
+                            </div>  
+                            :
+                            <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
+                                <Button onClick={closeEdit} color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                    <i className="ri-close-fill"></i>
+                                </Button>
+                            </div>
+                        }
                     </div>
+                    
                 </Form>
             </div>
             {/* Audio record Modal */}
@@ -178,11 +221,11 @@ function ChatInput(props) {
             </Modal>
         </React.Fragment>
     );
-}
+})
 
 const mapStatetoProps = state => {
     const { userSidebar } = state.Layout;
     return { userSidebar }
 };
 
-export default connect(mapStatetoProps)(ChatInput);
+export default connect(mapStatetoProps, null, null, {forwardRef: true})(ChatInput);

@@ -6,6 +6,7 @@ subscription subscribeToNewMessage($conversationId: ID!) {
     __typename
     conversationId
     createdAt
+    updatedAt
     id
     sender
     content

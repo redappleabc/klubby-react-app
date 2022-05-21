@@ -21,10 +21,11 @@ import { openUserSidebar, setFullUser } from "../../../redux/actions";
 import avatar4 from "../../../assets/images/users/avatar-4.jpg";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import { v4 as uuidv4 } from 'uuid';
-import createMessageGQL from '../../../apollo/mutations/createMessage';
 
 import apollo_client from '../../../apollo';
 import getConversationMessagesGQL from '../../../apollo/queries/getConversationMessages';
+import createMessageGQL from '../../../apollo/mutations/createMessage';
+import editMessageGQL from '../../../apollo/mutations/editMessage';
 import removeMessageGQL from '../../../apollo/mutations/removeMessage';
 
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
@@ -36,6 +37,7 @@ function UserChat(props) {
 
 
     const ref = useRef();
+    const chatInputRef = useRef(null)
 
     const [modal, setModal] = useState(false);
 
@@ -115,11 +117,11 @@ function UserChat(props) {
 
     }, [props.users, props.newDirectMessage]);
 
-    useEffect(()=>{
+    useEffect(() => {
         setchatMessages(props.active_user ? props.users[props.active_user].messages : []);
         ref.current.recalculate();
         scrolltoBottom();
-    },[props.active_user])
+    }, [props.active_user])
 
 
     useEffect(() => {
@@ -137,7 +139,7 @@ function UserChat(props) {
 
     const toggle = () => setModal(!modal);
 
-    const addMessage = (message, type) => {
+    const addMessage = (message, type, editMsgState, editMsgId) => {
         var messageObj = null;
 
         let d = new Date();
@@ -147,8 +149,11 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    content: message,
+                    content: editMsgState?message:message.replace(/\n/g, "\\n"),
                     conversationId: props.users[props.active_user].conversationId,
+                }
+                if(editMsgState){
+                    messageObj.id = editMsgId;
                 }
                 break;
 
@@ -189,14 +194,27 @@ function UserChat(props) {
         }
 
         if (props.users[props.active_user].conversationId) {
-            apollo_client.mutate({
-                mutation: createMessageGQL,
-                variables: messageObj
-            }).then((res) => {
-                console.log("created message   ", res)
-            }).catch((err) => {
-                console.log("create message error   ", err)
-            })
+            console.log(messageObj)
+            if(editMsgState){
+                
+                apollo_client.mutate({
+                    mutation: editMessageGQL,
+                    variables: messageObj
+                }).then((res) => {
+                    console.log("edit message   ", res)
+                }).catch((err) => {
+                    console.log("edit message error   ", err)
+                })
+            }else{
+                apollo_client.mutate({
+                    mutation: createMessageGQL,
+                    variables: messageObj
+                }).then((res) => {
+                    console.log("created message   ", res)
+                }).catch((err) => {
+                    console.log("create message error   ", err)
+                })
+            }
         }
 
 
@@ -272,10 +290,9 @@ function UserChat(props) {
         // setchatMessages(filtered);
     }
 
-    function editMessage(){
-
+    function editMessage(chatId, content) {
+        chatInputRef.current.editMessage(chatId, content);
     }
-
 
     const handleScroll = (e) => {
         if (ref.current.getScrollElement().scrollTop === 0) {
@@ -324,12 +341,13 @@ function UserChat(props) {
                             <ul className="list-unstyled mb-0" >
                                 {
                                     chatMessages.map((chat, key) =>
-                                        chat.isToday && chat.isToday === true ? <li key={"dayTitle" + key}>
-                                            <div className="chat-day-title">
-                                                <span className="title">Today</span>
-                                            </div>
-                                        </li> :
-
+                                        chat.isToday && chat.isToday === true ?
+                                            <li key={"dayTitle" + key}>
+                                                <div className="chat-day-title">
+                                                    <span className="title">Today</span>
+                                                </div>
+                                            </li>
+                                            :
                                             <li key={key} className={chat.sender === props.user.username ? "right" : ""}>
                                                 <div className="conversation-list">
 
@@ -361,9 +379,11 @@ function UserChat(props) {
                                                             <div className="ctext-wrap-content">
                                                                 {
                                                                     chat.content &&
-                                                                    <p className="mb-0">
-                                                                        {chat.content}
-                                                                    </p>
+                                                                    <pre>
+                                                                        <p className="mb-0">
+                                                                            {chat.content}
+                                                                        </p>
+                                                                    </pre>
                                                                 }
                                                                 {
                                                                     chat.imageMessage &&
@@ -398,7 +418,7 @@ function UserChat(props) {
                                                                     </DropdownToggle>
                                                                     <DropdownMenu>
                                                                         <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id)}>Edit <i className="ri-save-line float-end text-muted"></i></DropdownItem>}
+                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id, chat.content)}>Edit <i className="ri-save-line float-end text-muted"></i></DropdownItem>}
                                                                         {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>
@@ -432,7 +452,7 @@ function UserChat(props) {
                             </ModalBody>
                         </Modal>
 
-                        <ChatInput onaddMessage={addMessage} />
+                        <ChatInput onaddMessage={addMessage} ref={chatInputRef} />
                     </div>
 
                     <UserProfileSidebar activeUser={props.users[props.active_user]} />
