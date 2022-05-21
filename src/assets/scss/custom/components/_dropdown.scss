@@ -82,7 +82,7 @@
  .emoji-input {
    position: absolute;
    left: 17px;
-   top: 6px;
+   bottom: 5px;
  }
 
 
@@ -105,13 +105,23 @@
  .main-input-container {
    display: flex;
    position: relative;
-   align-items: center;
+   align-items: flex-end;
    justify-content: space-between;
    .round-input {
      input {
       border-radius: 21.5px;
       padding: 0 50px;
      }
+     textarea {
+      border-radius: 21.5px;
+      padding: 10px 50px;
+      resize: none;
+      overflow-y: hidden;
+      &.max-h {
+        overflow-y: scroll;
+        max-height: 230px;
+      }
+    }
      width: 100%;
    }
    .round-btn {
@@ -130,7 +140,7 @@
  .input-file {
    position: absolute;
    right: 17px;
-   top: 5px;
+   bottom: 3px;
    label {
      padding: 0 !important;
      i {
@@ -141,8 +151,9 @@
  }
 
  .chat-input {
-   height: 78px;
+   height: 75px;
    width: calc(100% - 468px);
+   background-color: #19191b;
    position: fixed;
    bottom: 0;
   .main-input {
