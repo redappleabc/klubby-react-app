@@ -36,6 +36,7 @@ function UserChat(props) {
 
 
     const ref = useRef();
+    const chatInputRef = useRef(null)
 
     const [modal, setModal] = useState(false);
 
@@ -272,10 +273,10 @@ function UserChat(props) {
         // setchatMessages(filtered);
     }
 
-    function editMessage(){
-
+    function editMessage(chatId){
+        alert(chatId);
+        chatInputRef.current.editMessage(chatId);
     }
-
 
     const handleScroll = (e) => {
         if (ref.current.getScrollElement().scrollTop === 0) {
@@ -324,12 +325,13 @@ function UserChat(props) {
                             <ul className="list-unstyled mb-0" >
                                 {
                                     chatMessages.map((chat, key) =>
-                                        chat.isToday && chat.isToday === true ? <li key={"dayTitle" + key}>
-                                            <div className="chat-day-title">
-                                                <span className="title">Today</span>
-                                            </div>
-                                        </li> :
-
+                                        chat.isToday && chat.isToday === true ? 
+                                            <li key={"dayTitle" + key}>
+                                                <div className="chat-day-title">
+                                                    <span className="title">Today</span>
+                                                </div>
+                                            </li> 
+                                            :
                                             <li key={key} className={chat.sender === props.user.username ? "right" : ""}>
                                                 <div className="conversation-list">
 
@@ -432,7 +434,7 @@ function UserChat(props) {
                             </ModalBody>
                         </Modal>
 
-                        <ChatInput onaddMessage={addMessage} />
+                        <ChatInput onaddMessage={addMessage} ref={chatInputRef} />
                     </div>
 
                     <UserProfileSidebar activeUser={props.users[props.active_user]} />

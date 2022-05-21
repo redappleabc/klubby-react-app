@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, Form, Modal, ModalBody } from "reactstrap";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
@@ -8,8 +8,9 @@ import { connect } from "react-redux";
 import emoji from '../../../assets/images/icons/emoji.png'
 
 
-function ChatInput(props) {
+const ChatInput = forwardRef((props, ref) => {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
+    const [editMsgState, setEditMsgState] = useState(false);
     const [textMessage, settextMessage] = useState("");
     const textAreaRef = useRef(null);
     const mainInputRef = useRef(null);
@@ -95,16 +96,28 @@ function ChatInput(props) {
         console.log(mainInputHeight);
       };
     
+      const closeEdit = () => {
+        setEditMsgState(false);
+        settextMessage("");
+      }
     useEffect(resizeTextArea, [textMessage]);
 
-    useEffect(() => {
-        document.addEventListener('keydown', (e) => {  
-            // e.preventDefault();
-            if ((e.metaKey || e.ctrlKey) && e.code === 'KeyC') {
-                console.log('fire!')
-            }  
-        })
-    })
+    // useEffect(() => {
+    //     document.addEventListener('keydown', (e) => {  
+    //         // e.preventDefault();
+    //         if ((e.metaKey || e.ctrlKey) && e.code === 'KeyC') {
+    //             console.log('fire!')
+    //         }  
+    //     })
+    // })
+
+
+    useImperativeHandle(ref, () => ({
+        editMessage(msg) {
+            settextMessage(msg);
+            setEditMsgState(true);
+        }
+    }))
 
     return (
         <React.Fragment>
@@ -132,18 +145,29 @@ function ChatInput(props) {
                                 </Label>
                             </div>
                         </div>
-
-                        <div className={`mic-btn ${textMessage.length >= 1 ? "" : "show"}`}>
-                            <Button color="primary" onClick={toggleVoiceRecordModal} className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
-                                <i className="ri-mic-line"></i>
-                            </Button>
-                        </div>
-                        <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
-                            <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
-                                <i className="ri-send-plane-2-fill"></i>
-                            </Button>
-                        </div>
+                        {
+                            editMsgState == false ?
+                            <div>
+                                <div className={`mic-btn ${textMessage.length >= 1 ? "" : "show"}`}>
+                                    <Button color="primary" onClick={toggleVoiceRecordModal} className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                        <i className="ri-mic-line"></i>
+                                    </Button>
+                                </div>
+                                <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
+                                    <Button type="submit" color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                        <i className="ri-send-plane-2-fill"></i>
+                                    </Button>
+                                </div>
+                            </div>  
+                            :
+                            <div className={`message-submit-btn ${textMessage.length >=1 ? "show" : ""}`}>
+                                <Button onClick={closeEdit} color="primary" className="font-size-16 btn-lg chat-send waves-effect waves-light round-btn">
+                                    <i className="ri-close-fill"></i>
+                                </Button>
+                            </div>
+                        }
                     </div>
+                    
                 </Form>
             </div>
             {/* Audio record Modal */}
@@ -178,11 +202,11 @@ function ChatInput(props) {
             </Modal>
         </React.Fragment>
     );
-}
+})
 
 const mapStatetoProps = state => {
     const { userSidebar } = state.Layout;
     return { userSidebar }
 };
 
-export default connect(mapStatetoProps)(ChatInput);
+export default connect(mapStatetoProps, null, null, {forwardRef: true})(ChatInput);
