@@ -31,7 +31,7 @@ import removeMessageGQL from '../../../apollo/mutations/removeMessage';
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import subscribeToNewMessagesGQL from '../../../apollo/subscriptions/subscribeToNewMessages';
 
-
+import parse from 'html-react-parser';
 
 function UserChat(props) {
 
@@ -149,10 +149,10 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    content: editMsgState?message:message.replace(/\n/g, "\\n"),
+                    content: editMsgState ? message : message.replace(/\n/g, "\\n"),
                     conversationId: props.users[props.active_user].conversationId,
                 }
-                if(editMsgState){
+                if (editMsgState) {
                     messageObj.id = editMsgId;
                 }
                 break;
@@ -195,8 +195,8 @@ function UserChat(props) {
 
         if (props.users[props.active_user].conversationId) {
             console.log(messageObj)
-            if(editMsgState){
-                
+            if (editMsgState) {
+
                 apollo_client.mutate({
                     mutation: editMessageGQL,
                     variables: messageObj
@@ -205,7 +205,7 @@ function UserChat(props) {
                 }).catch((err) => {
                     console.log("edit message error   ", err)
                 })
-            }else{
+            } else {
                 apollo_client.mutate({
                     mutation: createMessageGQL,
                     variables: messageObj
@@ -379,11 +379,11 @@ function UserChat(props) {
                                                             <div className="ctext-wrap-content">
                                                                 {
                                                                     chat.content &&
-                                                                    <pre>
-                                                                        <p className="mb-0">
-                                                                            {chat.content}
-                                                                        </p>
-                                                                    </pre>
+
+                                                                    <p className="mb-0">
+                                                                        {parse(chat.content.replace(/\n/g, "<br/>"))}
+                                                                    </p>
+
                                                                 }
                                                                 {
                                                                     chat.imageMessage &&
