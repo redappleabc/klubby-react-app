@@ -15,6 +15,7 @@ import subscribeToNewUserConversationbridge from '../../apollo/subscriptions/sub
 import { useSubscription } from '@apollo/client';
 import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
 import Preloader from '../../components/preloader';
+import { useHistory } from 'react-router-dom';
 
 
 const Index = (props) => {
@@ -22,6 +23,8 @@ const Index = (props) => {
     const [subscriptionData, setSubscriptionData] = useState()
     const [subscriptionToRemovedMessageData, setSubscriptionToRemovedMessageData] = useState()
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
+
+    let history = useHistory();
 
     const { data, loading } = useSubscription(subscribeToNewUserConversationbridge, {
         variables: {
@@ -68,6 +71,17 @@ const Index = (props) => {
                 updateQuery: (prev, { subscriptionData }) => {
                     setSubscriptionData(subscriptionData)
                     console.log('subscribeToMore - updateQuery:', subscriptionData);
+                },
+            })
+
+            observable.subscribeToMore({
+                document: subscribeToRemovedMessagesGQL,
+                variables: {
+                    conversationId: newUser.conversationId
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                    setSubscriptionToRemovedMessageData(subscriptionData)
+                    console.log('subscribeToRemovedMessage - updateQuery:', subscriptionData);
                 },
             })
         }
@@ -217,6 +231,9 @@ const Index = (props) => {
                 setConversationLoad(true)
             }).catch((err) => {
                 console.log(err)
+                alert("unsuccessfully registered user")
+                history.push("/logout")
+                
             })
         }
 

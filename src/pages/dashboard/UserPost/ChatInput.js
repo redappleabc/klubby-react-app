@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, ButtonDropdown, DropdownToggle, DropdownMenu, Label, Form, Modal, ModalBody } from "reactstrap";
 import { Picker } from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
@@ -11,6 +11,7 @@ import emoji from '../../../assets/images/icons/emoji.png'
 function ChatInput(props) {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
     const [textMessage, settextMessage] = useState("");
+    const textAreaRef = useRef(null);
     const [isOpen, setisOpen] = useState(false);
     const [file, setfile] = useState({
         name: "",
@@ -80,14 +81,23 @@ function ChatInput(props) {
         }
     }
 
+    const resizeTextArea = () => {
+        textAreaRef.current.style.height = "auto";
+        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+        console.log(textAreaRef.current.scrollHeight);
+      };
+    
+      useEffect(resizeTextArea, [textMessage]);
+
+
     return (
         <React.Fragment>
-            <div className="p-3 p-lg-4 border-top mb-0 chat-input">
+            <div className="p-3 p-lg-3 border-top mb-0 chat-input">
                 <Form onSubmit={(e) => onaddMessage(e, textMessage)} >
                     <div className='main-input-container'>
                         <div className='main-input'>
                             <div className='round-input'>
-                                <Input type="text" value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Comment    ..." />
+                            <textarea ref={textAreaRef} rows={1} value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
                             </div>
                             <div className="list-inline-item emoji-input">
                                 <ButtonDropdown className="emoji-dropdown" direction="up" isOpen={isOpen} toggle={toggle}>
