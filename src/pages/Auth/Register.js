@@ -7,10 +7,12 @@ import * as Yup from 'yup';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import action
-import { registerUser, apiError, registerUserSuccess } from '../../redux/actions';
+import { registerUser, apiError, registerUserSuccess} from '../../redux/actions';
 
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
+import apollo_client from '../../apollo';
+import { signOut } from '../../helpers/aws';
 
 
 
@@ -30,9 +32,11 @@ const Register = (props) => {
 
     useEffect(clearError, []);
     
-    useEffect(() => {
+    useEffect(async () => {
         if (props.user !==null && props.user !== "") {
             console.log(props.user)
+            await signOut()
+            apollo_client.clearStore()
             history.push('/verify-register')
         }
     }, [props.user])
