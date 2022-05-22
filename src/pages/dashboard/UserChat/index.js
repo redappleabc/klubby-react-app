@@ -427,7 +427,7 @@ function UserChat(props) {
 
                                                         </div>
                                                         {
-                                                            <div className="conversation-name">{chat.sender === props.user.username ? chat.sender : null}</div>
+                                                            <div className="conversation-name">{chat.sender}</div>
                                                         }
                                                     </div>
                                                 </div>
