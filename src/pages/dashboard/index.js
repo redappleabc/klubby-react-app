@@ -155,8 +155,8 @@ const Index = (props) => {
                 query: getUserConversationsGQL
             }).then(async (res) => {
                 console.log(res)
-                if (res.data.getMe && res.data.getMe.conversations.userConversations) {
-                    const _recentConversations = res.data.getMe.conversations.userConversations
+                if (res.data.getMe && res.data.getMe.conversations) {
+                    const _recentConversations = res.data.getMe.conversations
 
 
                     if (_recentConversations.length > 0) {
@@ -171,6 +171,8 @@ const Index = (props) => {
                             }
 
                             let _recentUser = {};
+                            if( _recentConversations[i].associated === null)
+                                continue;
                             _recentUser.username = _recentConversations[i].associated;
                             _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated;
                             _recentUser.conversationId = _recentConversations[i].conversationId
@@ -248,6 +250,7 @@ const Index = (props) => {
             }).catch((err) => {
                 console.log(err)
                 alert("unsuccessfully registered user")
+                //setConversationLoad(true)
                 history.push("/logout")
 
             })
