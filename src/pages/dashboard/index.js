@@ -158,9 +158,8 @@ const Index = (props) => {
                 if (res.data.getMe && res.data.getMe.conversations) {
                     const _recentConversations = res.data.getMe.conversations
 
-
+                    let _recentChatList = {}
                     if (_recentConversations.length > 0) {
-                        let _recentChatList = {}
                         for (var i = 0; i < _recentConversations.length; i++) {
 
                             let _readIndexNumber = 0
@@ -171,7 +170,7 @@ const Index = (props) => {
                             }
 
                             let _recentUser = {};
-                            if( _recentConversations[i].associated === null)
+                            if( _recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
                             _recentUser.username = _recentConversations[i].associated;
                             _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated;
@@ -240,10 +239,11 @@ const Index = (props) => {
 
                         }
 
-                        props.setFullUser(_recentChatList)
-                        console.log(_recentChatList)
-                        //props.activeUser(Object.keys(_recentChatList)[0]);
                     }
+                    
+                    props.activeUser(null);
+                    props.setFullUser(_recentChatList)
+                    console.log("setfulluser", _recentChatList)
 
                 }
                 setConversationLoad(true)

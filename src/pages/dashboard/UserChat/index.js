@@ -52,61 +52,6 @@ function UserChat(props) {
 
 
 
-    // const {
-    //     data,
-    //     loading,
-    //     error,
-    //     subscribeToMore
-    // } = useQuery(getConversationMessagesGQL, {
-    //     variables: {
-    //         conversationId: props.users[props.active_user].conversationId
-    //     }
-    // });
-
-
-    // subscribeToMore({
-    //     // ...
-    //     document: subscribeToNewMessagesGQL,
-    //     variables: {
-    //         conversationId: props.users[props.active_user].conversationId
-    //     },
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //         console.log('subscribeToMore - updateQuery:', subscriptionData);
-    //     },
-    //     onError:(err)=>{
-    //         console.log(err)
-    //     }
-    // });
-
-    //console.log( props.users[props.active_user].conversationId)
-
-
-
-
-    // const options = {
-    //     query: getConversationMessagesGQL,
-    //     variables: {
-    //         conversationId: props.users[props.active_user].conversationId,
-    //     }
-    // };
-
-
-    // const observable = apollo_client.watchQuery(options);
-
-    // observable.subscribe(({ data }) => {
-    //     console.log('chat-message-view: subscribe', data);
-    // });
-
-    // observable.subscribeToMore({
-    //     document: subscribeToNewMessagesGQL,
-    //     variables: { 'conversationId': props.users[props.active_user].conversationId },
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //                  console.log('subscribeToMore - updateQuery:', subscriptionData);
-    //         //     
-    //     }
-    // })
-
-
 
 
     useEffect(() => {
@@ -218,40 +163,8 @@ function UserChat(props) {
         }
 
 
-
-        //add message object to chat    
-
-        //setchatMessages([...chatMessages, messageObj])
-
-        //let copyallUsers = allUsers;
-        //copyallUsers[props.active_user].messages = [...chatMessages, messageObj];
-        //copyallUsers[props.active_user].isTyping = false;
-        //console.log("copyallusers", copyallUsers)
-        //props.setFullUser(copyallUsers);
-
     }
 
-
-
-
-    // if(props.active_user && props.users[props.active_user].conversationId){
-    //     apollo_client.query({
-    //         query:getConversationMessagesGQL,
-    //         variables:{
-    //             conversationId:props.users[props.active_user].conversationId
-    //         }
-    //     }).then((res)=>{    
-    //         //setchatMessages(res.data.getAllMessageConnection.messages)
-    //         let copyallUsers = allUsers;
-    //         const _messages = [...res.data.getAllMessageConnection.messages];
-
-    //         copyallUsers[props.active_user].messages = _messages.reverse();
-    //         props.setFullUser(copyallUsers);
-    //         console.log(res)
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }
 
 
     function scrolltoBottom() {
