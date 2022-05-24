@@ -236,6 +236,10 @@ function UserChat(props) {
     }
 
 
+    const replyMsg = (chatId, content) => {
+        chatInputRef.current.replyMessage(chatId, content);
+    }
+
 
     return (
         <React.Fragment>
@@ -336,7 +340,7 @@ function UserChat(props) {
                                                                         <DropdownItem onClick={()=>{navigator.clipboard.writeText(chat.content)}}>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id, chat.content)}>Edit <i className="ri-edit-line float-end text-muted"></i></DropdownItem>}
                                                                         {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
-                                                                        <DropdownItem onClick={alert}>Reply <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
+                                                                        <DropdownItem onClick={() => {replyMsg(chat.id, chat.content)}}>Reply <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>
                                                                 </UncontrolledDropdown>

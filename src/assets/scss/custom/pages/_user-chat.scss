@@ -481,6 +481,38 @@ textarea:focus {
 .klubs-header {
     border-bottom: 1px solid #343434;
 }
+
+.reply-message {
+    display: none;
+    position: relative;
+    background-color: #343434;
+    padding: 10px 20px;
+    color: white;
+    border-bottom: 1px solid #2B2C33;
+    font-size: 12px;
+    border-radius: 15px 15px 0 0;
+}
+
+.reply-msg-input-con .reply-message {
+    display: block;
+}
+
+.reply-message .reply-msg-close-btn {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    right: 13px;
+    top: 9px;
+}
+
+
+.reply-chat-input {
+    height: 115px;
+}
+
+.reply-chat-input textarea {
+    border-radius: 0 0 15px 15px !important;
+}
 @media (max-width: 1220px) {
     .klubs-header-tabs._pc {
         display: none !important;
