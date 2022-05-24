@@ -189,3 +189,24 @@
   height: 45px;
   background-color: #2B2C33;
 } 
+
+
+.con-context-item {
+  width: 190px;
+  padding: 15px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.con-context-item:hover {
+  background-color: #3c3c3c;
+}
+
+.con-context-menu {
+  background-color: #1D1D1D;
+  border: 1px solid #3c3c3c;
+  padding: 10px 0;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
