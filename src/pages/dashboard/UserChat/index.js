@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DropdownMenu, DropdownItem, DropdownToggle, UncontrolledDropdown, Modal, ModalHeader, ModalBody, CardBody, Button, ModalFooter } from "reactstrap";
+
 import { connect } from "react-redux";
 
 import SimpleBar from "simplebar-react";
@@ -330,8 +331,8 @@ function UserChat(props) {
                                                                         <i className="ri-more-2-fill"></i>
                                                                     </DropdownToggle>
                                                                     <DropdownMenu>
-                                                                        <DropdownItem>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
-                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id, chat.content)}>Edit <i className="ri-save-line float-end text-muted"></i></DropdownItem>}
+                                                                        <DropdownItem onClick={()=>{navigator.clipboard.writeText(chat.content)}}>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
+                                                                        {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id, chat.content)}>Edit <i className="ri-edit-line float-end text-muted"></i></DropdownItem>}
                                                                         {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>
