@@ -8,6 +8,8 @@
 
     background-color: $sidebar-sub-bg;
 
+    position: relative;
+    z-index: 99;
     @media (min-width: 992px) {
         min-width: 380px;
         max-width: 380px;

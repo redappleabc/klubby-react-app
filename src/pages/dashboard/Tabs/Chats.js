@@ -542,8 +542,15 @@ const Chats = (props) => {
                                                         </div>
                                                     </Link>
                                                 </ContextMenuTrigger>
-                                                <ContextMenu id={chat.conversationId}>
-                                                    <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId) }}>Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i></MenuItem>
+                                                <ContextMenu className="con-context-menu" id={chat.conversationId}>
+                                                    <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId) }}>
+                                                        <div className="con-context-item">
+                                                            Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
+                                                        </div>
+                                                        <div className="con-context-item">
+                                                            Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
+                                                        </div>
+                                                    </MenuItem>
                                                 </ContextMenu>
                                             </li>
                                         )
