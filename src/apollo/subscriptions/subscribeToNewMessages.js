@@ -1,4 +1,4 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export default gql`
 subscription subscribeToNewMessage($conversationId: ID!) {
@@ -11,5 +11,11 @@ subscription subscribeToNewMessage($conversationId: ID!) {
     sender
     content
     isSent
+    originalId
+    originalMessage{
+      content
+      createdAt
+      sender
+    }
   }
 }`;
