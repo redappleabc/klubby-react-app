@@ -268,7 +268,7 @@ function UserChat(props) {
                                                 <div className="conversation-list">
 
                                                     <div className="chat-avatar">
-                                                        {chat.sender === props.user.username && ((props.user.profilePicture === undefined || props.user.profilePicture === null) ?
+                                                        {chat.sender === props.user.username && ((typeof props.user.profilePicture === "undefined" || props.user.profilePicture === null) ?
                                                             <div className="chat-user-img align-self-center me-3">
                                                                 <div className="avatar-xs">
                                                                     <span className="avatar-title rounded-circle bg-soft-primary text-primary">
@@ -278,7 +278,7 @@ function UserChat(props) {
                                                             </div>
                                                             : <img src={props.user.profilePicture} alt="Klubby" />)
                                                         }
-                                                        {chat.sender !== props.user.username && ((typeof props.users[props.active_user].profilePicture === undefined || props.users[props.active_user].profilePicture === null) ?
+                                                        {chat.sender !== props.user.username && ((typeof props.users[props.active_user].profilePicture === "undefined" || props.users[props.active_user].profilePicture === null) ?
                                                             <div className="chat-user-img align-self-center me-3">
                                                                 <div className="avatar-xs">
                                                                     <span className="avatar-title rounded-circle bg-soft-primary text-primary">
