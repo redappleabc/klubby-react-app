@@ -310,15 +310,20 @@ function UserChat(props) {
                                                     <div className="user-chat-content">
                                                         <div className="ctext-wrap">
                                                             <div className="ctext-wrap-content">
-                                                            <div>
-                                                                {chat.originalId && chat.originalMessage.content}
+                                                            {
+                                                            chat.originalId && <div className='reply-text'>
+                                                                <div className='reply-icon'>
+                                                                    <i className='ri-reply-line'></i>
+                                                                </div>
+                                                                <div className='reply-text-main'>
+                                                                    {chat.originalMessage.content}
+                                                                </div>
+                                                                <div className='reply-text-date'>
+                                                                   <span className='reply-text-sender'>{chat.originalMessage.sender}, </span> {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
+                                                                </div>
+                                                                
                                                             </div>
-                                                            <div>
-                                                                {chat.originalId && (new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
-                                                            </div>
-                                                            <div>
-                                                                {chat.originalId && chat.originalMessage.sender}
-                                                            </div>
+                                                            }
                                                                 {
                                                                     chat.content &&
 
