@@ -36,6 +36,7 @@
     "node-sass": "^4.14.1",
     "react": "^17.0.2",
     "react-alice-carousel": "^2.5.1",
+    "react-contextmenu": "^2.14.0",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.11.3",
     "react-image-lightbox": "^5.1.4",

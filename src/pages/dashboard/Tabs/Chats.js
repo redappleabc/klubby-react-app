@@ -3,6 +3,9 @@ import { Input, InputGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, CardBody, Alert, Collapse, Card, CardHeader, Modal, ModalHeader, ModalBody, Form, Label, ModalFooter, TabContent, TabPane } from "reactstrap";
+
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
+
 import classnames from "classnames";
 //simplebar
 import SimpleBar from "simplebar-react";
@@ -16,13 +19,13 @@ import { v4 as uuidv4 } from 'uuid';
 import createConversationGQL from '../../../apollo/mutations/createConversation';
 import createUserConversationsGQL from '../../../apollo/mutations/createUserConversations';
 import apollo_client from '../../../apollo';
-import { create } from 'yup/lib/Reference';
-import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
 
+import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
 
 import { useMutation } from '@apollo/client';
 
 import setReadGQL from '../../../apollo/mutations/setRead';
+
 
 //components
 // import OnlineUsers from "./OnlineUsers";
@@ -220,7 +223,7 @@ const Chats = (props) => {
     }
 
     function openUserChat(e, chat) {
-        e.preventDefault();
+        //e.preventDefault();
 
         //find index of current chat in array
         var index = chat.name;
@@ -291,7 +294,7 @@ const Chats = (props) => {
     }
 
     function createUserChat(e, user) {
-        e.preventDefault();
+        //e.preventDefault();
         addNewUser = user
 
 
@@ -321,13 +324,13 @@ const Chats = (props) => {
             currentli.classList.add('active');
         }
 
-        
+
 
     }
 
     function onclickAddNewUser() {
 
-        if(addNewUser){
+        if (addNewUser) {
             let newConversation = {}
             createConversationApollo({
                 //variables: newConversation
@@ -344,17 +347,17 @@ const Chats = (props) => {
                 })
             }).then((res) => {
                 console.log("create userconversation 2 succeed")
-            }).catch((err) => { 
+            }).catch((err) => {
                 console.log("new conversation creation", err)
-                
-             })
+
+            })
         }
-        
+
         toggleAddMemberModal();
     }
     function openUserGroup(e, group) {
 
-        e.preventDefault();
+        //e.preventDefault();
 
         //find index of current chat in array
         var index = props.groups.indexOf(group);
@@ -399,6 +402,12 @@ const Chats = (props) => {
         if (unread) {
             unread.style.display = "none";
         }
+    }
+
+    const deleteConversation = (e, conversationId) => {
+        //e.preventDefault()
+
+        console.log(conversationId)
     }
 
 
@@ -473,64 +482,69 @@ const Chats = (props) => {
                                     {
                                         Object.entries(recentChatList).map(([key, chat]) =>
                                             <li key={key} id={"conversation" + key} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
-                                                <Link to="#" onClick={(e) => openUserChat(e, chat)}>
-                                                    <div className="d-flex">
-                                                        {
-                                                            chat.profilePicture === null || typeof chat.profilePicture === "undefined" ?
-                                                                <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                    <div className="avatar-xs">
-                                                                        <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                            {chat.name.charAt(0)}
-                                                                        </span>
-                                                                    </div>
-                                                                    {
-                                                                        chat.status && <span className="user-status"></span>
-                                                                    }
-                                                                </div>
-                                                                :
-                                                                <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
-                                                                    <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                    {
-                                                                        chat.status && <span className="user-status"></span>
-                                                                    }
-                                                                </div>
-                                                        }
-
-                                                        <div className="flex-1 overflow-hidden">
-                                                            <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
-                                                            <p className="chat-user-message text-truncate mb-0">
-                                                                {
-                                                                    chat.isTyping ?
-                                                                        <>
-                                                                            typing<span className="animate-typing">
-                                                                                <span className="dot ms-1"></span>
-                                                                                <span className="dot ms-1"></span>
-                                                                                <span className="dot ms-1"></span>
+                                                <ContextMenuTrigger id={chat.conversationId}>
+                                                    <Link to="#" onClick={(e) => openUserChat(e, chat)} >
+                                                        <div className="d-flex">
+                                                            {
+                                                                chat.profilePicture === null || typeof chat.profilePicture === "undefined" ?
+                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                        <div className="avatar-xs">
+                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                                {chat.name.charAt(0)}
                                                                             </span>
-                                                                        </>
-                                                                        :
-                                                                        <>
-                                                                            {
-                                                                                chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
-                                                                            }
-                                                                            {
-                                                                                chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
-                                                                            }
-                                                                            {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].content : null}
-                                                                        </>
-                                                                }
+                                                                        </div>
+                                                                        {
+                                                                            chat.status && <span className="user-status"></span>
+                                                                        }
+                                                                    </div>
+                                                                    :
+                                                                    <div className={"chat-user-img " + chat.status + " align-self-center me-3 ms-0"}>
+                                                                        <img src={chat.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
+                                                                        {
+                                                                            chat.status && <span className="user-status"></span>
+                                                                        }
+                                                                    </div>
+                                                            }
+
+                                                            <div className="flex-1 overflow-hidden">
+                                                                <h5 className="text-truncate font-size-15 mb-1">{chat.name}</h5>
+                                                                <p className="chat-user-message text-truncate mb-0">
+                                                                    {
+                                                                        chat.isTyping ?
+                                                                            <>
+                                                                                typing<span className="animate-typing">
+                                                                                    <span className="dot ms-1"></span>
+                                                                                    <span className="dot ms-1"></span>
+                                                                                    <span className="dot ms-1"></span>
+                                                                                </span>
+                                                                            </>
+                                                                            :
+                                                                            <>
+                                                                                {
+                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
+                                                                                }
+                                                                                {
+                                                                                    chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
+                                                                                }
+                                                                                {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].content : null}
+                                                                            </>
+                                                                    }
 
 
-                                                            </p>
-                                                        </div>
-                                                        <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
-                                                        {chat.unRead === 0 ? null :
-                                                            <div className="unread-message" id={"unRead" + chat.id}>
-                                                                <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
+                                                                </p>
                                                             </div>
-                                                        }
-                                                    </div>
-                                                </Link>
+                                                            <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
+                                                            {chat.unRead === 0 ? null :
+                                                                <div className="unread-message" id={"unRead" + chat.id}>
+                                                                    <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </Link>
+                                                </ContextMenuTrigger>
+                                                <ContextMenu id={chat.conversationId}>
+                                                    <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId) }}>Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i></MenuItem>
+                                                </ContextMenu>
                                             </li>
                                         )
                                     }
@@ -670,7 +684,7 @@ const Chats = (props) => {
                     <Form>
                         <div className="mb-4">
                             <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
-                            <Input type="text" className="form-control" id="addgroupname-input" onChange={(e)=>{searchUsersByUsername(e)}}/>
+                            <Input type="text" className="form-control" id="addgroupname-input" onChange={(e) => { searchUsersByUsername(e) }} />
                         </div>
                         <div className="mb-4">
                             <SimpleBar className="chat-search-container">
