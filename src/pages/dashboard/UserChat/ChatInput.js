@@ -11,8 +11,10 @@ import emoji from '../../../assets/images/icons/emoji.png'
 const ChatInput = forwardRef((props, ref) => {
     const [VoiceRecordmodal, setVoiceRecordModal] = useState(false);
     const [editMsgState, setEditMsgState] = useState(false);
+    const [replyMsgState, setReplyMsgState] = useState(false);
     const [editMsgId, setEditMsgId] = useState("")
     const [textMessage, settextMessage] = useState("");
+    const [replyMessage, setReplyMessage] = useState("");
     const textAreaRef = useRef(null);
     const mainInputRef = useRef(null);
     const [isOpen, setisOpen] = useState(false);
@@ -87,7 +89,13 @@ const ChatInput = forwardRef((props, ref) => {
             setfileImage("")
         }
         setEditMsgState(false);
+        
+        if(replyMsgState) toggleReplyMsg();
     }
+
+    useEffect(()=>{
+        resizeTextArea();   
+    }, [replyMsgState])
 
     const resizeTextArea = () => {
         textAreaRef.current.style.height = "auto";
@@ -98,6 +106,8 @@ const ChatInput = forwardRef((props, ref) => {
         } 
         else textAreaRef.current.classList.remove('max-h');
         let mainInputHeight = textAreaRef.current.scrollHeight + 34;
+       
+        if (replyMsgState) mainInputHeight += 40
         if (textAreaRef.current.scrollHeight != 0) mainInputRef.current.style.height = mainInputHeight + "px";
         console.log(mainInputHeight);
       };
@@ -106,6 +116,12 @@ const ChatInput = forwardRef((props, ref) => {
         setEditMsgState(false);
         settextMessage("");
       }
+
+      let realReplyMsgState = false;
+
+      useEffect(()=>{
+        realReplyMsgState = replyMsgState;
+      }, [replyMsgState])
     useEffect(resizeTextArea, [textMessage]);
 
     // useEffect(() => {
@@ -123,6 +139,11 @@ const ChatInput = forwardRef((props, ref) => {
             setEditMsgId(id)
             settextMessage(msg);
             setEditMsgState(true);
+        },
+        replyMessage(id, msg) {
+            setReplyMessage(msg);
+            setReplyMsgState(true);
+            resizeTextArea();
         }
     }))
 
@@ -138,13 +159,25 @@ const ChatInput = forwardRef((props, ref) => {
         }
     }
 
+    const toggleReplyMsg = () => {
+        setReplyMsgState(!replyMsgState);
+        // replyMsgState = !replyMsgState;
+        console.log(replyMsgState);
+        resizeTextArea();
+    }
+
     return (
         <React.Fragment>
-            <div ref={mainInputRef} className={`p-3 p-lg-3 border-top mb-0 chat-input ${props.userSidebar === true ? "small": ""}`}>
+            <div ref={mainInputRef} className={`p-3 p-lg-3 border-top mb-0 chat-input ${replyMsgState ? 'reply-chat-input':''}`}>
                 <Form onSubmit={(e) => onaddMessage(e, textMessage)} >
                     <div className='main-input-container'>
                         <div className='main-input'>
-                            <div className='round-input'>
+                            
+                            <div className={replyMsgState ? 'round-input  reply-msg-input-con' : 'round-input'}>
+                                <div className= 'reply-message'>
+                                    {replyMessage}
+                                    <i className="reply-msg-close-btn ri-close-line" onClick={toggleReplyMsg}></i>
+                                </div>
                                 <textarea onKeyDownCapture={keyDownHandler} ref={textAreaRef} rows={1} value={textMessage} onChange={handleChange} className="form-control form-control-lg bg-light border-light" placeholder="Enter Message" />
                             </div>
                             <div className="list-inline-item emoji-input">
