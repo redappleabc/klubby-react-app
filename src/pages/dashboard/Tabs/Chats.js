@@ -18,6 +18,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import createConversationGQL from '../../../apollo/mutations/createConversation';
 import createUserConversationsGQL from '../../../apollo/mutations/createUserConversations';
+import removeConversationGQL from '../../../apollo/mutations/removeConversation';
+import removeUserConversationBridgeGQL from '../../../apollo/mutations/removeUserConversationBridge';
 import apollo_client from '../../../apollo';
 
 import getUsersByUserNameGQL from '../../../apollo/queries/getUsersByUserName';
@@ -49,6 +51,8 @@ const Chats = (props) => {
 
     const [createConversationApollo, { }] = useMutation(createConversationGQL)
     const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
+    const [removeConversationApollo, { }] = useMutation(removeConversationGQL)
+    const [removeUserConversationBridgeApollo, { }] = useMutation(removeUserConversationBridgeGQL)
 
     let addNewUser = null;
 
@@ -404,8 +408,27 @@ const Chats = (props) => {
         }
     }
 
-    const deleteConversation = (e, conversationId) => {
+    const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
+        removeUserConversationBridgeApollo({variables:{
+            username:props.user.username,
+            conversationId:conversationId
+        }}).then((res)=>{
+            console.log("delete userconversationbridge self succeed")
+            removeUserConversationBridgeApollo({variables:{
+                username:username,
+                conversationId:conversationId
+            }})
+        }).then((res)=>{
+            console.log("delete userconversationbridge other succeed")
+            removeConversationApollo({variables:{
+                conversationId:conversationId
+            }})
+        }).then((res)=>{
+            console.log("delete conversation succeed")
+        }).catch((res)=>{
+            console.log("error delete conversation", res);
+        })
 
         console.log(conversationId)
     }
@@ -543,7 +566,7 @@ const Chats = (props) => {
                                                     </Link>
                                                 </ContextMenuTrigger>
                                                 <ContextMenu className="con-context-menu" id={chat.conversationId}>
-                                                    <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId) }}>
+                                                    <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId, chat.username) }}>
                                                         <div className="con-context-item">
                                                             Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
                                                         </div>

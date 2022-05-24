@@ -42,7 +42,7 @@ function UserChat(props) {
 
     const [modal, setModal] = useState(false);
 
-    const [chatMessages, setchatMessages] = useState(props.active_user ? props.users[props.active_user].messages : []);
+    const [chatMessages, setchatMessages] = useState([]);
 
     const [loadedMessagesMore, setLoadedMessagesMore] = useState(false)
 
@@ -65,6 +65,7 @@ function UserChat(props) {
 
     useEffect(() => {
         setchatMessages(props.active_user ? props.users[props.active_user].messages : []);
+        console.log("props.active_user",props.active_user)
         ref.current.recalculate();
         scrolltoBottom();
     }, [props.active_user])
@@ -209,7 +210,7 @@ function UserChat(props) {
     }
 
     const handleScroll = (e) => {
-        if (ref.current.getScrollElement().scrollTop === 0) {
+        if (props.active_user && ref.current.getScrollElement().scrollTop === 0) {
             if (props.users[props.active_user].nextToken) {
                 apollo_client.query({
                     query: getConversationMessagesGQL,
@@ -254,6 +255,7 @@ function UserChat(props) {
                             id="messages">
                             <ul className="list-unstyled mb-0" >
                                 {
+                                    props.active_user&&
                                     chatMessages.map((chat, key) =>
                                         chat.isToday && chat.isToday === true ?
                                             <li key={"dayTitle" + key}>
@@ -266,7 +268,7 @@ function UserChat(props) {
                                                 <div className="conversation-list">
 
                                                     <div className="chat-avatar">
-                                                        {chat.sender === props.user.username && (typeof props.user.profilePicture === "undefined" || props.user.profilePicture === "Null" ?
+                                                        {chat.sender === props.user.username && ((props.user.profilePicture === undefined || props.user.profilePicture === null) ?
                                                             <div className="chat-user-img align-self-center me-3">
                                                                 <div className="avatar-xs">
                                                                     <span className="avatar-title rounded-circle bg-soft-primary text-primary">
@@ -276,7 +278,7 @@ function UserChat(props) {
                                                             </div>
                                                             : <img src={props.user.profilePicture} alt="Klubby" />)
                                                         }
-                                                        {chat.sender !== props.user.username && (typeof props.users[props.active_user].profilePicture === "undefined" || props.users[props.active_user].profilePicture === "Null" ?
+                                                        {chat.sender !== props.user.username && ((typeof props.users[props.active_user].profilePicture === undefined || props.users[props.active_user].profilePicture === null) ?
                                                             <div className="chat-user-img align-self-center me-3">
                                                                 <div className="avatar-xs">
                                                                     <span className="avatar-title rounded-circle bg-soft-primary text-primary">
