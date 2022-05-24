@@ -547,9 +547,7 @@ const Chats = (props) => {
                                                         <div className="con-context-item">
                                                             Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
                                                         </div>
-                                                        <div className="con-context-item">
-                                                            Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
-                                                        </div>
+                                                      
                                                     </MenuItem>
                                                 </ContextMenu>
                                             </li>
