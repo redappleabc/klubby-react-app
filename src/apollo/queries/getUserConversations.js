@@ -23,6 +23,12 @@ export default gql`query getUserConversations {
                 updatedAt
                 sender
                 isSent
+                originalId
+                originalMessage{
+                  content
+                  createdAt
+                  sender
+                }
               }
               nextToken
             }

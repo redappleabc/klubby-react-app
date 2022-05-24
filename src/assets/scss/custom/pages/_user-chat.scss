@@ -17,7 +17,7 @@
         height: calc(calc(var(--app-height) - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
         visibility: hidden;
         transform: translateX(100%);
-        z-index: 99;
+        z-index: 9999;
 
         &.user-chat-show{
             visibility: visible;
@@ -480,6 +480,75 @@ textarea:focus {
 }
 .klubs-header {
     border-bottom: 1px solid #343434;
+}
+
+.reply-message {
+    display: none;
+    position: relative;
+    height: 40px;
+    overflow: hidden;
+    background-color: #343434;
+    padding: 10px 20px;
+    color: white;
+    border-bottom: 1px solid #2B2C33;
+    font-size: 13px;
+    border-radius: 15px 15px 0 0;
+    word-break: break-all;
+    line-height: 2;
+    padding-right: 40px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.reply-msg-input-con .reply-message {
+    display: -webkit-box;
+}
+
+.reply-message .reply-msg-close-btn {
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    right: 13px;
+    top: 5px;
+}
+
+
+.reply-chat-input {
+    height: 115px;
+}
+
+.reply-chat-input textarea {
+    border-radius: 0 0 15px 15px !important;
+}
+
+.reply-text-main {
+    font-style: italic;
+    padding: 10px 10px 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.reply-text-date {
+    font-size: 12px;
+    font-style: italic;
+    color: rgb(138, 141, 145);
+}
+
+.reply-text {
+    border-bottom: solid 1px rgb(138, 141, 145);
+    padding: 20px 0;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.reply-icon {
+    position: absolute;
+    font-size: 20px;
+    left: -6px;
+    top: -2px;
 }
 @media (max-width: 1220px) {
     .klubs-header-tabs._pc {
