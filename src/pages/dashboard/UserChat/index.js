@@ -27,6 +27,7 @@ import apollo_client from '../../../apollo';
 import getConversationMessagesGQL from '../../../apollo/queries/getConversationMessages';
 import createMessageGQL from '../../../apollo/mutations/createMessage';
 import editMessageGQL from '../../../apollo/mutations/editMessage';
+import replyMessageGQL from '../../../apollo/mutations/replyMessage';
 import removeMessageGQL from '../../../apollo/mutations/removeMessage';
 
 import { useQuery, useMutation, useSubscription } from '@apollo/client';
@@ -86,7 +87,7 @@ function UserChat(props) {
 
     const toggle = () => setModal(!modal);
 
-    const addMessage = (message, type, editMsgState, editMsgId) => {
+    const addMessage = (message, type, messageType, oriMsgId) => {
         var messageObj = null;
 
         let d = new Date();
@@ -96,11 +97,13 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    content: editMsgState ? message : message.replace(/\n/g, "\\n"),
+                    content: messageType==="edit" ? message : message.replace(/\n/g, "\\n"),
                     conversationId: props.users[props.active_user].conversationId,
                 }
-                if (editMsgState) {
-                    messageObj.id = editMsgId;
+                if (messageType === "edit") {
+                    messageObj.id = oriMsgId;
+                } else if(messageType === "reply"){
+                    messageObj.originalId = oriMsgId
                 }
                 break;
 
@@ -142,7 +145,7 @@ function UserChat(props) {
 
         if (props.users[props.active_user].conversationId) {
             console.log(messageObj)
-            if (editMsgState) {
+            if (messageType === "edit") {
 
                 apollo_client.mutate({
                     mutation: editMessageGQL,
@@ -152,7 +155,17 @@ function UserChat(props) {
                 }).catch((err) => {
                     console.log("edit message error   ", err)
                 })
-            } else {
+            }else if(messageType === "reply"){
+                apollo_client.mutate({
+                    mutation: replyMessageGQL,
+                    variables: messageObj
+                }).then((res) => {
+                    console.log("reply message   ", res)
+                }).catch((err) => {
+                    console.log("reply message error   ", err)
+                })
+            }
+             else {
                 apollo_client.mutate({
                     mutation: createMessageGQL,
                     variables: messageObj
@@ -297,6 +310,15 @@ function UserChat(props) {
                                                     <div className="user-chat-content">
                                                         <div className="ctext-wrap">
                                                             <div className="ctext-wrap-content">
+                                                            <div>
+                                                                {chat.originalId && chat.originalMessage.content}
+                                                            </div>
+                                                            <div>
+                                                                {chat.originalId && (new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
+                                                            </div>
+                                                            <div>
+                                                                {chat.originalId && chat.originalMessage.sender}
+                                                            </div>
                                                                 {
                                                                     chat.content &&
 

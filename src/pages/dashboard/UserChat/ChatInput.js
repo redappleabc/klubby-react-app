@@ -6,6 +6,7 @@ import 'emoji-mart/css/emoji-mart.css'
 import { connect } from "react-redux";
 
 import emoji from '../../../assets/images/icons/emoji.png'
+import editMessage from '../../../apollo/mutations/editMessage';
 
 
 const ChatInput = forwardRef((props, ref) => {
@@ -15,6 +16,7 @@ const ChatInput = forwardRef((props, ref) => {
     const [editMsgId, setEditMsgId] = useState("")
     const [textMessage, settextMessage] = useState("");
     const [replyMessage, setReplyMessage] = useState("");
+    const [replyMessageId, setReplyMessageId] = useState("");
     const textAreaRef = useRef(null);
     const mainInputRef = useRef(null);
     const [isOpen, setisOpen] = useState(false);
@@ -69,7 +71,16 @@ const ChatInput = forwardRef((props, ref) => {
         //if text value is not emptry then call onaddMessage function
         if (textMessage !== "") {
             
-            props.onaddMessage(textMessage, "textMessage", editMsgState, editMsgId);
+            let messageType = "normal"
+            let messageId;
+            if(editMsgState){
+                messageType = "edit"
+                messageId = editMsgId
+            }else if(replyMsgState){
+                messageType = "reply"
+                messageId = replyMessageId
+            }
+            props.onaddMessage(textMessage, "textMessage", messageType, messageId);
             settextMessage("");
         }
 
@@ -117,11 +128,6 @@ const ChatInput = forwardRef((props, ref) => {
         settextMessage("");
       }
 
-      let realReplyMsgState = false;
-
-      useEffect(()=>{
-        realReplyMsgState = replyMsgState;
-      }, [replyMsgState])
     useEffect(resizeTextArea, [textMessage]);
 
     // useEffect(() => {
@@ -142,6 +148,7 @@ const ChatInput = forwardRef((props, ref) => {
         },
         replyMessage(id, msg) {
             setReplyMessage(msg);
+            setReplyMessageId(id)
             setReplyMsgState(true);
             resizeTextArea();
         }
