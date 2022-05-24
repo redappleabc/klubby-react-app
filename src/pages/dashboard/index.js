@@ -11,7 +11,8 @@ import getUserConversationsGQL from '../../apollo/queries/getUserConversations';
 import getConversationMessagesGQL from '../../apollo/queries/getConversationMessages';
 import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNewMessages';
 import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeToRemovedMessages';
-import subscribeToNewUserConversationbridge from '../../apollo/subscriptions/subscribeToNewUserConversationbridge';
+import subscribeToNewUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToNewUserConversationbridge';
+import subscribeToRemovedUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToRemovedUserConversationbridge';
 import { useSubscription } from '@apollo/client';
 import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
 import Preloader from '../../components/preloader';
@@ -23,13 +24,14 @@ const Index = (props) => {
     const [subscriptionData, setSubscriptionData] = useState()
     const [subscriptionToRemovedMessageData, setSubscriptionToRemovedMessageData] = useState()
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
+    const [removedUserConversationBridgescriptionData, setRemovedUserConversationBridgescriptionData] = useState()
 
     const [conversationLoaded, setConversationLoad] = useState(false)
 
 
     let history = useHistory();
 
-    const { data, loading } = useSubscription(subscribeToNewUserConversationbridge, {
+    const { data, loading } = useSubscription(subscribeToNewUserConversationbridgeGQL, {
         variables: {
             username: props.user.username
         },
@@ -37,6 +39,17 @@ const Index = (props) => {
             console.log("newUserConversationBridgescriptionData")
             console.log(subscriptionData)
             setNewUserConversationBridgescriptionData(subscriptionData)
+        }
+    })
+
+    const { } = useSubscription(subscribeToRemovedUserConversationbridgeGQL, {
+        variables: {
+            username: props.user.username
+        },
+        onSubscriptionData: ({ client, subscriptionData }) => {
+            console.log("removeUserConversationBridgescriptionData")
+            console.log(subscriptionData)
+            setRemovedUserConversationBridgescriptionData(subscriptionData)
         }
     })
 
@@ -93,6 +106,36 @@ const Index = (props) => {
 
 
     useEffect(() => {
+
+        if (removedUserConversationBridgescriptionData) {
+            let copyallUsers = {...props.users};
+            const conversationId = removedUserConversationBridgescriptionData.data.subscribeToRemovedUserConversationBridge.conversationId;
+            console.log("copyallUsers", copyallUsers)
+            console.log("removedUser", removedUserConversationBridgescriptionData)
+
+            for (const userKey in copyallUsers) {
+                const user = copyallUsers[userKey]
+                if (user.conversationId === conversationId) {
+                    delete  copyallUsers[userKey];
+                    console.log("props.activeuser", props.active_user)
+                    console.log("userkey", userKey)
+                    if(props.active_user === userKey){
+                        console.log("set props active user", null)
+                        props.activeUser(null)
+                    }
+                    props.setFullUser(copyallUsers)
+                    break;
+                }
+            }
+        }
+
+    }, [removedUserConversationBridgescriptionData])
+
+
+
+
+
+    useEffect(() => {
         if (!subscriptionData) return
 
         const newMessage = subscriptionData.data.subscribeToNewMessage;
@@ -129,6 +172,9 @@ const Index = (props) => {
 
     }, [subscriptionData])
 
+
+
+
     useEffect(() => {
         if (!subscriptionToRemovedMessageData) return;
         const conversationId = subscriptionToRemovedMessageData.data.subscribeToRemovedMessage.conversationId;
@@ -146,6 +192,7 @@ const Index = (props) => {
         props.subscribeDirectMessage(subscriptionToRemovedMessageData.data.subscribeToRemovedMessage.id + " removed")
 
     }, [subscriptionToRemovedMessageData])
+
 
 
 
