@@ -66,7 +66,7 @@ function UserChat(props) {
 
     useEffect(() => {
         setchatMessages(props.active_user ? props.users[props.active_user].messages : []);
-        console.log("props.active_user",props.active_user)
+        console.log("props.active_user", props.active_user)
         ref.current.recalculate();
         scrolltoBottom();
     }, [props.active_user])
@@ -97,12 +97,12 @@ function UserChat(props) {
         switch (type) {
             case "textMessage":
                 messageObj = {
-                    content: messageType==="edit" ? message : message.replace(/\n/g, "\\n"),
+                    content: messageType === "edit" ? message : message.replace(/\n/g, "\\n"),
                     conversationId: props.users[props.active_user].conversationId,
                 }
                 if (messageType === "edit") {
                     messageObj.id = oriMsgId;
-                } else if(messageType === "reply"){
+                } else if (messageType === "reply") {
                     messageObj.originalId = oriMsgId
                 }
                 break;
@@ -155,7 +155,7 @@ function UserChat(props) {
                 }).catch((err) => {
                     console.log("edit message error   ", err)
                 })
-            }else if(messageType === "reply"){
+            } else if (messageType === "reply") {
                 apollo_client.mutate({
                     mutation: replyMessageGQL,
                     variables: messageObj
@@ -165,7 +165,7 @@ function UserChat(props) {
                     console.log("reply message error   ", err)
                 })
             }
-             else {
+            else {
                 apollo_client.mutate({
                     mutation: createMessageGQL,
                     variables: messageObj
@@ -272,7 +272,7 @@ function UserChat(props) {
                             id="messages">
                             <ul className="list-unstyled mb-0" >
                                 {
-                                    props.active_user&&
+                                    props.active_user &&
                                     chatMessages.map((chat, key) =>
                                         chat.isToday && chat.isToday === true ?
                                             <li key={"dayTitle" + key}>
@@ -310,20 +310,21 @@ function UserChat(props) {
                                                     <div className="user-chat-content">
                                                         <div className="ctext-wrap">
                                                             <div className="ctext-wrap-content">
-                                                            {
-                                                            chat.originalId && <div className='reply-text'>
-                                                                <div className='reply-icon'>
-                                                                    <i className='ri-reply-line'></i>
-                                                                </div>
-                                                                <div className='reply-text-main'>
-                                                                    {chat.originalMessage.content}
-                                                                </div>
-                                                                <div className='reply-text-date'>
-                                                                   <span className='reply-text-sender'>{chat.originalMessage.sender}, </span> {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
-                                                                </div>
-                                                                
-                                                            </div>
-                                                            }
+
+                                                                {
+                                                                    chat.originalId && <div className='reply-text'>
+                                                                        <div className='reply-icon'>
+                                                                            <i className='ri-reply-line'></i>
+                                                                        </div>
+                                                                        <div className='reply-text-main'>
+                                                                            {parse(chat.originalMessage.content.replace(/\n/g, "<br/>"))}
+                                                                        </div>
+                                                                        <div className='reply-text-date'>
+                                                                            <span className='reply-text-sender'>{chat.originalMessage.sender}, </span> {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
+                                                                        </div>
+
+                                                                    </div>
+                                                                }
                                                                 {
                                                                     chat.content &&
 
@@ -354,7 +355,7 @@ function UserChat(props) {
                                                                     </p>
                                                                 }
                                                                 {
-                                                                    !chat.isTyping && <p className="chat-time mb-0"><i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toISOString())}</span></p>
+                                                                    !chat.isTyping && <p className="chat-time mb-0">{ (! props.users[props.active_user].otherReadMessageId || parseInt(props.users[props.active_user].otherReadMessageId.substring(0,13)) ) >= parseInt(chat.id.substring(0,13))&& <i className="read-mark ri-check-double-line"></i>}<i className="ri-time-line align-middle"></i> <span className="align-middle">{(new Date(parseInt(chat.createdAt)).toISOString())}</span></p>
                                                                 }
                                                             </div>
                                                             {
@@ -364,10 +365,10 @@ function UserChat(props) {
                                                                         <i className="ri-more-2-fill"></i>
                                                                     </DropdownToggle>
                                                                     <DropdownMenu>
-                                                                        <DropdownItem onClick={()=>{navigator.clipboard.writeText(chat.content)}}>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
+                                                                        <DropdownItem onClick={() => { navigator.clipboard.writeText(chat.content) }}>Copy <i className="ri-file-copy-line float-end text-muted"></i></DropdownItem>
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => editMessage(chat.id, chat.content)}>Edit <i className="ri-edit-line float-end text-muted"></i></DropdownItem>}
                                                                         {/* <DropdownItem onClick={toggle}>Forward <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem> */}
-                                                                        <DropdownItem onClick={() => {replyMsg(chat.id, chat.content)}}>Reply <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
+                                                                        <DropdownItem onClick={() => { replyMsg(chat.id, chat.content) }}>Reply <i className="ri-chat-forward-line float-end text-muted"></i></DropdownItem>
                                                                         {chat.sender === props.user.username && <DropdownItem onClick={() => deleteMessage(chat.id)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>}
                                                                     </DropdownMenu>
                                                                 </UncontrolledDropdown>

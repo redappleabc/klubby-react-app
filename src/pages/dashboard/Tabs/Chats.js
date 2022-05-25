@@ -287,7 +287,7 @@ const Chats = (props) => {
                 }
             }).then((res) => {
 
-                console.log("set read success");
+                console.log("set read success", res);
             }).catch((err) => {
                 console.log("set read error ", err)
             })

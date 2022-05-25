@@ -550,6 +550,17 @@ textarea:focus {
     left: -6px;
     top: -2px;
 }
+
+.chat-time {
+    display: flex;
+    align-items: center;
+}
+
+.read-mark {
+    font-size: 16px;
+    color: #7269ef;
+    margin-right: 10px;
+}
 @media (max-width: 1220px) {
     .klubs-header-tabs._pc {
         display: none !important;
