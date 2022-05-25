@@ -10,10 +10,12 @@ frontend:
         - cp .env.${STAGE} .env
         - TOPIC_ARN=$(aws ssm get-parameter --name webapp-sns-topic-$STAGE --region us-east-1 --output text --query Parameter.Value)
         - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"pending\"}"
-        - yarn install
+        # - yarn install
+        - npm install
     build:
       commands:
-        - yarn run build
+        # - yarn run build
+        - npm run build
     postBuild:
       commands:
         - aws sns publish --topic-arn $TOPIC_ARN --message "{\"commitId\":\"$AWS_COMMIT_ID\",\"status\":\"success\"}"
