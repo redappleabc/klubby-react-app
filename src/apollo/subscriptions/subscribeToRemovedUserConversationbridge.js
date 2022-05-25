@@ -7,7 +7,7 @@ subscription subscribeToRemovedUserConversationBridge($username: ID!) {
     username
     name
     conversationId
-    associated{
+    associated  {
       username
       read
     }

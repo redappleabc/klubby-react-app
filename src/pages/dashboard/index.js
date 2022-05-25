@@ -36,28 +36,29 @@ const Index = (props) => {
 
 
     useEffect(() => {
-        window.addEventListener("focus", ()=>{
+        window.addEventListener("focus", () => {
             setWindowTabFocus(true)
             console.log("focus")
         }, true);
-        window.addEventListener("blur", ()=>{
+        window.addEventListener("blur", () => {
             setWindowTabFocus(false)
             console.log("blur")
         }, true);
         // Specify how to clean up after this effect:
         return () => {
-            window.removeEventListener("focus", ()=>{
+            window.removeEventListener("focus", () => {
                 console.log("no focus")
-            },true);
-            window.removeEventListener("blur", ()=>{
+            }, true);
+            window.removeEventListener("blur", () => {
                 console.log("no blur")
-            },true);
+            }, true);
         };
     }, []);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (props.active_user && windowTabFocus && props.users[props.active_user].messages.length > 0
-             && props.users[props.active_user].otherReadMessageId !== props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id ) {
+            && props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].sender !== props.user.username
+            && props.users[props.active_user].read !== props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id) {
             apollo_client.mutate({
                 mutation: setReadGQL,
                 variables: {
@@ -67,6 +68,9 @@ const Index = (props) => {
                 }
             }).then((res) => {
 
+                let copyallUsers = props.users;
+                copyallUsers[props.active_user].read = res.data.setRead.read;
+                props.setFullUser(copyallUsers)
                 console.log("set read success", res);
             }).catch((err) => {
                 console.log("set read error ", err)
@@ -166,7 +170,7 @@ const Index = (props) => {
     useEffect(() => {
 
         if (removedUserConversationBridgescriptionData) {
-            let copyallUsers = {...props.users};
+            let copyallUsers = { ...props.users };
             const conversationId = removedUserConversationBridgescriptionData.data.subscribeToRemovedUserConversationBridge.conversationId;
             console.log("copyallUsers", copyallUsers)
             console.log("removedUser", removedUserConversationBridgescriptionData)
@@ -174,10 +178,10 @@ const Index = (props) => {
             for (const userKey in copyallUsers) {
                 const user = copyallUsers[userKey]
                 if (user.conversationId === conversationId) {
-                    delete  copyallUsers[userKey];
+                    delete copyallUsers[userKey];
                     console.log("props.activeuser", props.active_user)
                     console.log("userkey", userKey)
-                    if(props.active_user === userKey){
+                    if (props.active_user === userKey) {
                         console.log("set props active user", null)
                         props.activeUser(null)
                     }
@@ -202,15 +206,15 @@ const Index = (props) => {
         const updatedAt = subscriptionData.data.subscribeToNewMessage.updatedAt;
         const createdAt = subscriptionData.data.subscribeToNewMessage.createdAt;
         const id = subscriptionData.data.subscribeToNewMessage.id;
-        
+
         let copyallUsers = props.users;
 
         for (const userKey in copyallUsers) {
             const user = copyallUsers[userKey]
             if (user.conversationId === conversationId) {
                 if (updatedAt) {
-                    for(var i = 0; i<user.messages.length; i++){
-                        if(user.messages[i].id === id){
+                    for (var i = 0; i < user.messages.length; i++) {
+                        if (user.messages[i].id === id) {
                             user.messages[i] = newMessage
                             break;
                         }
@@ -221,7 +225,7 @@ const Index = (props) => {
                     if (sender != props.user.username && sender != props.active_user)
                         user.unRead += 1;
                     // if sender is active user set read.
-                    if(sender === props.active_user && windowTabFocus){
+                    if (sender === props.active_user && windowTabFocus) {
                         if (props.users[props.active_user].messages.length > 0) {
                             apollo_client.mutate({
                                 mutation: setReadGQL,
@@ -231,7 +235,9 @@ const Index = (props) => {
                                     messageId: props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id
                                 }
                             }).then((res) => {
-                
+                                let copyallUsers = props.users;
+                                copyallUsers[props.active_user].read = res.data.setRead.read;
+                                props.setFullUser(copyallUsers)
                                 console.log("set read success", res);
                             }).catch((err) => {
                                 console.log("set read error ", err)
@@ -243,7 +249,7 @@ const Index = (props) => {
         }
         props.setFullUser(copyallUsers)
 
-        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id + (updatedAt?updatedAt:createdAt) + " created")
+        props.subscribeDirectMessage(subscriptionData.data.subscribeToNewMessage.id + (updatedAt ? updatedAt : createdAt) + " created")
 
 
     }, [subscriptionData])
@@ -270,19 +276,19 @@ const Index = (props) => {
     }, [subscriptionToRemovedMessageData])
 
 
-    useEffect(()=> {
-        if(!readSubscriptionData) return;
+    useEffect(() => {
+        if (!readSubscriptionData) return;
 
         const conversationId = readSubscriptionData.data.subscribeToReadMessage.conversationId;
         const username = readSubscriptionData.data.subscribeToReadMessage.username
-        const readMessageId =  readSubscriptionData.data.subscribeToReadMessage.read
-        if(username === props.user.username) return;
-        let copyallUsers = {...props.users}
+        const readMessageId = readSubscriptionData.data.subscribeToReadMessage.read
+        if (username === props.user.username) return;
+        let copyallUsers = { ...props.users }
 
         for (const userKey in copyallUsers) {
             const user = copyallUsers[userKey]
             if (user.conversationId === conversationId) {
-                if(copyallUsers[userKey].otherReadMessageId === readMessageId)
+                if (copyallUsers[userKey].otherReadMessageId === readMessageId)
                     return;
                 copyallUsers[userKey].otherReadMessageId = readMessageId
             }
@@ -317,7 +323,7 @@ const Index = (props) => {
 
 
                             let _recentUser = {};
-                            if( _recentConversations[i].associated === null || _recentConversations[i].conversation === null)
+                            if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
                             _recentUser.username = _recentConversations[i].associated.username;
                             _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated.username;
@@ -327,7 +333,8 @@ const Index = (props) => {
                             _recentUser.status = "online";
                             //_recentUser.profilePicture = null
                             _recentUser.unRead = 0;
-                            _recentUser.otherReadMessageId =  _recentConversations[i].associated.read
+                            _recentUser.read = _recentConversations[i].read
+                            _recentUser.otherReadMessageId = _recentConversations[i].associated.read
 
                             if (_recentConversations[i].conversation.messages) {
                                 _recentUser.nextToken = _recentConversations[i].conversation.messages.nextToken
@@ -411,7 +418,7 @@ const Index = (props) => {
                         }
 
                     }
-                    
+
                     props.activeUser(null);
                     props.setFullUser(_recentChatList)
                     console.log("setfulluser", _recentChatList)
