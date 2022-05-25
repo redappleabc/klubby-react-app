@@ -13,6 +13,8 @@ import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNew
 import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeToRemovedMessages';
 import subscribeToNewUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToNewUserConversationbridge';
 import subscribeToRemovedUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToRemovedUserConversationbridge';
+import subscribeToReadMessageGQL from '../../apollo/subscriptions/subscribeToReadMessage';
+import setReadGQL from '../../apollo/mutations/setRead';
 import { useSubscription } from '@apollo/client';
 import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
 import Preloader from '../../components/preloader';
@@ -26,7 +28,51 @@ const Index = (props) => {
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
     const [removedUserConversationBridgescriptionData, setRemovedUserConversationBridgescriptionData] = useState()
 
+    const [readSubscriptionData, setReadSubscriptionData] = useState()
+
     const [conversationLoaded, setConversationLoad] = useState(false)
+
+    const [windowTabFocus, setWindowTabFocus] = useState(true)
+
+
+    useEffect(() => {
+        window.addEventListener("focus", ()=>{
+            setWindowTabFocus(true)
+            console.log("focus")
+        }, true);
+        window.addEventListener("blur", ()=>{
+            setWindowTabFocus(false)
+            console.log("blur")
+        }, true);
+        // Specify how to clean up after this effect:
+        return () => {
+            window.removeEventListener("focus", ()=>{
+                console.log("no focus")
+            },true);
+            window.removeEventListener("blur", ()=>{
+                console.log("no blur")
+            },true);
+        };
+    }, []);
+
+    useEffect(()=>{
+        if (props.active_user && windowTabFocus && props.users[props.active_user].messages.length > 0) {
+            apollo_client.mutate({
+                mutation: setReadGQL,
+                variables: {
+                    conversationId: props.users[props.active_user].conversationId,
+                    username: props.user.username,
+                    messageId: props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id
+                }
+            }).then((res) => {
+
+                console.log("set read success", res);
+            }).catch((err) => {
+                console.log("set read error ", err)
+            })
+        }
+
+    }, [windowTabFocus])
 
 
     let history = useHistory();
@@ -100,6 +146,17 @@ const Index = (props) => {
                     console.log('subscribeToRemovedMessage - updateQuery:', subscriptionData);
                 },
             })
+
+            observable.subscribeToMore({
+                document: subscribeToReadMessageGQL,
+                variables: {
+                    conversationId: newUser.conversationId
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                    setReadSubscriptionData(subscriptionData)
+                    console.log('subscribeToReadMessageData - updateQuery:', subscriptionData);
+                },
+            })
         }
 
     }, [newUserConversationBridgescriptionData])
@@ -162,6 +219,24 @@ const Index = (props) => {
                     user.messages = [...user.messages, newMessage]
                     if (sender != props.user.username && sender != props.active_user)
                         user.unRead += 1;
+                    // if sender is active user set read.
+                    if(sender === props.active_user && windowTabFocus){
+                        if (props.users[props.active_user].messages.length > 0) {
+                            apollo_client.mutate({
+                                mutation: setReadGQL,
+                                variables: {
+                                    conversationId: props.users[props.active_user].conversationId,
+                                    username: props.user.username,
+                                    messageId: props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id
+                                }
+                            }).then((res) => {
+                
+                                console.log("set read success", res);
+                            }).catch((err) => {
+                                console.log("set read error ", err)
+                            })
+                        }
+                    }
                 }
             }
         }
@@ -194,6 +269,29 @@ const Index = (props) => {
     }, [subscriptionToRemovedMessageData])
 
 
+    useEffect(()=> {
+        if(!readSubscriptionData) return;
+
+        const conversationId = readSubscriptionData.data.subscribeToReadMessage.conversationId;
+        const username = readSubscriptionData.data.subscribeToReadMessage.username
+        const readMessageId =  readSubscriptionData.data.subscribeToReadMessage.read
+        if(username === props.user.username) return;
+        let copyallUsers = {...props.users}
+
+        for (const userKey in copyallUsers) {
+            const user = copyallUsers[userKey]
+            if (user.conversationId === conversationId) {
+                if(copyallUsers[userKey].otherReadMessageId === readMessageId)
+                    return;
+                copyallUsers[userKey].otherReadMessageId = readMessageId
+            }
+        }
+
+        props.setFullUser(copyallUsers)
+
+    })
+
+
 
 
     useEffect(() => {
@@ -216,23 +314,27 @@ const Index = (props) => {
                                 _readIndexNumber = parseInt(_recentConversations[i].read.substring(0, 13))
                             }
 
+
                             let _recentUser = {};
                             if( _recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
-                            _recentUser.username = _recentConversations[i].associated;
-                            _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated;
+                            _recentUser.username = _recentConversations[i].associated.username;
+                            _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated.username;
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
                             _recentUser.status = "online";
                             //_recentUser.profilePicture = null
                             _recentUser.unRead = 0;
+                            _recentUser.otherReadMessageId =  _recentConversations[i].associated.read
 
                             if (_recentConversations[i].conversation.messages) {
                                 _recentUser.nextToken = _recentConversations[i].conversation.messages.nextToken
                             }
                             if (_recentConversations[i].conversation.messages.messages) {
+
                                 let messages = [..._recentConversations[i].conversation.messages.messages]
+                                // calculate unread message count
                                 for (let j = 0; j < messages.length; j++) {
                                     if (messages[j].sender === props.user.username || messages[j].id === _readIndex) {
                                         break;
@@ -240,6 +342,15 @@ const Index = (props) => {
                                         _recentUser.unRead++
                                     }
                                 }
+
+                                // // set read status by other
+                                // for (let k = 0; k < messages.length; k++) {
+                                //     if (_otherReadIndexNumber > parseInt(messages[k].id.substring(0, 13)) || messages[k].id === _otherReadIndex) {
+                                //         _recentUser.otherReadMessageId = messages[k]
+                                //         break;
+                                //     }
+                                // }
+
                                 _recentUser.messages = messages.reverse();
 
 
@@ -281,6 +392,18 @@ const Index = (props) => {
                                 updateQuery: (prev, { subscriptionData }) => {
                                     setSubscriptionToRemovedMessageData(subscriptionData)
                                     console.log('subscribeToRemovedMessage - updateQuery:', subscriptionData);
+                                },
+                            })
+
+
+                            observable.subscribeToMore({
+                                document: subscribeToReadMessageGQL,
+                                variables: {
+                                    conversationId: _recentUser.conversationId
+                                },
+                                updateQuery: (prev, { subscriptionData }) => {
+                                    setReadSubscriptionData(subscriptionData)
+                                    console.log('subscribeToReadMessageData - updateQuery:', subscriptionData);
                                 },
                             })
 

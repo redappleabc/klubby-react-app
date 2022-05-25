@@ -145,11 +145,14 @@ const ChatInput = forwardRef((props, ref) => {
             setEditMsgId(id)
             settextMessage(msg);
             setEditMsgState(true);
+            setReplyMsgState(false);
+
         },
         replyMessage(id, msg) {
             setReplyMessage(msg);
             setReplyMessageId(id)
             setReplyMsgState(true);
+            setEditMsgState(false);
             resizeTextArea();
         }
     }))
