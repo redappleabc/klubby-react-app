@@ -277,7 +277,8 @@ const Chats = (props) => {
         // if (unread) {
         //     unread.style.display = "none";
         // }
-        if (props.users[index].messages.length > 0) {
+        if (props.users[index].messages.length > 0
+            && props.users[index].otherReadMessageId !== props.users[index].messages[props.users[index].messages.length - 1].id) {
             apollo_client.mutate({
                 mutation: setReadGQL,
                 variables: {
