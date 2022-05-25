@@ -12,7 +12,7 @@ subscription subscribeToNewMessage($conversationId: ID!) {
     content
     isSent
     originalId
-    originalMessage{
+    originalMessage {
       content
       createdAt
       sender

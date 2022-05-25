@@ -277,8 +277,10 @@ const Chats = (props) => {
         // if (unread) {
         //     unread.style.display = "none";
         // }
+
         if (props.users[index].messages.length > 0
-            && props.users[index].otherReadMessageId !== props.users[index].messages[props.users[index].messages.length - 1].id) {
+            && props.users[index].read !== props.users[index].messages[props.users[index].messages.length - 1].id) {
+            console.log("props.users[index].messages", props.users[index].messages)
             apollo_client.mutate({
                 mutation: setReadGQL,
                 variables: {
@@ -287,7 +289,10 @@ const Chats = (props) => {
                     messageId: props.users[index].messages[props.users[index].messages.length - 1].id
                 }
             }).then((res) => {
-
+               
+                let copyallUsers = props.users;
+                copyallUsers[index].read = res.data.setRead.read;
+                props.setFullUser(copyallUsers)
                 console.log("set read success", res);
             }).catch((err) => {
                 console.log("set read error ", err)
@@ -411,23 +416,29 @@ const Chats = (props) => {
 
     const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
-        removeUserConversationBridgeApollo({variables:{
-            username:props.user.username,
-            conversationId:conversationId
-        }}).then((res)=>{
+        removeUserConversationBridgeApollo({
+            variables: {
+                username: props.user.username,
+                conversationId: conversationId
+            }
+        }).then((res) => {
             console.log("delete userconversationbridge self succeed")
-            removeUserConversationBridgeApollo({variables:{
-                username:username,
-                conversationId:conversationId
-            }})
-        }).then((res)=>{
+            removeUserConversationBridgeApollo({
+                variables: {
+                    username: username,
+                    conversationId: conversationId
+                }
+            })
+        }).then((res) => {
             console.log("delete userconversationbridge other succeed")
-            removeConversationApollo({variables:{
-                conversationId:conversationId
-            }})
-        }).then((res)=>{
+            removeConversationApollo({
+                variables: {
+                    conversationId: conversationId
+                }
+            })
+        }).then((res) => {
             console.log("delete conversation succeed")
-        }).catch((res)=>{
+        }).catch((res) => {
             console.log("error delete conversation", res);
         })
 
@@ -571,7 +582,7 @@ const Chats = (props) => {
                                                         <div className="con-context-item">
                                                             Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
                                                         </div>
-                                                      
+
                                                     </MenuItem>
                                                 </ContextMenu>
                                             </li>

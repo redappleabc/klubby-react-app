@@ -12,7 +12,7 @@ export default gql`
       content
       isSent
       originalId
-      originalMessage{
+      originalMessage {
         content
         createdAt
         sender

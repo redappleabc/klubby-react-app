@@ -8,7 +8,7 @@ export default gql`query getUserConversations {
           __typename
           conversationId
           username
-          associated{
+          associated  {
             username
             read
           }
@@ -16,7 +16,7 @@ export default gql`query getUserConversations {
           conversation {
             id
             createdAt
-            messages{
+            messages  {
               messages {
                 __typename
                 id
@@ -27,7 +27,7 @@ export default gql`query getUserConversations {
                 sender
                 isSent
                 originalId
-                originalMessage{
+                originalMessage {
                   content
                   createdAt
                   sender
