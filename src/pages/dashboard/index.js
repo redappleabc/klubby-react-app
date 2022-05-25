@@ -56,7 +56,8 @@ const Index = (props) => {
     }, []);
 
     useEffect(()=>{
-        if (props.active_user && windowTabFocus && props.users[props.active_user].messages.length > 0) {
+        if (props.active_user && windowTabFocus && props.users[props.active_user].messages.length > 0
+             && props.users[props.active_user].otherReadMessageId !== props.users[props.active_user].messages[props.users[props.active_user].messages.length - 1].id ) {
             apollo_client.mutate({
                 mutation: setReadGQL,
                 variables: {
