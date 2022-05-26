@@ -22,6 +22,7 @@ phases:
       - npm run build
       - npm install -g @ionic/cli
       - ionic capacitor add android
+      - npx cap sync
 
       #build android native app
       - cd android
@@ -31,7 +32,7 @@ phases:
       - aws s3 cp --recursive app/build/outputs/apk/release s3://klubby-${ENVIRONMENT}-release-bucket/android
 
       - aws s3 cp --recursive app/build/outputs/apk/debug s3://klubby-${ENVIRONMENT}-debug-bucket/android
-      
+
 artifacts:
   files:
     - 'android/app/build/outputs/apk/release/**/*'
