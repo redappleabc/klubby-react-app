@@ -29,7 +29,9 @@ phases:
 
       # Copy to S3
       - aws s3 cp --recursive app/build/outputs/apk/release s3://klubby-${ENVIRONMENT}-release-bucket/android
+      - aws s3 cp --recursive app/build/outputs/apk/debug s3://klubby-${ENVIRONMENT}-debug-bucket/android
 artifacts:
   files:
     - 'android/app/build/outputs/apk/release/**/*'
+    - 'android/app/build/outputs/apk/debug/**/*'
   name: 'klubby-android-deployment-dev-BuildArtifact'
