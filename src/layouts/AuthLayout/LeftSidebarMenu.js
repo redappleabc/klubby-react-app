@@ -5,6 +5,7 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 
 import { setActiveTab } from "../../redux/actions";
+import avatar2 from "../../assets/images/users/avatar-1.jpg";
 
 
 function LeftSidebarMenu(props) {
@@ -71,7 +72,8 @@ function LeftSidebarMenu(props) {
 
                         <NavItem id="Settings">
                             <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
-                                <i className="ri-user-3-line"></i>
+                                {/* <i className="ri-user-3-line"></i> */}
+                                <img src={avatar2} className="rounded-circle avatar-xs"/>
                             </NavLink>
                         </NavItem>
                         <UncontrolledTooltip target="Settings" placement="top">
