@@ -65,30 +65,30 @@ const ForgetPassword = (props) => {
                                         <Form onSubmit={formik.handleSubmit}>
 
                                             <FormGroup className="mb-4">
-                                                <Label className="form-label">Username</Label>
-                                                <InputGroup className="mb-3 bg-soft-light rounded-3">
-                                                    <span className="input-group-text border-light text-muted">
+                                                {/* <Label className="form-label">Username</Label> */}
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
                                                         <i className="ri-mail-line"></i>
                                                     </span>
-                                                    <Input
+                                                    <input
                                                         type="text"
                                                         id="username"
                                                         name="username"
-                                                        className="form-control form-control-lg border-light bg-soft-light"
-                                                        placeholder="Enter username"
+                                                        className=""
+                                                        placeholder="Username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.username}
-                                                        invalid={formik.touched.username && formik.errors.username ? true : false}
+                                                        // invalid={formik.touched.username && formik.errors.username ? true : false}
                                                     />
                                                     {formik.touched.username && formik.errors.username ? (
-                                                        <FormFeedback type="invalid">{formik.errors.username}</FormFeedback>
+                                                        <div  className='auth-input-error'>{formik.errors.username}</div>
                                                     ) : null}
                                                 </InputGroup>
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Reset</button>
+                                                <button className="auth-main-btn auth-main-btn-new" type="submit">Reset</button>
                                             </div>
 
                                         </Form>

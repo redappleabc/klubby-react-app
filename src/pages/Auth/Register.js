@@ -12,6 +12,7 @@ import { registerUser, apiError, registerUserSuccess} from '../../redux/actions'
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import apollo_client from '../../apollo';
+import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
 import { signOut } from '../../helpers/aws';
 
 
@@ -71,9 +72,9 @@ const Register = (props) => {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5}>
-                            <div className="text-center mb-4">
-                                <h1>Sign up</h1>
-
+                            <div className="text-center">
+                                {/* <h1>Sign up</h1> */}
+                                <img src={auth_logo} className='auth-logo-img'/>
                             </div>
 
                             {
@@ -82,82 +83,78 @@ const Register = (props) => {
                                     {/* {
                                         props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
                                     } */}
-                                    <div className="p-3">
+                                    <div className="mt-3">
 
                                         <Form onSubmit={formik.handleSubmit}>
 
-                                            <div className="mb-3">
-                                                <Label className="form-label">Email</Label>
-                                                <InputGroup className="input-group bg-soft-light rounded-3 mb-3">
-                                                    <span className="input-group-text text-muted">
-                                                        <i className="ri-mail-line"></i>
+                                            <div className="mb-4">
+        
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
+                                                       @
                                                     </span>
-                                                    <Input
-                                                        type="text"
-                                                        id="email"
-                                                        name="email"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Email"
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
-                                                        value={formik.values.email}
-                                                        invalid={formik.touched.email && formik.errors.email ? true : false}
-                                                    />
-                                                    {formik.touched.email && formik.errors.email ? (
-                                                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
-                                                    ) : null}
-                                                </InputGroup>
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <Label className="form-label">Username</Label>
-                                                <InputGroup className="mb-3 bg-soft-light input-group-lg rounded-lg">
-                                                    <span className="input-group-text border-light text-muted">
-                                                        <i className="ri-user-2-line"></i>
-                                                    </span>
-                                                    <Input
+                                                    <input
                                                         type="text"
                                                         id="username"
                                                         name="username"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Username"
+                                                        placeholder="Username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.username}
-                                                        invalid={formik.touched.username && formik.errors.username ? true : false}
+                                                        // invalid={formik.touched.username && formik.errors.username ? true : false}
                                                     />
                                                     {formik.touched.username && formik.errors.username ? (
-                                                        <FormFeedback type="invalid">{formik.errors.username}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.username}</div>
+                                                    ) : null}
+                                                </InputGroup>
+                                            </div>
+                                            <div className="mb-4">
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span>
+                                                        <i className="ri-mail-line"></i>
+                                                    </span>
+                                                    <input
+                                                        type="text"
+                                                        id="email"
+                                                        name="email"
+                                                        placeholder="Email"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.email}
+                                                        // invalid={formik.touched.email && formik.errors.email ? true : false}
+                                                    />
+                                                    {formik.touched.email && formik.errors.email ? (
+                                                        <div className='auth-input-error'>{formik.errors.email}</div>
                                                     ) : null}
                                                 </InputGroup>
                                             </div>
 
+                                           
+
                                             <FormGroup className="mb-4">
-                                                <Label className="form-label">Password</Label>
-                                                <InputGroup className="mb-3 bg-soft-light input-group-lg rounded-lg">
-                                                    <span className="input-group-text border-light text-muted">
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
-                                                    <Input
+                                                    <input
                                                         type="password"
                                                         id="password"
                                                         name="password"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Password"
+                                                        placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.password}
-                                                        invalid={formik.touched.password && formik.errors.password ? true : false}
+                                                        // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
                                                     {formik.touched.password && formik.errors.password ? (
-                                                        <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}
 
                                                 </InputGroup>
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Sign up</button>
+                                                <button className="auth-main-btn auth-main-btn-new " type="submit">Register</button>
                                             </div>
 
                                         </Form>
