@@ -90,7 +90,7 @@ const Register = (props) => {
                                     {/* {
                                         props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
                                     } */}
-                                    <div className="mt-3">
+                                    <div className="mt-3 padding-lr-10">
 
                                         <Form onSubmit={formik.handleSubmit}>
 
@@ -166,13 +166,13 @@ const Register = (props) => {
                                             <div className="d-grid">
                                                 <button className="auth-main-btn auth-main-btn-new " type="submit">Register</button>
                                             </div>
-
+                                            <div className="text-right auth-bottom-text">
+                                                <p>or<Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link> </p>
+                                            </div>
                                         </Form>
                                     </div>
 
-                            <div className="mt-3 text-center">
-                                <p>Already have an account <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link> </p>
-                            </div>
+                            
                         </Col>
                     </Row>
                 </Container>

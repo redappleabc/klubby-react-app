@@ -81,7 +81,7 @@ const Login = (props) => {
                                     {
                                         props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
-                                    <div className="mt-4">
+                                    <div className="mt-4 padding-lr-10">
                                         <Form onSubmit={formik.handleSubmit}>
                                             <div className="mb-3">
                                                 {/* <Label className="form-label">Username</Label> */}
@@ -107,10 +107,7 @@ const Login = (props) => {
                                             </div>
 
                                             <FormGroup className="mb-4">
-                                                <div className="float-end">
-                                                    <Link to="forget-password" className="text-muted font-size-13">Forgot password</Link>
-                                                </div>
-                                               
+                                                
                                                 <InputGroup className="mb-3 auth-input-con">
                                                     <span className="">
                                                         <i className="ri-lock-2-line"></i>
@@ -134,18 +131,22 @@ const Login = (props) => {
                                                 </InputGroup>
                                             </FormGroup>
 
-                                            <div className="form-check mb-4">
-                                                <Input type="checkbox" className="form-check-input" id="remember-check" />
-                                                <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
+                                            <div className='auth-text-con mt-3 mb-3'>
+                                                <div className="form-check">
+                                                    <Input type="checkbox" className="form-check-input" id="remember-check" />
+                                                    <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
+                                                </div>
+                                                <div className="float-end">
+                                                    <Link to="forget-password" className="text-muted font-size-13">Forgot password</Link>
+                                                </div>
                                             </div>
-
                                             <div className="d-grid">
                                                 <button className="auth-main-btn auth-main-btn-new" type="submit">Sign in</button>
                                             </div>
 
                                         </Form>
                                     </div>
-                                    <div className="mt-3 text-center">
+                                    <div className="auth-bottom-text">
                                      <p>No account yet? &nbsp;<Link to="/register" className="font-weight-medium text-primary">&nbsp;Sign up&nbsp;</Link>here </p>
                                 </div>
                         </Col>
