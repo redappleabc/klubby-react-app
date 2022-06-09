@@ -52,7 +52,7 @@ const Verify = (props) => {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5} >
-                            <div className="text-center mb-4">
+                            <div className="text-center mb-4 auth-header-text">
 
                                 <h1>Please input verify code</h1>
                             </div>
@@ -78,7 +78,7 @@ const Verify = (props) => {
                                             </div>
                            
                                           <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Confirm</button>
+                                                <button className="auth-main-btn auth-main-btn-new" type="submit">Confirm</button>
                                             </div>
 
                                         </Form>

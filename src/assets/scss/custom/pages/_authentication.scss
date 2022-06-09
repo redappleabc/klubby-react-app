@@ -124,8 +124,10 @@
 }
 
 .auth-input-con input {
-    width: 100%;
-    padding: 0 70px;
+    width: calc(100% - 60px) !important;
+    margin-left: 60px !important;
+    padding-right: 60px;
+    padding-left: 10px;
     border: none;
     background-color: transparent;
     outline: none;
@@ -146,4 +148,18 @@
 .auth-main-btn-new:hover {
     filter: brightness(1.2);
     background-color: rgba(99, 85, 250, 1);
+}
+
+.password-show-btn {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    font-size: 25px;
+    z-index: 3;
+}
+
+.auth-header-text h1 {
+    color: rgba(99, 85, 250, 1) !important;
 }
