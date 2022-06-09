@@ -25,8 +25,12 @@ const Login = (props) => {
     let history = useHistory();
     const clearError= useCallback(() => { props.apiError("");}, [])
 
+    const [pwdShowState, setpwdShowState] = useState(false)
    
-
+    const togglePwdShowState = (e) => {
+        e.preventDefault();
+        setpwdShowState(!pwdShowState);
+    }
 
     useEffect(()=>{
         clearError();
@@ -89,7 +93,7 @@ const Login = (props) => {
                                                         type="text"
                                                         id="email"
                                                         name="email"
-                                                        className="form-control form-control-lg border-light bg-soft-light"
+                                                        className=" "
                                                         placeholder="Username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
@@ -112,16 +116,17 @@ const Login = (props) => {
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
                                                     <input
-                                                        type="password"
+                                                        type= {pwdShowState ? "text" : "password"}
                                                         id="password"
                                                         name="password"
-                                                        className="form-control form-control-lg border-light bg-soft-light"
+                                                        className=" "
                                                         placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.password}
                                                         // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
+                                                    <button className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></button>
                                                     {formik.touched.password && formik.errors.password ? (
                                                         <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}

@@ -51,7 +51,7 @@ const ForgetPassword = (props) => {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5}>
-                            <div className="text-center mb-4">
+                            <div className="text-center mb-4 auth-header-text">
                                 <h1>Reset Password</h1>
                             </div>
                                     <div className="p-3">
@@ -68,7 +68,7 @@ const ForgetPassword = (props) => {
                                                 {/* <Label className="form-label">Username</Label> */}
                                                 <InputGroup className="mb-3 auth-input-con">
                                                     <span className="">
-                                                        <i className="ri-mail-line"></i>
+                                                        @
                                                     </span>
                                                     <input
                                                         type="text"

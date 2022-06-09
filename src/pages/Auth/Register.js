@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link, useHistory } from 'react-router-dom';
 
@@ -23,6 +23,13 @@ import { signOut } from '../../helpers/aws';
  */
 const Register = (props) => {
     
+    const [pwdShowState, setpwdShowState] = useState(false)
+   
+    const togglePwdShowState = (e) => {
+        e.preventDefault();
+        setpwdShowState(!pwdShowState);
+    }
+
     let history = useHistory();
     // const [successMsg, setSuccessMsg] = useState(props.user)
     // useEffect()
@@ -103,6 +110,7 @@ const Register = (props) => {
                                                         value={formik.values.username}
                                                         // invalid={formik.touched.username && formik.errors.username ? true : false}
                                                     />
+
                                                     {formik.touched.username && formik.errors.username ? (
                                                         <div className='auth-input-error'>{formik.errors.username}</div>
                                                     ) : null}
@@ -137,7 +145,8 @@ const Register = (props) => {
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
                                                     <input
-                                                        type="password"
+                                                        type= {pwdShowState ? "text" : "password"}
+
                                                         id="password"
                                                         name="password"
                                                         placeholder="Password"
@@ -146,6 +155,7 @@ const Register = (props) => {
                                                         value={formik.values.password}
                                                         // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
+                                                    <button className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></button>
                                                     {formik.touched.password && formik.errors.password ? (
                                                         <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}
