@@ -147,7 +147,7 @@ const Login = (props) => {
                                         </Form>
                                     </div>
                                     <div className="auth-bottom-text">
-                                     <p>No account yet? &nbsp;<Link to="/register" className="font-weight-medium text-primary">&nbsp;Sign up&nbsp;</Link>here </p>
+                                     <p>or &nbsp;<Link to="/register" className="font-weight-medium text-primary">&nbsp;Sign up&nbsp;</Link>here </p>
                                 </div>
                         </Col>
                     </Row>
