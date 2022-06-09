@@ -11,6 +11,8 @@ import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import { isAuthenticated } from '../../helpers/aws';
 import Preloader from '../../components/preloader';
+import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+
 
 //Import Images
 
@@ -68,35 +70,34 @@ const Login = (props) => {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5} >
-                            <div className="text-center mb-4">
-
-                                <h1>Sign in</h1>
-
+                            <div className="text-center">
+                                <img src={auth_logo} className='auth-logo-img'/>
+                                {/* <h1>Sign in</h1> */}
                             </div>
                                     {
                                         props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
-                                    <div className="p-3">
+                                    <div className="mt-4">
                                         <Form onSubmit={formik.handleSubmit}>
                                             <div className="mb-3">
-                                                <Label className="form-label">Username</Label>
-                                                <InputGroup className="mb-3 bg-soft-light rounded-3">
-                                                    <span className="input-group-text text-muted" id="basic-addon3">
-                                                        <i className="ri-user-2-line"></i>
+                                                {/* <Label className="form-label">Username</Label> */}
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span id="basic-addon3">
+                                                        @
                                                     </span>
-                                                    <Input
+                                                    <input
                                                         type="text"
                                                         id="email"
                                                         name="email"
                                                         className="form-control form-control-lg border-light bg-soft-light"
-                                                        placeholder="Enter username"
+                                                        placeholder="Username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.email}
-                                                        invalid={formik.touched.email && formik.errors.email ? true : false}
+                                                        // invalid={formik.touched.email && formik.errors.email ? true : false}
                                                     />
                                                     {formik.touched.email && formik.errors.email ? (
-                                                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.email}</div>
                                                     ) : null}
                                                 </InputGroup>
                                             </div>
@@ -105,24 +106,24 @@ const Login = (props) => {
                                                 <div className="float-end">
                                                     <Link to="forget-password" className="text-muted font-size-13">Forgot password</Link>
                                                 </div>
-                                                <Label className="form-label">Password</Label>
-                                                <InputGroup className="mb-3 bg-soft-light rounded-3">
-                                                    <span className="input-group-text text-muted">
+                                               
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
-                                                    <Input
+                                                    <input
                                                         type="password"
                                                         id="password"
                                                         name="password"
                                                         className="form-control form-control-lg border-light bg-soft-light"
-                                                        placeholder="Enter Password"
+                                                        placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.password}
-                                                        invalid={formik.touched.password && formik.errors.password ? true : false}
+                                                        // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
                                                     {formik.touched.password && formik.errors.password ? (
-                                                        <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}
 
                                                 </InputGroup>
@@ -134,7 +135,7 @@ const Login = (props) => {
                                             </div>
 
                                             <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Sign in</button>
+                                                <button className="auth-main-btn auth-main-btn-new" type="submit">Sign in</button>
                                             </div>
 
                                         </Form>
