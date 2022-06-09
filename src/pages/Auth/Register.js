@@ -155,7 +155,7 @@ const Register = (props) => {
                                                         value={formik.values.password}
                                                         // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
-                                                    <button className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></button>
+                                                    <Link to="#" className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></Link>
                                                     {formik.touched.password && formik.errors.password ? (
                                                         <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}
