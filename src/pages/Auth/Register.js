@@ -15,7 +15,7 @@ import apollo_client from '../../apollo';
 import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
 import { signOut } from '../../helpers/aws';
 import { isAuthenticated } from '../../helpers/aws';
-
+import Preloader from '../../components/preloader';
 
 /**
  * Register component
@@ -60,7 +60,8 @@ const Register = (props) => {
 
     const clearError = () => {
         props.apiError("");
-        props.registerUserSuccess("")
+        props.registerUserSuccess("");
+        console.log(props.loading)
     }
 
     useEffect(clearError, []);
@@ -96,9 +97,24 @@ const Register = (props) => {
     });
 
 
+    if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
+        isAuthenticated().then((user)=>{
+            if(user){
+                //return <Redirect to="/" />;
+                props.loginUserSuccess(user)
+                history.push("/dashboard")
+            }
+        }).catch((error=>{
+            
+        }))
+    }
+    else if (localStorage.getItem("authUser")) {
+        return <Redirect to="/dashboard" />;
+    }
+
     return (
         <React.Fragment>
-
+            {   props.loading ? <Preloader/>:
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -209,6 +225,7 @@ const Register = (props) => {
                     </Row>
                 </Container>
             </div>
+            }
         </React.Fragment>
     )
 }
