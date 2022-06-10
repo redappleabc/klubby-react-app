@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link, useHistory, Redirect } from 'react-router-dom';
+import { withRouter, Link, useHistory } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import action
-import { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess} from '../../redux/actions';
+import { registerUser, apiError, registerUserSuccess} from '../../redux/actions';
 
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import apollo_client from '../../apollo';
 import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
 import { signOut } from '../../helpers/aws';
-import { isAuthenticated } from '../../helpers/aws';
+
 
 
 /**
@@ -22,42 +22,17 @@ import { isAuthenticated } from '../../helpers/aws';
  * @param {*} props 
  */
 const Register = (props) => {
-    let history = useHistory();
-    const [emailVal, setEmailVal] = useState("");
-    const [emailValError, setEmailValError] = useState("")
-    const [pwdShowState, setpwdShowState] = useState(false);
-    const [loginPageShowState, setLoginPageShowState] = useState(false);
+    
+    const [pwdShowState, setpwdShowState] = useState(false)
    
-    let real_emailVal="";
-
-    useEffect(()=>{
-        real_emailVal = emailVal;
-        console.log(real_emailVal);
-    }, [emailVal])
-
-    const emailHandleChange = (val) => {
-        setEmailVal(val);
-        if (validateEmail(val) === null) setEmailValError("Input valid Email");
-        else setEmailValError("");
-        if (val === "") {setEmailValError("Required");}
-    }
-
     const togglePwdShowState = (e) => {
         e.preventDefault();
         setpwdShowState(!pwdShowState);
     }
 
-    const validateEmail = (email) => {
-        return String(email)
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          );
-      };
-
-    const togglePage = () => {
-        setLoginPageShowState(!loginPageShowState);
-    }
-
+    let history = useHistory();
+    // const [successMsg, setSuccessMsg] = useState(props.user)
+    // useEffect()
     const clearError = () => {
         props.apiError("");
         props.registerUserSuccess("")
@@ -66,7 +41,7 @@ const Register = (props) => {
     useEffect(clearError, []);
     
     useEffect(async () => {
-        if (props.user !==null && props.user !== "" && !loginPageShowState) {
+        if (props.user !==null && props.user !== "") {
             console.log(props.user)
             await signOut()
             apollo_client.clearStore()
@@ -74,21 +49,22 @@ const Register = (props) => {
         }
     }, [props.user])
 
-   
     // validation
     const formik = useFormik({
         initialValues: {
             username: '',
+            email: '',
             password: ''
         },
         validationSchema: Yup.object({
             username: Yup.string().required('Required'),
-            password: Yup.string().required('Required')
+            email: Yup.string().email('Enter proper email').required('Required'),
+            password: Yup.string()
+                .required('Required')
         }),
         onSubmit: values => {
-            console.log(values);
-            if (loginPageShowState) props.loginUser(values.username, values.password, props.history); 
-            else props.registerUser({username: values.username, email: emailVal, password: values.password});
+            //console.log(values);
+            props.registerUser(values);
         },
         handleChange: values=> {
             console.log("adasd")
@@ -141,21 +117,22 @@ const Register = (props) => {
                                                 </InputGroup>
                                             </div>
                                             <div className="mb-4">
-                                                <InputGroup className={loginPageShowState ? "mb-3 auth-input-con auth-animation-1" : "mb-3 auth-input-con auth-animation-1 active"}>
+                                                <InputGroup className="mb-3 auth-input-con">
                                                     <span>
                                                         <i className="ri-mail-line"></i>
                                                     </span>
                                                     <input
                                                         type="text"
-                                                        id="auth_email"
+                                                        id="email"
                                                         name="email"
                                                         placeholder="Email"
-                                                        onChange={(e) => {emailHandleChange(e.target.value)}}
-                                                        value={emailVal}
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.email}
                                                         // invalid={formik.touched.email && formik.errors.email ? true : false}
                                                     />
-                                                    {emailValError ? (
-                                                        <div className='auth-input-error'>{emailValError}</div>
+                                                    {formik.touched.email && formik.errors.email ? (
+                                                        <div className='auth-input-error'>{formik.errors.email}</div>
                                                     ) : null}
                                                 </InputGroup>
                                             </div>
@@ -163,7 +140,7 @@ const Register = (props) => {
                                            
 
                                             <FormGroup className="mb-4">
-                                                <InputGroup className={loginPageShowState ? "mb-3 auth-input-con auth-animation-2" : "mb-3 auth-input-con auth-animation-2 active"}>
+                                                <InputGroup className="mb-3 auth-input-con">
                                                     <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
@@ -187,10 +164,10 @@ const Register = (props) => {
                                             </FormGroup>
 
                                             <div className="d-grid">
-                                                <button className="auth-main-btn auth-main-btn-new " type="submit">{loginPageShowState ? "Sign In" : "Register"}</button>
+                                                <button className="auth-main-btn auth-main-btn-new " type="submit">Register</button>
                                             </div>
                                             <div className="text-right auth-bottom-text">
-                                                <p>or &nbsp;&nbsp;&nbsp;<Link to="#" className="font-weight-medium text-primary" onClick={()=> {togglePage();}}>{loginPageShowState ? "Register" : "Sign In"}</Link> </p>
+                                                <p>or<Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link> </p>
                                             </div>
                                         </Form>
                                     </div>
@@ -210,4 +187,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error };
 };
 
-export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess })(Register));
+export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess })(Register));
