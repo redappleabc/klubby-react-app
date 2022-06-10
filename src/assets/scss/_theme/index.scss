@@ -1,5 +1,9 @@
 @import "./_theme.scss";
 
+body {
+  background-color: white;
+}
+
 .iphone-header {
   width: 100%;
   height: env(safe-area-inset-top);

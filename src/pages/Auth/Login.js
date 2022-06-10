@@ -137,7 +137,7 @@ const Login = (props) => {
                                                     <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
                                                 </div>
                                                 <div className="float-end">
-                                                    <Link to="forget-password" className="text-muted font-size-13">Forgot password</Link>
+                                                    <Link to="forget-password" className="text-muted font-weight-bold font-size-15">Forgot password</Link>
                                                 </div>
                                             </div>
                                             <div className="d-grid">
