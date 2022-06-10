@@ -27,8 +27,10 @@ const Register = (props) => {
     const [emailValError, setEmailValError] = useState("")
     const [pwdShowState, setpwdShowState] = useState(false);
     const [loginPageShowState, setLoginPageShowState] = useState(false);
+
    
     let real_emailVal="";
+    console.log(props.loading)
 
     useEffect(()=>{
         real_emailVal = emailVal;
@@ -61,7 +63,7 @@ const Register = (props) => {
     const clearError = () => {
         props.apiError("");
         props.registerUserSuccess("");
-        console.log(props.loading)
+        console.log("props.loading", props.loading)
     }
 
     useEffect(clearError, []);
