@@ -119,7 +119,7 @@
     color: red;
     position: absolute;
     bottom: -1px;
-    left: 69px;
+    left: 72px;
     font-size: 12px;
 }
 
@@ -163,4 +163,26 @@
 
 .auth-header-text h1 {
     color: rgba(99, 85, 250, 1) !important;
+}
+
+.auth-animation-1 {
+    transition: .3s ease;
+    transform: translateX(-100vw);
+}
+.auth-animation-1.active input {
+    // color: white;
+}
+.auth-animation-1.active {
+    transform: translateX(0);
+    transition-delay: .3s;
+}
+
+.auth-animation-2 {
+    transition: .3s ease;
+    transition-delay: .3s;
+    margin-top: -86px;
+}
+.auth-animation-2.active {
+    margin-top: 0;
+    transition-delay: 0s;
 }

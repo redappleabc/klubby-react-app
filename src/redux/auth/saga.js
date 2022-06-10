@@ -57,7 +57,7 @@ function* login({ payload: { username, password, history } }) {
             
         } else {
             // alert("hi")
-            const response = yield call(create, '/login', { username, password });
+            const response = yield call(create, '/register', { username, password });
             console.log(response)
             localStorage.setItem("authUser", JSON.stringify(response));
             console.log(JSON.stringify(response))
@@ -86,7 +86,7 @@ function* logout({ payload: { history } }) {
         }
         yield call(() => {
             apollo_client.clearStore()
-            history.push("/login");
+            history.push("/register");
         });
     } catch (error) { }
 }
