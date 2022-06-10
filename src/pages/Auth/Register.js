@@ -114,7 +114,7 @@ const Register = (props) => {
 
     return (
         <React.Fragment>
-            {   props.loading ? <Preloader/>:
+        {   props.loading ? <Preloader/>:
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
@@ -201,13 +201,13 @@ const Register = (props) => {
 
                                                 </InputGroup>
                                             </FormGroup>
-                                            <div className={loginPageShowState ? 'auth-text-con mt-3 mb-3' : 'auth-text-con mt-3 mb-3 hidden'}>
+                                            <div className={loginPageShowState ? 'auth-text-con remember-me' : 'auth-text-con remember-me hidden'}>
                                                 <div className="form-check">
                                                     <Input type="checkbox" className="form-check-input" id="remember-check" />
                                                     <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
                                                 </div>
                                                 <div className="float-end">
-                                                    <Link to="/forget-password" className="text-muted font-size-13">Forgot password</Link>
+                                                    <Link to="/forget-password" className="text-muted font-weight-bold font-size-15">Forgot password</Link>
                                                 </div>
                                             </div>
 
@@ -225,7 +225,7 @@ const Register = (props) => {
                     </Row>
                 </Container>
             </div>
-            }
+         }
         </React.Fragment>
     )
 }
