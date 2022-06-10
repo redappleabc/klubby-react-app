@@ -60,7 +60,7 @@ const ForgetPassword = (props) => {
                                         }
                                         {
                                             props.passwordResetStatus ? <Alert className="text-center mb-4">{props.passwordResetStatus}</Alert>
-                                                : <Alert className="text-center mb-4">Enter your Username and instructions will be sent to you</Alert>
+                                                : <Alert className="text-center mb-4">Please enter your email to receive instructions</Alert>
                                         }
                                         <Form onSubmit={formik.handleSubmit}>
 
@@ -94,8 +94,8 @@ const ForgetPassword = (props) => {
                                         </Form>
                                     </div>
 
-                            <div className="mt-3 text-center">
-                                <p>Remember It ? <Link to="login" className="font-weight-medium text-primary">Sign in</Link> </p>
+                            <div className="mt-3 text-center font-size-18">
+                                <p>Remember it ? <Link to="login" className="font-weight-bold text-primary ">Sign in</Link> </p>
                                 
                             </div>
                         </Col>
