@@ -185,6 +185,15 @@ const Register = (props) => {
 
                                                 </InputGroup>
                                             </FormGroup>
+                                            <div className={loginPageShowState ? 'auth-text-con mt-3 mb-3' : 'auth-text-con mt-3 mb-3 hidden'}>
+                                                <div className="form-check">
+                                                    <Input type="checkbox" className="form-check-input" id="remember-check" />
+                                                    <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
+                                                </div>
+                                                <div className="float-end">
+                                                    <Link to="/forget-password" className="text-muted font-size-13">Forgot password</Link>
+                                                </div>
+                                            </div>
 
                                             <div className="d-grid">
                                                 <button className="auth-main-btn auth-main-btn-new " type="submit">{loginPageShowState ? "Sign In" : "Register"}</button>
