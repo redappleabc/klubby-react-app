@@ -68,14 +68,14 @@ const ForgetPassword = (props) => {
                                                 {/* <Label className="form-label">Username</Label> */}
                                                 <InputGroup className="mb-3 auth-input-con">
                                                     <span className="">
-                                                        @
+                                                        <i className="ri-mail-line"></i>
                                                     </span>
                                                     <input
                                                         type="text"
                                                         id="username"
                                                         name="username"
                                                         className=""
-                                                        placeholder="Username"
+                                                        placeholder="Email"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.username}
