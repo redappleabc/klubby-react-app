@@ -12,7 +12,8 @@ import { registerUser, apiError, registerUserSuccess, loginUser, loginUserSucces
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import apollo_client from '../../apollo';
-import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+// import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+import auth_logo from '../../assets/images/klubby_logo_big.svg'
 import { signOut } from '../../helpers/aws';
 import { isAuthenticated } from '../../helpers/aws';
 import Preloader from '../../components/preloader';
