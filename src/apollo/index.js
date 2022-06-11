@@ -43,7 +43,7 @@ if (process.env.REACT_APP_ENVIRONMENT === "development") {
 
 let socketURL;
 if (process.env.REACT_APP_ENVIRONMENT === "development") {
-    socketURL = "wss://4ze3wlpbnzfohpg4l347prseyq.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
+    socketURL = "wss://bw77ptwe3zfdbaog3owcjiogla.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
 } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
     socketURL = "wss://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
 }
