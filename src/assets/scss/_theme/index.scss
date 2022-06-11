@@ -10,7 +10,7 @@ body {
   position: fixed;
   z-index: 9999;
   top: 0;
-  background-color: black;
+  background-color: #19191B;
 }
 
 .iphone-footer {
@@ -19,7 +19,7 @@ body {
   position: fixed;
   z-index: 9999;
   bottom: 0;
-  background-color: black;
+  background-color: #19191B;
 }
 
 ._sp {
@@ -116,11 +116,12 @@ label {
 }
 //------------------------ Theme-light white ---------------------------
 .theme--light {
+  color: #495057;
+  background-color: white;
   .preloader {
     background-color: white;
   }
-  color: #495057;
-  background-color: #f7f7ff;
+  
   .iphone-header, .iphone-footer {
     background-color: white;
   }

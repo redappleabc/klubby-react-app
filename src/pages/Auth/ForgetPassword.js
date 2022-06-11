@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 //Import formik validation
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
+import { Container, Row, Col, FormGroup, Alert, Form, InputGroup } from 'reactstrap';
 
 //Import actions and helpers
 import { forgetPassword, apiError, setLoginPage } from '../../redux/actions';
