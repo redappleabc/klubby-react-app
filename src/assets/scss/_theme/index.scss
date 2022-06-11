@@ -106,6 +106,14 @@ label {
 .bg-light {
   background-color: #343434 !important;
 }
+// -----------------------theme-dark------------------------
+.theme--dark {
+  background-color: #19191B;
+  // color: white;
+  .form-check-label {
+    color: white;
+  }
+}
 //------------------------ Theme-light white ---------------------------
 .theme--light {
   .preloader {
