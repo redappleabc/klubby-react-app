@@ -35,7 +35,7 @@ const getToken = async () => {
 
 let url;
 if (process.env.REACT_APP_ENVIRONMENT === "development") {
-    url = "https://4ze3wlpbnzfohpg4l347prseyq.appsync-api.us-east-1.amazonaws.com/graphql"
+    url = "https://bw77ptwe3zfdbaog3owcjiogla.appsync-api.us-east-1.amazonaws.com/graphql"
 } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
     url = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
 }
