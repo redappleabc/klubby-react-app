@@ -4,8 +4,14 @@ import {
 	SET_KLUBS_ACTIVE_TAB,
 	OPEN_USER_PROFILE_SIDEBAR,
 	CLOSE_USER_PROFILE_SIDEBAR,
-	SET_CONVERSATION_NAME_IN_OPEN_CHAT
+	SET_CONVERSATION_NAME_IN_OPEN_CHAT,
+	SET_LOGIN_PAGE
 } from "./constants";
+
+export const setLoginPage = (state) => ({
+	type: SET_LOGIN_PAGE,
+	payload: state
+});
 
 export const setActiveTab = (tabId) => ({
 	type: SET_ACTIVE_TAB,

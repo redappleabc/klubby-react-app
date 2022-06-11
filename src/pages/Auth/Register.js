@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import action
-import { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess} from '../../redux/actions';
+import { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess, setLoginPage} from '../../redux/actions';
 
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
@@ -26,16 +26,9 @@ const Register = (props) => {
     const [emailVal, setEmailVal] = useState("");
     const [emailValError, setEmailValError] = useState("")
     const [pwdShowState, setpwdShowState] = useState(false);
-    const [loginPageShowState, setLoginPageShowState] = useState(false);
 
-   
-    let real_emailVal="";
-    console.log(props.loading)
-
-    useEffect(()=>{
-        real_emailVal = emailVal;
-        console.log(real_emailVal);
-    }, [emailVal])
+    
+    
 
     const emailHandleChange = (val) => {
         setEmailVal(val);
@@ -57,20 +50,19 @@ const Register = (props) => {
       };
 
     const togglePage = () => {
-        setLoginPageShowState(!loginPageShowState);
+        props.setLoginPage(!props.loginPageState);
     }
 
     const clearError = () => {
         props.apiError("");
         props.registerUserSuccess("");
-        console.log("props.loading", props.loading)
     }
 
     useEffect(clearError, []);
     
     useEffect(async () => {
-        if (props.user !==null && props.user !== "" && !loginPageShowState) {
-            console.log(props.user)
+        if (props.user !==null && props.user !== "" && !props.loginPageState) {
+            
             await signOut()
             apollo_client.clearStore()
             history.push('/verify-register')
@@ -89,10 +81,13 @@ const Register = (props) => {
             password: Yup.string().required('Required')
         }),
         onSubmit: values => {
-            console.log(values);
-            if (loginPageShowState) props.loginUser(values.username, values.password, props.history); 
-            else props.registerUser({username: values.username, email: emailVal, password: values.password});
-        },
+        
+            if (props.loginPageState) props.loginUser(values.username, values.password, props.history); 
+            else {
+                emailHandleChange(emailVal);
+                if (validateEmail != null) props.registerUser({username: values.username, email: emailVal, password: values.password});
+            }
+            },
         handleChange: values=> {
             console.log("adasd")
         }
@@ -159,7 +154,7 @@ const Register = (props) => {
                                                 </InputGroup>
                                             </div>
                                             <div className="mb-4">
-                                                <InputGroup className={loginPageShowState ? "mb-3 auth-input-con auth-animation-1" : "mb-3 auth-input-con auth-animation-1 active"}>
+                                                <InputGroup className={props.loginPageState ? "mb-3 auth-input-con auth-animation-1" : "mb-3 auth-input-con auth-animation-1 active"}>
                                                     <span>
                                                         <i className="ri-mail-line"></i>
                                                     </span>
@@ -181,7 +176,7 @@ const Register = (props) => {
                                            
 
                                             <FormGroup className="mb-4">
-                                                <InputGroup className={loginPageShowState ? "mb-3 auth-input-con auth-animation-2" : "mb-3 auth-input-con auth-animation-2 active"}>
+                                                <InputGroup className={props.loginPageState ? "mb-3 auth-input-con auth-animation-2" : "mb-3 auth-input-con auth-animation-2 active"}>
                                                     <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
@@ -203,21 +198,21 @@ const Register = (props) => {
 
                                                 </InputGroup>
                                             </FormGroup>
-                                            <div className={loginPageShowState ? 'auth-text-con remember-me' : 'auth-text-con remember-me hidden'}>
+                                            <div className={props.loginPageState ? 'auth-text-con remember-me' : 'auth-text-con remember-me hidden'}>
                                                 <div className="form-check">
                                                     <Input type="checkbox" className="form-check-input" id="remember-check" />
-                                                    <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
+                                                    <Label className="form-check-label font-size-15" htmlFor="remember-check">Remember me</Label>
                                                 </div>
                                                 <div className="float-end">
-                                                    <Link to="/forget-password" className="text-muted font-weight-bold font-size-15">Forgot password</Link>
+                                                    <Link to="/forget-password" className="text-muted font-size-15">Forgot password</Link>
                                                 </div>
                                             </div>
 
                                             <div className="d-grid">
-                                                <button className="auth-main-btn auth-main-btn-new " type="submit">{loginPageShowState ? "Sign In" : "Register"}</button>
+                                                <button className="auth-main-btn auth-main-btn-new " type="submit" onClick={()=>{emailHandleChange(emailVal);}}>{props.loginPageState ? "Sign In" : "Register"}</button>
                                             </div>
                                             <div className="text-right auth-bottom-text">
-                                                <p>or &nbsp;&nbsp;&nbsp;<Link to="#" className="font-weight-medium text-primary" onClick={()=> {togglePage();}}>{loginPageShowState ? "Register" : "Sign In"}</Link> </p>
+                                                <p>or &nbsp;&nbsp;&nbsp;<Link to="#" className="font-weight-medium text-primary" onClick={()=> {togglePage();}}>{props.loginPageState ? "Register" : "Sign In"}</Link> </p>
                                             </div>
                                         </Form>
                                     </div>
@@ -234,8 +229,9 @@ const Register = (props) => {
 
 
 const mapStateToProps = (state) => {
-    const { user, loading, error } = state.Auth;
-    return { user, loading, error };
+    const { user, loading, error,  } = state.Auth;
+    const {loginPageState} = state.Layout;
+    return { user, loading, error, loginPageState };
 };
 
-export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess })(Register));
+export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess, setLoginPage })(Register));

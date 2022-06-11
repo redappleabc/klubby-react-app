@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import actions and helpers
-import { forgetPassword, apiError } from '../../redux/actions';
+import { forgetPassword, apiError, setLoginPage } from '../../redux/actions';
 
 
 
@@ -95,7 +95,7 @@ const ForgetPassword = (props) => {
                                     </div>
 
                             <div className="mt-3 text-center font-size-18">
-                                <p>Remember it ? <Link to="login" className="font-weight-bold text-primary ">Sign in</Link> </p>
+                                <p>Remember it? <Link to="/register" className="font-weight-bold text-primary" onClick={()=>{props.setLoginPage(true)}}>Sign in</Link> </p>
                                 
                             </div>
                         </Col>
@@ -112,4 +112,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error, passwordResetStatus };
 };
 
-export default connect(mapStateToProps, { forgetPassword, apiError })(ForgetPassword);
+export default connect(mapStateToProps, { forgetPassword, apiError, setLoginPage })(ForgetPassword);

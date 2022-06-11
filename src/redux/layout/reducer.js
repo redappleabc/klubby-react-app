@@ -5,7 +5,8 @@ import {
 	SET_KLUBS_ACTIVE_TAB,
 	OPEN_USER_PROFILE_SIDEBAR,
 	CLOSE_USER_PROFILE_SIDEBAR,
-	SET_CONVERSATION_NAME_IN_OPEN_CHAT
+	SET_CONVERSATION_NAME_IN_OPEN_CHAT,
+	SET_LOGIN_PAGE
 } from "./constants";
 
 const INIT_STATE = {
@@ -13,11 +14,18 @@ const INIT_STATE = {
 	userSidebar : false,
 	conversationName : "Doris Brown",
 	activeChatSubTab: "chat-klubs",
-	activeKlubTab: "main"
+	activeKlubTab: "main",
+	loginPageState: false,
 };
 
 const Layout = (state = INIT_STATE, action) => {
 	switch (action.type) {
+		case SET_LOGIN_PAGE:
+			return {
+				...state,
+				loginPageState: action.payload
+			};
+
 		case SET_ACTIVE_TAB:
 			return {
 				...state,
