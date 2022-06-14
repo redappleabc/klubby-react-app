@@ -518,10 +518,50 @@ label {
 }
 
 
+// Add new desing css 
 
-// .nav-upvote {
-//   @include colored() {
-//     color: c('color') !important;
-//   }
-// }
 
+.side-menu-nav .nav-item .nav-link {
+    background-color: transparent !important;
+    .select {
+      display: none;
+    }
+
+    &>div {
+      color: #4F4F4F;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .profile-img {
+        width: 30px;
+        height: 30px;
+        border-radius: 40px;
+        border: 2px solid white;
+      }
+      span {
+        margin-top: 2px;
+        line-height: 1;
+      }
+    }
+
+    &.active {
+      background-color: transparent !important;
+      .select {
+        display: block;
+        margin: 0;
+      }
+      .no-select {
+        display: none;
+        margin: 0;
+      }
+      &>div {
+        color: #6355FA;
+        .profile-img {
+          border-color: #6355FA;
+        }
+      }
+    }
+
+}

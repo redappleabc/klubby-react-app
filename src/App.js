@@ -4,7 +4,6 @@ import Routes from './routes/';
 
 //Import Scss
 import  "./assets/scss/themes.scss";
-
 import "./assets/scss/_theme/index.scss"
 
 //fackbackend

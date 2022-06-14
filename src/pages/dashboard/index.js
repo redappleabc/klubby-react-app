@@ -429,7 +429,7 @@ const Index = (props) => {
                 console.log(err)
                 alert("unsuccessfully registered user")
                 //setConversationLoad(true)
-                history.push("/logout")
+                history.push("/logout")                
 
             })
         }
