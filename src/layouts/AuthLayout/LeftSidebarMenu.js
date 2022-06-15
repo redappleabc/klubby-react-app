@@ -11,7 +11,7 @@ import klubs_icon from "../../assets/images/icons/klubs.png";
 import klubs_icon_active from "../../assets/images/icons/klubs-active.png";
 
 import chat_icon from "../../assets/images/icons/chat.png";
-import chat_icon_active from "../../assets/images/icons/chat.png";
+import chat_icon_active from "../../assets/images/icons/chat-active.png";
 
 
 function LeftSidebarMenu(props) {
@@ -49,7 +49,7 @@ function LeftSidebarMenu(props) {
                     <Nav pills className="side-menu-nav justify-content-center" role="tablist">
                        
                         <NavItem id="Klubs">
-                            <NavLink id="pills-Klubs-tab" className={classnames({ active: activeTab === 'chat' })} onClick={() => { toggleTab('chat'); }}>
+                            <NavLink id="pills-Klubs-tab" className={classnames({ active: activeTab === 'klub' })} onClick={() => { toggleTab('klub'); }}>
                                 <div>
                                     <img className='no-select' src={klubs_icon}/>
                                     <img className='select' src={klubs_icon_active}/>
