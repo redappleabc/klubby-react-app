@@ -7,11 +7,11 @@ import { connect } from "react-redux";
 import { setActiveTab } from "../../redux/actions";
 import avatar2 from "../../assets/images/users/avatar-1.jpg";
 
-import klubs_icon from "../../assets/images/icons/klubs.png";
-import klubs_icon_active from "../../assets/images/icons/klubs-active.png";
+import klubs_icon from "../../assets/images/icons/klubs.svg";
+import klubs_icon_active from "../../assets/images/icons/klubs-active.svg";
 
-import chat_icon from "../../assets/images/icons/chat.png";
-import chat_icon_active from "../../assets/images/icons/chat-active.png";
+import chat_icon from "../../assets/images/icons/chat.svg";
+import chat_icon_active from "../../assets/images/icons/chat-active.svg";
 
 
 function LeftSidebarMenu(props) {
