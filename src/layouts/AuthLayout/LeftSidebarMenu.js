@@ -11,7 +11,7 @@ import klubs_icon from "../../assets/images/icons/klubs.png";
 import klubs_icon_active from "../../assets/images/icons/klubs-active.png";
 
 import chat_icon from "../../assets/images/icons/chat.png";
-import chat_icon_active from "../../assets/images/icons/chat.png";
+import chat_icon_active from "../../assets/images/icons/chat-active.png";
 
 
 function LeftSidebarMenu(props) {
