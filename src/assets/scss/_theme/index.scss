@@ -565,3 +565,137 @@ label {
     }
 
 }
+
+.nav-header-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  height: 56px;
+  .nav-header-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .header-add-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #F2F2F2;
+    color: #333333;
+    font-size: 16px;
+    border-radius: 99px;
+    border: none;
+    padding: 0;
+  }
+}
+
+.nav-header-search-con {
+  height: 50px;
+  padding: 0 16px 10px 16px;
+  background-color: white;
+  .chat-search-box {
+    width: 100%;
+    background-color: #F2F2F2;
+    border-radius: 1000px;
+    overflow: hidden;
+    position: relative;
+    span {
+      position: absolute;
+      left: 24px;
+      top: 0px;
+      background-color: transparent !important;
+    }
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 10px 20px 10px 58px;
+      border: none;
+      background-color: #F2F2F2;
+      outline: none;
+      font-weight: 16px;
+      font-weight: 400;
+    }
+  }
+}
+.theme--light {
+  .nav-header-header {
+    background-color: white;
+  }
+  .chat-leftsidebar {
+    background-color: white;
+  }
+}
+
+
+.group-list-con {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px 16px 0 16px;
+  justify-content: space-between; 
+  margin-bottom: 2px;
+  .group-infor-con {
+    width: calc(100% - 66px);
+  }
+  .group-description {
+    width: 72%;
+    p {
+       /* Hides content that exceeds the container width */
+        overflow: hidden;
+
+        /* The text is treated as a box element */
+        display: -webkit-box;
+
+        /* Sets the max line limit to 3 */
+        -webkit-line-clamp: 3;
+
+        /* Sets the orientation of the box */
+        -webkit-box-orient: vertical;
+        line-height: 1.2;
+    }
+  }
+  .group-information {
+    width: 28%;
+    text-align: right;
+    &>div:first-child {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      i {
+        font-size: 14px;
+        margin-right: 5px;
+      }
+    }
+    &>div:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      font-size: 12px;
+      span {
+        display: inline-block;
+        margin-right: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 10px;
+        background-color: #27AE60;
+      }
+    }
+  }
+}
+
+.chat-list li a {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.group-infor-con {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+
+.theme--light .chat-list li.active a {
+  background-color: #F2F2F2;
+}

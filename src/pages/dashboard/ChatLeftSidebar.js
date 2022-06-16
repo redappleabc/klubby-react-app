@@ -44,7 +44,7 @@ function ChatLeftSidebar(props) {
                     {/* End chats tab-pane */}
 
                     {/* Start groups tab-pane */}
-                    <TabPane tabId="klubs" id="pills-klubs">
+                    <TabPane tabId="klub" id="pills-klub">
                         {/* Groups content */}
                         <Klubs />
                     </TabPane>

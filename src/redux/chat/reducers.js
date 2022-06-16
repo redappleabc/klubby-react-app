@@ -56,7 +56,7 @@ const INIT_STATE = {
     },
     groups: [
         {
-            gourpId: 1, name: "Ethereum Ballers", profilePicture: group1, isGroup: true, unRead: 0, desc: "Wow that’s great", groupType: "main",
+            gourpId: 1, name: "Ethereum Ballers", profilePicture: group1, isGroup: true, unRead: 0, description: "This is a super rad group for true ethereum ballers to hang out and talk about ethereum.", groupType: "main",  
             members: [
                 // { userId: 1, name: "Sara Muller", profilePicture: "Null", role: null },
                 // { userId: 2, name: "Ossie Wilson", profilePicture: avatar8, role: "admin" },
@@ -84,35 +84,35 @@ const INIT_STATE = {
                 ]
             }
         },
-        // {
-        //     gourpId: 2, name: "Klubby First 1000", profilePicture: group2, isGroup: true, unRead: 23, desc: "We were all early to this", groupType: "main",
-        //     members: [
-        //         { userId: 1, name: "Sara Muller", profilePicture: "Null", role: null },
-        //         { userId: 2, name: "Ossie Wilson", profilePicture: avatar8, role: "admin" },
-        //         { userId: 3, name: "Jonathan Miller", profilePicture: "Null", role: null },
-        //         { userId: 4, name: "Paul Haynes", profilePicture: avatar7, role: null },
-        //         { userId: 5, name: "Yana sha", profilePicture: avatar3, role: null },
-        //         { userId: 6, name: "Steve Walker", profilePicture: avatar6, role: null },
-        //     ],
-        //     messages: {
-        //         "main": [
-        //             { id: 33, isToday: true },
-        //             { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //             { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] },
-        //             { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }
-        //         ],
-        //         "whale": [
-        //             { id: 33, isToday: true },
-        //             { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //             { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }
-        //         ],
-        //         "announcement": [
-        //             { id: 33, isToday: true },
-        //             { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //             { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] },
-        //         ]
-        //     }
-        // },
+        {
+            gourpId: 2, name: "Klubby First 1000", profilePicture: group2, isGroup: true, unRead: 23, description: "This is a super rad group for true ethereum ballers to hang out and talk about ethereum.This is a super rad group for true ethereum ballers to hang out and talk about ethereum.", groupType: "main",
+            members: [
+                { userId: 1, name: "Sara Muller", profilePicture: "Null", role: null },
+                { userId: 2, name: "Ossie Wilson", profilePicture: avatar8, role: "admin" },
+                { userId: 3, name: "Jonathan Miller", profilePicture: "Null", role: null },
+                { userId: 4, name: "Paul Haynes", profilePicture: avatar7, role: null },
+                { userId: 5, name: "Yana sha", profilePicture: avatar3, role: null },
+                { userId: 6, name: "Steve Walker", profilePicture: avatar6, role: null },
+            ],
+            messages: {
+                "main": [
+                    { id: 33, isToday: true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }
+                ],
+                "whale": [
+                    { id: 33, isToday: true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
+                    { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }
+                ],
+                "announcement": [
+                    { id: 33, isToday: true },
+                    { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
+                    { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] },
+                ]
+            }
+        },
         // {
         //     gourpId: 3, name: "Kishu Inu", profilePicture: group3, isGroup: true, unRead: 0, isNew: true, desc: "I remember when this first", groupType: "main",
         //     members: [
