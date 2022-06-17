@@ -8,12 +8,15 @@ export default gql`query getUserConversations {
           __typename
           conversationId
           username
-          associated
+          associated  {
+            username
+            read
+          }
           read
           conversation {
             id
             createdAt
-            messages{
+            messages  {
               messages {
                 __typename
                 id
@@ -23,6 +26,12 @@ export default gql`query getUserConversations {
                 updatedAt
                 sender
                 isSent
+                originalId
+                originalMessage {
+                  content
+                  createdAt
+                  sender
+                }
               }
               nextToken
             }

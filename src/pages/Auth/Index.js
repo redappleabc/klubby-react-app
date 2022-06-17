@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 //Import Images
 import logo from "../../assets/images/logo.png";
+import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+
 
 const AuthIndex = () => {
 
@@ -19,19 +21,19 @@ const AuthIndex = () => {
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5} >
                             <div className="text-center mb-4 auth-first">
-                                <Link to="/" className="auth-logo mb-2 d-block">
-                                    <img src={logo} alt="" height="176" className="logo" />
-                                </Link>
+                                {/* <Link to="/" className="auth-logo mb-2 d-block"> */}
+                                <img src={auth_logo} className='auth-logo-img'/>
+                                {/* </Link> */}
 
-                                <h1>Klubby</h1>
-                                <p className="text-muted mb-4">Find Your Klub</p>
+                                {/* <h1>Klubby</h1> */}
+                                {/* <p className="text-muted mb-4">Find Your Klub</p> */}
 
-                                <Link to="login" className="d-grid mb-4">
-                                <button className="auth-main-btn"><i className="fas fa-user"></i>Sign in</button>
+                                <Link to="login" className="d-grid mt-4 mb-4">
+                                <button className="auth-main-btn auth-main-btn-new"><i className="fas fa-user"></i>Sign in</button>
                                 </Link>
 
                                 <Link to="register" className="d-grid">
-                                    <button className="auth-main-btn"><i className="fas fa-user"></i>Sign up</button>
+                                    <button className="auth-main-btn auth-main-btn-new"><i className="fas fa-user"></i>Sign up</button>
                                 </Link>
                             </div>
                         </Col>

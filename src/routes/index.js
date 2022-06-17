@@ -28,7 +28,7 @@ const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props
                     //localStorage.setItem("authUser", JSON.stringify(user));
                 }
             }, (error) => {
-                history.push("/index")
+                history.push("/register")
 
             })
         }

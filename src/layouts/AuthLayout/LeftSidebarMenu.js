@@ -5,6 +5,13 @@ import classnames from "classnames";
 import { connect } from "react-redux";
 
 import { setActiveTab } from "../../redux/actions";
+import avatar2 from "../../assets/images/users/avatar-1.jpg";
+
+import klubs_icon from "../../assets/images/icons/klubs.svg";
+import klubs_icon_active from "../../assets/images/icons/klubs-active.svg";
+
+import chat_icon from "../../assets/images/icons/chat.svg";
+import chat_icon_active from "../../assets/images/icons/chat-active.svg";
 
 
 function LeftSidebarMenu(props) {
@@ -32,7 +39,6 @@ function LeftSidebarMenu(props) {
                                 </g>
                             </g>
                         </svg>
-                            {/* <img src={logo} alt="logo" height="40" /> */}
                         </span>
                     </Link>
                 </div>
@@ -41,85 +47,37 @@ function LeftSidebarMenu(props) {
                 {/* Start side-menu nav */}
                 <div className="flex-lg-column my-auto">
                     <Nav pills className="side-menu-nav justify-content-center" role="tablist">
-                        <NavItem id="Home">
-                            <NavLink id="pills-home-tab" className={classnames({ active: activeTab === 'home' })} onClick={() => { toggleTab('home'); }}>
-                                <i className="ri-home-4-line"></i>
+                       
+                        <NavItem id="Klubs">
+                            <NavLink id="pills-Klubs-tab" className={classnames({ active: activeTab === 'klub' })} onClick={() => { toggleTab('klub'); }}>
+                                <div>
+                                    <img className='no-select' src={klubs_icon}/>
+                                    <img className='select' src={klubs_icon_active}/>
+                                </div>
                             </NavLink>
                         </NavItem>
-                        <UncontrolledTooltip target="Home" placement="top">
-                            Home
-                        </UncontrolledTooltip>
 
                         <NavItem id="Chats">
                             <NavLink id="pills-chat-tab" className={classnames({ active: activeTab === 'chat' })} onClick={() => { toggleTab('chat'); }}>
-                                <i className="ri-message-3-line"></i>
+                                <div>
+                                    <img className='no-select' src={chat_icon}/>
+                                    <img className='select' src={chat_icon_active}/>
+                                </div>
                             </NavLink>
                         </NavItem>
-                        <UncontrolledTooltip target="Chats" placement="top">
-                            Chats
-                        </UncontrolledTooltip>
-
-                        <NavItem id="Post" className='_pc'>
-                            <NavLink id="pills-post-tab" className={classnames({ active: activeTab === 'post' })} onClick={() => { toggleTab('post'); }}>
-                                <i className="ri-advertisement-line"></i>
-                            </NavLink>
-                        </NavItem>
-                        <UncontrolledTooltip target="Post" placement="top">
-                            Post
-                        </UncontrolledTooltip>
-
+        
 
                         <NavItem id="Settings">
                             <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
-                                <i className="ri-user-3-line"></i>
+                                <div>
+                                    <img src={avatar2} className="profile-img"/>
+                                    <span>Profile</span>
+                                </div>
                             </NavLink>
                         </NavItem>
-                        <UncontrolledTooltip target="Settings" placement="top">
-                            Settings
-                        </UncontrolledTooltip>
-
-
-                        {/* <Dropdown nav isOpen={dropdownOpenMobile2} toggle={toggleMobile2} className="profile-user-dropdown d-inline-block d-lg-none">
-                            <DropdownToggle nav>
-                            <i className="ri-user-3-line"></i>
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-end dropdown-setting">
-                                <DropdownItem onClick={() => { toggleTab('profile'); }}>Profile <i className="ri-profile-line float-end text-muted"></i></DropdownItem>
-                                <DropdownItem onClick={() => { toggleTab('settings'); }}>Setting <i className="ri-settings-3-line float-end text-muted"></i></DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem href="/logout">Log out <i className="ri-logout-circle-r-line float-end text-muted"></i></DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>  */}
+                        
                     </Nav>
                 </div>
-                {/* end side-menu nav */}
-
-                {/* <div className="flex-lg-column d-none d-lg-block">
-                    <Nav className="side-menu-nav justify-content-center">
-                        <Dropdown nav isOpen={dropdownOpen1} className="nav-item btn-group dropup profile-user-dropdown" toggle={toggle1}>
-                            <DropdownToggle className="nav-link" tag="a">
-                            <div className='notification-cover'><i className="ri-notification-3-line"><div className='notification-badge'>2</div></i></div>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem onClick={() => { toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                                <DropdownItem onClick={() => { toggleTab('home'); }}><img src={group1} alt="" className="profile-user rounded-circle" /> Rahui Gautam </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-
-                        <Dropdown nav isOpen={dropdownOpen2} className="nav-item btn-group dropup profile-user-dropdown" toggle={toggle2}>
-                            <DropdownToggle className="nav-link" tag="a">
-                            <i className="ri-user-3-line"></i>
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem onClick={() => { toggleTab('profile'); }}>Profile <i className="ri-profile-line float-end text-muted"></i></DropdownItem>
-                                <DropdownItem onClick={() => { toggleTab('settings'); }}>Setting <i className="ri-settings-3-line float-end text-muted"></i></DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem href="/logout">Log out <i className="ri-logout-circle-r-line float-end text-muted"></i></DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </Nav>
-                </div> */}
-                {/* Side menu user */}
             </div>
         </React.Fragment>
     );

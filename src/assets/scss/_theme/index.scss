@@ -1,12 +1,16 @@
 @import "./_theme.scss";
 
+body {
+  background-color: white;
+}
+
 .iphone-header {
   width: 100%;
   height: env(safe-area-inset-top);
   position: fixed;
   z-index: 9999;
   top: 0;
-  background-color: black;
+  background-color: #19191B;
 }
 
 .iphone-footer {
@@ -15,7 +19,7 @@
   position: fixed;
   z-index: 9999;
   bottom: 0;
-  background-color: black;
+  background-color: #19191B;
 }
 
 ._sp {
@@ -93,8 +97,8 @@ label {
 
 
 .alert-danger, .alert-success {
-  background-color: #252526 !important;
-  border-color: #252526 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
   color:white !important;
   text-align: center;
 }
@@ -102,13 +106,22 @@ label {
 .bg-light {
   background-color: #343434 !important;
 }
+// -----------------------theme-dark------------------------
+.theme--dark {
+  background-color: #19191B;
+  // color: white;
+  .form-check-label {
+    color: white;
+  }
+}
 //------------------------ Theme-light white ---------------------------
 .theme--light {
+  color: #495057;
+  background-color: white;
   .preloader {
     background-color: white;
   }
-  color: #495057;
-  background-color: #f7f7ff;
+  
   .iphone-header, .iphone-footer {
     background-color: white;
   }
@@ -350,7 +363,7 @@ label {
   .alert-danger, .alert-success {
     color: #252526 !important;
     border: none;
-    background-color: #f0eff5 !important;
+    // background-color: transparent !important;
   }
   .black-img {
     display: none;
@@ -505,10 +518,184 @@ label {
 }
 
 
+// Add new desing css 
 
-// .nav-upvote {
-//   @include colored() {
-//     color: c('color') !important;
-//   }
-// }
 
+.side-menu-nav .nav-item .nav-link {
+    background-color: transparent !important;
+    .select {
+      display: none;
+    }
+
+    &>div {
+      color: #4F4F4F;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .profile-img {
+        width: 30px;
+        height: 30px;
+        border-radius: 40px;
+        border: 2px solid white;
+      }
+      span {
+        line-height: 1;
+        font-weight: 400;
+      }
+    }
+
+    &.active {
+      background-color: transparent !important;
+      .select {
+        display: block;
+        margin: 0;
+      }
+      .no-select {
+        display: none;
+        margin: 0;
+      }
+      &>div {
+        color: #6355FA;
+        .profile-img {
+          border-color: #6355FA;
+        }
+      }
+    }
+
+}
+
+.nav-header-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  height: 56px;
+  .nav-header-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .header-add-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #F2F2F2;
+    color: #333333;
+    font-size: 16px;
+    border-radius: 99px;
+    border: none;
+    padding: 0;
+  }
+}
+
+.nav-header-search-con {
+  height: 50px;
+  padding: 0 16px 10px 16px;
+  background-color: white;
+  .chat-search-box {
+    width: 100%;
+    background-color: #F2F2F2;
+    border-radius: 1000px;
+    overflow: hidden;
+    position: relative;
+    span {
+      position: absolute;
+      left: 24px;
+      top: 0px;
+      background-color: transparent !important;
+    }
+    input {
+      width: 100%;
+      height: 100%;
+      padding: 10px 20px 10px 58px;
+      border: none;
+      background-color: #F2F2F2;
+      outline: none;
+      font-weight: 16px;
+      font-weight: 400;
+    }
+  }
+}
+.theme--light {
+  .nav-header-header {
+    background-color: white;
+  }
+  .chat-leftsidebar {
+    background-color: white;
+  }
+}
+
+
+.group-list-con {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px 16px 0 16px;
+  justify-content: space-between; 
+  margin-bottom: 2px;
+  .group-infor-con {
+    width: calc(100% - 66px);
+  }
+  .group-description {
+    width: 72%;
+    p {
+       /* Hides content that exceeds the container width */
+        overflow: hidden;
+
+        /* The text is treated as a box element */
+        display: -webkit-box;
+
+        /* Sets the max line limit to 3 */
+        -webkit-line-clamp: 3;
+
+        /* Sets the orientation of the box */
+        -webkit-box-orient: vertical;
+        line-height: 1.2;
+    }
+  }
+  .group-information {
+    width: 28%;
+    text-align: right;
+    &>div:first-child {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      i {
+        font-size: 14px;
+        margin-right: 5px;
+      }
+    }
+    &>div:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      font-size: 12px;
+      span {
+        display: inline-block;
+        margin-right: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 10px;
+        background-color: #27AE60;
+      }
+    }
+  }
+}
+
+.chat-list li a {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.group-infor-con {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #BDBDBD;
+}
+
+
+.theme--light .chat-list li.active a {
+  background-color: #F2F2F2;
+}

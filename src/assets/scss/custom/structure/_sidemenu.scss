@@ -12,9 +12,8 @@
     min-height: 570px;
     background-color: $sidebar-bg;
     display: flex;
-    z-index: 9;
+    z-index: 999;
     box-shadow: 0 2px 4px rgba(15,34,58,.12);
-
     @media (max-width: 991.98px) {
         position: fixed;
         bottom: env(safe-area-inset-bottom);

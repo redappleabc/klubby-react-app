@@ -1,79 +1,125 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link, useHistory } from 'react-router-dom';
+import { withRouter, Link, useHistory, Redirect } from 'react-router-dom';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
 //Import action
-import { registerUser, apiError, registerUserSuccess} from '../../redux/actions';
+import { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess, setLoginPage} from '../../redux/actions';
 
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
 import apollo_client from '../../apollo';
+// import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+import auth_logo from '../../assets/images/klubby_logo_big.svg'
 import { signOut } from '../../helpers/aws';
-
-
+import { isAuthenticated } from '../../helpers/aws';
+import Preloader from '../../components/preloader';
 
 /**
  * Register component
  * @param {*} props 
  */
 const Register = (props) => {
-    
     let history = useHistory();
-    // const [successMsg, setSuccessMsg] = useState(props.user)
-    // useEffect()
+    const [emailVal, setEmailVal] = useState("");
+    const [emailValError, setEmailValError] = useState("")
+    const [pwdShowState, setpwdShowState] = useState(false);
+
+    
+    
+
+    const emailHandleChange = (val) => {
+        setEmailVal(val);
+        if (validateEmail(val) === null) setEmailValError("Input valid Email");
+        else setEmailValError("");
+        if (val === "") {setEmailValError("Required");}
+    }
+
+    const togglePwdShowState = (e) => {
+        e.preventDefault();
+        setpwdShowState(!pwdShowState);
+    }
+
+    const validateEmail = (email) => {
+        return String(email)
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      };
+
+    const togglePage = () => {
+        props.setLoginPage(!props.loginPageState);
+    }
+
     const clearError = () => {
         props.apiError("");
-        props.registerUserSuccess("")
+        props.registerUserSuccess("");
     }
 
     useEffect(clearError, []);
     
     useEffect(async () => {
-        if (props.user !==null && props.user !== "") {
-            console.log(props.user)
+        if (props.user !==null && props.user !== "" && !props.loginPageState) {
+            
             await signOut()
             apollo_client.clearStore()
             history.push('/verify-register')
         }
     }, [props.user])
 
+   
     // validation
     const formik = useFormik({
         initialValues: {
             username: '',
-            email: '',
             password: ''
         },
         validationSchema: Yup.object({
             username: Yup.string().required('Required'),
-            email: Yup.string().email('Enter proper email').required('Required'),
-            password: Yup.string()
-                .required('Required')
+            password: Yup.string().required('Required')
         }),
         onSubmit: values => {
-            //console.log(values);
-            props.registerUser(values);
-        },
+        
+            if (props.loginPageState) props.loginUser(values.username, values.password, props.history); 
+            else {
+                emailHandleChange(emailVal);
+                if (validateEmail != null) props.registerUser({username: values.username, email: emailVal, password: values.password});
+            }
+            },
         handleChange: values=> {
             console.log("adasd")
         }
     });
 
 
+    if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
+        isAuthenticated().then((user)=>{
+            if(user){
+                //return <Redirect to="/" />;
+                props.loginUserSuccess(user)
+                history.push("/dashboard")
+            }
+        }).catch((error=>{
+            
+        }))
+    }
+    else if (localStorage.getItem("authUser")) {
+        return <Redirect to="/dashboard" />;
+    }
+
     return (
         <React.Fragment>
-
+        {   props.loading ? <Preloader/>:
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5}>
-                            <div className="text-center mb-4">
-                                <h1>Sign up</h1>
-
+                            <div className="text-center">
+                                {/* <h1>Sign up</h1> */}
+                                <img src={auth_logo} className='auth-logo-img'/>
                             </div>
 
                             {
@@ -82,102 +128,111 @@ const Register = (props) => {
                                     {/* {
                                         props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
                                     } */}
-                                    <div className="p-3">
+                                    <div className="mt-3 padding-lr-10">
 
                                         <Form onSubmit={formik.handleSubmit}>
 
-                                            <div className="mb-3">
-                                                <Label className="form-label">Email</Label>
-                                                <InputGroup className="input-group bg-soft-light rounded-3 mb-3">
-                                                    <span className="input-group-text text-muted">
-                                                        <i className="ri-mail-line"></i>
+                                            <div className="mb-4">
+        
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
+                                                       @
                                                     </span>
-                                                    <Input
-                                                        type="text"
-                                                        id="email"
-                                                        name="email"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Email"
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
-                                                        value={formik.values.email}
-                                                        invalid={formik.touched.email && formik.errors.email ? true : false}
-                                                    />
-                                                    {formik.touched.email && formik.errors.email ? (
-                                                        <FormFeedback type="invalid">{formik.errors.email}</FormFeedback>
-                                                    ) : null}
-                                                </InputGroup>
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <Label className="form-label">Username</Label>
-                                                <InputGroup className="mb-3 bg-soft-light input-group-lg rounded-lg">
-                                                    <span className="input-group-text border-light text-muted">
-                                                        <i className="ri-user-2-line"></i>
-                                                    </span>
-                                                    <Input
+                                                    <input
                                                         type="text"
                                                         id="username"
                                                         name="username"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Username"
+                                                        placeholder="Username"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.username}
-                                                        invalid={formik.touched.username && formik.errors.username ? true : false}
+                                                        // invalid={formik.touched.username && formik.errors.username ? true : false}
                                                     />
+
                                                     {formik.touched.username && formik.errors.username ? (
-                                                        <FormFeedback type="invalid">{formik.errors.username}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.username}</div>
+                                                    ) : null}
+                                                </InputGroup>
+                                            </div>
+                                            <div className="mb-4">
+                                                <InputGroup className={props.loginPageState ? "mb-3 auth-input-con auth-animation-1" : "mb-3 auth-input-con auth-animation-1 active"}>
+                                                    <span>
+                                                        <i className="ri-mail-line"></i>
+                                                    </span>
+                                                    <input
+                                                        type="text"
+                                                        id="auth_email"
+                                                        name="email"
+                                                        placeholder="Email"
+                                                        onChange={(e) => {emailHandleChange(e.target.value)}}
+                                                        value={emailVal}
+                                                        // invalid={formik.touched.email && formik.errors.email ? true : false}
+                                                    />
+                                                    {emailValError ? (
+                                                        <div className='auth-input-error'>{emailValError}</div>
                                                     ) : null}
                                                 </InputGroup>
                                             </div>
 
+                                           
+
                                             <FormGroup className="mb-4">
-                                                <Label className="form-label">Password</Label>
-                                                <InputGroup className="mb-3 bg-soft-light input-group-lg rounded-lg">
-                                                    <span className="input-group-text border-light text-muted">
+                                                <InputGroup className={props.loginPageState ? "mb-3 auth-input-con auth-animation-2" : "mb-3 auth-input-con auth-animation-2 active"}>
+                                                    <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
-                                                    <Input
-                                                        type="password"
+                                                    <input
+                                                        type= {pwdShowState ? "text" : "password"}
+
                                                         id="password"
                                                         name="password"
-                                                        className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Password"
+                                                        placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.password}
-                                                        invalid={formik.touched.password && formik.errors.password ? true : false}
+                                                        // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
+                                                    <Link to="#" className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></Link>
                                                     {formik.touched.password && formik.errors.password ? (
-                                                        <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
+                                                        <div className='auth-input-error'>{formik.errors.password}</div>
                                                     ) : null}
 
                                                 </InputGroup>
                                             </FormGroup>
-
-                                            <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Sign up</button>
+                                            <div className={props.loginPageState ? 'auth-text-con remember-me' : 'auth-text-con remember-me hidden'}>
+                                                <div className="form-check">
+                                                    <Input type="checkbox" className="form-check-input" id="remember-check" />
+                                                    <Label className="form-check-label font-size-15" htmlFor="remember-check">Remember me</Label>
+                                                </div>
+                                                <div className="float-end">
+                                                    <Link to="/forget-password" className="text-muted font-size-15">Forgot password</Link>
+                                                </div>
                                             </div>
 
+                                            <div className="d-grid">
+                                                <button className="auth-main-btn auth-main-btn-new " type="submit" onClick={()=>{emailHandleChange(emailVal);}}>{props.loginPageState ? "Sign In" : "Register"}</button>
+                                            </div>
+                                            <div className="text-right auth-bottom-text">
+                                                <p>or &nbsp;&nbsp;&nbsp;<Link to="#" className="font-weight-medium text-primary" onClick={()=> {togglePage();}}>{props.loginPageState ? "Register" : "Sign In"}</Link> </p>
+                                            </div>
                                         </Form>
                                     </div>
 
-                            <div className="mt-3 text-center">
-                                <p>Already have an account <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link> </p>
-                            </div>
+                            
                         </Col>
                     </Row>
                 </Container>
             </div>
+         }
         </React.Fragment>
     )
 }
 
 
 const mapStateToProps = (state) => {
-    const { user, loading, error } = state.Auth;
-    return { user, loading, error };
+    const { user, loading, error,  } = state.Auth;
+    const {loginPageState} = state.Layout;
+    return { user, loading, error, loginPageState };
 };
 
-export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess })(Register));
+export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess, loginUser, loginUserSuccess, setLoginPage })(Register));

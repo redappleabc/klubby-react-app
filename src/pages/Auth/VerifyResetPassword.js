@@ -21,6 +21,13 @@ import error_img_white from '../../assets/images/icons/error_white.png';
 const Verify = (props) => {
     const [loading, setLoading] = useState(false);
     const clearError= useCallback(() => { props.apiError("");}, [])
+
+    const [pwdShowState, setpwdShowState] = useState(false)
+   
+    const togglePwdShowState = (e) => {
+        e.preventDefault();
+        setpwdShowState(!pwdShowState);
+    }
     useEffect(()=>{
         clearError();
     }, [clearError])
@@ -51,7 +58,7 @@ const Verify = (props) => {
                 <Container>
                     <Row className="justify-content-center">
                         <Col md={8} lg={6} xl={5} >
-                            <div className="text-center mb-4">
+                            <div className="text-center mb-4 auth-header-text">
 
                                 <h1>Please input verify code</h1>
                             </div>
@@ -76,22 +83,23 @@ const Verify = (props) => {
                                                 </div>
                                             </div>
                                             <FormGroup className="mb-4">
-                                                <Label className="form-label">Password</Label>
-                                                <InputGroup className="mb-3 bg-soft-light input-group-lg rounded-lg">
-                                                    <span className="input-group-text border-light text-muted">
+                                                {/* <Label className="form-label">Password</Label> */}
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
-                                                    <Input
-                                                        type="password"
+                                                    <input
+                                                        type= {pwdShowState ? "text" : "password"}
                                                         id="password"
                                                         name="password"
                                                         className="form-control form-control-lg bg-soft-light border-light"
-                                                        placeholder="Enter Password"
+                                                        placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.password}
-                                                        invalid={formik.touched.password && formik.errors.password ? true : false}
+                                                        // invalid={formik.touched.password && formik.errors.password ? true : false}
                                                     />
+                                                    <Link className='password-show-btn' onClick={(e)=>{togglePwdShowState(e);}}><i className={ pwdShowState ? "ri-eye-line" : "ri-eye-off-line"}></i></Link>
                                                     {formik.touched.password && formik.errors.password ? (
                                                         <FormFeedback type="invalid">{formik.errors.password}</FormFeedback>
                                                     ) : null}
@@ -100,7 +108,7 @@ const Verify = (props) => {
                                             </FormGroup>
                            
                                           <div className="d-grid">
-                                                <button className="auth-main-btn" type="submit">Confirm</button>
+                                                <button className="auth-main-btn auth-main-btn-new" type="submit">Confirm</button>
                                             </div>
 
                                         </Form>

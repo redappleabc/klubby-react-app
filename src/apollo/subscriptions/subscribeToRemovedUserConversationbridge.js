@@ -1,8 +1,8 @@
 import {gql} from "@apollo/client";
 
 export default gql`
-subscription subscribeToNewUserConversationBridge($username: ID!) {
-  subscribeToNewUserConversationBridge(username: $username) {
+subscription subscribeToRemovedUserConversationBridge($username: ID!) {
+  subscribeToRemovedUserConversationBridge(username: $username) {
     __typename
     username
     name

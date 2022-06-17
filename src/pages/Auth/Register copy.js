@@ -1,30 +1,28 @@
-import React, { useEffect,useCallback, useState } from 'react';
-import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter, Redirect, useHistory } from 'react-router-dom';
+import { withRouter, Link, useHistory } from 'react-router-dom';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Container, Row, Col, FormGroup, Alert, Form, Input, FormFeedback, Label, InputGroup } from 'reactstrap';
 
-//redux store
-import { loginUser, apiError, loginUserSuccess } from '../../redux/actions';
+//Import action
+import { registerUser, apiError, registerUserSuccess} from '../../redux/actions';
+
 import error_img from '../../assets/images/icons/error.png';
 import error_img_white from '../../assets/images/icons/error_white.png';
-import { isAuthenticated } from '../../helpers/aws';
-import Preloader from '../../components/preloader';
+import apollo_client from '../../apollo';
 import auth_logo from '../../assets/images/auth/klubby-logo-auth.png'
+import { signOut } from '../../helpers/aws';
 
-
-//Import Images
 
 
 /**
- * Login component
+ * Register component
  * @param {*} props 
  */
-const Login = (props) => {
-    let history = useHistory();
-    const clearError= useCallback(() => { props.apiError("");}, [])
-
+const Register = (props) => {
+    
     const [pwdShowState, setpwdShowState] = useState(false)
    
     const togglePwdShowState = (e) => {
@@ -32,69 +30,102 @@ const Login = (props) => {
         setpwdShowState(!pwdShowState);
     }
 
-    useEffect(()=>{
-        clearError();
-    }, [clearError])
+    let history = useHistory();
+    // const [successMsg, setSuccessMsg] = useState(props.user)
+    // useEffect()
+    const clearError = () => {
+        props.apiError("");
+        props.registerUserSuccess("")
+    }
+
+    useEffect(clearError, []);
+    
+    useEffect(async () => {
+        if (props.user !==null && props.user !== "") {
+            console.log(props.user)
+            await signOut()
+            apollo_client.clearStore()
+            history.push('/verify-register')
+        }
+    }, [props.user])
 
     // validation
     const formik = useFormik({
         initialValues: {
+            username: '',
             email: '',
             password: ''
         },
         validationSchema: Yup.object({
-            email: Yup.string().required('Please Enter Your Username'),
-            password: Yup.string().required('Please Enter Your Password')
+            username: Yup.string().required('Required'),
+            email: Yup.string().email('Enter proper email').required('Required'),
+            password: Yup.string()
+                .required('Required')
         }),
         onSubmit: values => {
-            
-            props.loginUser(values.email, values.password, props.history);
-          
+            //console.log(values);
+            props.registerUser(values);
         },
+        handleChange: values=> {
+            console.log("adasd")
+        }
     });
-    if(process.env.REACT_APP_DEFAULTAUTH === "aws"){
-        isAuthenticated().then((user)=>{
-            if(user){
-                //return <Redirect to="/" />;
-                props.loginUserSuccess(user)
-                history.push("/dashboard")
-            }
-        }).catch((error=>{
-            
-        }))
-    }
-    else if (localStorage.getItem("authUser")) {
-        return <Redirect to="/dashboard" />;
-    }
+
 
     return (
         <React.Fragment>
-        {   props.loading ? <Preloader/>:
+
             <div className="account-pages pt-sm-5">
                 <Container>
                     <Row className="justify-content-center">
-                        <Col md={8} lg={6} xl={5} >
+                        <Col md={8} lg={6} xl={5}>
                             <div className="text-center">
+                                {/* <h1>Sign up</h1> */}
                                 <img src={auth_logo} className='auth-logo-img'/>
-                                {/* <h1>Sign in</h1> */}
                             </div>
-                                    {
+
+                            {
                                         props.error && <Alert color="danger"> <img src={error_img} className="black-img" alt="klubby"/><img className='white-img' src={error_img_white} alt="klubby"/><br/>{props.error}</Alert>
                                     }
-                                    <div className="mt-4 padding-lr-10">
+                                    {/* {
+                                        props.user && <Alert variant="success">Thank You for registering with us!<br/> Please <Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link></Alert>
+                                    } */}
+                                    <div className="mt-3 padding-lr-10">
+
                                         <Form onSubmit={formik.handleSubmit}>
-                                            <div className="mb-3">
-                                                {/* <Label className="form-label">Username</Label> */}
+
+                                            <div className="mb-4">
+        
                                                 <InputGroup className="mb-3 auth-input-con">
-                                                    <span id="basic-addon3">
-                                                        @
+                                                    <span className="">
+                                                       @
+                                                    </span>
+                                                    <input
+                                                        type="text"
+                                                        id="username"
+                                                        name="username"
+                                                        placeholder="Username"
+                                                        onChange={formik.handleChange}
+                                                        onBlur={formik.handleBlur}
+                                                        value={formik.values.username}
+                                                        // invalid={formik.touched.username && formik.errors.username ? true : false}
+                                                    />
+
+                                                    {formik.touched.username && formik.errors.username ? (
+                                                        <div className='auth-input-error'>{formik.errors.username}</div>
+                                                    ) : null}
+                                                </InputGroup>
+                                            </div>
+                                            <div className="mb-4">
+                                                <InputGroup className="mb-3 auth-input-con">
+                                                    <span>
+                                                        <i className="ri-mail-line"></i>
                                                     </span>
                                                     <input
                                                         type="text"
                                                         id="email"
                                                         name="email"
-                                                        className=" "
-                                                        placeholder="Username"
+                                                        placeholder="Email"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
                                                         value={formik.values.email}
@@ -106,17 +137,18 @@ const Login = (props) => {
                                                 </InputGroup>
                                             </div>
 
+                                           
+
                                             <FormGroup className="mb-4">
-                                                
                                                 <InputGroup className="mb-3 auth-input-con">
                                                     <span className="">
                                                         <i className="ri-lock-2-line"></i>
                                                     </span>
                                                     <input
                                                         type= {pwdShowState ? "text" : "password"}
+
                                                         id="password"
                                                         name="password"
-                                                        className=" "
                                                         placeholder="Password"
                                                         onChange={formik.handleChange}
                                                         onBlur={formik.handleBlur}
@@ -131,29 +163,20 @@ const Login = (props) => {
                                                 </InputGroup>
                                             </FormGroup>
 
-                                            <div className='auth-text-con mt-3 mb-3'>
-                                                <div className="form-check">
-                                                    <Input type="checkbox" className="form-check-input" id="remember-check" />
-                                                    <Label className="form-check-label" htmlFor="remember-check">Remember me</Label>
-                                                </div>
-                                                <div className="float-end">
-                                                    <Link to="forget-password" className="text-muted font-weight-bold font-size-15">Forgot password</Link>
-                                                </div>
-                                            </div>
                                             <div className="d-grid">
-                                                <button className="auth-main-btn auth-main-btn-new" type="submit">Sign in</button>
+                                                <button className="auth-main-btn auth-main-btn-new " type="submit">Register</button>
                                             </div>
-
+                                            <div className="text-right auth-bottom-text">
+                                                <p>or<Link to="/login" className="font-weight-medium text-primary">&nbsp;Sign&nbsp;in </Link> </p>
+                                            </div>
                                         </Form>
                                     </div>
-                                    <div className="auth-bottom-text">
-                                     <p>or &nbsp;<Link to="/register" className="font-weight-medium text-primary">&nbsp;Sign up&nbsp;</Link> </p>
-                                </div>
+
+                            
                         </Col>
                     </Row>
                 </Container>
             </div>
-        }
         </React.Fragment>
     )
 }
@@ -164,4 +187,4 @@ const mapStateToProps = (state) => {
     return { user, loading, error };
 };
 
-export default withRouter(connect(mapStateToProps, { loginUser, apiError, loginUserSuccess })(Login));
+export default withRouter(connect(mapStateToProps, { registerUser, apiError, registerUserSuccess })(Register));

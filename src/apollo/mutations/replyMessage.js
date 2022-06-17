@@ -1,12 +1,11 @@
 import {gql} from "@apollo/client";
 
 export default gql`
-  mutation editMessage($content: String!, $conversationId: ID!, $id: String!) {
-    editMessage(id: $id, content: $content, conversationId: $conversationId){
+  mutation replyMessage($content: String!, $conversationId: ID!, $originalId: ID!) {
+    replyMessage(content: $content, conversationId: $conversationId, originalId: $originalId){
       __typename
       conversationId
       createdAt
-      updatedAt
       id
       sender
       content

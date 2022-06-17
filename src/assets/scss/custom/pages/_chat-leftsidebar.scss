@@ -8,6 +8,8 @@
 
     background-color: $sidebar-sub-bg;
 
+    position: relative;
+    z-index: 99;
     @media (min-width: 992px) {
         min-width: 380px;
         max-width: 380px;
@@ -56,7 +58,7 @@
 
 .chat-message-list {
     background-color: #1d1d1d;
-    height: calc(calc(var(--app-height) - 155px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+    height: calc(calc(var(--app-height) - 106px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     @media (max-width: 991.98px) {
         // height: calc(var(--app-height) - 214px);
         // height: var(--app-height);
@@ -302,7 +304,7 @@
     }
     .chat-message-list {
         position: fixed;
-        top:  calc(154px + env(safe-area-inset-top));
+        top:  calc(105px + env(safe-area-inset-top));
         width: 100%;
     }
 }

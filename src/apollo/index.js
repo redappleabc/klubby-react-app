@@ -9,20 +9,9 @@ import {
 
 import { Auth } from "aws-amplify";
 
-// import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-// import { createClient } from 'graphql-ws';
-
-
-
 import { getMainDefinition } from '@apollo/client/utilities';
 import { createAuthLink } from "aws-appsync-auth-link";
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link";
-
-
-//import AWSAppSyncClient from 'aws-appsync'
-// import { WebSocketLink } from '@apollo/client/link/ws';
-// import { SubscriptionClient } from "subscriptions-transport-ws";
-
 
 
 
@@ -32,10 +21,9 @@ const getToken = async () => {
 }
 
 
-
 let url;
 if (process.env.REACT_APP_ENVIRONMENT === "development") {
-    url = "https://4ze3wlpbnzfohpg4l347prseyq.appsync-api.us-east-1.amazonaws.com/graphql"
+    url = "https://myqrbz2nvvhlbg2r6i36olffji.appsync-api.us-east-1.amazonaws.com/graphql"
 } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
     url = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
 }
@@ -43,41 +31,10 @@ if (process.env.REACT_APP_ENVIRONMENT === "development") {
 
 let socketURL;
 if (process.env.REACT_APP_ENVIRONMENT === "development") {
-    socketURL = "wss://4ze3wlpbnzfohpg4l347prseyq.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
+    socketURL = "wss://myqrbz2nvvhlbg2r6i36olffji.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
 } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
     socketURL = "wss://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
 }
-
-
-// const wsLink = new WebSocketLink(
-//     // new SubscriptionClient(
-//     //     socketURL, {
-//     //     reconnect: true,
-//     //     timeout: 1,
-//     //     lazy: true,
-//     //     connectionParams: {
-//     //         authToken: async () => getToken()
-//     //     },
-
-//     // }),
-//     {
-//         uri: socketURL,
-
-//         options: {
-//             lazy: true,
-//             reconnect: true,
-//             connectionParams: {
-//                 authToken: async () => getToken()
-//             }
-//         }
-//     }
-// );
-
-
-
-
-
-
 
 
 const auth = {
@@ -86,22 +43,7 @@ const auth = {
 }
 
 
-
-
-
-
-
 const region = 'us-east-1';
-
-
-
-// const wsLink = new GraphQLWsLink(createClient({
-//     url: socketURL,
-//     connectionParams: {
-//         authToken: async () => getToken() ,
-//     },
-// }));
-
 
 const httpLink = createHttpLink({
     uri: url,
@@ -112,7 +54,6 @@ const authLink = createAuthLink({
     region: region,
     auth: auth
 })
-
 
 const wsLink = createSubscriptionHandshakeLink({ url, region, auth }, httpLink)
 
@@ -128,11 +69,6 @@ const splitLink = split(
     authLink.concat(httpLink),
 );
 
-
-// const splitLink = ApolloLink.from([
-//     authLink,
-//     wsLink,
-//   ]);
 
 
 
