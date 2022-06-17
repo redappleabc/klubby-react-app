@@ -107,7 +107,7 @@ const Chats = (props) => {
                 </div>
                     {/* klub tab start */}
                 <SimpleBar className="chat-message-list">
-                        <ul className="list-unstyled chat-list chat-user-list" id="group-list">
+                        <ul className="list-unstyled chat-list chat-user-list group-list" id="group-list">
                             {
                                 groups.map((group, key) =>
                                     <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === props.active_user ? "active" : ""}>

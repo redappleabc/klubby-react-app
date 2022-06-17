@@ -623,6 +623,10 @@ label {
   .chat-leftsidebar {
     background-color: white;
   }
+  .chat-conversation .right .chat-time {
+    text-align: left;
+    color: #343a40;
+}
 }
 
 
@@ -682,7 +686,7 @@ label {
   }
 }
 
-.chat-list li a {
+.group-list.chat-list li a {
   padding: 0 !important;
   border: none !important;
 }
