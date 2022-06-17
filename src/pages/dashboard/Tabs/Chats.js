@@ -465,8 +465,7 @@ const Chats = (props) => {
                         {/* Search Box */}
                         <div className='home-header-btn-container'>
 
-                            {
-                                props.activeChatSubTab === 'chat-chat' ?
+
                                     <div className="user-chat-nav float-end">
                                         <div className="new-member">
                                             {/* Button trigger modal */}
@@ -475,16 +474,7 @@ const Chats = (props) => {
                                             </button>
                                         </div>
                                     </div>
-                                    :
-                                    <div className="user-chat-nav float-end">
-                                        <div className="create-group">
-                                            {/* Button trigger modal */}
-                                            <button onClick={toggleAddGroupModal} className="group-add-btn">
-                                                <i className="ri-group-line me-1"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                            }
+                                    
 
                             <div className='home-header-btn'>
                                 <Dropdown nav isOpen={notiDropdown} className="nav-item btn-group dropup profile-user-dropdown" toggle={setNoticDropdown}>
@@ -559,7 +549,7 @@ const Chats = (props) => {
 
                                                         </p>
                                                     </div>
-                                                    <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].createdAt : null}</div>
+                                                    <div className="font-size-11">{chat.messages && chat.messages.length > 0 ? (new Date(parseInt(chat.messages[(chat.messages).length - 1].createdAt)).toISOString().substring(0,19))  : null}</div>
                                                     {chat.unRead === 0 ? null :
                                                         <div className="unread-message" id={"unRead" + chat.id}>
                                                             <span className="badge badge-soft-danger rounded-pill">{chat.messages && chat.messages.length > 0 ? chat.unRead >= 20 ? chat.unRead + "+" : chat.unRead : ""}</span>
