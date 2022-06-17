@@ -317,7 +317,7 @@ function UserChat(props) {
                                                                             <i className='ri-reply-line'></i>
                                                                         </div>
                                                                         <div className='reply-text-main'>
-                                                                            {parse(chat.originalMessage.content.replace(/\n/g, "<br/>"))}
+                                                                            {parse((chat.originalMessage.content).replace(/\n/g, "<br/>"))}
                                                                         </div>
                                                                         <div className='reply-text-date'>
                                                                             <span className='reply-text-sender'>{chat.originalMessage.sender}, </span> {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
