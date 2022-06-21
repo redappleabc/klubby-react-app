@@ -92,7 +92,7 @@ const Chats = (props) => {
                             Klubs
                         </div>
                         <div>
-                            <button className='header-add-btn' onClick={alert}><img src={add_icon}/></button>
+                            <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-klubs")}}><img src={add_icon}/></button>
                         </div>
                     </div>
                     <div className="nav-header-search-con">
