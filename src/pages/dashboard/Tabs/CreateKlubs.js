@@ -148,7 +148,7 @@ const CreateKlubs = (props) => {
                             hidden
                         />
                         <label htmlFor="imgUpload">
-                            Upload Photos<span className="nec">*</span>
+                            Upload Photo<span className="nec">*</span>
                         </label>
                         {/* <div className='error-text'>{formik.errors.imgUpload}</div> */}
                     </div>
@@ -309,7 +309,7 @@ const CreateKlubs = (props) => {
                                 <div className="icon">
                                     <img src={dextools} />
                                 </div>
-                                <input type="text" placeholder="dextools.com"/>
+                                <input type="text" placeholder="https://dextools.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
