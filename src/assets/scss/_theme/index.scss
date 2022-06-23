@@ -757,9 +757,12 @@ label {
   background-color: #6355FA;
   color: white;
   padding: 20px 16px;
+  width: 100%;
+
   .header-main {
     position: relative;
     margin-bottom: 16px;
+    transition: .3s ease;
     .header-link {
       position: absolute;
       left: 0;
@@ -784,7 +787,9 @@ label {
     border-radius: 10px;
     background-color: #7A6EFB;
     overflow: hidden;
+    
     div {
+      transition: .5s ease;
       text-align: right;
       color: #6355FA;
       font-weight: 600;
@@ -798,6 +803,37 @@ label {
       justify-content: right;
       padding-right: 5px;
     }
+  }
+  .header-footer.small {
+    display: none;
+  }
+  &.small-bar {
+    .header-main {
+      display: none;
+    }
+    .header-footer {
+      display: none;
+    }
+    .header-footer.small {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .input-percent {
+        width: calc(100% - 30px);
+      }
+    }
+    i {
+      color: white;
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .create-klubs-header {
+    top: env(safe-area-inset-top);
+    position: fixed;
+    width: 100%;
   }
 }
 
@@ -821,7 +857,7 @@ label {
     }
   }
   .nec {
-    color: red;
+    color: #EB5757;
   }
   .input-con {
     width: 100%;
@@ -941,6 +977,7 @@ label {
       line-height: 1;
       margin-left: 10px;
       margin-top: -14px;
+      width: 60px;
     }
     .slider-con {
       display: flex;
@@ -972,12 +1009,29 @@ label {
       input {
         width: calc(100% - 50px);
       }
+      .error-text {
+        display: none;
+      }
+    }
+    &.error {
+      input, textarea {
+        border-color: #EB5757;
+      }
+      .error-text {
+        font-size: 12px;
+        display: block;
+        color: #EB5757;
+      }
     }
   }
   .Whale-chat-input-con {
     .slider-text-con {
       color: #48FA9B;
+      &:focus {
+        color: #06d6a0;
+      }
     }
+    
     .example-track {
       position: relative;
       background: #48FA9B;
@@ -992,4 +1046,9 @@ label {
       color: #48FA9B;
     }
   }
+  &.small-bar {
+    top:  calc(71px + env(safe-area-inset-top));
+    height: calc(calc(var(--app-height) - 71px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+  }
 }
+
