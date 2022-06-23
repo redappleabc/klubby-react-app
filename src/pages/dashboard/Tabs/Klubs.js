@@ -14,7 +14,7 @@ import { DirectiveLocation } from 'graphql';
 //components
 // import OnlineUsers from "./OnlineUsers";
 
-const Chats = (props) => {
+const Klubs = (props) => {
     const [focusSearch, setFocusSearch] = useState(false)
     const [groups, setGroups] = useState(props.groups)
 
@@ -174,4 +174,4 @@ const mapStateToProps = (state) => {
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Klubs);

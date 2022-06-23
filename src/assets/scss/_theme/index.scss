@@ -712,7 +712,7 @@ label {
 
 .horizontal-slider {
   width: 100%;
-  max-width: 500px;
+  // max-width: 500px;
   height: 24px;
 }
 
@@ -924,8 +924,8 @@ label {
       text-align: left;
     }
     .horizontal-slider {
-      width: 80%;
-      max-width: 500px;
+      width: calc(100% - 60px);
+      // max-width: 500px;
     }
     
     .example-thumb {
@@ -1046,9 +1046,12 @@ label {
       color: #48FA9B;
     }
   }
-  &.small-bar {
-    top:  calc(71px + env(safe-area-inset-top));
-    height: calc(calc(var(--app-height) - 71px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+  @media (max-width: 992px) {
+    &.small-bar {
+      top:  calc(71px + env(safe-area-inset-top));
+      height: calc(calc(var(--app-height) - 71px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+    }
   }
+
 }
 
