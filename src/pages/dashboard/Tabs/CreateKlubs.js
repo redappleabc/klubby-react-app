@@ -1,5 +1,5 @@
 import ReactSlider from "react-slider";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import 'rc-slider/assets/index.css';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -18,8 +18,6 @@ import reddit from "../../../assets/images/group/icon/reddit.png";
 import telegram from "../../../assets/images/group/icon/telegram.png";
 import twitter from "../../../assets/images/group/icon/twitter.png";
 import discord from "../../../assets/images/group/icon/discord.png";
-import { useEffect } from "react";
-
 
 const CreateKlubs = (props) => {
     const creatKlubPageRef = useRef();
@@ -27,17 +25,45 @@ const CreateKlubs = (props) => {
     const [mainChatSliderValue, setMainChatSliderValue] = useState(0)
     const [whaleChatSliderValue, setWhaleChatSliderValue] = useState(0)
     const [inputPercent, setInputPercent] = useState(0);
-
-    const inputPercenFlag = [0, 0, 0, 0];
-
-    const calInputPercent = () => {
-        let percent = 0;
-        for (let i =0; i<inputPercenFlag.length; i++) percent+=(100/inputPercenFlag.length)*inputPercenFlag[i];  
-        return percent;
-    }
+    const [profileImage, setProfileImage] = useState(null);
+    const [profileImgpreview, setProfileImgPreview] = useState(profile);
     const [tokenRequirments, setTokenRequirments] = useState('eth');
 
     const totalCount = 10000;
+
+    useEffect(() => {
+        if (profileImage) {
+          const reader = new FileReader();
+    
+          reader.onloadend = () => {
+            setProfileImgPreview(reader.result);
+          };
+    
+          reader.readAsDataURL(profileImage);
+        } else {
+            setProfileImgPreview(profile);
+        }
+      }, [profileImage]);
+
+    // const [klubname, setKlubname] = useState("")
+    // const [logo, setLogo] = useState("")
+    // const [description, setDescription] = useState("")
+    // const [contractAddress, setContractAddress] = useState("")
+    // const [blockchainExplorer, setBlockchainExplorer] = useState("")
+    // const [tokenType, setTokenType] = useState("")
+    // const [minimumAmountForMainGroup, setMinimumAmountForMainGroup] = useState("")
+    // const [minimumAmountForWhaleGroup, setMinimumAmountForWhaleGroup] = useState("")
+    // const [website, setWebsite] = useState("")
+    // const [coinmarketcap, setCoinmarketcap] = useState("")
+    // const [coingecho, setCoingecho] = useState("")
+    // const [dextools, setDextools] = useState("")
+    // const [telegram, setTelegram] = useState("")
+    // const [discord, setDiscord] = useState("")
+    // const [twitter, setTwitter] = useState("")
+    // const [reddit, setReddit] = useState("")
+    // const [instagram, setInsgagram] = useState("")
+
+   
 
     const onScroll = () => {
         if (creatKlubPageRef.current) {
@@ -56,23 +82,47 @@ const CreateKlubs = (props) => {
         }
       };
 
+    //   const formData = {
+    //     uploadImg: null,
+    //     tokenType: "",
+    //     minimumAmountForMainGroup: "",
+    //     minimumAmountForWhaleGroup: ""
+    //   }
+
       const formik = useFormik({
         initialValues: {
             name: '',
             description: '',
             contarctAdress: '',
             BlockchainExplorer: '',
-            // imgUpload: '',
+            name: '',
+            website: '',
+            coinmarketcap: '',
+            BlockchainExplorer: '',
+            coingecko: '',
+            dextools: '',
+            telegram: '',
+            discord: '',
+            twitter: '',
+            reddit: '',
+            instagram: '',
         },
         validationSchema: Yup.object({
             name: Yup.string().required('*Required'),
             description: Yup.string().required('*Required'),
             contarctAdress: Yup.string().required('*Required'),
             BlockchainExplorer: Yup.string().required('*Required'),
-            name: Yup.string().required('*Required'),
         }),
         onSubmit: values => {
             alert('ok');
+        let formData = {
+            profileimg: profileImage,
+            tokenType: tokenRequirments, 
+            mainChatSliderValue: mainChatSliderValue, 
+            whaleChatSliderValue:whaleChatSliderValue,
+            ...formik.values
+        }
+        console.log(formData);
         },
     });
     
@@ -80,15 +130,32 @@ const CreateKlubs = (props) => {
     useEffect(()=>{
         const calInputPercent = () => {
             let percent = 0;
-            for(let index in formik.values) {
-                console.log(Object.keys(formik.values).length)
-                if (formik.values[index] != "") percent += 100/Object.keys(formik.values).length; 
-            }
-            return percent;
+            // for(let index in formik.values) {
+            //     console.log(Object.keys(formik.values).length)
+            //     if (formik.values[index] != "" ) percent += 100/Object.keys(formik.values).length; 
+            // }
+            // return percent.toFixed(0);
+
+            let percent_flag = [0, 0, 0, 0, 0];
+
+            if (profileImage != null) percent_flag[0] = 1;
+            else percent_flag[0] = 0;
+            if (formik.values.name !="") percent_flag[1] = 1;
+            else percent_flag[1] = 0;
+            if (formik.values.description !="") percent_flag[2] = 1;
+            else percent_flag[2] = 0;
+            if (formik.values.contarctAdress !="") percent_flag[3] = 1;
+            else percent_flag[3] = 0;
+            if (formik.values.BlockchainExplorer !="") percent_flag[4] = 1;
+            else percent_flag[4] = 0;
+
+            for (let i = 0; i<percent_flag.length; i++) percent+=20*percent_flag[i];
+
+            return percent.toFixed(0);
         }
         setInputPercent(calInputPercent());
         console.log(formik.values)
-    }, [formik.values])
+    }, [formik.values, profileImage])
 
     return (
         <React.Fragment>
@@ -107,12 +174,6 @@ const CreateKlubs = (props) => {
                     <div className="input-percent">
                         <div style={{width: `${inputPercent}%`}}>{inputPercent}%</div>
                     </div>
-                    {/* <ReactSlider
-                        className="horizontal-slider"
-                        thumbClassName="example-thumb"
-                        trackClassName="example-track"
-                        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                    /> */}
                 </div>
                 <div className="header-footer small">
                         <Link to="#" onClick={()=>{props.setActiveTab("klub")}}>
@@ -121,12 +182,6 @@ const CreateKlubs = (props) => {
                     <div className="input-percent">
                         <div style={{width: `${inputPercent}%`}}>{inputPercent}%</div>
                     </div>
-                        {/* <ReactSlider
-                        className="horizontal-slider"
-                        thumbClassName="example-thumb"
-                        trackClassName="example-track"
-                        renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-                        /> */}
                 </div>
             </div>
             <SimpleBar className={headerSmallState ? "chat-message-list create-klubs-input-con small-bar" : "chat-message-list create-klubs-input-con"}  
@@ -136,14 +191,21 @@ const CreateKlubs = (props) => {
                 <form className="create-klubs-input-main" onSubmit={formik.handleSubmit}>
                     <div className="profile-img">
                         <label htmlFor="imgUpload">
-                            <img src={profile}/>
+                            <img src={profileImgpreview}/>
                         </label>
                         <input
-                            // onChange={formik.handleChange}
-                            // onBlur={formik.handleBlur}
-                            // value={formik.values.name}
+                            onChange={(e)=>{
+                                const file = e.target.files?.[0];
+                                if (file && file.type.substr(0, 5) === "image") {
+                                    setProfileImage(file);
+                                } else {
+                                    setProfileImage(null);
+                                }
+                            }}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.imgUpload}
                             type="file"
-                            // name="imgUpload" 
+                            name="imgUpload" 
                             id="imgUpload" 
                             hidden
                         />
@@ -156,7 +218,7 @@ const CreateKlubs = (props) => {
                         <div className={formik.errors.name ? "input-con error" : "input-con"}>
                             <div className="text" >
                                 Name<span className="nec">*</span>
-                            </div>
+                            </div>  
                             <input 
                                 type="text"
                                 id="name"
@@ -287,7 +349,12 @@ const CreateKlubs = (props) => {
                             <div className="text" >
                                 Website
                             </div>
-                            <input type="text" placeholder="https://website.com"/>
+                            <input 
+                            type="text" 
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.website}
+                            id="website" name="website" placeholder="https://website.com"/>
                         </div>
                         <div className="input-con">
                             <div className="text" >
@@ -297,49 +364,89 @@ const CreateKlubs = (props) => {
                                 <div className="icon">
                                     <img src={coinmarketcap} />
                                 </div>
-                                <input type="text" placeholder="https://coinmarketcap.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.coinmarketcap}
+                                id="coinmarketcap" name="coinmarketcap" placeholder="https://coinmarketcap.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={coingecko} />
                                 </div>
-                                <input type="text" placeholder="https://coingecko.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.coingecko}
+                                id="coingecko" name="coingecko" placeholder="https://coingecko.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={dextools} />
                                 </div>
-                                <input type="text" placeholder="https://dextools.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.dextools}
+                                id="dextools" name="dextools" placeholder="https://dextools.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={telegram} />
                                 </div>
-                                <input type="text" placeholder="https://telegram.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.telegram}
+                                id="telegram" name="telegram" placeholder="https://telegram.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={discord} />
                                 </div>
-                                <input type="text" placeholder="https://discord.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.discord}
+                                id="discord" name="discord" placeholder="https://discord.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={twitter} />
                                 </div>
-                                <input type="text" placeholder="https://twitter.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.twitter}
+                                id="twitter" name="twitter" placeholder="https://twitter.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={reddit} />
                                 </div>
-                                <input type="text" placeholder="https://reddit.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.reddit}
+                                id="reddit" name="reddit" placeholder="https://reddit.com"/>
                             </div>
                             <div className="social-input-con">
                                 <div className="icon">
                                     <img src={instagram} />
                                 </div>
-                                <input type="text" placeholder="https://instagram.com"/>
+                                <input 
+                                type="text" 
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.instagram}
+                                id="instagram" name="instagram" placeholder="https://instagram.com"/>
                             </div>
                         </div>
                         <div>
