@@ -28,6 +28,25 @@ const CreateKlubs = (props) => {
     const [whaleChatSliderValue, setWhaleChatSliderValue] = useState(0)
     const [inputPercent, setInputPercent] = useState(0);
 
+    const [klubname, setKlubname] = useState("")
+    const [logo, setLogo] = useState("")
+    const [description, setDescription] = useState("")
+    const [contractAddress, setContractAddress] = useState("")
+    const [blockchainExplorer, setBlockchainExplorer] = useState("")
+    const [tokenType, setTokenType] = useState("")
+    const [minimumAmountForMainGroup, setMinimumAmountForMainGroup] = useState("")
+    const [minimumAmountForWhaleGroup, setMinimumAmountForWhaleGroup] = useState("")
+    const [website, setWebsite] = useState("")
+    const [coinmarketcap, setCoinmarketcap] = useState("")
+    const [coingecho, setCoingecho] = useState("")
+    const [dextools, setDextools] = useState("")
+    const [telegram, setTelegram] = useState("")
+    const [discord, setDiscord] = useState("")
+    const [twitter, setTwitter] = useState("")
+    const [reddit, setReddit] = useState("")
+    const [instagram, setInsgagram] = useState("")
+
+
     const inputPercenFlag = [0, 0, 0, 0];
 
     const calInputPercent = () => {
