@@ -26,6 +26,9 @@ function ChatMainBoard(props) {
                      <TabPane tabId="klub" id="pills-klub_">
                         <UserGroup />
                     </TabPane>
+                    <TabPane tabId="create-klubs" id="create-klubs_">
+                        <UserGroup />
+                    </TabPane>
                     <TabPane tabId="chat" id="pills-klub_">
                         <UserChat />
                     </TabPane>

@@ -14,7 +14,7 @@ import { DirectiveLocation } from 'graphql';
 //components
 // import OnlineUsers from "./OnlineUsers";
 
-const Chats = (props) => {
+const Klubs = (props) => {
     const [focusSearch, setFocusSearch] = useState(false)
     const [groups, setGroups] = useState(props.groups)
 
@@ -92,7 +92,7 @@ const Chats = (props) => {
                             Klubs
                         </div>
                         <div>
-                            <button className='header-add-btn' onClick={alert}><img src={add_icon}/></button>
+                            <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-klubs")}}><img src={add_icon}/></button>
                         </div>
                     </div>
                     <div className="nav-header-search-con">
@@ -174,4 +174,4 @@ const mapStateToProps = (state) => {
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Klubs);

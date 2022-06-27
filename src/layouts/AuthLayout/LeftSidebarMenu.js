@@ -49,7 +49,7 @@ function LeftSidebarMenu(props) {
                     <Nav pills className="side-menu-nav justify-content-center" role="tablist">
                        
                         <NavItem id="Klubs">
-                            <NavLink id="pills-Klubs-tab" className={classnames({ active: activeTab === 'klub' })} onClick={() => { toggleTab('klub'); }}>
+                            <NavLink id="pills-Klubs-tab" className={classnames({ active: activeTab === 'klub' || activeTab === "create-klubs" })} onClick={() => { toggleTab('klub'); }}>
                                 <div>
                                     <img className='no-select' src={klubs_icon}/>
                                     <img className='select' src={klubs_icon_active}/>
@@ -66,7 +66,6 @@ function LeftSidebarMenu(props) {
                             </NavLink>
                         </NavItem>
         
-
                         <NavItem id="Settings">
                             <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
                                 <div>
