@@ -15,9 +15,9 @@ import Preloader from '../components/preloader';
 
 // handle auth and authorization
 const AppRoute = ({ component: Component, layout: Layout, isAuthProtected, props_user, ...rest }) => {
-    const dispatch = useDispatch();
-    const [loggedin, setLoggedin] = useState(false)
-    let history = useHistory();
+        const dispatch = useDispatch();
+        const [loggedin, setLoggedin] = useState(false)
+        let history = useHistory();
     useEffect(()=>{
         if (isAuthProtected && process.env.REACT_APP_DEFAULTAUTH === "aws") {         
             isAuthenticated().then((user) => {
