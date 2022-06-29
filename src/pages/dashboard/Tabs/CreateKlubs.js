@@ -137,9 +137,9 @@ const CreateKlubs = (props) => {
 
             console.log(formData)
             try {
-                const key = `${Date.now()}-${uuidv4()}.webm`
+                const key = `${Date.now()}-${uuidv4()}.jpg`
                 // await Storage.put(key, formData.avatar, {
-                //   contentType: "video/webm", // contentType is optional
+                //   contentType: "image/jpg", // contentType is optional
                 // });
                 console.log("avarta uploading done")
                 formData.avatar = { ...config_storage, key }

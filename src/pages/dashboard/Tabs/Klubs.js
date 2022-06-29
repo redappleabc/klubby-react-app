@@ -9,6 +9,7 @@ import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, se
 import add_icon from "../../../assets/images/icons/icon-add.svg";
 import { DirectiveLocation } from 'graphql';
 
+import profile from "../../../assets/images/group/profile-img.png";
 
 
 //components
@@ -24,15 +25,9 @@ const Klubs = (props) => {
     }
 
     useEffect(() => {
-        setGroups(props.groups)
-        console.log("tab/chat.js", props.users)
-    }, [props.users, props.newDirectMessage])
-
-
-
-
-
-
+        // setGroups(props.groups)
+        console.log("tab/klubs.js", props.groups)
+    }, [props.groups])
 
     function openUserGroup(e, group) {
 
@@ -109,13 +104,14 @@ const Klubs = (props) => {
                 <SimpleBar className="chat-message-list">
                         <ul className="list-unstyled chat-list chat-user-list group-list" id="group-list">
                             {
-                                groups.map((group, key) =>
-                                    <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === props.active_user ? "active" : ""}>
-                                        <Link to="#" onClick={(e) => openUserGroup(e, group)}>
+                                props.groups.map((group, key) =>
+                                    <li key={key} id={"klub" + key} >
+                                        {/* <Link to="#" onClick={(e) => openUserGroup(e, group)}> */}
+                                        <Link to="#" >
                                             <div className="group-list-con">
                                                 {
                                                     group.profilePicture === "Null" ?
-                                                        <div className={"chat-user-img " + group.status}>
+                                                        <div className={"chat-user-img "}>
                                                             <div className="avatar-xs">
                                                                 <span className="avatar-title rounded-circle bg-soft-primary text-primary">
                                                                     {group.name.charAt(0)}
@@ -126,19 +122,18 @@ const Klubs = (props) => {
                                                             }
                                                         </div>
                                                         :
-                                                        <div className={"chat-user-img " + group.status}>
-                                                            <img src={group.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                            {
-                                                                group.status && <span className="user-status"></span>
-                                                            }
+                                                        <div className={"chat-user-img "}>
+                                                            <img src={profile} className="rounded-circle avatar-xs" alt="klubby" />
+                                                            
                                                         </div>
                                                 }
 
                                                 <div className='group-infor-con'>
                                                     <div className="flex-1 overflow-hidden group-description">
-                                                        <h5 className="text-truncate font-size-16 mb-1">{group.name}</h5>
+                                                        <h5 className="text-truncate font-size-16 mb-1">{group.klubname}</h5>
                                                         <p className="chat-user-message group-description-text font-size-12 mb-0">
-                                                            {group.description}
+                                                            This is a super rad group for true ethereum ballers to hang out and talk about ethereum.
+                                                            This is a super rad group for true ethereum ballers to hang out and talk about ethereum.
                                                         </p>
                                                     </div>
                                                     <div className='group-information'>
