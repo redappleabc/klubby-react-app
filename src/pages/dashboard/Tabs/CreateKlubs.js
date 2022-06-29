@@ -147,6 +147,11 @@ const CreateKlubs = (props) => {
                 
                 const res = await createKlubApollo({
                     variables: formData
+                }).then((res)=>{
+                    console.log("create klub success", res)
+                })
+                .catch((err)=>{
+                    console.log("create klub error", err)
                 })
                 console.log(res)
 
