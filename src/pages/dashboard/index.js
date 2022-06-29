@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import apollo_client from '../../apollo';
 
 import getUserConversationsGQL from '../../apollo/queries/getUserConversations';
+import getKlubsByKlubNameGQL from '../../apollo/queries/getKlubsByKlubName';
 import getConversationMessagesGQL from '../../apollo/queries/getConversationMessages';
 import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNewMessages';
 import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeToRemovedMessages';
@@ -15,8 +16,8 @@ import subscribeToNewUserConversationbridgeGQL from '../../apollo/subscriptions/
 import subscribeToRemovedUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToRemovedUserConversationbridge';
 import subscribeToReadMessageGQL from '../../apollo/subscriptions/subscribeToReadMessage';
 import setReadGQL from '../../apollo/mutations/setRead';
-import { useSubscription } from '@apollo/client';
-import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
+import { from, useSubscription } from '@apollo/client';
+import { setFullUser, activeUser, subscribeDirectMessage, setFullGroup } from '../../redux/actions';
 import Preloader from '../../components/preloader';
 import { useHistory } from 'react-router-dom';
 
@@ -432,10 +433,20 @@ const Index = (props) => {
                 history.push("/logout")                
 
             })
+
+            apollo_client.query({
+                query: getKlubsByKlubNameGQL,
+                variables: {klubname : ""}
+            }).then(async (res) => {
+                 const klubs = [...res.data.searchKlubs];
+                 props.setFullGroup(klubs);
+            }).catch((err) => {
+                console.log(err)
+                history.push('/logout')
+            })
         }
 
     }, [])
-
 
 
 
@@ -464,9 +475,9 @@ const Index = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const { users, posts, active_user } = state.Chat;
+    const { users, posts, active_user, groups } = state.Chat;
     const { user, loading, error } = state.Auth;
-    return { users, posts, user, active_user };
+    return { users, posts, user, active_user, groups };
 };
 
-export default connect(mapStateToProps, { setFullUser, activeUser, subscribeDirectMessage })(Index);
+export default connect(mapStateToProps, { setFullUser, activeUser, subscribeDirectMessage, setFullGroup })(Index);

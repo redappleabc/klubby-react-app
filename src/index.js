@@ -8,9 +8,13 @@ import { configureStore } from './redux/store';
 
 
 import {Amplify} from 'aws-amplify';
-import awsconfig from './config_aws';
+import {config_userPool, config_storage} from './config_aws';
 
-Amplify.configure({Auth: awsconfig});
+Amplify.configure(
+  {
+    Auth: config_userPool,
+    Storage: config_storage
+  });
 
 
 ReactDOM.render(

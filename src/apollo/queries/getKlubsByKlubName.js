@@ -4,11 +4,5 @@ export default gql`query getKlubsByKlubName($klubname:String!) {
     searchKlubs(klubname: $klubname)
     {
         klubname
-        avatar {
-            bucket
-            key
-            region
-        }
-        description
     }
 }`;
