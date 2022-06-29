@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 //simplebar
 import SimpleBar from "simplebar-react";
 //actions
-import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
+import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setFullGroup, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
 import add_icon from "../../../assets/images/icons/icon-add.svg";
 import { DirectiveLocation } from 'graphql';
-
+import apollo_client from '../../../apollo';
+import getKlubsByKlubNameGQL from '../../../apollo/queries/getKlubsByKlubName';
 import profile from "../../../assets/images/group/profile-img.png";
 
 
@@ -16,6 +17,7 @@ import profile from "../../../assets/images/group/profile-img.png";
 // import OnlineUsers from "./OnlineUsers";
 
 const Klubs = (props) => {
+    const history = useHistory();
     const [focusSearch, setFocusSearch] = useState(false)
     const [groups, setGroups] = useState(props.groups)
 
@@ -78,6 +80,20 @@ const Klubs = (props) => {
         }
     }
 
+    const setSearchedKlubs = (key) => {
+        apollo_client.query({
+            query: getKlubsByKlubNameGQL,
+            variables: {klubname : key}
+        }).then(async (res) => {
+             const klubs = [...res.data.searchKlubs];
+             console.log("search klubs",klubs)
+             props.setFullGroup(klubs);
+        }).catch((err) => {
+            console.log(err)
+            history.push('/logout')
+        })
+    }
+
     return (
         <React.Fragment>
             <div>
@@ -95,7 +111,7 @@ const Klubs = (props) => {
                             <span>
                                 <i className="ri-search-line search-icon font-size-24"></i>
                             </span>
-                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} placeholder="Search..." />
+                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e)=>{setSearchedKlubs(e.target.value);}} placeholder="Search..." />
                         </div>
                         {/* Search Box */}
                     </div>
@@ -169,4 +185,4 @@ const mapStateToProps = (state) => {
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Klubs);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setFullGroup, setActiveTab, setActiveChatSubTab, activeGroup })(Klubs);

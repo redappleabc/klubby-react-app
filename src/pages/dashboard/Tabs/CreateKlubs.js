@@ -24,6 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { config_storage } from "../../../config_aws";
 import createKlubGQL from "../../../apollo/mutations/createKlub";
 import { useMutation } from '@apollo/client';
+import { setFullGroup } from "../../../redux/actions";
 
 
 
@@ -58,25 +59,6 @@ const CreateKlubs = (props) => {
         }
     }, [profileImage]);
 
-    // const [klubname, setKlubname] = useState("")
-    // const [logo, setLogo] = useState("")
-    // const [description, setDescription] = useState("")
-    // const [contractAddress, setContractAddress] = useState("")
-    // const [blockchainExplorer, setblockchainExplorer] = useState("")
-    // const [tokenType, setTokenType] = useState("")
-    // const [minimumAmountForMainGroup, setMinimumAmountForMainGroup] = useState("")
-    // const [minimumAmountForWhaleGroup, setMinimumAmountForWhaleGroup] = useState("")
-    // const [website, setWebsite] = useState("")
-    // const [coinmarketcap, setCoinmarketcap] = useState("")
-    // const [coingecho, setCoingecho] = useState("")
-    // const [dextools, setDextools] = useState("")
-    // const [telegram, setTelegram] = useState("")
-    // const [discord, setDiscord] = useState("")
-    // const [twitter, setTwitter] = useState("")
-    // const [reddit, setReddit] = useState("")
-    // const [instagram, setInsgagram] = useState("")
-
-
 
     const onScroll = () => {
         if (creatKlubPageRef.current) {
@@ -94,13 +76,6 @@ const CreateKlubs = (props) => {
             }
         }
     };
-
-    //   const formData = {
-    //     uploadImg: null,
-    //     tokenType: "",
-    //     minimumAmountForMainGroup: "",
-    //     minimumAmountForWhaleGroup: ""
-    //   }
 
     const formik = useFormik({
         initialValues: {
@@ -149,13 +124,14 @@ const CreateKlubs = (props) => {
                     variables: formData
                 }).then((res)=>{
                     console.log("create klub success", res)
+                    props.setActiveTab('klub')
+                    console.log("new klubs", [{...formData}, ...props.groups])
+                    props.setFullGroup([{...formData}, ...props.groups])
                 })
                 .catch((err)=>{
                     console.log("create klub error", err)
                 })
                 console.log(res)
-
-
             } catch (error) {
                 console.log("Error uploading file: ", error);
                 setUploading(false)
@@ -165,6 +141,9 @@ const CreateKlubs = (props) => {
     });
 
 
+    useEffect(()=> {
+        console.log("creatklubssssssssssssssssssssssssssssssss",props.groups)
+    }, [props.groups])
     useEffect(() => {
         const calInputPercent = () => {
             let percent = 0;
@@ -499,7 +478,8 @@ const CreateKlubs = (props) => {
 
 const mapStateToProps = (state) => {
     const { activeTab } = state.Layout;
-    return { activeTab }
+    const { groups } = state.Chat;
+    return { activeTab, groups }
 }
 
-export default connect(mapStateToProps, { setActiveTab })(CreateKlubs);
+export default connect(mapStateToProps, { setActiveTab, setFullGroup })(CreateKlubs);
