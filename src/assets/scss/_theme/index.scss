@@ -1,3 +1,4 @@
+@import "./../themes.scss";
 @import "./_theme.scss";
 
 body {
@@ -78,9 +79,7 @@ body {
 label {
   cursor: pointer;
 }
-.modal-content {
-  background-color: #242424;
-}
+
 .form-control {
   background-color: #19191B;
   
@@ -1053,6 +1052,30 @@ label {
       height: calc(calc(var(--app-height) - 71px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     }
   }
+}
 
+.modal-content, .modal-body, .modal-header, .modal-footer {
+  background-color: white;
+  border: white;
+}
+
+.form-control, .form-control:focus {
+  color: #19191B;
+  background-color: #F2F2F2;
+  border-radius: 50px;
+  border: none;
+}
+
+.chat-list li a {
+  position: relative;
+  display: block;
+  padding: 15px 20px;
+  color: #19191B;
+  transition: all 0.4s;
+  border-top: 1px solid white;
+  border-radius: 4px;
+}
+.chat-list li a:hover, .chat-list li.active a {
+  background-color: #E4FEF0;
 }
 
