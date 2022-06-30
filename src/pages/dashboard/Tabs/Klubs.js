@@ -18,8 +18,8 @@ import profile from "../../../assets/images/group/profile-img.png";
 
 const Klubs = (props) => {
     const history = useHistory();
-    const [focusSearch, setFocusSearch] = useState(false)
-    const [groups, setGroups] = useState(props.groups)
+    const [focusSearch, setFocusSearch] = useState(false);
+    // const [groups, setGroups] = useState(props.groups)
 
 
     function toggleSearchFocus() {

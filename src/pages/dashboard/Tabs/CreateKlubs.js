@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setActiveTab } from "../../../redux/actions";
 import SimpleBar from "simplebar-react";
-import { useFormik } from 'formik';
+import { FastField, useFormik } from 'formik';
 import { Form } from "reactstrap";
 import * as Yup from 'yup';
+
+import Preloader from "../../../components/preloader";
 
 import profile from "../../../assets/images/group/profile-img.png";
 import coinmarketcap from "../../../assets/images/group/icon/coinmarketcap.png";
@@ -39,7 +41,7 @@ const CreateKlubs = (props) => {
     const [tokenRequirments, setTokenRequirments] = useState('eth');
 
     const [uploading, setUploading] = useState(false)
-
+    const [error, seterror] = useState('');
     const [createKlubApollo, { }] = useMutation(createKlubGQL)
 
 
@@ -119,31 +121,38 @@ const CreateKlubs = (props) => {
                 console.log("avarta uploading done")
                 formData.avatar = { ...config_storage, key }
                 formData.klubname = formData.name
-                
+                setUploading(true);
                 const res = await createKlubApollo({
                     variables: formData
                 }).then((res)=>{
                     console.log("create klub success", res)
+                    setUploading(false);
                     props.setActiveTab('klub')
                     console.log("new klubs", [{...formData}, ...props.groups])
                     props.setFullGroup([{...formData}, ...props.groups])
                 })
                 .catch((err)=>{
                     console.log("create klub error", err)
+                    setUploading(false)
+                    scrolltoBottom()
+                    seterror("Create klub error!");
                 })
                 console.log(res)
             } catch (error) {
                 console.log("Error uploading file: ", error);
-                setUploading(false)
+                
             }
             console.log(formData);
         },
     });
 
 
-    useEffect(()=> {
-        console.log("creatklubssssssssssssssssssssssssssssssss",props.groups)
-    }, [props.groups])
+    function scrolltoBottom() {
+        if (creatKlubPageRef.current.el) {
+            creatKlubPageRef.current.getScrollElement().scrollTop = creatKlubPageRef.current.getScrollElement().scrollHeight;
+        }
+    }
+
     useEffect(() => {
         const calInputPercent = () => {
             let percent = 0;
@@ -175,7 +184,12 @@ const CreateKlubs = (props) => {
     }, [formik.values, profileImage])
 
     return (
-        <React.Fragment>
+        <>
+        {
+            uploading ?
+            <Preloader/>
+            :
+            <React.Fragment>
             <div className={headerSmallState ? "create-klubs-header small-bar" : "create-klubs-header"}>
                 <div className="header-main">
                     <div className="header-link">
@@ -466,13 +480,18 @@ const CreateKlubs = (props) => {
                                     id="instagram" name="instagram" placeholder="https://instagram.com" />
                             </div>
                         </div>
+                        
                         <div>
                             <button className="auth-main-btn auth-main-btn-new" type="submit">Create Klub</button>
                         </div>
+                        {error && <div className="upload-error">{error}</div>}
                     </div>
                 </form>
             </SimpleBar>
         </React.Fragment>
+        }
+        </>
+       
     )
 }
 
