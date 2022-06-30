@@ -855,6 +855,15 @@ label {
       font-weight: 600;
       display: block;
     }
+
+    &.error {
+      img {
+        border: 2px solid #EB5757;
+      } 
+      .error-text {
+        color: #EB5757;
+      }
+    }
   }
   .nec {
     color: #EB5757;

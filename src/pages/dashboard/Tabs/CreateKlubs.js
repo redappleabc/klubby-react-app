@@ -39,9 +39,10 @@ const CreateKlubs = (props) => {
     const [profileImage, setProfileImage] = useState(null);
     const [profileImgpreview, setProfileImgPreview] = useState(profile);
     const [tokenRequirments, setTokenRequirments] = useState('eth');
+    const [profileImgError, setProfileImgError] = useState('');
 
     const [uploading, setUploading] = useState(false)
-    const [error, seterror] = useState('');
+    const [error, setError] = useState('');
     const [createKlubApollo, { }] = useMutation(createKlubGQL)
 
 
@@ -60,7 +61,6 @@ const CreateKlubs = (props) => {
             setProfileImgPreview(profile);
         }
     }, [profileImage]);
-
 
     const onScroll = () => {
         if (creatKlubPageRef.current) {
@@ -111,48 +111,63 @@ const CreateKlubs = (props) => {
                 minimumAmountForWhaleGroup: whaleChatSliderValue,
                 ...formik.values
             }
-
             console.log(formData)
-            try {
-                const key = `${Date.now()}-${uuidv4()}.jpg`
-                // await Storage.put(key, formData.avatar, {
-                //   contentType: "image/jpg", // contentType is optional
-                // });
-                console.log("avarta uploading done")
-                formData.avatar = { ...config_storage, key }
-                formData.klubname = formData.name
-                setUploading(true);
-                const res = await createKlubApollo({
-                    variables: formData
-                }).then((res)=>{
-                    console.log("create klub success", res)
-                    setUploading(false);
-                    props.setActiveTab('klub')
-                    console.log("new klubs", [{...formData}, ...props.groups])
-                    props.setFullGroup([{...formData}, ...props.groups])
-                })
-                .catch((err)=>{
-                    console.log("create klub error", err)
-                    setUploading(false)
-                    scrolltoBottom()
-                    seterror("Create klub error!");
-                })
-                console.log(res)
-            } catch (error) {
-                console.log("Error uploading file: ", error);
-                
+            if (profileImage == null ) {
+                setError('Please fill all the required input!');
+                setProfileImgError('*Require!');
             }
+            else {
+                try {
+                    const key = `${Date.now()}-${uuidv4()}.jpg`
+                    // await Storage.put(key, formData.avatar, {
+                    //   contentType: "image/jpg", // contentType is optional
+                    // });
+                    console.log("avarta uploading done")
+                    formData.avatar = { ...config_storage, key }
+                    formData.klubname = formData.name
+                    setUploading(true);
+                    const res = await createKlubApollo({
+                        variables: formData
+                    }).then((res)=>{
+                        console.log("create klub success", res)
+                        setUploading(false);
+                        props.setActiveTab('klub');
+                        setError("");
+                        console.log("new klubs", [{...formData}, ...props.groups])
+                        props.setFullGroup([{...formData}, ...props.groups])
+                    })
+                    .catch((err)=>{
+                        console.log("create klub error")
+                        // console.log(err.message)
+                        // alert(err)
+                        setUploading(false)
+                        scrolltoBottom()
+                        setError("Create klub error!");
+                    })
+                    console.log(res)
+                } catch (error) {
+                    console.log("Error uploading file: ", error);
+                    
+                }
+            }
+
             console.log(formData);
         },
     });
 
 
-    function scrolltoBottom() {
+    const scrolltoBottom = () => {
         if (creatKlubPageRef.current.el) {
             creatKlubPageRef.current.getScrollElement().scrollTop = creatKlubPageRef.current.getScrollElement().scrollHeight;
         }
     }
 
+    const onSubmit = () => {
+        if (profileImage == null ) {
+            setError('Please fill all the required input!');
+            setProfileImgError('*Require!');
+        }
+    }
     useEffect(() => {
         const calInputPercent = () => {
             let percent = 0;
@@ -164,16 +179,48 @@ const CreateKlubs = (props) => {
 
             let percent_flag = [0, 0, 0, 0, 0];
 
-            if (profileImage != null) percent_flag[0] = 1;
-            else percent_flag[0] = 0;
-            if (formik.values.name != "") percent_flag[1] = 1;
-            else percent_flag[1] = 0;
-            if (formik.values.description != "") percent_flag[2] = 1;
-            else percent_flag[2] = 0;
-            if (formik.values.contractAddress != "") percent_flag[3] = 1;
-            else percent_flag[3] = 0;
-            if (formik.values.blockchainExplorer != "") percent_flag[4] = 1;
-            else percent_flag[4] = 0;
+            if (profileImage != null) {
+                percent_flag[0] = 1;
+                setProfileImgError('');
+                setError("");
+            }
+            else {
+                percent_flag[0] = 0;
+                // setProfileImgError('*Require!');
+                // setError("Please fill all the input and select profile image!")
+            }
+            if (formik.values.name != "") {
+                percent_flag[1] = 1;
+                // setError("");
+            }
+            else {
+                percent_flag[1] = 0;
+                // setError("Please fill all the input and select profile image!")
+            }
+            if (formik.values.description != "") {
+                percent_flag[2] = 1;
+                // setError("");
+            }
+            else {
+                percent_flag[2] = 0;
+                // setError("Please fill all the input and select profile image!")
+            }
+            if (formik.values.contractAddress != "") {
+                percent_flag[3] = 1;
+                // setError("");
+            }
+            else {
+                percent_flag[3] = 0;
+                // setError("Please fill all the input and select profile image!")
+            }
+            if (formik.values.blockchainExplorer != "") {
+                percent_flag[4] = 1;
+                // setError("");
+            } 
+            else {
+                percent_flag[4] = 0;
+                // setError("Please fill all the input and select profile image!")
+            }
 
             for (let i = 0; i < percent_flag.length; i++) percent += 20 * percent_flag[i];
 
@@ -220,10 +267,11 @@ const CreateKlubs = (props) => {
                 ref={creatKlubPageRef}
             >
                 <form className="create-klubs-input-main" onSubmit={formik.handleSubmit}>
-                    <div className="profile-img">
+                    <div className={profileImgError ==="" ? "profile-img " : "profile-img error"}>
                         <label htmlFor="imgUpload">
                             <img src={profileImgpreview} />
                         </label>
+                        <div className='error-text'>{profileImgError}</div>
                         <input
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
@@ -482,7 +530,7 @@ const CreateKlubs = (props) => {
                         </div>
                         
                         <div>
-                            <button className="auth-main-btn auth-main-btn-new" type="submit">Create Klub</button>
+                            <button className="auth-main-btn auth-main-btn-new" type="submit" onClick={onSubmit}>Create Klub</button>
                         </div>
                         {error && <div className="upload-error">{error}</div>}
                     </div>
