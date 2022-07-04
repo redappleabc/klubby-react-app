@@ -148,8 +148,7 @@ const Klubs = (props) => {
                                                     <div className="flex-1 overflow-hidden group-description">
                                                         <h5 className="text-truncate font-size-16 mb-1">{group.klubname}</h5>
                                                         <p className="chat-user-message group-description-text font-size-12 mb-0">
-                                                            This is a super rad group for true ethereum ballers to hang out and talk about ethereum.
-                                                            This is a super rad group for true ethereum ballers to hang out and talk about ethereum.
+                                                            {group.description}
                                                         </p>
                                                     </div>
                                                     <div className='group-information'>
