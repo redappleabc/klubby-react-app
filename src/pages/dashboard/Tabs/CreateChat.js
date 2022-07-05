@@ -95,12 +95,22 @@ const CreateChats = (props) => {
 
 
     useEffect(() => {
-        setGroups(props.groups)
-        setRecentChatList(props.users)
-        console.log("tab/chat.js", props.users)
-    }, [props.users, props.newDirectMessage])
+        addNewUser = null
+        apollo_client.query({
+            query: getUsersByUserNameGQL,
+            variables: { username: "" }
+        }).then((res) => {
+            let searchedUsers = res.data.searchUsers;
 
-
+            if (searchedUsers) {
+                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                setSearchedUserList(searchedUsers)
+            }
+            // console.log(searchedUsers)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [])
 
 
     function addGroup() {
@@ -226,83 +236,6 @@ const CreateChats = (props) => {
         }
     }
 
-    function openUserChat(e, chat) {
-        //e.preventDefault();
-
-        //find index of current chat in array
-        var index = chat.name;
-
-
-        // set activeUser 
-        props.activeUser(index);
-
-
-        var chatList = document.getElementById("chat-list");
-        var clickedItem = e.target;
-        var currentli = null;
-
-        if (chatList) {
-            var li = chatList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
-            for (var k = 0; k < li.length; ++k) {
-                if (li[k].contains(clickedItem)) {
-                    currentli = li[k];
-                    break;
-                }
-            }
-        }
-
-        //activation of clicked coversation user
-        if (currentli) {
-            currentli.classList.add('active');
-        }
-
-        var userChat = document.getElementsByClassName("user-chat");
-        if (userChat) {
-            userChat[0].classList.add("user-chat-show");
-        }
-
-
-
-        //removes unread badge if user clicks
-
-        // var unread = document.getElementById("unRead" + chat.id);
-        // alert(unread)
-        // if (unread) {
-        //     unread.style.display = "none";
-        // }
-
-        if (props.users[index].messages.length > 0
-            && props.users[index].messages[props.users[index].messages.length - 1].sender !== props.user.username
-            && props.users[index].read !== props.users[index].messages[props.users[index].messages.length - 1].id) {
-            apollo_client.mutate({
-                mutation: setReadGQL,
-                variables: {
-                    conversationId: props.users[index].conversationId,
-                    username: props.user.username,
-                    messageId: props.users[index].messages[props.users[index].messages.length - 1].id
-                }
-            }).then((res) => {
-               
-                let copyallUsers = props.users;
-                copyallUsers[index].read = res.data.setRead.read;
-                props.setFullUser(copyallUsers)
-                console.log("set read success", res);
-            }).catch((err) => {
-                console.log("set read error ", err)
-            })
-        }
-        let copyAllUsers = props.users;
-        copyAllUsers[index].unRead = 0;
-        props.setFullUser(copyAllUsers)
-    }
-
     function createUserChat(e, user) {
         //e.preventDefault();
         addNewUser = user
@@ -365,54 +298,7 @@ const CreateChats = (props) => {
 
         toggleAddMemberModal();
     }
-    function openUserGroup(e, group) {
 
-        //e.preventDefault();
-
-        //find index of current chat in array
-        var index = props.groups.indexOf(group);
-
-        // set activeUser 
-        props.activeGroup(index);
-
-
-        var groupList = document.getElementById("group-list");
-        var clickedItem = e.target;
-        var currentli = null;
-
-        if (groupList) {
-            var li = groupList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
-            for (var k = 0; k < li.length; ++k) {
-                if (li[k].contains(clickedItem)) {
-                    currentli = li[k];
-                    break;
-                }
-            }
-        }
-
-        //activation of clicked coversation user
-        if (currentli) {
-            currentli.classList.add('active');
-        }
-
-        var userChat = document.getElementsByClassName("user-group");
-        if (userChat) {
-            userChat[0].classList.add("user-chat-show");
-        }
-
-        //removes unread badge if user clicks
-        var unread = document.getElementById("unRead" + group.id);
-        if (unread) {
-            unread.style.display = "none";
-        }
-    }
 
     const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
@@ -449,65 +335,77 @@ const CreateChats = (props) => {
     return (
         <React.Fragment>
             <div>
-                <ModalHeader tag="h5" className="modal-title font-size-14" toggle={toggleAddMemberModal}>Add New Member</ModalHeader>
-                <ModalBody className="p-4">
-                    <Form>
-                        <div className="mb-4">
-                            <Label className="form-label" htmlFor="addgroupname-input">Type username</Label>
-                            <Input type="text" className="form-control" id="addgroupname-input" onChange={(e) => { searchUsersByUsername(e) }} />
+                <div className='nav-message-header'>
+                    <div className='nav-header-header'>
+                        
+                        <div className='nav-header-title'>
+                            <Link to="#" onClick={() => { props.setActiveTab("chat") }}>
+                                <i className="ri-arrow-left-s-line"></i>
+                            </Link>
+                            New Chat
                         </div>
-                        <div className="mb-4">
-                            <SimpleBar className="chat-search-container">
-                                <div className=''>
-                                    <ul className="list-unstyled chat-list" id="search-chat-list">
-                                        {
-                                            searchedUserList.map((searchedUser, key) =>
-                                                <li key={key} id={"searchedUser" + key}>
-                                                    <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
-                                                        <div className="d-flex align-items-center">
-                                                            {
-                                                                typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
-                                                                    <div className={"chat-user-img " + "chat.status" + ""}>
-                                                                        <div className="avatar-xs">
-                                                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
-                                                                                {searchedUser.username.charAt(0)}
-                                                                            </span>
-                                                                        </div>
-                                                                        {/* {
-                                                                                    chat.status && <span className="user-status"></span>
-                                                                                } */}
-                                                                    </div>
-                                                                    :
-                                                                    <div className={"chat-user-img " + "chat.status" + ""}>
-                                                                        <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
-                                                                        {/* {
-                                                                                    chat.status && <span className="user-status"></span>
-                                                                                } */}
-                                                                    </div>
-                                                            }
+                        <div>
+                            <buttonn className="add-chat-btn">Chat</buttonn>
+                        </div>
+                    </div>
+                    <div className="nav-header-search-con">
+                        <div className={focusSearch ? "search-box chat-search-box active" : "search-box chat-search-box"}>
+                            <span>
+                                <i className="ri-search-line search-icon font-size-24"></i>
+                            </span>
+                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e)=>{searchUsersByUsername(e)}} placeholder="Search..." />
+                        </div>
+                        {/* Search Box */}
+                    </div>
+                </div>
 
-                                                            <div className="flex-1 overflow-hidden">
-                                                                <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
-
+                <SimpleBar className="">
+                    <div className=''>
+                        <ul className="list-unstyled chat-list" id="search-chat-list">
+                            {
+                                searchedUserList.map((searchedUser, key) =>
+                                    <li key={key} id={"searchedUser" + key}>
+                                        <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
+                                            <div className="d-flex align-items-center">
+                                                {
+                                                    typeof searchedUser.profilePicture === "undefined" || searchedUser.profilePicture === null ?
+                                                        <div className={"chat-user-img " + "chat.status" + ""}>
+                                                            <div className="avatar-xs">
+                                                                <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                                                    {searchedUser.username.charAt(0)}
+                                                                </span>
                                                             </div>
+                                                            {/* {
+                                                                        chat.status && <span className="user-status"></span>
+                                                                    } */}
                                                         </div>
+                                                        :
+                                                        <div className={"chat-user-img " + "chat.status" + ""}>
+                                                            <img src={avatar1} className="rounded-circle avatar-xs" alt="klubby" />
+                                                            {/* {
+                                                                        chat.status && <span className="user-status"></span>
+                                                                    } */}
+                                                        </div>
+                                                }
 
-                                                    </Link>
-                                                </li>
-                                            )
-                                        }
-                                    </ul>
-                                </div>
-                            </SimpleBar>
-                        </div>
-                    </Form>
-                </ModalBody>
-                <ModalFooter>
-                    <Button type="button" color="link" onClick={toggleAddMemberModal}>Close</Button>
-                    <Button type="button" color="primary" onClick={onclickAddNewUser}>Add Member</Button>
-                </ModalFooter>
+                                                <div className="flex-1 overflow-hidden">
+                                                    <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
+
+                                                </div>
+                                            </div>
+
+                                        </Link>
+                                    </li>
+                                )
+                            }
+                        </ul>
+                    </div>
+                </SimpleBar>
+
+                {/* Start chat-message-list  */}
+
+                {/* End chat-message-list */}
             </div>
-            {/* End add group Modal */}
         </React.Fragment>
     );
 }
