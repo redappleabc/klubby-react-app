@@ -74,11 +74,11 @@
 .emoji-mart-category {
   .emoji-mart-emoji {
     &:hover {
-      background-color: $gray-300 !important;
+      // background-color: $gray-300 !important;
     }
 
     &::before {
-      background-color: $gray-300 !important;
+      // background-color: $gray-300 !important;
       border-radius: 100% !important;
     }
   }
@@ -128,3 +128,19 @@
 }
 
 
+.add-chat-btn {
+  height: 36px;
+  width: auto;
+  padding: 0 16px;
+  background-color: #6355FA;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  display: inline-block;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

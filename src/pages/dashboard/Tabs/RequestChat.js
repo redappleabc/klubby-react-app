@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
+import { Input, InputGroup } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Button, Dropdown, UncontrolledDropdown, DropdownItem, DropdownToggle, DropdownMenu, CardBody, Alert, Collapse, Card, CardHeader, Modal, ModalHeader, ModalBody, Form, Label, ModalFooter, TabContent, TabPane } from "reactstrap";
 
 import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
+import classnames from "classnames";
 //simplebar
 import SimpleBar from "simplebar-react";
+import SelectContact from "../../../components/SelectContact";
 //actions
 import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
+import group1 from "../../../assets/images/group/group1.png";
+import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import { v4 as uuidv4 } from 'uuid';
 
 import createConversationGQL from '../../../apollo/mutations/createConversation';
@@ -26,7 +32,7 @@ import add_icon from "../../../assets/images/icons/icon-add.svg";
 //components
 // import OnlineUsers from "./OnlineUsers";
 
-const Chats = (props) => {
+const RequestChats = (props) => {
     const [searchChat, setSearchChat] = useState("")
     const [focusSearch, setFocusSearch] = useState(false)
     const [recentChatList, setRecentChatList] = useState(props.users)
@@ -40,7 +46,6 @@ const Chats = (props) => {
     const [groupName, setGroupName] = useState("")
     const [groupDesc, setGroupDesc] = useState("")
     const [searchedUserList, setSearchedUserList] = useState([])
-    const [notiDropdown, setNotiDropdown] = useState(false)
 
 
     const [createConversationApollo, { }] = useMutation(createConversationGQL)
@@ -170,15 +175,35 @@ const Chats = (props) => {
     }
 
 
-    function setNoticDropdown() {
-        setNotiDropdown(!notiDropdown)
+
+    function searchUsersByUsername(e) {
+
+        apollo_client.query({
+            query: getUsersByUserNameGQL,
+            variables: { username: e.target.value }
+        }).then((res) => {
+            let searchedUsers = res.data.searchUsers;
+            if (searchedUsers) {
+                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                setSearchedUserList(searchedUsers)
+            }
+            console.log(searchedUsers)
+        }).catch((err) => {
+            console.log(err)
+        })
+
     }
+
+
 
     function handleChange(e) {
         setSearchChat(e.target.value)
         var search = e.target.value;
         let conversation = recentChatList;
         let filteredArray = [];
+
+
+
 
         //find conversation name from array
         for (let i = 0; i < conversation.length; i++) {
@@ -335,7 +360,54 @@ const Chats = (props) => {
 
         toggleAddMemberModal();
     }
+    function openUserGroup(e, group) {
 
+        //e.preventDefault();
+
+        //find index of current chat in array
+        var index = props.groups.indexOf(group);
+
+        // set activeUser 
+        props.activeGroup(index);
+
+
+        var groupList = document.getElementById("group-list");
+        var clickedItem = e.target;
+        var currentli = null;
+
+        if (groupList) {
+            var li = groupList.getElementsByTagName("li");
+            //remove coversation user
+            for (var i = 0; i < li.length; ++i) {
+                if (li[i].classList.contains('active')) {
+                    li[i].classList.remove('active');
+                }
+            }
+            //find clicked coversation user
+            for (var k = 0; k < li.length; ++k) {
+                if (li[k].contains(clickedItem)) {
+                    currentli = li[k];
+                    break;
+                }
+            }
+        }
+
+        //activation of clicked coversation user
+        if (currentli) {
+            currentli.classList.add('active');
+        }
+
+        var userChat = document.getElementsByClassName("user-group");
+        if (userChat) {
+            userChat[0].classList.add("user-chat-show");
+        }
+
+        //removes unread badge if user clicks
+        var unread = document.getElementById("unRead" + group.id);
+        if (unread) {
+            unread.style.display = "none";
+        }
+    }
 
     const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
@@ -372,19 +444,32 @@ const Chats = (props) => {
     return (
         <React.Fragment>
             <div>
-            <div className='nav-message-header'>
+                <div className='nav-message-header'>
                     <div className='nav-header-header'>
+                        
                         <div className='nav-header-title'>
-                            Chat
+                            <Link to="#" onClick={() => { props.setActiveTab("chat") }}>
+                                <i className="ri-arrow-left-s-line"></i>
+                            </Link>
+                            Requests
                         </div>
                         
-                        <div>
-                            <span className='nav-header-link' onClick={()=>{props.setActiveTab("request-chat")}}>
-                                2 Requests
-                            </span>
-                            <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-chat")}}><img src={add_icon}/></button>
-                        </div>
-
+                        <UncontrolledDropdown className='header-dropdown'>
+                            <DropdownToggle>
+                                <div className='header-edit-btn'>
+                                    <i className="ri-more-2-fill"></i>
+                                </div>
+                            </DropdownToggle>
+                            <DropdownMenu className="dropdown-menu-end">
+                                <DropdownItem>
+                                    <div>Chat Settings</div> <i className="ri-chat-3-line"></i>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <div>Members</div> <i className="ri-group-line"></i>
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                        
                     </div>
                     <div className="nav-header-search-con">
                         <div className={focusSearch ? "search-box chat-search-box active" : "search-box chat-search-box"}>
@@ -472,13 +557,14 @@ const Chats = (props) => {
                                                                     </>
                                                                     :
                                                                     <>
-                                                                        {
+                                                                        This is an example of the last message that was sent within this specific chat.
+                                                                        {/* {
                                                                             chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isImageMessage === true) ? <i className="ri-image-fill align-middle me-1"></i> : null
                                                                         }
                                                                         {
                                                                             chat.messages && (chat.messages.length > 0 && chat.messages[(chat.messages).length - 1].isFileMessage === true) ? <i className="ri-file-text-fill align-middle me-1"></i> : null
                                                                         }
-                                                                        {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].content : null}
+                                                                        {chat.messages && chat.messages.length > 0 ? chat.messages[(chat.messages).length - 1].content : null} */}
                                                                     </>
                                                             }
                                                             </p>
@@ -530,4 +616,4 @@ const mapStateToProps = (state) => {
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(RequestChats);

@@ -14,6 +14,7 @@ import Settings from "./Tabs/Settings";
 import Post from "./Tabs/Post";
 import CreateKlubs from "./Tabs/CreateKlubs";
 import CreateChat from './Tabs/CreateChat';
+import RequestChat from './Tabs/RequestChat';
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -75,6 +76,13 @@ function ChatLeftSidebar(props) {
                     <TabPane tabId="create-chat" id="pills-create-chat">
                         {/* Settings content */}
                         <CreateChat />
+                    </TabPane>
+                    {/* End settings tab-pane */}
+
+                    
+                    <TabPane tabId="request-chat" id="pills-request-chat">
+                        {/* Settings content */}
+                        <RequestChat />
                     </TabPane>
                     {/* End settings tab-pane */}
 

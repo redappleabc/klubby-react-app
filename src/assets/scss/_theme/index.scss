@@ -574,6 +574,21 @@ label {
   .nav-header-title {
     font-size: 16px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    color: #333333;
+
+    a {
+      display: contents;
+      
+      i {
+        color: #333333;
+        font-weight: normal;
+        line-height: 1;
+        font-size: 26px;
+        margin-right: 5px;
+      }
+    }
   }
   .header-add-btn {
     width: 32px;
@@ -1099,4 +1114,50 @@ label {
   color: white;
   font-size: 18px;
   font-weight: bold;
+}
+
+.nav-header-link {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2F80ED;
+  padding: 7px 12px;
+  line-height: 18px;
+  background-color: #EBF3FE;
+  border-radius: 40px;
+  text-align: center;
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.header-edit-btn {
+  color: #333333;
+  font-size: 20px;
+  border: none;
+  background-color: transparent;
+  font-weight: 400;
+  padding: 0;
+}
+.header-dropdown {
+  .btn {
+    padding: 0;
+  }
+  .dropdown-menu {
+    width: 180px !important;
+    position: absolute;
+    right: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    border-radius: 8px;
+    background-color: #F2F2F2;
+    font-size: 14px;
+    font-weight: 400;
+    // padding: 12px 16px;
+    padding: 12px 0;
+  }
+  .dropdown-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 }
