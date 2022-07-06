@@ -28,70 +28,38 @@ import { useMutation } from '@apollo/client';
 
 import setReadGQL from '../../../apollo/mutations/setRead';
 import add_icon from "../../../assets/images/icons/icon-add.svg";
+import checked from "../../../assets/images/icons/checked.png";
+import no_checked from "../../../assets/images/icons/no-checked.png";
+
+
 
 //components
 // import OnlineUsers from "./OnlineUsers";
 
 const CreateChats = (props) => {
-    const [searchChat, setSearchChat] = useState("")
+
+    const [selectedMembers, setSelectedMembers] = useState([]);
+
     const [focusSearch, setFocusSearch] = useState(false)
-    const [recentChatList, setRecentChatList] = useState(props.users)
-    const [modalMember, setModalMember] = useState(false)
-    const [modalGroup, setModalGroup] = useState(false)
-    const [isOpenCollapse, setIsOpenCollapse] = useState(false)
-    const [groups, setGroups] = useState(props.groups)
-    const [selectedContact, setSelectedContact] = useState([])
-    const [isOpenAlert, setIsOpenAlert] = useState(false)
-    const [message, setMessage] = useState("")
-    const [groupName, setGroupName] = useState("")
-    const [groupDesc, setGroupDesc] = useState("")
     const [searchedUserList, setSearchedUserList] = useState([])
-    const [notiDropdown, setNotiDropdown] = useState(false)
 
 
-    const [createConversationApollo, { }] = useMutation(createConversationGQL)
-    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
-    const [removeConversationApollo, { }] = useMutation(removeConversationGQL)
-    const [removeUserConversationBridgeApollo, { }] = useMutation(removeUserConversationBridgeGQL)
+
+
+    const delSelectedMember = (memberId) => {
+        console.log(memberId);
+        selectedMembers.splice(selectedMembers.indexOf(memberId), 1);
+        setSelectedMembers([...selectedMembers]);
+        // console.log("ddddddddddddddddddddd", selectedMembers[parseInt(index)]);
+
+       if (memberId) document.getElementById(memberId).classList.remove("active");
+    }
 
     let addNewUser = null;
 
     function toggleSearchFocus() {
         setFocusSearch(!focusSearch)
     }
-
-
-    function toggleAddGroupModal() {
-        setModalGroup(!modalGroup)
-    }
-
-    function toggleAddMemberModal() {
-        if (!modalMember) {
-            addNewUser = null
-            apollo_client.query({
-                query: getUsersByUserNameGQL,
-                variables: { username: "" }
-            }).then((res) => {
-                let searchedUsers = res.data.searchUsers;
-
-                if (searchedUsers) {
-                    searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
-                    setSearchedUserList(searchedUsers)
-                }
-                // console.log(searchedUsers)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-
-        setModalMember(!modalMember)
-    }
-
-    function toggleCollapse() {
-        setIsOpenAlert(!isOpenCollapse)
-    }
-
-
 
 
     useEffect(() => {
@@ -103,7 +71,7 @@ const CreateChats = (props) => {
             let searchedUsers = res.data.searchUsers;
 
             if (searchedUsers) {
-                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
                 setSearchedUserList(searchedUsers)
             }
             // console.log(searchedUsers)
@@ -112,83 +80,6 @@ const CreateChats = (props) => {
         })
     }, [])
 
-
-    function addGroup() {
-        if (selectedContact.length > 2) {
-            // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
-            var obj = {
-                gourpId: `${Date.now()}-${uuidv4()}`,
-                name: groupName,
-                profilePicture: "Null",
-                isGroup: true,
-                unRead: 0,
-                isNew: true,
-                desc: groupDesc,
-                members: selectedContact,
-                messages: { "main": [{}], "whale": [{}], "announcement": [{}] }
-            }
-            //call action for creating a group
-            const newGroup = {
-                createdAt: `${Date.now()}`,
-                id: obj.gourpId,
-                name: obj.name
-            }
-            console.log(newGroup)
-            apollo_client.mutate({
-                mutation: createConversationGQL,
-                variables: newGroup
-            }).then((res) => { console.log(res) })
-                .catch((err) => { console.log(err) })
-            props.createGroup(obj);
-            console.log(obj);
-            console.log(groups);
-            toggleAddGroupModal();
-
-        } else if (selectedContact.length === 1) {
-            setMessage("Minimum 2 members required!!!")
-            setIsOpenAlert(true)
-        } else {
-            setMessage("Please Select Members!!!")
-            setIsOpenAlert(true)
-        }
-        setTimeout(
-            function () {
-                setIsOpenAlert(false)
-            }
-                .bind(this),
-            3000
-        );
-    }
-
-    function handleCheck(e, contactId) {
-        var selected = selectedContact;
-        var obj;
-        if (e.target.checked) {
-            obj = {
-                id: contactId,
-                name: e.target.value
-            };
-            selected.push(obj);
-            setSelectedContact(selected)
-        }
-    }
-
-    function handleChangeGroupName(e) {
-        setGroupName(e.target.value)
-    }
-
-    function handleChangeGroupDesc(e) {
-        setGroupDesc(e.target.value)
-    }
-
-    function toggleTab(tab) {
-        props.setActiveTab(tab)
-    }
-
-
-    function setNoticDropdown() {
-        setNotiDropdown(!notiDropdown)
-    }
 
 
     function searchUsersByUsername(e) {
@@ -199,7 +90,7 @@ const CreateChats = (props) => {
         }).then((res) => {
             let searchedUsers = res.data.searchUsers;
             if (searchedUsers) {
-                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
                 setSearchedUserList(searchedUsers)
             }
             console.log(searchedUsers)
@@ -211,30 +102,6 @@ const CreateChats = (props) => {
 
 
 
-    function handleChange(e) {
-        setSearchChat(e.target.value)
-        var search = e.target.value;
-        let conversation = recentChatList;
-        let filteredArray = [];
-
-
-
-
-        //find conversation name from array
-        for (let i = 0; i < conversation.length; i++) {
-            if (conversation[i].name.toLowerCase().includes(search) || conversation[i].name.toUpperCase().includes(search))
-                filteredArray.push(conversation[i]);
-        }
-
-        //set filtered items to state
-        setRecentChatList(filteredArray)
-
-        //if input value is blanck then assign whole recent chatlist to array
-        if (search === "") {
-            setRecentChatList(props.users)
-
-        }
-    }
 
     function createUserChat(e, user) {
         //e.preventDefault();
@@ -247,90 +114,27 @@ const CreateChats = (props) => {
 
         if (chatList) {
             var li = chatList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
             for (var k = 0; k < li.length; ++k) {
                 if (li[k].contains(clickedItem)) {
                     currentli = li[k];
                     break;
                 }
             }
+
         }
 
-        //activation of clicked coversation user
-        if (currentli) {
+        if (currentli.classList.contains("active")) {
+            console.log("acitve")
+            currentli.classList.remove('active');
+            selectedMembers.splice(selectedMembers.indexOf(currentli.id), 1);
+        }
+        else {
+            selectedMembers.push(currentli.id);
             currentli.classList.add('active');
         }
-
-
+        setSelectedMembers([...selectedMembers]);
 
     }
-
-    function onclickAddNewUser() {
-
-        if (addNewUser) {
-            let newConversation = {}
-            createConversationApollo({
-                //variables: newConversation
-            }).then((res) => {
-                newConversation.id = res.data.createConversation.id;
-                console.log("create conversation succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username, name: addNewUser.username }
-                })
-            }).then((res) => {
-                console.log("create user conversation 1 succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: addNewUser.username, name: props.user.username }
-                })
-            }).then((res) => {
-                console.log("create userconversation 2 succeed")
-            }).catch((err) => {
-                console.log("new conversation creation", err)
-
-            })
-        }
-
-        toggleAddMemberModal();
-    }
-
-
-    const deleteConversation = (e, conversationId, username) => {
-        //e.preventDefault()
-        removeUserConversationBridgeApollo({
-            variables: {
-                username: props.user.username,
-                conversationId: conversationId
-            }
-        }).then((res) => {
-            console.log("delete userconversationbridge self succeed")
-            removeUserConversationBridgeApollo({
-                variables: {
-                    username: username,
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete userconversationbridge other succeed")
-            removeConversationApollo({
-                variables: {
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete conversation succeed")
-        }).catch((res) => {
-            console.log("error delete conversation", res);
-        })
-
-        console.log(conversationId)
-    }
-
 
     return (
         <React.Fragment>
@@ -345,7 +149,30 @@ const CreateChats = (props) => {
                             New Chat
                         </div>
                         <div>
-                            <buttonn className="add-chat-btn">Chat</buttonn>
+                            <button className="add-chat-btn">Chat</button>
+                        </div>
+                        
+                    </div>
+                    <div className='selected-member-main'>
+                        <div>
+                            To:
+                        </div>
+                        <div className='selected-members-cover'>
+                            {
+                                selectedMembers.length === 0 ? <div className='text'>Nobody selected</div>
+                                :
+                                <div className='selected-members'>
+                                    {
+                                    selectedMembers.map((member, key) => 
+                                        <span className='selected-member-item' key={key}>
+                                            {member}
+                                            <span onClick={()=>{delSelectedMember(member)}}><i className="ri-close-fill"></i></span>
+                                        </span>
+                                    )
+                                    }
+                                </div>
+                            }
+                            
                         </div>
                     </div>
                     <div className="nav-header-search-con">
@@ -359,12 +186,12 @@ const CreateChats = (props) => {
                     </div>
                 </div>
 
-                <SimpleBar className="">
+                <SimpleBar className="create-chat-message">
                     <div className=''>
                         <ul className="list-unstyled chat-list" id="search-chat-list">
                             {
                                 searchedUserList.map((searchedUser, key) =>
-                                    <li key={key} id={"searchedUser" + key}>
+                                    <li key={key} id={searchedUser.username} className="searched-user-list">
                                         <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
                                             <div className="d-flex align-items-center">
                                                 {
@@ -388,9 +215,13 @@ const CreateChats = (props) => {
                                                         </div>
                                                 }
 
-                                                <div className="flex-1 overflow-hidden">
+                                                <div className="flex-1 overflow-hidden chat-list-text">
                                                     <h5 className="text-truncate font-size-15 mb-1">{searchedUser.username}</h5>
-
+                                                    <h6 className="text-truncate font-size-15 mb-1">@ {searchedUser.username}</h6>
+                                                </div>
+                                                <div className='check'>
+                                                    <img className='no-checked' src={no_checked}/>
+                                                    <img className='checked' src={checked}/>
                                                 </div>
                                             </div>
 
