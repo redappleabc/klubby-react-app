@@ -27,174 +27,24 @@ import add_icon from "../../../assets/images/icons/icon-add.svg";
 // import OnlineUsers from "./OnlineUsers";
 
 const Chats = (props) => {
-    const [searchChat, setSearchChat] = useState("")
     const [focusSearch, setFocusSearch] = useState(false)
     const [recentChatList, setRecentChatList] = useState(props.users)
-    const [modalMember, setModalMember] = useState(false)
-    const [modalGroup, setModalGroup] = useState(false)
-    const [isOpenCollapse, setIsOpenCollapse] = useState(false)
-    const [groups, setGroups] = useState(props.groups)
-    const [selectedContact, setSelectedContact] = useState([])
-    const [isOpenAlert, setIsOpenAlert] = useState(false)
-    const [message, setMessage] = useState("")
-    const [groupName, setGroupName] = useState("")
-    const [groupDesc, setGroupDesc] = useState("")
-    const [searchedUserList, setSearchedUserList] = useState([])
-    const [notiDropdown, setNotiDropdown] = useState(false)
 
-
-    const [createConversationApollo, { }] = useMutation(createConversationGQL)
-    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
     const [removeConversationApollo, { }] = useMutation(removeConversationGQL)
     const [removeUserConversationBridgeApollo, { }] = useMutation(removeUserConversationBridgeGQL)
 
-    let addNewUser = null;
 
     function toggleSearchFocus() {
         setFocusSearch(!focusSearch)
     }
 
 
-    function toggleAddGroupModal() {
-        setModalGroup(!modalGroup)
-    }
-
-    function toggleAddMemberModal() {
-        if (!modalMember) {
-            addNewUser = null
-            apollo_client.query({
-                query: getUsersByUserNameGQL,
-                variables: { username: "" }
-            }).then((res) => {
-                let searchedUsers = res.data.searchUsers;
-
-                if (searchedUsers) {
-                    searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
-                    setSearchedUserList(searchedUsers)
-                }
-                // console.log(searchedUsers)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-
-        setModalMember(!modalMember)
-    }
-
-    function toggleCollapse() {
-        setIsOpenAlert(!isOpenCollapse)
-    }
-
-
-
-
     useEffect(() => {
-        setGroups(props.groups)
         setRecentChatList(props.users)
         console.log("tab/chat.js", props.users)
     }, [props.users, props.newDirectMessage])
 
 
-
-
-    function addGroup() {
-        if (selectedContact.length > 2) {
-            // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
-            var obj = {
-                gourpId: `${Date.now()}-${uuidv4()}`,
-                name: groupName,
-                profilePicture: "Null",
-                isGroup: true,
-                unRead: 0,
-                isNew: true,
-                desc: groupDesc,
-                members: selectedContact,
-                messages: { "main": [{}], "whale": [{}], "announcement": [{}] }
-            }
-            //call action for creating a group
-            const newGroup = {
-                createdAt: `${Date.now()}`,
-                id: obj.gourpId,
-                name: obj.name
-            }
-            console.log(newGroup)
-            apollo_client.mutate({
-                mutation: createConversationGQL,
-                variables: newGroup
-            }).then((res) => { console.log(res) })
-                .catch((err) => { console.log(err) })
-            props.createGroup(obj);
-            console.log(obj);
-            console.log(groups);
-            toggleAddGroupModal();
-
-        } else if (selectedContact.length === 1) {
-            setMessage("Minimum 2 members required!!!")
-            setIsOpenAlert(true)
-        } else {
-            setMessage("Please Select Members!!!")
-            setIsOpenAlert(true)
-        }
-        setTimeout(
-            function () {
-                setIsOpenAlert(false)
-            }
-                .bind(this),
-            3000
-        );
-    }
-
-    function handleCheck(e, contactId) {
-        var selected = selectedContact;
-        var obj;
-        if (e.target.checked) {
-            obj = {
-                id: contactId,
-                name: e.target.value
-            };
-            selected.push(obj);
-            setSelectedContact(selected)
-        }
-    }
-
-    function handleChangeGroupName(e) {
-        setGroupName(e.target.value)
-    }
-
-    function handleChangeGroupDesc(e) {
-        setGroupDesc(e.target.value)
-    }
-
-    function toggleTab(tab) {
-        props.setActiveTab(tab)
-    }
-
-
-    function setNoticDropdown() {
-        setNotiDropdown(!notiDropdown)
-    }
-
-    function handleChange(e) {
-        setSearchChat(e.target.value)
-        var search = e.target.value;
-        let conversation = recentChatList;
-        let filteredArray = [];
-
-        //find conversation name from array
-        for (let i = 0; i < conversation.length; i++) {
-            if (conversation[i].name.toLowerCase().includes(search) || conversation[i].name.toUpperCase().includes(search))
-                filteredArray.push(conversation[i]);
-        }
-
-        //set filtered items to state
-        setRecentChatList(filteredArray)
-
-        //if input value is blanck then assign whole recent chatlist to array
-        if (search === "") {
-            setRecentChatList(props.users)
-
-        }
-    }
 
     function openUserChat(e, chat) {
         //e.preventDefault();
@@ -273,69 +123,6 @@ const Chats = (props) => {
         props.setFullUser(copyAllUsers)
     }
 
-    function createUserChat(e, user) {
-        //e.preventDefault();
-        addNewUser = user
-
-
-        var chatList = document.getElementById("search-chat-list");
-        var clickedItem = e.target;
-        var currentli = null;
-
-        if (chatList) {
-            var li = chatList.getElementsByTagName("li");
-            //remove coversation user
-            for (var i = 0; i < li.length; ++i) {
-                if (li[i].classList.contains('active')) {
-                    li[i].classList.remove('active');
-                }
-            }
-            //find clicked coversation user
-            for (var k = 0; k < li.length; ++k) {
-                if (li[k].contains(clickedItem)) {
-                    currentli = li[k];
-                    break;
-                }
-            }
-        }
-
-        //activation of clicked coversation user
-        if (currentli) {
-            currentli.classList.add('active');
-        }
-
-
-
-    }
-
-    function onclickAddNewUser() {
-
-        if (addNewUser) {
-            let newConversation = {}
-            createConversationApollo({
-                //variables: newConversation
-            }).then((res) => {
-                newConversation.id = res.data.createConversation.id;
-                console.log("create conversation succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username, name: addNewUser.username }
-                })
-            }).then((res) => {
-                console.log("create user conversation 1 succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: addNewUser.username, name: props.user.username }
-                })
-            }).then((res) => {
-                console.log("create userconversation 2 succeed")
-            }).catch((err) => {
-                console.log("new conversation creation", err)
-
-            })
-        }
-
-        toggleAddMemberModal();
-    }
-
 
     const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
@@ -380,7 +167,7 @@ const Chats = (props) => {
                         
                         <div>
                             <span className='nav-header-link' onClick={()=>{props.setActiveTab("request-chat")}}>
-                                2 Requests
+                                4 Requests
                             </span>
                             <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-chat")}}><img src={add_icon}/></button>
                         </div>
