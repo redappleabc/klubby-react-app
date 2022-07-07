@@ -33,6 +33,7 @@ import no_checked from "../../../assets/images/icons/no-checked.png";
 
 
 
+
 //components
 // import OnlineUsers from "./OnlineUsers";
 
@@ -43,8 +44,8 @@ const CreateChats = (props) => {
     const [focusSearch, setFocusSearch] = useState(false)
     const [searchedUserList, setSearchedUserList] = useState([])
 
-
-
+    const [createConversationApollo, { }] = useMutation(createConversationGQL)
+    const [createUserConversationApollo, { }] = useMutation(createUserConversationsGQL)
 
     const delSelectedMember = (memberId) => {
         console.log(memberId);
@@ -71,14 +72,14 @@ const CreateChats = (props) => {
             let searchedUsers = res.data.searchUsers;
 
             if (searchedUsers) {
-                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
                 setSearchedUserList(searchedUsers)
             }
             // console.log(searchedUsers)
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }, [props.users])
 
 
 
@@ -90,7 +91,7 @@ const CreateChats = (props) => {
         }).then((res) => {
             let searchedUsers = res.data.searchUsers;
             if (searchedUsers) {
-                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(recentChatList).includes(username))
+                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
                 setSearchedUserList(searchedUsers)
             }
             console.log(searchedUsers)
@@ -136,6 +137,39 @@ const CreateChats = (props) => {
 
     }
 
+    function onclickAddNewUser() {
+
+        if (selectedMembers.length!==0) {
+
+            for (let i = 0; i<selectedMembers.length; i++) {
+                let newConversation = {}
+            createConversationApollo({
+                //variables: newConversation
+            }).then((res) => {
+                newConversation.id = res.data.createConversation.id;
+                console.log("create conversation succeed");
+                createUserConversationApollo({
+                    variables: { conversationId: newConversation.id, username: props.user.username, name: selectedMembers[i] }
+                })
+            }).then((res) => {
+                console.log("create user conversation 1 succeed");
+                createUserConversationApollo({
+                    variables: { conversationId: newConversation.id, username: selectedMembers[i], name: props.user.username }
+                })
+            }).then((res) => {
+                console.log("create userconversation 2 succeed")
+            }).catch((err) => {
+                console.log("new conversation creation", err)
+
+            })
+            }
+
+            setSelectedMembers([]);
+            
+        }
+
+    }
+
     return (
         <React.Fragment>
             <div>
@@ -149,7 +183,7 @@ const CreateChats = (props) => {
                             New Chat
                         </div>
                         <div>
-                            <button className="add-chat-btn">Chat</button>
+                            <button className="add-chat-btn" onClick={()=>{onclickAddNewUser()}} >Chat</button>
                         </div>
                         
                     </div>

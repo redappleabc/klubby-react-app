@@ -58,7 +58,7 @@ function LeftSidebarMenu(props) {
                         </NavItem>
 
                         <NavItem id="Chats">
-                            <NavLink id="pills-chat-tab" className={classnames({ active: activeTab === 'chat' || activeTab === "create-chat" })} onClick={() => { toggleTab('chat'); }}>
+                            <NavLink id="pills-chat-tab" className={classnames({ active: activeTab === 'chat' || activeTab === "create-chat" || activeTab === "request-chat" })} onClick={() => { toggleTab('chat'); }}>
                                 <div>
                                     <img className='no-select' src={chat_icon}/>
                                     <img className='select' src={chat_icon_active}/>

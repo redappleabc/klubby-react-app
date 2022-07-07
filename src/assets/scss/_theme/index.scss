@@ -1312,3 +1312,19 @@ label {
     background-color: white !important;
   }
 }
+
+.con-context-menu {
+  border-radius: 8px;
+  background-color: #F2F2F2;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .18);
+  padding: 10px 0;
+  border: none;
+  overflow: hidden;
+  z-index: 9999;
+  .con-context-item {
+    color: #333333;
+    &:hover {
+      background-color: #f5f7fb;
+    }
+  }
+}

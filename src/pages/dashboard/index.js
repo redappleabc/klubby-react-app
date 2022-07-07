@@ -223,7 +223,7 @@ const Index = (props) => {
 
                 } else {
                     user.messages = [...user.messages, newMessage]
-                    if (sender != props.user.username && sender != props.active_user)
+                    if (sender !== props.user.username && sender !== props.active_user)
                         user.unRead += 1;
                     // if sender is active user set read.
                     if (sender === props.active_user && windowTabFocus) {

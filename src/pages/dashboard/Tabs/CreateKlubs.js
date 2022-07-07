@@ -173,13 +173,13 @@ const CreateKlubs = (props) => {
             let percent = 0;
             // for(let index in formik.values) {
             //     console.log(Object.keys(formik.values).length)
-            //     if (formik.values[index] != "" ) percent += 100/Object.keys(formik.values).length; 
+            //     if (formik.values[index] !== "" ) percent += 100/Object.keys(formik.values).length; 
             // }
             // return percent.toFixed(0);
 
             let percent_flag = [0, 0, 0, 0, 0];
 
-            if (profileImage != null) {
+            if (profileImage !== null) {
                 percent_flag[0] = 1;
                 setProfileImgError('');
                 setError("");
@@ -189,7 +189,7 @@ const CreateKlubs = (props) => {
                 // setProfileImgError('*Require!');
                 // setError("Please fill all the input and select profile image!")
             }
-            if (formik.values.name != "") {
+            if (formik.values.name !== "") {
                 percent_flag[1] = 1;
                 // setError("");
             }
@@ -197,7 +197,7 @@ const CreateKlubs = (props) => {
                 percent_flag[1] = 0;
                 // setError("Please fill all the input and select profile image!")
             }
-            if (formik.values.description != "") {
+            if (formik.values.description !== "") {
                 percent_flag[2] = 1;
                 // setError("");
             }
@@ -205,7 +205,7 @@ const CreateKlubs = (props) => {
                 percent_flag[2] = 0;
                 // setError("Please fill all the input and select profile image!")
             }
-            if (formik.values.contractAddress != "") {
+            if (formik.values.contractAddress !== "") {
                 percent_flag[3] = 1;
                 // setError("");
             }
@@ -213,7 +213,7 @@ const CreateKlubs = (props) => {
                 percent_flag[3] = 0;
                 // setError("Please fill all the input and select profile image!")
             }
-            if (formik.values.blockchainExplorer != "") {
+            if (formik.values.blockchainExplorer !== "") {
                 percent_flag[4] = 1;
                 // setError("");
             } 
@@ -383,7 +383,7 @@ const CreateKlubs = (props) => {
                                 // renderThumb={(props, state) => <div {...props}></div>}
                                 />
 
-                                <input className="slider-text-con" type='number' value={mainChatSliderValue != 0 ? mainChatSliderValue : ""}
+                                <input className="slider-text-con" type='number' value={mainChatSliderValue !== 0 ? mainChatSliderValue : ""}
                                     onChange={(e) => {
                                         if (e.target.value === "") setMainChatSliderValue(0);
                                         else if (parseInt(e.target.value) > totalCount) setMainChatSliderValue(totalCount);
@@ -413,7 +413,7 @@ const CreateKlubs = (props) => {
                                 // renderThumb={(props, state) => <div {...props}></div>}
                                 />
 
-                                <input className="slider-text-con" type='number' value={whaleChatSliderValue != 0 ? whaleChatSliderValue : ""}
+                                <input className="slider-text-con" type='number' value={whaleChatSliderValue !== 0 ? whaleChatSliderValue : ""}
                                     onChange={(e) => {
                                         if (e.target.value === "") setWhaleChatSliderValue(0);
                                         else if (parseInt(e.target.value) > totalCount) setWhaleChatSliderValue(totalCount);
