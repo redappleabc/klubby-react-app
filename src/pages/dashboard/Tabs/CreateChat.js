@@ -191,7 +191,7 @@ const CreateChats = (props) => {
                         <ul className="list-unstyled chat-list" id="search-chat-list">
                             {
                                 searchedUserList.map((searchedUser, key) =>
-                                    <li key={key} id={searchedUser.username} className="searched-user-list">
+                                    <li key={key} id={searchedUser.username} className={selectedMembers.includes(searchedUser.username) ? "searched-user-list active" : "searched-user-list"}>
                                         <Link to="#" onClick={(e) => { createUserChat(e, searchedUser) }}>
                                             <div className="d-flex align-items-center">
                                                 {
