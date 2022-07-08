@@ -53,7 +53,7 @@ const CreateChats = (props) => {
         setSelectedMembers([...selectedMembers]);
         // console.log("ddddddddddddddddddddd", selectedMembers[parseInt(index)]);
 
-       if (memberId) document.getElementById(memberId).classList.remove("active");
+        if (memberId) document.getElementById(memberId).classList.remove("active");
     }
 
     let addNewUser = null;
@@ -139,33 +139,35 @@ const CreateChats = (props) => {
 
     function onclickAddNewUser() {
 
-        if (selectedMembers.length!==0) {
+        if (selectedMembers.length !== 0) {
 
-            for (let i = 0; i<selectedMembers.length; i++) {
-                let newConversation = {}
+
+            let newConversation = {}
             createConversationApollo({
                 //variables: newConversation
             }).then((res) => {
                 newConversation.id = res.data.createConversation.id;
                 console.log("create conversation succeed");
                 createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username, name: selectedMembers[i] }
+                    variables: { conversationId: newConversation.id, username: props.user.username, name: selectedMembers.join(",") }
                 })
             }).then((res) => {
                 console.log("create user conversation 1 succeed");
-                createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: selectedMembers[i], name: props.user.username }
-                })
+                for (let i = 0; i < selectedMembers.length; i++) {
+                    createUserConversationApollo({
+                        variables: { conversationId: newConversation.id, username: selectedMembers[i], name: selectedMembers.join(",") }
+                    })
+                }
             }).then((res) => {
                 console.log("create userconversation 2 succeed")
             }).catch((err) => {
                 console.log("new conversation creation", err)
 
             })
-            }
+
 
             setSelectedMembers([]);
-            
+
         }
 
     }
@@ -175,7 +177,7 @@ const CreateChats = (props) => {
             <div>
                 <div className='nav-message-header'>
                     <div className='nav-header-header'>
-                        
+
                         <div className='nav-header-title'>
                             <Link to="#" onClick={() => { props.setActiveTab("chat") }}>
                                 <i className="ri-arrow-left-s-line"></i>
@@ -183,9 +185,9 @@ const CreateChats = (props) => {
                             New Chat
                         </div>
                         <div>
-                            <button className="add-chat-btn" onClick={()=>{onclickAddNewUser()}} >Chat</button>
+                            <button className="add-chat-btn" onClick={() => { onclickAddNewUser() }} >Chat</button>
                         </div>
-                        
+
                     </div>
                     <div className='selected-member-main'>
                         <div>
@@ -194,19 +196,19 @@ const CreateChats = (props) => {
                         <div className='selected-members-cover'>
                             {
                                 selectedMembers.length === 0 ? <div className='text'>Nobody selected</div>
-                                :
-                                <div className='selected-members'>
-                                    {
-                                    selectedMembers.map((member, key) => 
-                                        <span className='selected-member-item' key={key}>
-                                            {member}
-                                            <span onClick={()=>{delSelectedMember(member)}}><i className="ri-close-fill"></i></span>
-                                        </span>
-                                    )
-                                    }
-                                </div>
+                                    :
+                                    <div className='selected-members'>
+                                        {
+                                            selectedMembers.map((member, key) =>
+                                                <span className='selected-member-item' key={key}>
+                                                    {member}
+                                                    <span onClick={() => { delSelectedMember(member) }}><i className="ri-close-fill"></i></span>
+                                                </span>
+                                            )
+                                        }
+                                    </div>
                             }
-                            
+
                         </div>
                     </div>
                     <div className="nav-header-search-con">
@@ -214,7 +216,7 @@ const CreateChats = (props) => {
                             <span>
                                 <i className="ri-search-line search-icon font-size-24"></i>
                             </span>
-                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e)=>{searchUsersByUsername(e)}} placeholder="Search..." />
+                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e) => { searchUsersByUsername(e) }} placeholder="Search..." />
                         </div>
                         {/* Search Box */}
                     </div>
@@ -254,8 +256,8 @@ const CreateChats = (props) => {
                                                     <h6 className="text-truncate font-size-15 mb-1">@ {searchedUser.username}</h6>
                                                 </div>
                                                 <div className='check'>
-                                                    <img className='no-checked' src={no_checked}/>
-                                                    <img className='checked' src={checked}/>
+                                                    <img className='no-checked' src={no_checked} />
+                                                    <img className='checked' src={checked} />
                                                 </div>
                                             </div>
 

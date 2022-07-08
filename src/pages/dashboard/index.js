@@ -326,8 +326,13 @@ const Index = (props) => {
                             let _recentUser = {};
                             if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
-                            _recentUser.username = _recentConversations[i].associated.username;
-                            _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated.username;
+                            if(_recentConversations[i].associated.length === 1){
+                                _recentUser.username = _recentConversations[i].associated[0].username;
+                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            }else if(_recentConversations[i].associated.length > 1){
+                                _recentUser.username = _recentConversations[i].associated[0].username;
+                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            }
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
