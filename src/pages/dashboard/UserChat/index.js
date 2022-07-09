@@ -144,7 +144,7 @@ function UserChat(props) {
         }
 
         if (props.users[props.active_user].conversationId) {
-            console.log(messageObj)
+            console.log("messageobj",messageObj)
             if (messageType === "edit") {
 
                 apollo_client.mutate({
