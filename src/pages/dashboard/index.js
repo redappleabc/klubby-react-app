@@ -307,13 +307,15 @@ const Index = (props) => {
             apollo_client.query({
                 query: getUserConversationsGQL
             }).then(async (res) => {
-                console.log(res)
+                console.log("getUserConversationsGQL", res)
                 if (res.data.getMe && res.data.getMe.conversations) {
                     const _recentConversations = res.data.getMe.conversations
 
                     let _recentChatList = {}
                     if (_recentConversations.length > 0) {
                         for (var i = 0; i < _recentConversations.length; i++) {
+
+                           
 
                             let _readIndexNumber = 0
                             let _readIndex = "";
@@ -322,8 +324,11 @@ const Index = (props) => {
                                 _readIndexNumber = parseInt(_recentConversations[i].read.substring(0, 13))
                             }
 
-
                             let _recentUser = {};
+                            
+                            _recentUser.accepted = _recentConversations[i].accepted;
+                            
+
                             if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
                             if(_recentConversations[i].associated.length === 1){
@@ -374,6 +379,8 @@ const Index = (props) => {
 
 
                             _recentChatList[_recentUser.username] = _recentUser
+
+                        
 
 
                             const observable = apollo_client.watchQuery({

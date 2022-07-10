@@ -486,7 +486,8 @@ const RequestChats = (props) => {
                     <div className='px-2'>
                         <ul className="list-unstyled chat-list chat-user-list group-list" id="chat-list">
                             {
-                                Object.entries(recentChatList).map(([key, chat]) =>
+                                Object.entries(recentChatList).map(([key, chat]) => {
+                                    return (chat.accepted === false || chat.accepted === null) ?
                                     <li key={key} id={"conversation" + key} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
                                         <ContextMenuTrigger id={chat.conversationId}>
                                             <Link to="#" onClick={(e) => openUserChat(e, chat)} >
@@ -593,6 +594,10 @@ const RequestChats = (props) => {
                                             </MenuItem>
                                         </ContextMenu>
                                     </li>
+                                    :
+                                    <div key={key}></div>
+                                }
+                                    
                                 )
                             }
                         </ul>
