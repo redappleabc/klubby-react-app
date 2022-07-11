@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 //simplebar
 import SimpleBar from "simplebar-react";
 //actions
-import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
+import { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setFullGroup, setActiveTab, setActiveChatSubTab, activeGroup } from "../../../redux/actions"
 import add_icon from "../../../assets/images/icons/icon-add.svg";
 import { DirectiveLocation } from 'graphql';
-
+import apollo_client from '../../../apollo';
+import getKlubsByKlubNameGQL from '../../../apollo/queries/getKlubsByKlubName';
+import profile from "../../../assets/images/group/profile-img.png";
 
 
 //components
 // import OnlineUsers from "./OnlineUsers";
 
-const Chats = (props) => {
-    const [focusSearch, setFocusSearch] = useState(false)
-    const [groups, setGroups] = useState(props.groups)
+const Klubs = (props) => {
+    const history = useHistory();
+    const [focusSearch, setFocusSearch] = useState(false);
+    // const [groups, setGroups] = useState(props.groups)
 
 
     function toggleSearchFocus() {
@@ -24,15 +27,9 @@ const Chats = (props) => {
     }
 
     useEffect(() => {
-        setGroups(props.groups)
-        console.log("tab/chat.js", props.users)
-    }, [props.users, props.newDirectMessage])
-
-
-
-
-
-
+        // setGroups(props.groups)
+        console.log("tab/klubs.js", props.groups)
+    }, [props.groups])
 
     function openUserGroup(e, group) {
 
@@ -83,6 +80,20 @@ const Chats = (props) => {
         }
     }
 
+    const setSearchedKlubs = (key) => {
+        apollo_client.query({
+            query: getKlubsByKlubNameGQL,
+            variables: {klubname : key}
+        }).then(async (res) => {
+             const klubs = [...res.data.searchKlubs];
+             console.log("search klubs",klubs)
+             props.setFullGroup(klubs);
+        }).catch((err) => {
+            console.log(err)
+            history.push('/logout')
+        })
+    }
+
     return (
         <React.Fragment>
             <div>
@@ -92,7 +103,7 @@ const Chats = (props) => {
                             Klubs
                         </div>
                         <div>
-                            <button className='header-add-btn' onClick={alert}><img src={add_icon}/></button>
+                            <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-klubs")}}><img src={add_icon}/></button>
                         </div>
                     </div>
                     <div className="nav-header-search-con">
@@ -100,22 +111,23 @@ const Chats = (props) => {
                             <span>
                                 <i className="ri-search-line search-icon font-size-24"></i>
                             </span>
-                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} placeholder="Search..." />
+                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e)=>{setSearchedKlubs(e.target.value);}} placeholder="Search..." />
                         </div>
                         {/* Search Box */}
                     </div>
                 </div>
                     {/* klub tab start */}
                 <SimpleBar className="chat-message-list">
-                        <ul className="list-unstyled chat-list chat-user-list" id="group-list">
+                        <ul className="list-unstyled chat-list chat-user-list group-list" id="group-list">
                             {
-                                groups.map((group, key) =>
-                                    <li key={key} id={"conversation" + key} className={group.unRead ? "unread" : group.isTyping ? "typing" : key === props.active_user ? "active" : ""}>
-                                        <Link to="#" onClick={(e) => openUserGroup(e, group)}>
+                                props.groups.map((group, key) =>
+                                    <li key={key} id={"klub" + key} >
+                                        {/* <Link to="#" onClick={(e) => openUserGroup(e, group)}> */}
+                                        <Link to="#" >
                                             <div className="group-list-con">
                                                 {
                                                     group.profilePicture === "Null" ?
-                                                        <div className={"chat-user-img " + group.status}>
+                                                        <div className={"chat-user-img "}>
                                                             <div className="avatar-xs">
                                                                 <span className="avatar-title rounded-circle bg-soft-primary text-primary">
                                                                     {group.name.charAt(0)}
@@ -126,17 +138,15 @@ const Chats = (props) => {
                                                             }
                                                         </div>
                                                         :
-                                                        <div className={"chat-user-img " + group.status}>
-                                                            <img src={group.profilePicture} className="rounded-circle avatar-xs" alt="klubby" />
-                                                            {
-                                                                group.status && <span className="user-status"></span>
-                                                            }
+                                                        <div className={"chat-user-img "}>
+                                                            <img src={profile} className="rounded-circle avatar-xs" alt="klubby" />
+                                                            
                                                         </div>
                                                 }
 
                                                 <div className='group-infor-con'>
                                                     <div className="flex-1 overflow-hidden group-description">
-                                                        <h5 className="text-truncate font-size-16 mb-1">{group.name}</h5>
+                                                        <h5 className="text-truncate font-size-16 mb-1">{group.klubname}</h5>
                                                         <p className="chat-user-message group-description-text font-size-12 mb-0">
                                                             {group.description}
                                                         </p>
@@ -174,4 +184,4 @@ const mapStateToProps = (state) => {
     return { active_user, users, groups, active_group, activeChatSubTab, newDirectMessage, user };
 };
 
-export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setActiveTab, setActiveChatSubTab, activeGroup })(Chats);
+export default connect(mapStateToProps, { setconversationNameInOpenChat, activeUser, createGroup, setFullUser, setFullGroup, setActiveTab, setActiveChatSubTab, activeGroup })(Klubs);

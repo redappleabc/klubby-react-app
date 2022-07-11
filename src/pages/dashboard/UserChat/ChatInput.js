@@ -119,7 +119,7 @@ const ChatInput = forwardRef((props, ref) => {
         let mainInputHeight = textAreaRef.current.scrollHeight + 34;
        
         if (replyMsgState) mainInputHeight += 40
-        if (textAreaRef.current.scrollHeight != 0) mainInputRef.current.style.height = mainInputHeight + "px";
+        if (textAreaRef.current.scrollHeight !== 0) mainInputRef.current.style.height = mainInputHeight + "px";
         console.log(mainInputHeight);
       };
     

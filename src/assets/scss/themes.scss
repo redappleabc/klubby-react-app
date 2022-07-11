@@ -74,11 +74,11 @@
 .emoji-mart-category {
   .emoji-mart-emoji {
     &:hover {
-      background-color: $gray-300 !important;
+      // background-color: $gray-300 !important;
     }
 
     &::before {
-      background-color: $gray-300 !important;
+      // background-color: $gray-300 !important;
       border-radius: 100% !important;
     }
   }
@@ -126,5 +126,4 @@
   height: 1em;
   z-index: 2;
 }
-
 

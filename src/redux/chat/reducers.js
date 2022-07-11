@@ -155,11 +155,7 @@ const INIT_STATE = {
         //     messages: {
         //         "main": [
         //             { id: 33, isToday: true },
-        //             { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
-        //             { id: 2, message: "image", time: "12:05", userType: "receiver", isImageMessage: true, isFileMessage: false, imageMessage: [{ image: img6 }] },
-        //             { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }
-        //         ],
-        //         "whale": [
+        //                { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFi      
         //             { id: 33, isToday: true },
         //             { id: 1, message: "hi yana", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false },
         //             { id: 3, message: "Wow that's great", time: "12:00", userType: "sender", isImageMessage: false, isFileMessage: false }

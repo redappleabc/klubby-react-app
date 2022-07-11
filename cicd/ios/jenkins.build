@@ -1,0 +1,19 @@
+node --version
+cp .env.dev .env
+npm install
+npm install -D typescript
+CI=""
+npm run build
+ionic capacitor add ios
+npx cap sync
+xcodebuild -workspace ios/App/App.xcworkspace -scheme App DEVELOPMENT_TEAM=BUDQ4KT2TD -destination generic/platform=iOS -derivedDataPath /Users/Brenden/Desktop/dev-builds -allowProvisioningUpdates build
+mkdir -p ~/Desktop/dev-builds/deployment/
+cp -r ~/Desktop/dev-builds/Build/Products/Debug-iphoneos/App.app ~/Desktop/dev-builds/deployment/App.app
+cd ~/Desktop/dev-builds
+zip -r deployment.zip deployment
+
+#awsume klubby
+export AWS_ACCESS_KEY_ID=foo
+export AWS_SECRET_ACCESS_KEY=bar
+#aws s3 cp --recursive ~/Desktop/dev-builds/Build/Products/debug-iphoneos/App.app s3://klubby-dev-release-bucket/ios
+aws s3 cp ~/Desktop/dev-builds/deployment.zip s3://klubby-dev-release-bucket/ios/deployment.zip

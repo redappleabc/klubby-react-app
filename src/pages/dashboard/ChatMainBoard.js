@@ -5,7 +5,7 @@ import { TabContent, TabPane } from "reactstrap";
 
 
 import UserChat from "./UserChat";
-import UserGroup from "./UserGroup";
+// import UserGroup from "./UserGroup";
 import UserPost from "./UserPost";
 
 function ChatMainBoard(props) {
@@ -24,7 +24,10 @@ function ChatMainBoard(props) {
 
                      {/* Start Home tab-pane */}
                      <TabPane tabId="klub" id="pills-klub_">
-                        <UserGroup />
+                        {/* <UserGroup /> */}
+                    </TabPane>
+                    <TabPane tabId="create-klubs" id="create-klubs_">
+                        {/* <UserGroup /> */}
                     </TabPane>
                     <TabPane tabId="chat" id="pills-klub_">
                         <UserChat />

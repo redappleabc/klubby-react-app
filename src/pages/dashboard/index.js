@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import apollo_client from '../../apollo';
 
 import getUserConversationsGQL from '../../apollo/queries/getUserConversations';
+import getKlubsByKlubNameGQL from '../../apollo/queries/getKlubsByKlubName';
 import getConversationMessagesGQL from '../../apollo/queries/getConversationMessages';
 import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNewMessages';
 import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeToRemovedMessages';
@@ -15,8 +16,8 @@ import subscribeToNewUserConversationbridgeGQL from '../../apollo/subscriptions/
 import subscribeToRemovedUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToRemovedUserConversationbridge';
 import subscribeToReadMessageGQL from '../../apollo/subscriptions/subscribeToReadMessage';
 import setReadGQL from '../../apollo/mutations/setRead';
-import { useSubscription } from '@apollo/client';
-import { setFullUser, activeUser, subscribeDirectMessage } from '../../redux/actions';
+import { from, useSubscription } from '@apollo/client';
+import { setFullUser, activeUser, subscribeDirectMessage, setFullGroup } from '../../redux/actions';
 import Preloader from '../../components/preloader';
 import { useHistory } from 'react-router-dom';
 
@@ -222,7 +223,7 @@ const Index = (props) => {
 
                 } else {
                     user.messages = [...user.messages, newMessage]
-                    if (sender != props.user.username && sender != props.active_user)
+                    if (sender !== props.user.username && sender !== props.active_user)
                         user.unRead += 1;
                     // if sender is active user set read.
                     if (sender === props.active_user && windowTabFocus) {
@@ -306,13 +307,15 @@ const Index = (props) => {
             apollo_client.query({
                 query: getUserConversationsGQL
             }).then(async (res) => {
-                console.log(res)
+                console.log("getUserConversationsGQL", res)
                 if (res.data.getMe && res.data.getMe.conversations) {
                     const _recentConversations = res.data.getMe.conversations
 
                     let _recentChatList = {}
                     if (_recentConversations.length > 0) {
                         for (var i = 0; i < _recentConversations.length; i++) {
+
+                           
 
                             let _readIndexNumber = 0
                             let _readIndex = "";
@@ -321,12 +324,20 @@ const Index = (props) => {
                                 _readIndexNumber = parseInt(_recentConversations[i].read.substring(0, 13))
                             }
 
-
                             let _recentUser = {};
+                            
+                            _recentUser.accepted = _recentConversations[i].accepted;
+                            
+
                             if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                                 continue;
-                            _recentUser.username = _recentConversations[i].associated.username;
-                            _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated.username;
+                            if(_recentConversations[i].associated.length === 1){
+                                _recentUser.username = _recentConversations[i].associated[0].username;
+                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            }else if(_recentConversations[i].associated.length > 1){
+                                _recentUser.username = _recentConversations[i].associated[0].username;
+                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            }
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
@@ -368,6 +379,8 @@ const Index = (props) => {
 
 
                             _recentChatList[_recentUser.username] = _recentUser
+
+                        
 
 
                             const observable = apollo_client.watchQuery({
@@ -432,10 +445,20 @@ const Index = (props) => {
                 history.push("/logout")                
 
             })
+
+            apollo_client.query({
+                query: getKlubsByKlubNameGQL,
+                variables: {klubname : ""}
+            }).then(async (res) => {
+                 const klubs = [...res.data.searchKlubs];
+                 props.setFullGroup(klubs);
+            }).catch((err) => {
+                console.log(err)
+                history.push('/logout')
+            })
         }
 
     }, [])
-
 
 
 
@@ -464,9 +487,9 @@ const Index = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    const { users, posts, active_user } = state.Chat;
+    const { users, posts, active_user, groups } = state.Chat;
     const { user, loading, error } = state.Auth;
-    return { users, posts, user, active_user };
+    return { users, posts, user, active_user, groups };
 };
 
-export default connect(mapStateToProps, { setFullUser, activeUser, subscribeDirectMessage })(Index);
+export default connect(mapStateToProps, { setFullUser, activeUser, subscribeDirectMessage, setFullGroup })(Index);
