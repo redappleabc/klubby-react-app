@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 
 // lazy load all the views
 const Dashboard = React.lazy(() => import("../pages/dashboard/index"));
-const StarterPage = React.lazy(() => import("../pages/StarterPage/index"));
 
 // auth
 const Index = React.lazy(() => import("../pages/Auth/Index"));
@@ -18,7 +17,6 @@ const LockScreen = React.lazy(() => import("../pages/Auth/LockScreen"));
 // declare all routes
 const authProtectedRoutes = [
   { path: "/dashboard", component: Dashboard },
-  { path: "/pages-starter", component: StarterPage },
 
   {
     path: "/",

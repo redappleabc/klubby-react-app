@@ -8,10 +8,12 @@ export default gql`query getUserConversations {
           __typename
           conversationId
           username
+          name
           accepted
           associated  {
             username
             read
+            accepted
           }
           read
           conversation {

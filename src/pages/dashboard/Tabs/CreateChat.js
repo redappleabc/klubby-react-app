@@ -72,10 +72,10 @@ const CreateChats = (props) => {
             let searchedUsers = res.data.searchUsers;
 
             if (searchedUsers) {
-                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
+                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
                 setSearchedUserList(searchedUsers)
             }
-            // console.log(searchedUsers)
+            console.log("searched userqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",searchedUsers)
         }).catch((err) => {
             console.log(err)
         })
@@ -91,7 +91,7 @@ const CreateChats = (props) => {
         }).then((res) => {
             let searchedUsers = res.data.searchUsers;
             if (searchedUsers) {
-                searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
+                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
                 setSearchedUserList(searchedUsers)
             }
             console.log(searchedUsers)
@@ -148,14 +148,17 @@ const CreateChats = (props) => {
             }).then((res) => {
                 newConversation.id = res.data.createConversation.id;
                 console.log("create conversation succeed");
+                console.log("props.user.username", props.user.username)
                 createUserConversationApollo({
-                    variables: { conversationId: newConversation.id, username: props.user.username, name: selectedMembers.join(",") }
+                    variables: { accepted: true, conversationId: newConversation.id, username: props.user.username, name: selectedMembers.join(",") }
                 })
             }).then((res) => {
                 console.log("create user conversation 1 succeed");
                 for (let i = 0; i < selectedMembers.length; i++) {
+                    let temp = [...selectedMembers];
+                    temp[i] = props.user.username;
                     createUserConversationApollo({
-                        variables: { conversationId: newConversation.id, username: selectedMembers[i], name: selectedMembers.join(",") }
+                        variables: { accepted: false, conversationId: newConversation.id, username: selectedMembers[i], name: temp.join(",") }
                     })
                 }
             }).then((res) => {
@@ -165,8 +168,8 @@ const CreateChats = (props) => {
 
             })
 
-
             setSelectedMembers([]);
+            // props.setFullUser(...props.users, {accepted: true, conversationId: newConversation.id, username: props.user.username, name: selectedMembers.join(",") } ])
 
         }
 

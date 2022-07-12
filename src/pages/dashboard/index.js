@@ -111,7 +111,8 @@ const Index = (props) => {
         if (newUserConversationBridgescriptionData) {
             let copyallUsers = props.users;
             const newUser = {}
-            newUser.username = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
+            newUser.accepted = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.accepted;
+            newUser.username = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.username;
             newUser.name = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.name;
             newUser.conversationId = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId;
             newUser.status = "online";
@@ -120,7 +121,7 @@ const Index = (props) => {
             newUser.unRead = 0;
             newUser.messages = []
             //copyallUsers[newUser.username] = newUser;
-            props.setFullUser({ ...copyallUsers, [newUser.username]: newUser })
+            props.setFullUser({ ...copyallUsers, [newUser.name]: newUser })
 
             const observable = apollo_client.watchQuery({
                 query: getConversationMessagesGQL,
@@ -330,14 +331,21 @@ const Index = (props) => {
                             
 
                             if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
+                            {
+                                alert("dfsfsfdsf")
                                 continue;
-                            if(_recentConversations[i].associated.length === 1){
-                                _recentUser.username = _recentConversations[i].associated[0].username;
-                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
-                            }else if(_recentConversations[i].associated.length > 1){
-                                _recentUser.username = _recentConversations[i].associated[0].username;
-                                _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
                             }
+                            // if(_recentConversations[i].associated.length === 1){
+                            //     _recentUser.username = _recentConversations[i].associated[0].username;
+                            //     _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            // }else if(_recentConversations[i].associated.length > 1){
+                                // _recentUser.username = _recentConversations[i].associated[0].username;
+                                // _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
+                            // }
+
+                            _recentUser.username = _recentConversations[i].username;
+                            _recentUser.name = _recentConversations[i].name;
+
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
                             _recentUser.isGroup = false;
@@ -378,7 +386,7 @@ const Index = (props) => {
                             }
 
 
-                            _recentChatList[_recentUser.username] = _recentUser
+                            _recentChatList[_recentUser.name] = _recentUser
 
                         
 

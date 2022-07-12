@@ -1,34 +1,23 @@
 import React, { useState } from 'react';
-import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button, Input, Row, Col, Modal, ModalBody } from "reactstrap";
+import { Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button, Input, Row, Col, Modal, ModalBody, UncontrolledDropdown,  } from "reactstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { openUserSidebar, setFullUser } from "../../../redux/actions";
 
 //import images
-import user from '../../../assets/images/users/avatar-4.jpg'
 
 function UserHead(props) {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [dropdownOpen1, setDropdownOpen1] = useState(false);
-    const [Callmodal, setCallModal] = useState(false);
-    const [Videomodal, setVideoModal] = useState(false);
 
     const toggle = () => setDropdownOpen(!dropdownOpen);
-    const toggle1 = () => setDropdownOpen1(!dropdownOpen1);
-    const toggleCallModal = () => setCallModal(!Callmodal);
-    const toggleVideoModal = () => setVideoModal(!Videomodal);
 
-    const openUserSidebar = (e) => {
-        e.preventDefault();
-        props.openUserSidebar();
-    }
 
     function closeUserChat(e) {
         e.preventDefault();
         var userChat = document.getElementsByClassName("user-chat");
         if (userChat) {
-            userChat[0].classList.remove("user-chat-show");
+            for(var i = 0; i< userChat.length; i++) userChat[i].classList.remove("user-chat-show");
         }
     }
 
@@ -42,7 +31,7 @@ function UserHead(props) {
 
     return (
         <React.Fragment>
-            <div className="p-2 p-lg-3 border-bottom user-header">
+            <div className="p-2 p-lg-3 user-header">
                 <Row className="align-items-center user-header-main">
                     <Col sm={4} xs={8}>
                         <div className="d-flex align-items-center">
@@ -58,7 +47,7 @@ function UserHead(props) {
                                     </div>
                                     : <div className="chat-user-img align-self-center me-3">
                                         <div className="avatar-xs">
-                                            <span className="avatar-title rounded-circle bg-soft-primary text-primary">
+                                            <span className="avatar-title rounded-circle">
                                                 {props.users[props.active_user].name.charAt(0)}
                                             </span>
                                         </div>
@@ -67,7 +56,7 @@ function UserHead(props) {
 
                             {props.active_user?
                             <div className="flex-1 overflow-hidden">
-                                <h5 className="font-size-16 mb-0 text-truncate">
+                                <h5 className="font-size-14 mb-0 text-truncate">
                                     <Link to="#" className="text-reset user-profile-show">
                                         {props.users[props.active_user].name}
                                     </Link>
@@ -100,6 +89,9 @@ function UserHead(props) {
                                     })()}
 
                                 </h5>
+                                <h6 className='text-truncate'>
+                                  @ {props.users[props.active_user].name}
+                                </h6>
                             </div>:<div></div>
                             }
                         </div>
@@ -119,97 +111,29 @@ function UserHead(props) {
                                     </DropdownMenu>
                                 </Dropdown>
                             </li>
-
-                            {/* <li className="list-inline-item d-none d-lg-inline-block">
-                                <Button type="button" color="none" onClick={(e) => openUserSidebar(e)} className="nav-btn user-profile-show">
-                                    <i className="ri-user-2-line"></i>
-                                </Button>
-                            </li> */}
-
-                            {/* <li className="list-inline-item">
-                                <Dropdown isOpen={dropdownOpen1} toggle={toggle1}>
-                                    <DropdownToggle className="btn nav-btn " color="none" type="button" >
-                                        <i className="ri-more-fill"></i>
+                            <li className="list-inline-item">
+                                <UncontrolledDropdown className='header-dropdown'>
+                                    <DropdownToggle>
+                                        <div className='header-edit-btn'>
+                                            <i className="ri-more-2-fill"></i>
+                                        </div>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-menu-end">
-                                        <DropdownItem className="d-block d-lg-none user-profile-show" onClick={(e) => openUserSidebar(e)}>View profile <i className="ri-user-2-line float-end text-muted"></i></DropdownItem>
-                                        <DropdownItem>Archive <i className="ri-archive-line float-end text-muted"></i></DropdownItem>
-                                        <DropdownItem>Muted <i className="ri-volume-mute-line float-end text-muted"></i></DropdownItem>
-                                        <DropdownItem onClick={(e) => deleteMessage(e)}>Delete <i className="ri-delete-bin-line float-end text-muted"></i></DropdownItem>
+                                        <DropdownItem>
+                                            <div>Chat Settings</div> <i className="ri-chat-3-line"></i>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            <div>Members</div> <i className="ri-group-line"></i>
+                                        </DropdownItem>
                                     </DropdownMenu>
-                                </Dropdown>
-                            </li> */}
+                                </UncontrolledDropdown>
+                            </li>
+                            
 
                         </ul>
                     </Col>
                 </Row>
             </div>
-
-            {/* Start Audiocall Modal */}
-            <Modal tabIndex="-1" isOpen={Callmodal} toggle={toggleCallModal} centered>
-                <ModalBody>
-                    <div className="text-center p-4">
-                        <div className="avatar-lg mx-auto mb-4">
-                            <img src={user} alt="" className="img-thumbnail rounded-circle" />
-                        </div>
-
-                        <h5 className="text-truncate">Doris Brown</h5>
-                        <p className="text-muted">Start Audio Call</p>
-
-                        <div className="mt-5">
-                            <ul className="list-inline mb-1">
-                                <li className="list-inline-item px-2 me-2 ms-0">
-                                    <button type="button" className="btn btn-danger avatar-sm rounded-circle" onClick={toggleCallModal}>
-                                        <span className="avatar-title bg-transparent font-size-20">
-                                            <i className="ri-close-fill"></i>
-                                        </span>
-                                    </button>
-                                </li>
-                                <li className="list-inline-item px-2">
-                                    <button type="button" className="btn btn-success avatar-sm rounded-circle">
-                                        <span className="avatar-title bg-transparent font-size-20">
-                                            <i className="ri-phone-fill"></i>
-                                        </span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </ModalBody>
-            </Modal>
-
-            {/* Start VideoCall Modal */}
-            <Modal tabIndex="-1" isOpen={Videomodal} toggle={toggleVideoModal} centered>
-                <ModalBody>
-                    <div className="text-center p-4">
-                        <div className="avatar-lg mx-auto mb-4">
-                            <img src={user} alt="" className="img-thumbnail rounded-circle" />
-                        </div>
-
-                        <h5 className="text-truncate">Doris Brown</h5>
-                        <p className="text-muted">Start Video Call</p>
-
-                        <div className="mt-5">
-                            <ul className="list-inline mb-1">
-                                <li className="list-inline-item px-2 me-2 ms-0">
-                                    <button type="button" className="btn btn-danger avatar-sm rounded-circle" onClick={toggleVideoModal}>
-                                        <span className="avatar-title bg-transparent font-size-20">
-                                            <i className="ri-close-fill"></i>
-                                        </span>
-                                    </button>
-                                </li>
-                                <li className="list-inline-item px-2">
-                                    <button type="button" className="btn btn-success avatar-sm rounded-circle">
-                                        <span className="avatar-title bg-transparent font-size-20">
-                                            <i className="ri-vidicon-fill"></i>
-                                        </span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </ModalBody>
-            </Modal>
         </React.Fragment>
     );
 }

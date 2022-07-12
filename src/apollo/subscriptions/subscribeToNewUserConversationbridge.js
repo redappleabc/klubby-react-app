@@ -7,6 +7,7 @@ subscription subscribeToNewUserConversationBridge($username: ID!) {
     username
     name
     conversationId
+    accepted
     associated  {
       username
       read

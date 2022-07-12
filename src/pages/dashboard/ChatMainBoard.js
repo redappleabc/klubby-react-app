@@ -26,10 +26,16 @@ function ChatMainBoard(props) {
                      <TabPane tabId="klub" id="pills-klub_">
                         {/* <UserGroup /> */}
                     </TabPane>
-                    <TabPane tabId="create-klubs" id="create-klubs_">
+                    <TabPane tabId="create-klubs" id="pills-create-klubs_">
                         {/* <UserGroup /> */}
                     </TabPane>
+
                     <TabPane tabId="chat" id="pills-klub_">
+                        <UserChat />
+                    </TabPane>
+                    {/* End Home tab-pane  */}
+
+                    <TabPane tabId="request-chat" id="pills-request-chat_">
                         <UserChat />
                     </TabPane>
                     {/* End Home tab-pane  */}
@@ -48,7 +54,6 @@ function ChatMainBoard(props) {
                     </TabPane>
                     {/* End chats tab-pane */}
 
-                    
                 </TabContent>
             </div>
         </React.Fragment>
