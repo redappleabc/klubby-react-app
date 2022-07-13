@@ -487,10 +487,10 @@ textarea:focus {
     position: relative;
     height: 40px;
     overflow: hidden;
-    background-color: #343434;
+    background-color: #F2F2F2;
     padding: 10px 20px;
-    color: white;
-    border-bottom: 1px solid #2B2C33;
+    color: #333333;
+    border-bottom: 1px dotted #6355FA;
     font-size: 13px;
     border-radius: 15px 15px 0 0;
     word-break: break-all;
@@ -506,7 +506,7 @@ textarea:focus {
 }
 
 .reply-message .reply-msg-close-btn {
-    color: white;
+    color: #333333;
     font-size: 16px;
     position: absolute;
     right: 13px;

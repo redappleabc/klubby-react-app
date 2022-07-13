@@ -60,9 +60,6 @@ const RequestChats = (props) => {
     }
 
 
-    function toggleAddGroupModal() {
-        setModalGroup(!modalGroup)
-    }
 
     function toggleAddMemberModal() {
         if (!modalMember) {
@@ -94,60 +91,15 @@ const RequestChats = (props) => {
 
 
     useEffect(() => {
-        setGroups(props.groups)
+        
         setRecentChatList(props.users)
-        console.log("tab/chat.js", props.users)
+        console.log("tab/requestchat.js", props.users)
     }, [props.users, props.newDirectMessage])
 
 
 
 
-    function addGroup() {
-        if (selectedContact.length > 2) {
-            // gourpId : 5, name : "#Project-aplha", profilePicture : "Null", isGroup : true, unRead : 0, isNew : true, desc : "project related Group",
-            var obj = {
-                gourpId: `${Date.now()}-${uuidv4()}`,
-                name: groupName,
-                profilePicture: "Null",
-                isGroup: true,
-                unRead: 0,
-                isNew: true,
-                desc: groupDesc,
-                members: selectedContact,
-                messages: { "main": [{}], "whale": [{}], "announcement": [{}] }
-            }
-            //call action for creating a group
-            const newGroup = {
-                createdAt: `${Date.now()}`,
-                id: obj.gourpId,
-                name: obj.name
-            }
-            console.log(newGroup)
-            apollo_client.mutate({
-                mutation: createConversationGQL,
-                variables: newGroup
-            }).then((res) => { console.log(res) })
-                .catch((err) => { console.log(err) })
-            props.createGroup(obj);
-            console.log(obj);
-            console.log(groups);
-            toggleAddGroupModal();
 
-        } else if (selectedContact.length === 1) {
-            setMessage("Minimum 2 members required!!!")
-            setIsOpenAlert(true)
-        } else {
-            setMessage("Please Select Members!!!")
-            setIsOpenAlert(true)
-        }
-        setTimeout(
-            function () {
-                setIsOpenAlert(false)
-            }
-                .bind(this),
-            3000
-        );
-    }
 
     function handleCheck(e, contactId) {
         var selected = selectedContact;
@@ -232,7 +184,7 @@ const RequestChats = (props) => {
         props.activeUser(index);
 
 
-        var chatList = document.getElementById("chat-list");
+        var chatList = document.getElementById("request-chat-list");
         var clickedItem = e.target;
         var currentli = null;
 
@@ -260,7 +212,7 @@ const RequestChats = (props) => {
 
         var userChat = document.getElementsByClassName("user-chat");
         if (userChat) {
-            userChat[0].classList.add("user-chat-show");
+            for (var i = 0; i<userChat.length; i++) userChat[i].classList.add("user-chat-show");
         }
 
 
@@ -360,6 +312,7 @@ const RequestChats = (props) => {
 
         toggleAddMemberModal();
     }
+
     function openUserGroup(e, group) {
 
         //e.preventDefault();
@@ -408,6 +361,7 @@ const RequestChats = (props) => {
             unread.style.display = "none";
         }
     }
+
 
     const deleteConversation = (e, conversationId, username) => {
         //e.preventDefault()
@@ -484,11 +438,11 @@ const RequestChats = (props) => {
 
                 <SimpleBar className="chat-message-list">
                     <div className='px-2'>
-                        <ul className="list-unstyled chat-list chat-user-list group-list" id="chat-list">
+                        <ul className="list-unstyled chat-list chat-user-list group-list" id="request-chat-list">
                             {
                                 Object.entries(recentChatList).map(([key, chat]) => {
                                     return (chat.accepted === false || chat.accepted === null) ?
-                                    <li key={key} id={"conversation" + key} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
+                                    <li key={key} id={"conversation" + chat.conversationId} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
                                         <ContextMenuTrigger id={chat.conversationId}>
                                             <Link to="#" onClick={(e) => openUserChat(e, chat)} >
                                                 <div className="group-list-con">

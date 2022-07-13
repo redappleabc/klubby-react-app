@@ -167,7 +167,7 @@ const Chats = (props) => {
                         
                         <div>
                             <span className='nav-header-link' onClick={()=>{props.setActiveTab("request-chat")}}>
-                                {Object.entries(recentChatList).filter((item)=> (item.accepted !== true)).length} Requests
+                                {Object.values(recentChatList).filter((item)=> (item.accepted === false || item.accepted === null)).length} Requests
                             </span>
                             <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-chat")}}><img src={add_icon}/></button>
                         </div>
@@ -191,7 +191,7 @@ const Chats = (props) => {
                                 Object.entries(recentChatList).map(([key, chat]) =>
                                     {
                                         return chat.accepted === true ? 
-                                        <li key={key} id={"conversation" + key} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
+                                        <li key={key} id={"conversation" + chat.conversationId} className={(key === props.active_user ? "active" : chat.unRead ? "unread" : "") + (chat.isTyping ? " typing" : "")}>
                                             <ContextMenuTrigger id={chat.conversationId}>
                                                 <Link to="#" onClick={(e) => openUserChat(e, chat)} >
                                                     <div className="group-list-con">
