@@ -2,8 +2,7 @@ import {
     ApolloClient,
     InMemoryCache,
     createHttpLink,
-    split,
-    ApolloLink
+    split
 } from "@apollo/client";
 
 
@@ -20,22 +19,7 @@ const getToken = async () => {
     return token;
 }
 
-
-// let url;
-// if (process.env.REACT_APP_ENVIRONMENT === "development") {
-//     url = "https://myqrbz2nvvhlbg2r6i36olffji.appsync-api.us-east-1.amazonaws.com/graphql"
-// } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
-//     url = "https://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-api.us-east-1.amazonaws.com/graphql"
-// }
-let url = process.env.GRAPHQL_API_URL
-
-// let socketURL;
-// if (process.env.REACT_APP_ENVIRONMENT === "development") {
-//     socketURL = "wss://myqrbz2nvvhlbg2r6i36olffji.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
-// } else if (process.env.REACT_APP_ENVIRONMENT === "production") {
-//     socketURL = "wss://fy2cjmehurd6hdh2fj5wtyhk4u.appsync-realtime-api.us-east-1.amazonaws.com/graphql"
-// }
-let socketURL = process.env.GRAPHQL_SOCKET_URL
+const url = process.env.REACT_APP_GRAPHQL_API_URL
 
 
 const auth = {
@@ -70,29 +54,10 @@ const splitLink = split(
     authLink.concat(httpLink),
 );
 
-
-
-
 const apollo_client = new ApolloClient({
-    //fetch,
     link: splitLink,
-    cache: new InMemoryCache(),
-    onError: ({ networkError, graphQLErrors }) => {
-        console.log('graphQLErrors', graphQLErrors)
-        console.log('networkError', networkError)
-    }
+    cache: new InMemoryCache()
 });
-
-
-
-  
-// const apollo_client = new AWSAppSyncClient({
-//     url: URL,
-//     region: region,
-//     auth: auth
-//   })
-
-
 
 
 export default apollo_client;
