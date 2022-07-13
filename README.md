@@ -8,6 +8,16 @@ DevOps best practices are in place to automate the deployment of this applicatio
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## React Architecture
+In the src/ folder your will find the code for the Klubby Application. This folder follows standard react layout. The main entry point is index.js/App.js, from there...
+
+- redux
+- routes
+- single page application approach
+- styling
+- components
+
+
 ## Git Practice
 
 This project uses [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) with long term strategy of using [Trunk Based Deployments](https://trunkbaseddevelopment.com/).
