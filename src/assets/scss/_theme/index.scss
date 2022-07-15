@@ -1545,6 +1545,7 @@ label {
   .profile-lists {
     padding: 55px 16px 90px 16px;
     .list {
+      cursor: pointer;
       padding: 16px 0;
       display: flex;
       align-items: flex-start;
@@ -1570,6 +1571,10 @@ label {
           font-weight: 400;
           display: block;
         }
+      }
+      transition: .3s ease;
+      &:hover {
+        filter: brightness(.9);
       }
     }
     .list:last-child {
