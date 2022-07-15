@@ -15,6 +15,7 @@ import Post from "./Tabs/Post";
 import CreateKlubs from "./Tabs/CreateKlubs";
 import CreateChat from './Tabs/CreateChat';
 import RequestChat from './Tabs/RequestChat';
+import ProfileEdit from './Tabs/profile/ProfileEdit';
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -24,78 +25,36 @@ function ChatLeftSidebar(props) {
             <div className="chat-leftsidebar me-lg-2">
 
                 <TabContent activeTab={activeTab}>
-                     {/* Start Home tab-pane */}
-                     <TabPane tabId="home" id="pills-home">
-                         <Home />
-                    </TabPane>
-
-                    {/* End Profile tab-pane  */}
-
-                    {/* Start Profile tab-pane */}
-                    <TabPane tabId="profile" id="pills-user">
-                        {/* profile content  */}
-                        <Profile />
-                    </TabPane>
-                    {/* End Profile tab-pane  */}
-
-                    {/* Start chats tab-pane  */}
-                    <TabPane tabId="chat" id="pills-chat">
-                        {/* chats content */}
-                        <Chats/>
-                    </TabPane>
-                    {/* End chats tab-pane */}
-
-                    {/* Start groups tab-pane */}
+                    {/* klubs */}
                     <TabPane tabId="klub" id="pills-klub">
-                        {/* Groups content */}
                         <Klubs />
                     </TabPane>
-                    {/* End groups tab-pane */}
-
-                    {/* Start settings tab-pane */}
-                    <TabPane tabId="settings" id="pills-setting">
-                        {/* Settings content */}
-                        <Settings />
-                    </TabPane>
-                    {/* End settings tab-pane */}
-
-                    {/* Start settings tab-pane */}
-                    <TabPane tabId="settings" id="pills-setting">
-                        {/* Settings content */}
-                        <Profile />
-                    </TabPane>
-                    {/* End settings tab-pane */}
-
-                    {/* Start settings tab-pane */}
-                    <TabPane tabId="post" id="pills-post">
-                        {/* Settings content */}
-                        <Post />
-                    </TabPane>
-                    {/* End settings tab-pane */}
-                        
-                    {/* Start settings tab-pane */}
+                                            
                     <TabPane tabId="create-klubs" id="pills-create-klubs">
-                        {/* Settings content */}
                         <CreateKlubs />
                     </TabPane>
-                    {/* End settings tab-pane */}
-
+                     {/* chat  */}
+                    <TabPane tabId="chat" id="pills-chat">
+                        <Chats/>
+                    </TabPane>
+                   
                     <TabPane tabId="create-chat" id="pills-create-chat">
-                        {/* Settings content */}
                         <CreateChat />
                     </TabPane>
-                    {/* End settings tab-pane */}
 
-                    
                     <TabPane tabId="request-chat" id="pills-request-chat">
-                        {/* Settings content */}
                         <RequestChat />
                     </TabPane>
-                    {/* End settings tab-pane */}
+                    {/* profile  */}
+                    <TabPane tabId="profile" id="pills-profile">
+                        <Profile />
+                    </TabPane>
 
-                    
+                    <TabPane tabId="profile-edit" id="pills-profile-edit">
+                        <ProfileEdit />
+                    </TabPane>
+
                 </TabContent>
-                {/* end tab content */}
 
             </div>
         </React.Fragment>

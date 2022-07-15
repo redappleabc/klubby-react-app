@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from "react-redux";
+
 import { Card } from "reactstrap";
 
 import SimpleBar from "simplebar-react";
 //Import components
-
+import { setActiveTab } from '../../../../redux/actions';
 
 //Import Images
 import avatar1 from "../../../../assets/images/users/avatar-1.jpg";
@@ -18,10 +20,10 @@ function Profile(props) {
                     Profile
                 </div>
                 <div className='profile-header-btn'>
-                    <button><i className="ri-edit-2-line"></i></button>
+                    <button onClick={()=>{props.setActiveTab("profile-edit")}}><i className="ri-edit-2-line"></i></button>
                 </div>
             </div>
-            <div className='profile-main'>
+            <SimpleBar className='profile-main'>
                 <div className='profile-main-back'></div>
                 <div className='profile-avatar'>
                     <img src={avatar1}/>
@@ -78,9 +80,15 @@ function Profile(props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </SimpleBar>
         </React.Fragment>
     );
 }
 
-export default Profile;
+const mapStatetoProps = state => {
+    return {
+        ...state.Layout
+    };
+};
+
+export default connect(mapStatetoProps, {setActiveTab})(Profile);

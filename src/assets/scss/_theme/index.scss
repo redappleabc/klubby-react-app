@@ -851,7 +851,7 @@ label {
   }
 }
 
-.create-klubs-input-con {
+.create-klubs-input-con, .profile-main {
   padding: 24px 16px;
   padding-bottom: 90px;
   background-color: white;
@@ -1504,15 +1504,15 @@ label {
       color: white;
       // font-weight: bold;
       font-size: 18px;
+      padding: 0;
     }
   }
 
 }
 
 .profile-main {
-  
   position: relative;
-  padding-top: 50px;
+  padding-bottom: 20px;
   .profile-main-back {
     position: absolute;
     top: 0;
@@ -1523,6 +1523,7 @@ label {
     background-color: #6355FA;
   }
   .profile-avatar {
+    padding-top: 50px;
     text-align: center;
     position: relative;
     z-index: 2;
@@ -1540,10 +1541,14 @@ label {
       font-size: 16px;
       font-weight: 400;
     }
+    label {
+      display: inline-block;
+      color: #6355FA;
+    }
   }
 
   .profile-lists {
-    padding: 55px 16px 90px 16px;
+    padding: 55px 0 10px 0;
     .list {
       cursor: pointer;
       padding: 16px 0;
@@ -1607,6 +1612,9 @@ label {
     z-index: 9;
   }
   .profile-main {
-    margin-top: calc(55px + env(safe-area-inset-top));
+    position: fixed;
+    width: 100%;
+    top: calc(55px + env(safe-area-inset-top));
+    height: calc(calc(var(--app-height) - 100px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
   }
 }
