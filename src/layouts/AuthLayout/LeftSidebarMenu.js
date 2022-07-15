@@ -67,7 +67,7 @@ function LeftSidebarMenu(props) {
                         </NavItem>
         
                         <NavItem id="Settings">
-                            <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'settings' })} onClick={() => { toggleTab('settings'); }}>
+                            <NavLink id="pills-setting-tab" className={classnames({ active: activeTab === 'profile' })} onClick={() => { toggleTab('profile'); }}>
                                 <div>
                                     <img src={avatar2} className="profile-img"/>
                                     <span>Profile</span>

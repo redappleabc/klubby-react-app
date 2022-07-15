@@ -28,29 +28,56 @@ import add_icon from "../../../assets/images/icons/icon-add.svg";
 
 const Chats = (props) => {
     const [focusSearch, setFocusSearch] = useState(false)
-    const [recentChatList, setRecentChatList] = useState(props.users)
+    const [searchedUserList, setSearchedUserList] = useState([])
+
+    const [recentChatList, setRecentChatList] = useState(props.users);
+    const [request, setRequest] = useState(0);
 
     const [removeConversationApollo, { }] = useMutation(removeConversationGQL)
     const [removeUserConversationBridgeApollo, { }] = useMutation(removeUserConversationBridgeGQL)
 
 
+    
     function toggleSearchFocus() {
         setFocusSearch(!focusSearch)
     }
 
 
+    useEffect(()=> {
+        setRequest(Object.values(recentChatList).filter((item)=> (item.accepted === false || item.accepted === null)).length)
+    }, [recentChatList])
+
     useEffect(() => {
         setRecentChatList(props.users)
+        searchUsersByUsername("");
         console.log("tab/chat.js", props.users)
     }, [props.users, props.newDirectMessage])
 
+
+    function searchUsersByUsername(key) {
+
+        apollo_client.query({
+            query: getUsersByUserNameGQL,
+            variables: { username: key }
+        }).then((res) => {
+            let searchedUsers = res.data.searchUsers;
+            if (searchedUsers) {
+                // searchedUsers = searchedUsers.filter(({ username }) => !Object.keys(props.users).includes(username))
+                setSearchedUserList(searchedUsers)
+            }
+            console.log(searchedUsers)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+    }
 
 
     function openUserChat(e, chat) {
         //e.preventDefault();
 
         //find index of current chat in array
-        var index = chat.name;
+        var index = chat.conversationId;
 
 
         // set activeUser 
@@ -124,8 +151,9 @@ const Chats = (props) => {
     }
 
 
-    const deleteConversation = (e, conversationId, username) => {
+    const deleteConversation = (e, conversationId) => {
         //e.preventDefault()
+        console.log("props.user.username", props.user.username)
         removeUserConversationBridgeApollo({
             variables: {
                 username: props.user.username,
@@ -133,23 +161,7 @@ const Chats = (props) => {
             }
         }).then((res) => {
             console.log("delete userconversationbridge self succeed")
-            removeUserConversationBridgeApollo({
-                variables: {
-                    username: username,
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete userconversationbridge other succeed")
-            removeConversationApollo({
-                variables: {
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete conversation succeed")
-        }).catch((res) => {
-            console.log("error delete conversation", res);
+            console.log(res)
         })
 
         console.log(conversationId)
@@ -166,9 +178,14 @@ const Chats = (props) => {
                         </div>
                         
                         <div>
-                            <span className='nav-header-link' onClick={()=>{props.setActiveTab("request-chat")}}>
-                                {Object.values(recentChatList).filter((item)=> (item.accepted === false || item.accepted === null)).length} Requests
-                            </span>
+                            {
+                                request > 0 ? 
+                                <span className='nav-header-link' onClick={()=>{props.setActiveTab("request-chat")}}>
+                                    {`${request} Request`} 
+                                </span>
+                                :
+                                <></>
+                            }
                             <button className='header-add-btn' onClick={()=>{props.setActiveTab("create-chat")}}><img src={add_icon}/></button>
                         </div>
 
@@ -178,7 +195,7 @@ const Chats = (props) => {
                             <span>
                                 <i className="ri-search-line search-icon font-size-24"></i>
                             </span>
-                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus}  placeholder="Search..." />
+                            <input type="text" onFocus={toggleSearchFocus} onBlur={toggleSearchFocus} onChange={(e) => { searchUsersByUsername(e.target.value) }} placeholder="Search..." />
                         </div>
                         {/* Search Box */}
                     </div>
@@ -288,7 +305,7 @@ const Chats = (props) => {
                                                 </Link>
                                             </ContextMenuTrigger>
                                             <ContextMenu className="con-context-menu" id={chat.conversationId}>
-                                                <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId, chat.username) }}>
+                                                <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId) }}>
                                                     <div className="con-context-item">
                                                         Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
                                                     </div>

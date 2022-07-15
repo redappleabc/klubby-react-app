@@ -60,33 +60,6 @@ function UserHead(props) {
                                     <Link to="#" className="text-reset user-profile-show">
                                         {props.users[props.active_user].name}
                                     </Link>
-                                    {(() => {
-                                        switch (props.users[props.active_user].status) {
-                                            case "online":
-                                                return (
-                                                    <>
-                                                        <i className="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i>
-                                                    </>
-                                                )
-
-                                            case "away":
-                                                return (
-                                                    <>
-                                                        <i className="ri-record-circle-fill font-size-10 text-warning d-inline-block ms-1"></i>
-                                                    </>
-                                                )
-
-                                            case "offline":
-                                                return (
-                                                    <>
-                                                        <i className="ri-record-circle-fill font-size-10 text-secondary d-inline-block ms-1"></i>
-                                                    </>
-                                                )
-
-                                            default:
-                                                return;
-                                        }
-                                    })()}
 
                                 </h5>
                                 <h6 className='text-truncate'>

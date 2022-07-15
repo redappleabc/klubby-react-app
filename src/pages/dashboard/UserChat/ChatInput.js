@@ -233,7 +233,7 @@ const ChatInput = forwardRef((props, ref) => {
                 </Form>
             </div>
             {/* Audio record Modal */}
-            <Modal tabIndex="-1" isOpen={VoiceRecordmodal} toggle={toggleVoiceRecordModal} centered>
+            <Modal tabIndex="-1" isOpen={VoiceRecordmodal} toggle={toggleVoiceRecordModal} centered className='main-modal'>
                 <ModalBody>
                     <div className="text-center p-4">
                         <div className="avatar-lg mx-auto mb-4 voice-record-img">

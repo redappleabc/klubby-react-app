@@ -163,12 +163,14 @@ const CreateChats = (props) => {
                 }
             }).then((res) => {
                 console.log("create userconversation 2 succeed")
+                props.setActiveTab("chat")
             }).catch((err) => {
                 console.log("new conversation creation", err)
 
             })
 
             setSelectedMembers([]);
+            
             // props.setFullUser(...props.users, {accepted: true, conversationId: newConversation.id, username: props.user.username, name: selectedMembers.join(",") } ])
 
         }

@@ -1483,3 +1483,125 @@ label {
   }
 }
 
+.main-modal {
+  z-index: 9999 !important;
+}
+
+// profile page 
+
+.profile-header {
+  background-color: #6355FA;
+  color: white;
+  padding: 16px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .profile-header-btn {
+    button {
+      border: none;
+      background-color: transparent;
+      color: white;
+      // font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
+}
+
+.profile-main {
+  
+  position: relative;
+  padding-top: 50px;
+  .profile-main-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 135px;
+    z-index: 1;
+    background-color: #6355FA;
+  }
+  .profile-avatar {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    img {
+      width: 163px;
+      height: 163px;
+      border-radius: 300px;
+      border: 8px solid white;
+    }
+    .name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .username {
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+
+  .profile-lists {
+    padding: 55px 16px 90px 16px;
+    .list {
+      padding: 16px 0;
+      display: flex;
+      align-items: flex-start;
+      border-bottom: 1px solid #BDBDBD;
+      .icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        background-color: #F2F2F2;
+        color: #6355FA;
+        margin-right: 8px;
+        font-weight: 800;
+      }
+      .text {
+        font-size: 16px;
+        font-weight: 600;
+        span {
+          font-size: 12px;
+          font-weight: 400;
+          display: block;
+        }
+      }
+    }
+    .list:last-child {
+      border: none;
+    }
+    .list:nth-child(2) {
+      .icon {
+        color: #FA7B6E;
+      }
+    }
+    .list:nth-child(3) {
+      .icon {
+        color: #31D77E;
+      }
+    }
+    .list:nth-child(4) {
+      .icon {
+        color: #E5B300;
+      }
+    }
+  }
+}
+
+@media (max-width: 990px) {
+  .profile-header {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    left: 0;
+    width: 100%;
+    z-index: 9;
+  }
+  .profile-main {
+    margin-top: calc(55px + env(safe-area-inset-top));
+  }
+}

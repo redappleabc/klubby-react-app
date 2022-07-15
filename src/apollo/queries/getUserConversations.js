@@ -18,6 +18,7 @@ export default gql`query getUserConversations {
           read
           conversation {
             id
+            creator
             createdAt
             messages  {
               messages {

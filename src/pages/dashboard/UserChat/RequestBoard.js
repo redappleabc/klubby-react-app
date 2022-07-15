@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import acceptConversationGQL from '../../../apollo/mutations/AcceptUserConversation';
-import removeUserConversationBridgeGQL from '../../../apollo/mutations/removeConversation';
+import removeUserConversationBridgeGQL from '../../../apollo/mutations/removeUserConversationBridge';
+
 import inviteImg from "../../../assets/images/invite-img.png";
 import apollo_client from '../../../apollo';
-
+import { activeUser, setActiveTab } from '../../../redux/actions';
 //import images
 
 function RequestBoard(props) {
@@ -27,11 +28,39 @@ function RequestBoard(props) {
             }
         }).then((res) => {
             console.log('ok')
+            props.setActiveTab("chat")
+            props.activeUser(id)
+            // closeUserChat();
+            // activeUser(id);
+            console.log(props.users);
         })
-        .catch((err)=> {
+        .catch((err) => {
             console.log("error", err)
         })
     }    
+
+    function closeUserChat() {
+        var userChat = document.getElementsByClassName("user-chat");
+        if (userChat) {
+            for(var i = 0; i< userChat.length; i++) userChat[i].classList.remove("user-chat-show");
+        }
+    }
+
+    const deleteConversation = () => {
+        //e.preventDefault()
+        removeUserConversationBridgeApollo({
+            variables: {
+                username: props.user.username,
+                conversationId: props.users[props.active_user].conversationId
+            }
+        }).then((res) => {
+            closeUserChat();
+            props.setActiveTab("chat")
+            console.log("delete userconversationbridge self succeed", res,  props.users[props.active_user].conversationId, props.users[props.active_user])
+        })
+
+    }
+
     return (
         <>
         {props.active_user?
@@ -56,7 +85,7 @@ function RequestBoard(props) {
                     
                     <div className='username-time'>
                         <span className='username'>
-                            Adam Smith
+                            {props.users[props.active_user].creator}
                         </span>
                         <span className='time'>
                             2:30 PM
@@ -72,10 +101,10 @@ function RequestBoard(props) {
                 <div className='invite-main'>
                     <strong>Adam Smith (@asmith)</strong> has requested to chat with you
                     <div className='invite-btn-con'>
-                        <button className='accept' onClick={() => {acceptConversation(props.users[props.active_user].conversationId)}}>
+                        <button className='accept' onClick={() => {acceptConversation(props.active_user)}}>
                             Accept
                         </button>
-                        <button className='decline'>
+                        <button className='decline' onClick={() => {deleteConversation()}}>
                             Decline
                         </button>
                     </div>
@@ -90,8 +119,9 @@ function RequestBoard(props) {
 
 
 const mapStateToProps = (state) => {
-    const { users, active_user } = state.Chat;
-    return { users, active_user };
+    const { users, active_user} = state.Chat;
+    const {user} = state.Auth;
+    return { users, active_user, user };
 };
 
-export default connect(mapStateToProps, {})(RequestBoard);
+export default connect(mapStateToProps, {setActiveTab, activeUser})(RequestBoard);

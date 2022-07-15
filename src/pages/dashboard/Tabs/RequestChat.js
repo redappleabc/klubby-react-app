@@ -177,7 +177,7 @@ const RequestChats = (props) => {
         //e.preventDefault();
 
         //find index of current chat in array
-        var index = chat.name;
+        var index = chat.conversationId;
 
 
         // set activeUser 
@@ -363,38 +363,6 @@ const RequestChats = (props) => {
     }
 
 
-    const deleteConversation = (e, conversationId, username) => {
-        //e.preventDefault()
-        removeUserConversationBridgeApollo({
-            variables: {
-                username: props.user.username,
-                conversationId: conversationId
-            }
-        }).then((res) => {
-            console.log("delete userconversationbridge self succeed")
-            removeUserConversationBridgeApollo({
-                variables: {
-                    username: username,
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete userconversationbridge other succeed")
-            removeConversationApollo({
-                variables: {
-                    conversationId: conversationId
-                }
-            })
-        }).then((res) => {
-            console.log("delete conversation succeed")
-        }).catch((res) => {
-            console.log("error delete conversation", res);
-        })
-
-        console.log(conversationId)
-    }
-
-
     return (
         <React.Fragment>
             <div>
@@ -539,14 +507,6 @@ const RequestChats = (props) => {
                                                 </div>
                                             </Link>
                                         </ContextMenuTrigger>
-                                        <ContextMenu className="con-context-menu" id={chat.conversationId}>
-                                            <MenuItem onClick={(e) => { deleteConversation(e, chat.conversationId, chat.username) }}>
-                                                <div className="con-context-item">
-                                                    Delete Conversation<i className="ri-delete-bin-line float-end text-muted"></i>
-                                                </div>
-
-                                            </MenuItem>
-                                        </ContextMenu>
                                     </li>
                                     :
                                     <div key={key}></div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 //Import Components
 import ChatLeftSidebar from "./ChatLeftSidebar";
 import ChatMainBoard from "./ChatMainBoard";
-
+import { useMutation } from '@apollo/client';
 import { connect } from "react-redux";
 
 import apollo_client from '../../apollo';
@@ -15,19 +15,23 @@ import subscribeToRemovedMessagesGQL from '../../apollo/subscriptions/subscribeT
 import subscribeToNewUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToNewUserConversationbridge';
 import subscribeToRemovedUserConversationbridgeGQL from '../../apollo/subscriptions/subscribeToRemovedUserConversationbridge';
 import subscribeToReadMessageGQL from '../../apollo/subscriptions/subscribeToReadMessage';
+import subscribeToAcceptConversationGQL from '../../apollo/subscriptions/subscribeToAcceptedConversation';
 import setReadGQL from '../../apollo/mutations/setRead';
 import { from, useSubscription } from '@apollo/client';
 import { setFullUser, activeUser, subscribeDirectMessage, setFullGroup } from '../../redux/actions';
 import Preloader from '../../components/preloader';
 import { useHistory } from 'react-router-dom';
-
+import removeConversationBridge from '../../apollo/mutations/removeUserConversationBridge'
 
 const Index = (props) => {
+
+    const [removeUserConversationBridgeApollo, {}] = useMutation(removeConversationBridge)
 
     const [subscriptionData, setSubscriptionData] = useState()
     const [subscriptionToRemovedMessageData, setSubscriptionToRemovedMessageData] = useState()
     const [newUserConversationBridgescriptionData, setNewUserConversationBridgescriptionData] = useState()
     const [removedUserConversationBridgescriptionData, setRemovedUserConversationBridgescriptionData] = useState()
+    const [acceptSubscriptionData ,setAcceptSubscriptionData] = useState()
 
     const [readSubscriptionData, setReadSubscriptionData] = useState()
 
@@ -104,11 +108,13 @@ const Index = (props) => {
             setRemovedUserConversationBridgescriptionData(subscriptionData)
         }
     })
-
+ 
 
     useEffect(() => {
 
         if (newUserConversationBridgescriptionData) {
+
+            console.log( "newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge", newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge)
             let copyallUsers = props.users;
             const newUser = {}
             newUser.accepted = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.accepted;
@@ -120,8 +126,10 @@ const Index = (props) => {
             newUser.isGroup = false
             newUser.unRead = 0;
             newUser.messages = []
+            // newUser.creator = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversation.creator;
+
             //copyallUsers[newUser.username] = newUser;
-            props.setFullUser({ ...copyallUsers, [newUser.name]: newUser })
+            props.setFullUser({ ...copyallUsers, [newUser.conversationId]: newUser })
 
             const observable = apollo_client.watchQuery({
                 query: getConversationMessagesGQL,
@@ -162,6 +170,17 @@ const Index = (props) => {
                 updateQuery: (prev, { subscriptionData }) => {
                     setReadSubscriptionData(subscriptionData)
                     console.log('subscribeToReadMessageData - updateQuery:', subscriptionData);
+                },
+            })
+
+            observable.subscribeToMore({
+                document: subscribeToAcceptConversationGQL,
+                variables: {
+                    conversationId: newUser.conversationId
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                    setAcceptSubscriptionData(subscriptionData)
+                    console.log('subscribeToAcceptConversationGQL - updateQuery:', subscriptionData);
                 },
             })
         }
@@ -298,7 +317,7 @@ const Index = (props) => {
 
         props.setFullUser(copyallUsers)
 
-    })
+    }, [readSubscriptionData])
 
 
 
@@ -327,12 +346,25 @@ const Index = (props) => {
 
                             let _recentUser = {};
                             
-                            _recentUser.accepted = _recentConversations[i].accepted;
+                            
                             
 
                             if (_recentConversations[i].associated === null || _recentConversations[i].conversation === null)
                             {
-                                alert("dfsfsfdsf")
+                                // alert("dfsfsfdsf")
+                                console.log("22222222222222222222222222", _recentConversations[i])
+
+                                console.log("props.user.username", props.user.username, _recentConversations[i].conversationId)
+                                removeUserConversationBridgeApollo({
+                                    variables: {
+                                        username: props.user.username,
+                                        conversationId: _recentConversations[i].conversationId
+                                    }
+                                }).then((res) => {
+                                    console.log("delete userconversationbridge self succeed")
+                                    console.log(res)
+                                })
+                        
                                 continue;
                             }
                             // if(_recentConversations[i].associated.length === 1){
@@ -342,9 +374,10 @@ const Index = (props) => {
                                 // _recentUser.username = _recentConversations[i].associated[0].username;
                                 // _recentUser.name = _recentConversations[i].name ? _recentConversations[i].name : _recentConversations[i].associated[0].username;
                             // }
-
+                            _recentUser.accepted = _recentConversations[i].accepted;
                             _recentUser.username = _recentConversations[i].username;
                             _recentUser.name = _recentConversations[i].name;
+                            _recentUser.creator = _recentConversations[i].conversation.creator;
 
                             _recentUser.conversationId = _recentConversations[i].conversationId
                             _recentUser.nextToken = null;
@@ -386,7 +419,7 @@ const Index = (props) => {
                             }
 
 
-                            _recentChatList[_recentUser.name] = _recentUser
+                            _recentChatList[_recentUser.conversationId] = _recentUser
 
                         
 
@@ -398,7 +431,7 @@ const Index = (props) => {
                                 }
                             })
 
-
+                            
 
                             observable.subscribeToMore({
                                 document: subscribeToNewMessagesGQL,
@@ -436,6 +469,17 @@ const Index = (props) => {
                                 },
                             })
 
+                            observable.subscribeToMore({
+                                document: subscribeToAcceptConversationGQL,
+                                variables: {
+                                    conversationId: _recentUser.conversationId
+                                },
+                                updateQuery: (prev, { subscriptionData }) => {
+                                    setAcceptSubscriptionData(subscriptionData)
+                                    console.log('subscribeToAcceptConversationGQL - updateQuery:', subscriptionData);
+                                },
+                            })
+
                         }
 
                     }
@@ -468,6 +512,11 @@ const Index = (props) => {
 
     }, [])
 
+
+    useEffect(()=>{
+        if (!acceptSubscriptionData) return;
+        console.log("acceptSubscriptionData",acceptSubscriptionData);
+    }, [acceptSubscriptionData])
 
 
     // apollo_client.subscribe({

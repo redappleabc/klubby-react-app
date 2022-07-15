@@ -12,5 +12,8 @@ subscription subscribeToNewUserConversationBridge($username: ID!) {
       username
       read
     }
+    conversation {
+      creator
+    }
   }
 }`;

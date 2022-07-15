@@ -5,7 +5,7 @@ import { TabContent, TabPane } from "reactstrap";
 
 //Import Components
 import Home from "./Tabs/Home";
-import Profile from "./Tabs/Profile";
+import Profile from "./Tabs/profile/Profile";
 import Chats from "./Tabs/Chats";
 import Klubs from "./Tabs/Klubs";
 // import Notification from "./Tabs/Groups";
@@ -56,6 +56,13 @@ function ChatLeftSidebar(props) {
                     <TabPane tabId="settings" id="pills-setting">
                         {/* Settings content */}
                         <Settings />
+                    </TabPane>
+                    {/* End settings tab-pane */}
+
+                    {/* Start settings tab-pane */}
+                    <TabPane tabId="settings" id="pills-setting">
+                        {/* Settings content */}
+                        <Profile />
                     </TabPane>
                     {/* End settings tab-pane */}
 
