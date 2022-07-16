@@ -16,6 +16,8 @@ import CreateKlubs from "./Tabs/CreateKlubs";
 import CreateChat from './Tabs/CreateChat';
 import RequestChat from './Tabs/RequestChat';
 import ProfileEdit from './Tabs/profile/ProfileEdit';
+import ProfileAccount from './Tabs/profile/ProfileAccount';
+import ProfileAccountChangeEmail from './Tabs/profile/ProfileAccountChangeEmail';
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -52,6 +54,12 @@ function ChatLeftSidebar(props) {
 
                     <TabPane tabId="profile-edit" id="pills-profile-edit">
                         <ProfileEdit />
+                    </TabPane>
+                    <TabPane tabId="profile-account" id="pills-profile-account">
+                        <ProfileAccount />
+                    </TabPane>
+                    <TabPane tabId="profile-change-email" id="pills-profile-change-email">
+                        <ProfileAccountChangeEmail />
                     </TabPane>
 
                 </TabContent>

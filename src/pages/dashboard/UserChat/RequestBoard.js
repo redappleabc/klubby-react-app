@@ -20,11 +20,12 @@ function RequestBoard(props) {
 
 
     const acceptConversation = (id) => {
-        console.log(id)
+        console.log("props.user.username", props.user.username)
 
         acceptConversationApollo({
             variables: {
-                conversationId: id
+                conversationId: id,
+                username: props.user.username
             }
         }).then((res) => {
             console.log('ok')

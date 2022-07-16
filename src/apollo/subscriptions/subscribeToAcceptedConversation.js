@@ -4,5 +4,6 @@ export default gql`
 subscription subscribeToAcceptConversation($conversationId: ID!) {
   subscribeToAcceptConversation(conversationId: $conversationId) {
     conversationId
+    username
   }
 }`;

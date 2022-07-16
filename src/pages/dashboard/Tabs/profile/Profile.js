@@ -28,14 +28,14 @@ function Profile(props) {
                 <div className='profile-avatar'>
                     <img src={avatar1}/>
                     <div className='name'>
-                        John Doe
+                        {props.user.username}
                     </div>
                     <div className='username'>
-                        @ jdoe1234
+                        @ {props.user.username}
                     </div>
                 </div>
                 <div className='profile-lists'>
-                    <div className='list'>
+                    <div className='list' onClick={()=>{props.setActiveTab("profile-account")}}>
                         <div className='icon'>
                             <i className="ri-user-line"></i>
                         </div>
@@ -46,7 +46,7 @@ function Profile(props) {
                             </span>
                         </div>
                     </div>
-                    <div className='list'>
+                    <div className='list' onClick={()=>{props.setActiveTab("profile-security")}}>
                         <div className='icon'>
                             <i className="ri-lock-line"></i>
                         </div>
@@ -57,7 +57,7 @@ function Profile(props) {
                             </span>
                         </div>
                     </div>
-                    <div className='list'>
+                    <div className='list' onClick={()=>{props.setActiveTab("profile-wallet")}}>
                         <div className='icon'>
                             <i className="ri-wallet-line"></i>
                         </div>
@@ -68,7 +68,7 @@ function Profile(props) {
                             </span>
                         </div>
                     </div>
-                    <div className='list'>
+                    <div className='list' onClick={()=>{props.setActiveTab("profile-help")}}>
                         <div className='icon'>
                             <i className="ri-question-line"></i>
                         </div>
@@ -86,9 +86,9 @@ function Profile(props) {
 }
 
 const mapStatetoProps = state => {
-    return {
-        ...state.Layout
-    };
+    const { user} = state.Auth;
+
+    return {user}
 };
 
 export default connect(mapStatetoProps, {setActiveTab})(Profile);

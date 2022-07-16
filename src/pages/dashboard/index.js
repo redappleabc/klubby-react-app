@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import apollo_client from '../../apollo';
 
-import getUserConversationsGQL from '../../apollo/queries/getUserConversations';
+import getUserConversationsGQL from '../../apollo/queries/getme';
 import getKlubsByKlubNameGQL from '../../apollo/queries/getKlubsByKlubName';
 import getConversationMessagesGQL from '../../apollo/queries/getConversationMessages';
 import subscribeToNewMessagesGQL from '../../apollo/subscriptions/subscribeToNewMessages';
@@ -22,6 +22,7 @@ import { setFullUser, activeUser, subscribeDirectMessage, setFullGroup } from '.
 import Preloader from '../../components/preloader';
 import { useHistory } from 'react-router-dom';
 import removeConversationBridge from '../../apollo/mutations/removeUserConversationBridge'
+import getConverstationByIdGQL from '../../apollo/queries/getConverstationById';
 
 const Index = (props) => {
 
@@ -110,7 +111,7 @@ const Index = (props) => {
     })
  
 
-    useEffect(() => {
+    useEffect(async () => {
 
         if (newUserConversationBridgescriptionData) {
 
@@ -125,10 +126,23 @@ const Index = (props) => {
             newUser.profilePicture = null
             newUser.isGroup = false
             newUser.unRead = 0;
-            newUser.messages = []
-            // newUser.creator = newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversation.creator;
+            newUser.messages = [];
+            // newUser.associated = [...newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.associated]
+
+            console.log("newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId", newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId)
+            const result = await apollo_client.query({
+                query: getConverstationByIdGQL,
+                variables: {
+                    conversationId: newUserConversationBridgescriptionData.data.subscribeToNewUserConversationBridge.conversationId
+                }
+            })
+            console.log("getConverstationByIdGQL", result, "color: orange");
+
+            
+            newUser.creator = result.data.getConversationById.creator;
 
             //copyallUsers[newUser.username] = newUser;
+
             props.setFullUser({ ...copyallUsers, [newUser.conversationId]: newUser })
 
             const observable = apollo_client.watchQuery({
@@ -386,11 +400,14 @@ const Index = (props) => {
                             //_recentUser.profilePicture = null
                             _recentUser.unRead = 0;
                             _recentUser.read = _recentConversations[i].read
-                            _recentUser.otherReadMessageId = _recentConversations[i].associated.read
+                            // _recentUser.otherReadMessageId = _recentConversations[i].associated.read
+                            // _recentUser.associated = [];
+                            _recentUser.associated = [..._recentConversations[i].associated]
 
                             if (_recentConversations[i].conversation.messages) {
                                 _recentUser.nextToken = _recentConversations[i].conversation.messages.nextToken
                             }
+
                             if (_recentConversations[i].conversation.messages.messages) {
 
                                 let messages = [..._recentConversations[i].conversation.messages.messages]
@@ -515,7 +532,21 @@ const Index = (props) => {
 
     useEffect(()=>{
         if (!acceptSubscriptionData) return;
-        console.log("acceptSubscriptionData",acceptSubscriptionData);
+        let coppyUsers = {...props.users};
+        console.log("accepted!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", acceptSubscriptionData.data.subscribeToAcceptConversation.conversationId)
+        if (acceptSubscriptionData.data.subscribeToAcceptConversation.username === props.user.username) {
+            console.log("props.users", coppyUsers)
+            coppyUsers[acceptSubscriptionData.data.subscribeToAcceptConversation.conversationId].accepted = true;
+        }
+        else {
+            alert(acceptSubscriptionData.data.subscribeToAcceptConversation.username + " accepted")
+            console.log("coppyUsers[acceptSubscriptionData.data.subscribeToAcceptConversation.conversationId]", coppyUsers[acceptSubscriptionData.data.subscribeToAcceptConversation.conversationId])
+            // coppyUsers[acceptSubscriptionData.data.subscribeToAcceptConversation.conversationId].associated.filter((el)=>(el.username === acceptSubscriptionData.data.subscribeToAcceptConversation.username)).accepted = true;
+        }
+        
+        props.setFullUser(coppyUsers);
+        console.log("coppyUsers", coppyUsers);
+
     }, [acceptSubscriptionData])
 
 

@@ -202,7 +202,7 @@ const Chats = (props) => {
                 </div>
 
                 <SimpleBar className="chat-message-list">
-                    <div className='px-2'>
+                    <div className=''>
                         <ul className="list-unstyled chat-list chat-user-list group-list" id="chat-list">
                             {
                                 Object.entries(recentChatList).map(([key, chat]) =>
