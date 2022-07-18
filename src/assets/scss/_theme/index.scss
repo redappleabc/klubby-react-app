@@ -390,10 +390,7 @@ label {
   .owned-nft-main .header {
     color: #495057;
   }
-  .wallet-info-container .wallet-address, .wallet-info-container .icon-cover, .wallet-info-container .icon-cover i {
-    background-color: #f5f7fb;
-    color: #495057;
-  }
+
   .profile-container > div:nth-child(2) {
     color: #495057;
   }
@@ -1490,6 +1487,7 @@ label {
 // profile page 
 
 .profile-header {
+  position: relative;
   background-color: #6355FA;
   color: white;
   padding: 16px;
@@ -1532,6 +1530,7 @@ label {
       height: 163px;
       border-radius: 300px;
       border: 8px solid white;
+      object-fit: cover;
     }
     .name {
       font-size: 16px;
@@ -1601,6 +1600,9 @@ label {
       }
     }
   }
+  .error-text {
+    color: #EB5757;
+  }
 }
 
 @media (max-width: 990px) {
@@ -1625,8 +1627,14 @@ label {
   font-weight: 600;
   color: #6355FA;
   margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
-  display: block;
+  i {
+    font-weight: normal;
+    font-size: 18px;
+  }
   &.red {
     color: #EB5757;
   }
@@ -1650,5 +1658,40 @@ label {
     left: 20px;
     top: 11px;
   }
+  input:focus + span {
+    i {
+      color: #6355FA;
+    }
+  }
 
 }
+
+.wallet-modal-body {
+  color: #6355FA !important;
+}
+
+.wallet-btn-con {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  button {
+    width: 18px;
+    height: 18px;
+    overflow: hidden;
+    border: none;
+    background-color: transparent;
+    color: #333333;
+    font-size: 26px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.wallet-icon {
+  font-size: 18px;
+}
+

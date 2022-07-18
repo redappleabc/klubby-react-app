@@ -5,7 +5,7 @@ import { TabContent, TabPane } from "reactstrap";
 
 //Import Components
 import Home from "./Tabs/Home";
-import Profile from "./Tabs/profile/Profile";
+import Profile from "./Tabs/profile";
 import Chats from "./Tabs/Chats";
 import Klubs from "./Tabs/Klubs";
 // import Notification from "./Tabs/Groups";
@@ -15,9 +15,13 @@ import Post from "./Tabs/Post";
 import CreateKlubs from "./Tabs/CreateKlubs";
 import CreateChat from './Tabs/CreateChat';
 import RequestChat from './Tabs/RequestChat';
-import ProfileEdit from './Tabs/profile/ProfileEdit';
-import ProfileAccount from './Tabs/profile/ProfileAccount';
-import ProfileAccountChangeEmail from './Tabs/profile/ProfileAccountChangeEmail';
+import ProfileEdit from './Tabs/profile/Edit';
+import ProfileAccount from './Tabs/profile/Account';
+import ProfileAccountChangeEmail from './Tabs/profile/ChangeEmail';
+import ProfileSecurity from './Tabs/profile/Security';
+import ProfileAccountChangePassword from './Tabs/profile/ChangePassword';
+import Help from './Tabs/profile/ProfileHelp';
+import Wallet from './Tabs/profile/ProfileWallet';
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -60,6 +64,18 @@ function ChatLeftSidebar(props) {
                     </TabPane>
                     <TabPane tabId="profile-change-email" id="pills-profile-change-email">
                         <ProfileAccountChangeEmail />
+                    </TabPane>
+                    <TabPane tabId="profile-security" id="pills-profile-security">
+                        <ProfileSecurity />
+                    </TabPane>
+                    <TabPane tabId="profile-change-password" id="pills-profile-change-password">
+                        <ProfileAccountChangePassword />
+                    </TabPane>
+                    <TabPane tabId="profile-wallet" id="pills-profile-wallet">
+                        <Wallet/>
+                    </TabPane>
+                    <TabPane tabId="profile-help" id="pills-profile-help">
+                        <Help/>
                     </TabPane>
 
                 </TabContent>

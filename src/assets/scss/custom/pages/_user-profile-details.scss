@@ -97,39 +97,29 @@
     .icon-cover {
         width: 45px;
         height: 45px;
-        background-color: #343434;
         border-radius: 3px;
+        color: #333333;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         i {
-            font-size: 20px;
-            color: white;
+            font-size: 24px;
         }
     }
     .wallet-address {
-        background-color: #343434;
         width: calc(100% - 100px);
-        padding: 15px 12px;
-        color: white;
+        padding: 13px 20px;
         border-radius: 3px;
-        height: 45px;
-        div {
-            height: 100%;
-            width: 100%;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-            line-height: 1;
-        }
+        height: 48px;
+        border-radius: 50px;
+        border: 1px solid #333333;
     }
 }
 
 .owned-nft-main {
     .header {
-        font-size: 18px;
+        font-size: 16px;
         color: white;
         padding: 40px 0 20px 0;
     }
@@ -148,13 +138,15 @@
             display: flex;
             align-items: center;
             column-gap: 4px;
-            // justify-content: space-between;
-            flex-wrap: wrap;
+            width: auto;
+            flex-wrap: nowrap;
+            overflow: scroll;
             img {
-                width: calc(25% - 3px);
+                width: 125px;
                 // height: auto;
                 aspect-ratio: 1 / 1;
                 object-fit: cover;
+                border-radius: 10px;
             }
         }
     }
