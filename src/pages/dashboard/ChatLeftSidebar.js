@@ -22,6 +22,7 @@ import ProfileSecurity from './Tabs/profile/Security';
 import ProfileAccountChangePassword from './Tabs/profile/ChangePassword';
 import Help from './Tabs/profile/ProfileHelp';
 import Wallet from './Tabs/profile/ProfileWallet';
+import ProfileFaq from './Tabs/profile/ProfileFaq';
 
 function ChatLeftSidebar(props) {
     const activeTab = props.activeTab;
@@ -76,6 +77,9 @@ function ChatLeftSidebar(props) {
                     </TabPane>
                     <TabPane tabId="profile-help" id="pills-profile-help">
                         <Help/>
+                    </TabPane>
+                    <TabPane tabId="profile-faq" id="pills-profile-faq">
+                        <ProfileFaq/>
                     </TabPane>
 
                 </TabContent>

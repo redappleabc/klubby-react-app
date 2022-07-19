@@ -1695,3 +1695,52 @@ label {
   font-size: 18px;
 }
 
+
+// accordion 
+
+.accordion {
+  color: #6355FA;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 18px 0;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 16px;
+  transition: 0.4s;
+  background-color: white;
+  padding-right: 30px;
+  position: relative;
+  i {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    // font-weight: normal;
+    transition: .4s ease;
+  }
+  &.active {
+    i {
+      transform: translateY(-50%) rotate(180deg);
+    }
+  }
+}
+
+.accordion.active, .accordion:hover {
+  color: #333333;
+}
+
+
+
+.panel {
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  border-bottom: 1px solid #BDBDBD;
+  p {
+    padding: 0px 0 24px 0;
+  }
+}

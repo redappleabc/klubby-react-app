@@ -61,7 +61,7 @@ function ProfileHelp(props) {
                 <div className='account-link'>
                     Email support@klubby.io <i className="ri-mail-line"></i>
                 </div>
-                <div className='account-link'>
+                <div className='account-link' onClick={()=>{props.setActiveTab("profile-faq")}}>
                     FAQ List <i className="ri-question-line"></i>
                 </div>
             </SimpleBar>
