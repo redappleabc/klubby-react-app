@@ -1773,3 +1773,15 @@ label {
    
   }
 }
+
+.chat-conversation {
+  // max-width: 600px;
+  .simplebar-content {
+    ul {
+      min-height: calc(calc(var(--app-height) - 177px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+  }
+}
