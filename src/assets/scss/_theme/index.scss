@@ -1995,7 +1995,7 @@ label {
   .klub-header-con {
     position: relative;
     z-index: 2;
-    padding-top: 40px;
+    padding-top: 20px;
 
     @media (max-width: 990px) {
       padding-top: 10px;
@@ -2129,12 +2129,19 @@ label {
   top: env(safe-area-inset-top);
   // height: calc(calc(var(--app-height) - 71px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
   padding-bottom: 0 !important;
+  height: auto;
+  @media(min-width: 990px) {
+    .user-header-main {
+      padding-bottom: 15px;
+      border-bottom: solid 1px #EFEEFF;
+    }
+  }
 }
 
 .klub-main-board {
   position: fixed;
-  top: calc(350px + env(safe-area-inset-top));
-  height: calc(calc(var(--app-height) - 350px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+  top: calc(335px + env(safe-area-inset-top));
+  height: calc(calc(var(--app-height) - 335px - env(safe-area-inset-top)) - env(safe-area-inset-bottom));
   width: calc(100% - 470px);
   padding: 20px 16px;
 }
