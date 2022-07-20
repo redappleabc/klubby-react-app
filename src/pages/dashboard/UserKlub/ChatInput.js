@@ -59,7 +59,7 @@ function ChatInput(props) {
         //if text value is not emptry then call onaddMessage function
         if (textMessage !== "") {
             
-            props.onaddMessage(textMessage, "textMessage");
+            // props.onaddMessage(textMessage, "textMessage");
             settextMessage("");
         }
 

@@ -397,7 +397,7 @@ function UserChat(props) {
                                 <RequestBoard/>
                                 }
                             
-                            </SimpleBar>
+                        </SimpleBar>
                         {
                             props.active_user && 
                             props.users[props.active_user].accepted === true ? 

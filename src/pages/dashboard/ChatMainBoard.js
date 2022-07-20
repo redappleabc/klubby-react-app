@@ -5,7 +5,7 @@ import { TabContent, TabPane } from "reactstrap";
 
 
 import UserChat from "./UserChat";
-import UserGroup from "./UserGroup";
+import UserGroup from "./UserKlub";
 // import UserPost from "./UserPost";
 
 function ChatMainBoard(props) {

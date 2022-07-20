@@ -14,7 +14,7 @@ const INIT_STATE = {
 	userSidebar : false,
 	conversationName : "Doris Brown",
 	activeChatSubTab: "chat-klubs",
-	activeKlubTab: "main",
+	activeKlubTab: "klub-home",
 	loginPageState: false,
 };
 

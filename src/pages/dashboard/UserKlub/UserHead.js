@@ -115,6 +115,29 @@ function UserHead(props) {
                     <img src={klub_avatar}/>
                     <span>Ethereum</span>
                 </div>
+                <div className='klub-header-info-con'>
+                    <div className='user-info'>
+                        <i className="ri-group-line"></i>5,256
+                        <span className='online-user'>189</span>
+                    </div>
+                    <a href='https://ethereum.com' target='_blank' className='link'>
+                        <i className="ri-links-fill"></i>ethereum.com
+                    </a>
+                    <div className='klub-header-description'>
+                        This is a super rad group for true ethereum ballers to hang out and talk about ethereum. 
+                    </div>
+                </div>
+                <div className='klub-header-tab-con'>
+                    <div className={`tab-item ${props.activeKlubTab === 'klub-home' ? 'active' : ''}`} onClick={()=>{props.setActiveKlubsTab("klub-home")}}>
+                        Home
+                    </div>
+                    <div className={`tab-item ${props.activeKlubTab === 'klub-chat' ? 'active' : ''}`} onClick={()=>{props.setActiveKlubsTab("klub-chat")}}>
+                        Chat
+                    </div>
+                    <div className={`tab-item ${props.activeKlubTab === 'klub-whale-chat' ? 'active' : ''}`} onClick={()=>{props.setActiveKlubsTab("klub-whale-chat")}}>
+                        Whale Chat
+                    </div>
+                </div>
             </div>
 
         </React.Fragment>

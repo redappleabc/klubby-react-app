@@ -394,7 +394,7 @@ const CreateKlubs = (props) => {
                                     placeholder="0" />
                             </div>
                         </div>
-                        <div className="input-con Whale-chat-input-con">
+                        coinmarketcap                  <div className="input-con Whale-chat-input-con">
                             <div className="slider-text-1">
                                 Whale Chat<span className="slider-text-con">{(100 * whaleChatSliderValue / totalCount).toFixed(2)}%</span>
                             </div>
