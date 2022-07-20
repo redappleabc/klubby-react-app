@@ -31,13 +31,15 @@ const Klubs = (props) => {
         console.log("tab/klubs.js", props.groups)
     }, [props.groups])
 
-    function openUserGroup(e, group) {
+    function openUserKlub(e, group) {
 
         //e.preventDefault();
 
         //find index of current chat in array
         var index = props.groups.indexOf(group);
 
+        console.log("props.groups.indexOf(group)", index)
+        console.log(props.groups);
         // set activeUser 
         props.activeGroup(index);
 
@@ -68,9 +70,9 @@ const Klubs = (props) => {
             currentli.classList.add('active');
         }
 
-        var userChat = document.getElementsByClassName("user-group");
+        var userChat = document.getElementById("user-klub");
         if (userChat) {
-            userChat[0].classList.add("user-chat-show");
+            userChat.classList.add("user-chat-show");
         }
 
         //removes unread badge if user clicks
@@ -122,8 +124,8 @@ const Klubs = (props) => {
                             {
                                 props.groups.map((group, key) =>
                                     <li key={key} id={"klub" + key} >
-                                        {/* <Link to="#" onClick={(e) => openUserGroup(e, group)}> */}
-                                        <Link to="#" >
+                                        <Link to="#" onClick={(e) => openUserKlub(e, group)}>
+                                        {/* <Link to="#" > */}
                                             <div className="group-list-con">
                                                 {
                                                     group.profilePicture === "Null" ?

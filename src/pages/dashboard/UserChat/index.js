@@ -324,15 +324,16 @@ function UserChat(props) {
                                                         <div className='message'>
                                                             {
                                                                 chat.originalId && <div className='reply-text'>
-                                                                    <div className='reply-icon'>
-                                                                        <i className='ri-reply-line'></i>
+                                                                    <div className='reply-header'>
+                                                                        <span className='reply-text-sender'>{chat.originalMessage.sender}</span> 
+                                                                        <span className='reply-text-date'>
+                                                                        {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
+                                                                        </span>
                                                                     </div>
                                                                     <div className='reply-text-main'>
                                                                         {parse((chat.originalMessage.content).replace(/\n/g, "<br/>"))}
                                                                     </div>
-                                                                    <div className='reply-text-date'>
-                                                                        <span className='reply-text-sender'>{chat.originalMessage.sender}, </span> {(new Date(parseInt(chat.originalMessage.createdAt)).toISOString())}
-                                                                    </div>
+                                                                    
 
                                                                 </div>
                                                             }

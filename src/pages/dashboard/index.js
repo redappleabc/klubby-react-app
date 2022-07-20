@@ -520,6 +520,7 @@ const Index = (props) => {
                 variables: {klubname : ""}
             }).then(async (res) => {
                  const klubs = [...res.data.searchKlubs];
+                 
                  props.setFullGroup(klubs);
             }).catch((err) => {
                 console.log(err)

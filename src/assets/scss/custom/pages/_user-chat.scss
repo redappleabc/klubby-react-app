@@ -524,32 +524,33 @@ textarea:focus {
 }
 
 .reply-text-main {
-    font-style: italic;
-    padding: 10px 10px 0 10px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-    margin-bottom: 10px;
     overflow: hidden;
-}
-.reply-text-date {
-    font-size: 12px;
-    font-style: italic;
-    color: rgb(138, 141, 145);
 }
 
 .reply-text {
-    border-bottom: solid 1px rgb(138, 141, 145);
+    background-color: #EFEEFF;
+    border-left: 2px solid #6355FA;
     padding: 20px 0;
-    margin-bottom: 10px;
     position: relative;
+    padding: 4px 10px;
+    border-radius: 2px 8px 8px 2px;
+    margin-bottom: 10px;
+}
+.reply-text-sender {
+    color: #6355FA;
+    font-weight: 600;
+    font-size: 14px;
+    margin-right: 8px;
+    margin-bottom: 4px;
 }
 
-.reply-icon {
-    position: absolute;
-    font-size: 20px;
-    left: -6px;
-    top: -2px;
+.reply-text-date {
+    color: #828282;
+    font-weight: 400;
+    font-size: 12px;
 }
 
 .chat-time {
@@ -576,12 +577,26 @@ textarea:focus {
         display: flex !important;
     }
     .klubs-header {
-        height: 144px;
+        height: auto;
+        background-color: white !important;
         .user-header-main {
             height: auto;
+            position: relative;
+            z-index: 2;
         }
+    .klub-header-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 1;
+        background-color: #6355FA;
+    }
         
     }
+
+    
     
 }
 
@@ -610,4 +625,18 @@ textarea:focus {
 .padding-lr-10 {
     padding-left: 10px;
     padding-right: 10px;
+}
+.theme--light  {
+    .chat-message-container {
+        .dropdown-menu {
+            background-color: #6355FA;
+            border-radius: 8px;
+            .dropdown-item {
+                color: white;
+                i {
+                    color: white !important;
+                }
+            }
+        }
+    }
 }
