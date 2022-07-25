@@ -1,22 +1,14 @@
-let config_userPool;
-if(process.env.REACT_APP_ENVIRONMENT === "development"){
-    config_userPool= {
-        region: 'us-east-1',
-        userPoolId: 'us-east-1_picEXpb5v',
-        userPoolWebClientId: '79f3mof59ks2p1oi9jn3thuv63',
-        identityPoolId: ""
-    };
-}else if(process.env.REACT_APP_ENVIRONMENT === "production"){
-    config_userPool = {
-        region: 'us-east-1',
-        userPoolId: 'us-east-1_Se7EAAzAP',
-        userPoolWebClientId: '3et7u65bmjp6doas8cgttbi6qu'
-    };
-}
+
+const config_userPool = {
+    region: process.env.REACT_APP_REGION,
+    userPoolId: process.env.REACT_APP_USERPOOLID,
+    userPoolWebClientId: process.env.REACT_APP_USERPOOLWEBCLIENTID,
+    identityPoolId: ""
+};
 
 const config_storage = {
-    bucket: 'klubby-dev-klub-avatar-bucket', //REQUIRED -  Amazon S3 bucket
-    region: 'us-east-1', //OPTIONAL -  Amazon service region
+    bucket: process.env.REACT_APP_KLUB_AVATAR_BUCKET, //REQUIRED -  Amazon S3 bucket
+    region: process.env.REACT_APP_REGION, //OPTIONAL -  Amazon service region
 }
 
-export  {config_userPool, config_storage};
+export { config_userPool, config_storage };
